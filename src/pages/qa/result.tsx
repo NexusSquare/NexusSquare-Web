@@ -22,28 +22,23 @@ const SearchResult = (props:Props) => {
     )
 }
 export const getServerSideProps: GetServerSideProps = async(context) => {
-    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-    const url = defaultUrl + `?option=${queryOptions.notSolved}`
-    const title: string|string[] = (context.query.title) ? context.query.title : ""
-    const content: question[] = await axios.get(url)
-    .then(
-        (res: AxiosResponse<QAResponse>) => {
-            const { data, status } = res
-            const resBody: question[] = data.data
-            return resBody
+    try{
+        const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
+        const title: string|string[] = (context.query.title) ? context.query.title : ""
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
+        const response: AxiosResponse<question[]> = await axios.get(url)
+        const { data,status } = response
+        const props:Props = {
+            content: data,
+            title:title
         }
-    ).catch(
-        ({error}) => {
-            const router = useRouter()
-            console.log(error)
-            router.replace("/500")
-            return error
+        return { props }
+    }catch(error){
+        if(axios.isAxiosError(error)){
+            console.error(error.message)
+            return { notFound: true }
         }
-    )
-    const props:Props = {
-        content: content,
-        title: title
     }
-    return { props }
+    return { notFound: true }
 }
 export default SearchResult

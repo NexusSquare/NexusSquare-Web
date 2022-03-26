@@ -21,27 +21,21 @@ const All = (props:Props) => {
     )
 }
 export const getServerSideProps: GetServerSideProps = async() => {
-    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-    const url = defaultUrl + `?option=${queryOptions.notSolved}`
-    const content: question[] = await axios.get(url)
-    .then(
-        (res: AxiosResponse<QAResponse>) => {
-            const { data, status } = res
-            const resBody: question[] = data.data
-            return resBody
+    try{
+        const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
+        const response: AxiosResponse<question[]> = await axios.get(url)
+        const { data,status } = response
+        const props:Props = {
+            content: data
         }
-    ).catch(
-        ({error}) => {
-            const router = useRouter()
-            console.log(error)
-            router.replace("/500")
-            return error
+        return { props }
+    }catch(error){
+        if(axios.isAxiosError(error)){
+            console.error(error.message)
+            return { notFound: true }
         }
-        
-    )
-    const props:Props = {
-        content: content
     }
-    return { props }
+    return { notFound: true }
 }
 export default All
