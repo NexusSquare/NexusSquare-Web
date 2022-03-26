@@ -29,6 +29,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         () => {
             setNotSolvedQACardsData(data)
             console.log("first fetch")
+            console.log("url="+defaultUrl)
         },[query,data]
     )
     const onNotSolvedClickHandler = () => {
@@ -60,21 +61,32 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
                     setPrimeQACardsData(data.data)
                 }
             )
-            console.log(url)
         }
     }
     const NotSolvedQACardList:Function = useCallback(() => {
-        return notSolvedQACardsData.map((qaCardData: question) => {
-            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-    })},[notSolvedQACardsData])
+        if(Array.isArray(notSolvedQACardsData)){
+            return (notSolvedQACardsData.map((qaCardData: question) => {
+                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+        }))
+        }
+        return <Box>読み込みに失敗しました</Box>
+    },[notSolvedQACardsData])
     const SolvedQACardList:Function = useCallback(() => {
-        return solvedQACardsData.map((qaCardData: question) => {
-            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-    })},[solvedQACardsData])
+        if(Array.isArray(solvedQACardsData)){
+            return solvedQACardsData.map((qaCardData: question) => {
+                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+            })
+        }
+        return <Box>読み込みに失敗しました</Box>
+    },[solvedQACardsData])
     const PrimeQACardList:Function = useCallback(() => {
-        return primeQACardsData.map((qaCardData: question) => {
-            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-    })},[primeQACardsData])
+        if(Array.isArray(primeQACardsData)){
+            return primeQACardsData.map((qaCardData: question) => {
+                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+            })
+        }
+        return <Box>読み込みに失敗しました</Box>
+    },[primeQACardsData])
     return (
         <Tabs w="100%" isLazy defaultIndex={1}>
             <TabList>
