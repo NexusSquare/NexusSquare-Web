@@ -13,6 +13,12 @@ import ChakraNextImage from "../../components/common/chakraNextImage";
 import { NotAllowedIcon } from "@chakra-ui/icons";
 import DefaultFooter from "../../components/common/defaultFooter";
 import QAFooter from "../../components/qa/qaFooter";
+import answerResponse from "../../entity/qa/answerResponse";
+import answer from "../../entity/qa/answer";
+import { useState } from "react";
+import { useEffect } from "react";
+import { useMemo } from "react";
+import { useCallback } from "react";
 
 interface Props{
     content:perfectQuestion
@@ -28,6 +34,9 @@ const Question: NextPage<Props> = ({content}) => {
     }
     const DEFAULT_ICON_IMAGE_PATH: string = (process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH) ? `/images/${process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH}` : ""
     const question: perfectQuestion = content
+    const canselToken = axios.CancelToken
+    const source = canselToken.source()
+    const [answers,setAnswers] = useState<answer[]>([])
     const ICON_IMAGE_URL: string = (question.userIcon) ? question.userIcon : DEFAULT_ICON_IMAGE_PATH
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const createTimeResult = content.createAt.match(REGEX)
@@ -44,6 +53,65 @@ const Question: NextPage<Props> = ({content}) => {
             <Box></Box>
         )
     }
+    useEffect(() => {
+        if(!process.env.NEXT_PUBLIC_GET_QUESTION_URL){
+            console.error("urlの読み込みに失敗しました")
+            setAnswers([])
+        }
+        const url = `${process.env.NEXT_PUBLIC_GET_QUESTION_URL}/${content.id}/answer`
+        const getAnswers = async() =>{
+            try{
+                const response: AxiosResponse<answerResponse> = await axios.get(url,{cancelToken: source.token})
+                const {data,status} = response
+                if(status !== 200){
+                    console.error("リクエストが不正です")
+                    setAnswers([])
+                    return
+                }
+                console.log("取得した")
+                const resAns: answer[] = data.data
+                setAnswers((nowans)=>([...nowans,...resAns]))
+            }catch(error){
+                if(axios.isAxiosError(error)){
+                    console.log("アキシオスエラー")
+                    setAnswers([])
+                }
+            }
+            console.log("関数は実行した")
+        }
+        getAnswers()
+        return () => { source.cancel("fetch in useEffect is cancelled by creater ") }
+    },[])
+    const AnswerList = useCallback(() => {
+        if(!Array.isArray(answers)){
+            return (<Box>回答の取得に失敗しました</Box>)
+        }else if(answers.length < 1){
+            return(<Box>この質問への回答はまだありません</Box>)
+        }
+        return (
+            <VStack>
+                {answers.map(
+                    (answer: answer) => {
+                        const userImage: string = (answer.userIcon) ? answer.userIcon : DEFAULT_ICON_IMAGE_PATH
+                        return (<VStack key={answer.id}> 
+                            <HStack>
+                                <Box as="figure" width="30px" height="30px" >
+                                    <ChakraNextImage src={userImage} alt="回答者アイコン" borderRadius="50%" width={30} height={30} />
+                                </Box>
+                                <VStack spacing="0px">
+                                    <Text fontWeight="400">{answer.postedby}</Text>
+                                    <HStack>
+                                        <Text fontWeight="400" fontSize="sm" color="gray.400">作成日:{answer.createAt}</Text>
+                                    </HStack>
+                                </VStack>
+                            </HStack>
+                            <Text>{answer.content}</Text>
+                        </VStack>
+                    )}
+                )}
+            </VStack>
+        )
+    },[answers])
 
     return (
         <QALayout>
@@ -82,23 +150,7 @@ c                           <Text as="h2">{content.ansNum}</Text>
                 </HStack>
                 <VStack as="section">
                     <Text as="h2" fontSize="4xl" fontWeight="semibold">Answer</Text>
-                    <VStack>
-                        <VStack>
-                            <HStack>
-                                <Box as="figure" width="30px" height="30px" >
-                                    <ChakraNextImage src={ICON_IMAGE_URL} alt="回答者アイコン" borderRadius="50%" width={30} height={30} />
-                                </Box>
-                                <VStack spacing="0px">
-                                    <Text fontWeight="400">大魔王くん</Text>
-                                    <HStack>
-                                        <Text fontWeight="400" fontSize="sm" color="gray.400">作成日:{createDate}</Text>
-                                        <Text fontWeight="400" fontSize="sm" color="gray.400">更新日:{updateDate}</Text>
-                                    </HStack>
-                                    <Text>これが回答です</Text>
-                                </VStack>
-                            </HStack>
-                        </VStack>
-                    </VStack>
+                    <AnswerList />
                 </VStack>
                 <QAFooter />
             </VStack>
