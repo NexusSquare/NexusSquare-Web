@@ -5,7 +5,7 @@ import ChakraNextImage from "../common/chakraNextImage"
 
 const QACard: React.VFC<question> = (props) => {
     const QA_IMAGE_PATH: string = "/images/ans.png"
-    const REGEX: RegExp = /^([1-9][0-9]{3})\-(0[1-9]|1[0-2])\-(0[1-9]|[1-2][0-9]|3[01])/
+    const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = props.createAt.toString().match(REGEX)
     const date: string = (result) ? result[1] + "年" + result[2] + "月" + result[3] + "日" : "読み込めませんでした"
     const categoryText:string = (props.category2) ? `${props.category1}、${props.category2}` : props.category1
