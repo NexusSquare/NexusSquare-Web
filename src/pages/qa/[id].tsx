@@ -34,8 +34,6 @@ const Question: NextPage<Props> = ({content}) => {
     }
     const DEFAULT_ICON_IMAGE_PATH: string = (process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH) ? `/images/${process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH}` : ""
     const question: perfectQuestion = content
-    const canselToken = axios.CancelToken
-    const source = canselToken.source()
     const [answers,setAnswers] = useState<answer[]>([])
     const ICON_IMAGE_URL: string = (question.userIcon) ? question.userIcon : DEFAULT_ICON_IMAGE_PATH
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
@@ -59,9 +57,10 @@ const Question: NextPage<Props> = ({content}) => {
             setAnswers([])
         }
         const url = `${process.env.NEXT_PUBLIC_GET_QUESTION_URL}/${content.id}/answer`
-        const getAnswers = async() =>{
+        let abortController = new AbortController()
+        const getAnswers = async() => {
             try{
-                const response: AxiosResponse<answerResponse> = await axios.get(url,{cancelToken: source.token})
+                const response: AxiosResponse<answerResponse> = await axios.get(url)
                 const {data,status} = response
                 if(status !== 200){
                     console.error("リクエストが不正です")
@@ -80,7 +79,7 @@ const Question: NextPage<Props> = ({content}) => {
             console.log("関数は実行した")
         }
         getAnswers()
-        return () => { source.cancel("fetch in useEffect is cancelled by creater ") }
+        return () => { abortController.abort() }
     },[])
     const AnswerList = useCallback(() => {
         if(!Array.isArray(answers)){
@@ -143,6 +142,9 @@ c                           <Text as="h2">{content.ansNum}</Text>
                         <Spacer />
                         <IconButton aria-label="通報する" icon={<NotAllowedIcon />}></IconButton>
                     </HStack>
+                </VStack>
+                <VStack>
+                    <Text>回答する</Text>
                 </VStack>
                 <HStack w="100%" h="200px">
                     <Box w="180px" h="180px" bgColor="red">広告枠</Box>
