@@ -90,9 +90,9 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
     return (
         <Tabs w="100%" isLazy defaultIndex={1}>
             <TabList>
-                <Tab w="33.3%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize="2xl" onClick={onSolvedClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>解決済み</Tab>
-                <Tab w="33.4%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize="2xl" onClick={onNotSolvedClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>回答募集中</Tab>
-                <Tab w="33.3%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize="2xl" onClick={onPrimeClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>回答急募</Tab>
+                <Tab w="33.3%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize={{base:"lg",sm:"2xl"}} onClick={onSolvedClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>解決済み</Tab>
+                <Tab w="33.4%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize={{base:"lg",sm:"2xl"}} onClick={onNotSolvedClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>回答募集中</Tab>
+                <Tab w="33.3%" border="1px" color="gray.400" bgColor="gray.200" borderRadius="5px" fontSize={{base:"lg",sm:"2xl"}} onClick={onPrimeClickHandler} _selected={{ bgColor:"white",borderColor:"gray.400",borderBottomColor:"#3DB2FF",borderBottomWidth:"5px",color:"black" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>回答急募</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel padding="0px"><SolvedQACardList /><Box w="100%" textAlign="center"><Button w="100%">さらに読み込む</Button></Box></TabPanel>
