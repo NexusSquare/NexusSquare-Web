@@ -19,7 +19,7 @@ interface Props{
 const QAListLayout: Function = ({ children,pageName,data }: Props): JSX.Element => {
     return (
         <QALayout pageName={pageName}>
-            <VStack w={{ base:"100%",sm:"100vw",md:"calc(100vw - 270px)",lg:"calc(100vw - 210px)" ,"xl":"calc(400px + 50vw)" }} paddingLeft={{base:"0",sm:"60px",md:"calc((100vw - 800px) / 2)"}} >
+            <VStack w={{ base:"100%",sm:"100vw",md:"calc(100vw - 210px)",lg:"calc(100vw - 210px)" ,"xl":"calc(400px + 50vw)" }} paddingLeft={{base:"0",sm:"100px",lg:"calc((100vw - 800px) / 2)"}} >
                 <QACardWindow>
                     {children}
                     <QACardListBox data={data} />

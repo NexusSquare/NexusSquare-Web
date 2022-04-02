@@ -29,7 +29,6 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         () => {
             setNotSolvedQACardsData(data)
             console.log("first fetch")
-            console.log("url="+defaultUrl)
         },[query,data]
     )
     const onNotSolvedClickHandler = () => {

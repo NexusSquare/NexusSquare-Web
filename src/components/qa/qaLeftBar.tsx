@@ -50,7 +50,7 @@ const QALeftBar: Function = ({children}: Props): JSX.Element => {
         </Link>
     )
     return (
-        <VStack as="nav" aria-labelledby="QA navigation" bgColor="#FBF6F0" paddingTop="20px" h="calc(100vh - 60px)" w="calc((100vw - 800px) / 2)" minW="60px" display={{ base:"none", sm:"flex" }} position="fixed" top={{base:"98px",md:"60px"}} left="0" >
+        <VStack as="nav" aria-labelledby="QA navigation" bgColor="#FBF6F0" paddingTop="20px" h="calc(100vh - 60px)" w={{ base:"calc((100vw - 800px) / 2)",sm:'100px',lg:'calc((100vw - 800px) / 2)'}} minW="60px" display={{ base:"none", sm:"flex" }} position="fixed" top={{base:"98px",md:"60px"}} left="0">
             <VStack spacing="60px" margin="30px 10px" >
                 <NavButton imageSrc={CATEGORY_IMAGE_PATH} altText="カテゴリ一覧" name="カテゴリ" url="/qa/category" />
                 <NavButton imageSrc={ALL_Q_IMAGE_PATH} altText="Q&A一覧" name="Q&A一覧" url="/qa/all" />
@@ -79,7 +79,7 @@ const QALeftBar: Function = ({children}: Props): JSX.Element => {
             <Spacer />
             <Box as="form" onSubmit={onClickHandler} paddingBottom="35%">
                 <InputGroup w="260px" display={{ base:"none", xl:"unset" }} >
-                    <InputLeftElement style={{top:'initial'}} children={<SearchIcon />} />
+                    <InputLeftElement style={{top:'initial'}}>{<SearchIcon />}</InputLeftElement> 
                     <Input type="text" value={title} onChange={onChangeHandler} placeholder="Q&Aを検索" bgColor="white" _focus={{ borderColor:"#3DB2FF" }} boxShadow="md" />
                 </InputGroup>
             </Box>
