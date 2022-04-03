@@ -2,7 +2,8 @@ type answer = {
     id: string,
     postedby: string,
     content: string,
-    authorIcon: string,
-    isBest: boolean
+    userIcon?: string,
+    isBest: boolean,
+    createAt: string
 }
 export default answer

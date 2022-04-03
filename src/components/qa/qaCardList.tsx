@@ -63,28 +63,34 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         }
     }
     const NotSolvedQACardList:Function = useCallback(() => {
-        if(Array.isArray(notSolvedQACardsData)){
-            return (notSolvedQACardsData.map((qaCardData: question) => {
-                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-        }))
+        if(!Array.isArray(notSolvedQACardsData)){
+            return <Box>読み込みに失敗しました</Box>
+        }else if(notSolvedQACardsData.length < 1){
+            return(<Box>この質問への回答はまだありません</Box>)
         }
-        return <Box>読み込みに失敗しました</Box>
+        return (notSolvedQACardsData.map((qaCardData: question) => {
+            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+        }))
     },[notSolvedQACardsData])
     const SolvedQACardList:Function = useCallback(() => {
-        if(Array.isArray(solvedQACardsData)){
-            return solvedQACardsData.map((qaCardData: question) => {
-                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-            })
+        if(!Array.isArray(solvedQACardsData)){
+            return <Box>読み込みに失敗しました</Box>
+        }else if(solvedQACardsData.length < 1){
+            return(<Box>この質問への回答はまだありません</Box>)
         }
-        return <Box>読み込みに失敗しました</Box>
+        return (solvedQACardsData.map((qaCardData: question) => {
+            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+        }))
     },[solvedQACardsData])
     const PrimeQACardList:Function = useCallback(() => {
-        if(Array.isArray(primeQACardsData)){
-            return primeQACardsData.map((qaCardData: question) => {
-                return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
-            })
+        if(!Array.isArray(primeQACardsData)){
+            return <Box>読み込みに失敗しました</Box>
+        }else if(primeQACardsData.length < 1){
+            return(<Box>この質問への回答はまだありません</Box>)
         }
-        return <Box>読み込みに失敗しました</Box>
+        return (primeQACardsData.map((qaCardData: question) => {
+            return <QACard key={qaCardData.id} id={qaCardData.id} category1={qaCardData.category1} category2={qaCardData.category2} createAt={qaCardData.createAt} title={qaCardData.title} postedBy={qaCardData.postedBy} content={qaCardData.content} ansNum={qaCardData.ansNum} />
+        }))
     },[primeQACardsData])
     return (
         <Tabs w="100%" isLazy defaultIndex={1}>

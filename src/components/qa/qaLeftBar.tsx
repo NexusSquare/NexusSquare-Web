@@ -42,7 +42,7 @@ const QALeftBar: Function = ({children}: Props): JSX.Element => {
     const NavButton: React.VFC<NavButtonProps> = (props) => (
         <Link href={props.url} passHref>
             <HStack as="a" href={props.url} bgColor="#FFDA77" h="60px" w={{ base:"60px","xl":"210px" }} borderRadius="30px" boxShadow="md" paddingLeft="5px" paddingRight="5px" justifyContent="left" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }}>
-                <Box as="circle" bgColor="white" borderRadius="50%" h="50px" w="50px" padding="10px">
+                <Box bgColor="white" borderRadius="50%" h="50px" w="50px" padding="10px">
                     <ChakraNextImage src={props.imageSrc} alt={props.altText} width={30} height={30} minW="30px" minH="30px" />
                 </Box>
                 <Text justifySelf="center" w="calc(100% - 60px)" fontSize="2xl" fontWeight="normal" display={{ base:"none","xl":"flex" }} >{props.name}</Text>
@@ -58,7 +58,7 @@ const QALeftBar: Function = ({children}: Props): JSX.Element => {
                 <Popover>
                     <PopoverTrigger>
                         <Button variant="solid" bgColor="#FFDA77" h="60px" w="60px" borderRadius="30px" boxShadow="md" paddingLeft="5px" paddingRight="5px" justifyContent="left" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} display={{ base:"flex",xl:"none" }} >
-                            <Box as="circle" bgColor="white" borderRadius="50%" h="50px" w="50px" padding="15px 10px 5px">
+                            <Box bgColor="white" borderRadius="50%" h="50px" w="50px" padding="15px 10px 5px">
                                 <SearchIcon viewBox="0 0 24 24" boxSize="20px"/>
                             </Box>
                         </Button>
@@ -79,7 +79,7 @@ const QALeftBar: Function = ({children}: Props): JSX.Element => {
             <Spacer />
             <Box as="form" onSubmit={onClickHandler} paddingBottom="35%">
                 <InputGroup w="260px" display={{ base:"none", xl:"unset" }} >
-                    <InputLeftElement style={{top:'initial'}}>{<SearchIcon />}</InputLeftElement> 
+                    <InputLeftElement style={{top:'initial'}}>{<SearchIcon />}</InputLeftElement>
                     <Input type="text" value={title} onChange={onChangeHandler} placeholder="Q&Aを検索" bgColor="white" _focus={{ borderColor:"#3DB2FF" }} boxShadow="md" />
                 </InputGroup>
             </Box>
