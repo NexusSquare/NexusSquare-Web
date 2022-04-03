@@ -1,7 +1,7 @@
 import answer from "./answer"
 
 type answerResponse = {
-    answer:answer[],
+    data:answer[],
     status:number
 }
 export default answerResponse

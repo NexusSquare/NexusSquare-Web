@@ -18,7 +18,7 @@ interface headerFuncProps{
 const Header: Function  = ({children}: Props) :JSX.Element => {
     
     const LOGO_URL: string = "/images/logo.jpg"
-    const ICON_IMAGE_URL: string = "/images/default.png"
+    const ICON_IMAGE_URL: string = (process.env.DEFAULT_PROFILE_IMAGE_PATH) ? process.env.DEFAULT_PROFILE_IMAGE_PATH : ""
     const [isLogined,setIsLogined] = useState(false)
     const [isNotice,setIsNotice] = useState(false)
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {

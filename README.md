@@ -28,6 +28,5 @@ npm run dev
 | /qa/post | 質問の投稿ページ |
 | /profile | プロフィール |
 | /gift | プレゼント選択画面(必要？) |
-| /gift/[giftId] | プレゼント応募画面 |
 | /privacy | プライバシー・ポリシー |
 | /rule | 利用規約 |

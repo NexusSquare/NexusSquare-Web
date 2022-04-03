@@ -55,7 +55,6 @@ const CategorySelect = (props:Props) => {
 
     const RadioButtonList = () => {
         return(
-
             <RadioGroup onChange={onChangeHandler} value={checkValue}>
                 <Wrap>
                     {list.map((category) => {
