@@ -6,17 +6,17 @@ const DefaultFooter: Function = () => {
         <VStack as="footer" bgColor="#FF9037" spacing="0px" w="100%" >
             <Wrap as="nav">
                 <WrapItem>
-                    <Link href="/">
+                    <Link href="/" passHref>
                         <Box as="a" href="/" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} textAlign="center" >About</Box>
                     </Link>
                 </WrapItem>
                 <WrapItem>
-                    <Link href="/rule">
+                    <Link href="/rule" passHref>
                         <Box as="a" href="/rule" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >利用規約</Box>
                     </Link>
                 </WrapItem>
                 <WrapItem>
-                    <Link href="/privacy">
+                    <Link href="/privacy" passHref>
                         <Box as="a" href="/" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >プライバシー・ポリシー</Box>
                     </Link>
                 </WrapItem>

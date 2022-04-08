@@ -15,8 +15,8 @@ interface Props{
 const SearchResult = (props:Props) => {
     return (
         <QAListLayout pageName="検索結果" data={props.content}>
-            <Box h="100px" w="100%" textAlign="center">
-                <Text paddingLeft="15%" fontSize="4xl" paddingTop="30px" textAlign="left">{props.title}の検索結果</Text>
+            <Box h="100px" w="100%" marginTop={{base:'40px',md:'0px'}} display='flex' alignItems='center'>
+                <Text paddingLeft={{ base:'5%',md:'10%' }} fontSize="4xl" paddingTop="30px" textAlign="left">{props.title}の検索結果</Text>
             </Box>
         </QAListLayout>
     )

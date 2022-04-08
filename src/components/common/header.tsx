@@ -25,7 +25,7 @@ const Header: Function  = ({children}: Props) :JSX.Element => {
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return (
             (props.isComp) ? (
-                <Link href={props.url}>
+                <Link href={props.url} passHref>
                     <Box as="a" href={props.url} paddingTop="10px" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration: "underline" }} >{props.funcName}</Box>
                 </Link>
             ) : (
@@ -58,7 +58,7 @@ const Header: Function  = ({children}: Props) :JSX.Element => {
         ) : (
             <HStack spacing="10%" w="200px" justify="end" >
                 <Button onClick={() => signIn()}>新規登録</Button>
-                <Link href="/login">
+                <Link href="/login" passHref>
                     <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
                 </Link>
             </HStack>
@@ -66,15 +66,16 @@ const Header: Function  = ({children}: Props) :JSX.Element => {
     )
 
     return  (
-        <VStack as="header" w="100%" bgColor="#FF9037" spacing="0px" divider={<StackDivider borderColor="#FFDA77" />} position="fixed" top="0" >
+        <VStack as="header" w="100%" bgColor="#FF9037" spacing="0px" divider={<StackDivider borderColor="#FFDA77" />} position="fixed" top="0" zIndex={"sticky"}>
             <HStack h="60px" paddingX={{ base:"10px", sm:"50px" }} paddingY={{ base:"0px", md:"10px" }} w="100%" bgColor="#FF9037" >
                 <Box as="h1" display="flex" flexDirection="row" alignItems="center" marginX={{ base:"0px",xs:"10px" }} >
-                    <Link href="/">
+                    <Link href="/" passHref>
                         <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center" >
                             <ChakraNextImage src={LOGO_URL} alt="ロゴ" minW="150px" minH="30px" maxW="225px" maxH="45px" width={225} height={45} borderColor="#FF9037" ></ChakraNextImage>
                         </Box>
                     </Link>
                 </Box>
+                
                 <HStack as="nav" spacing="12%" paddingX="0.5%" aria-labelledby="jump to other functions" display={{ base:"none",md:"flex" }}>
                     <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
                     <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />

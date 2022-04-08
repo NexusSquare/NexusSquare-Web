@@ -11,7 +11,7 @@ const QACard: React.VFC<question> = (props) => {
     const categoryText:string = (props.category2) ? `${props.category1}、${props.category2}` : props.category1
 
     return (
-        <Link href={"/qa/" + props.id}>
+        <Link href={"/qa/" + props.id} passHref>
             <Box as="a" href={"/qa/" + props.id}>
                 <Box as="section" w="100%" padding="10px 20px" border="1px" borderColor="gray.300" _hover={{ opacity:"50%" }} >
                     <HStack>
@@ -23,7 +23,7 @@ const QACard: React.VFC<question> = (props) => {
                     <Text paddingBottom="15px" color="gray.400" isTruncated>by {props.postedBy}</Text>
                     <Text marginX="5px" width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3} >{props.content}</Text>
                     <HStack paddingTop="10px">
-                        <Spacer />
+                        <Spacer/>
                         <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
                         <Text>{props.ansNum}</Text>
                     </HStack>
