@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ReactNode } from "react";
 import ChakraNextImage from "./chakraNextImage";
+import { useSession,signIn,signOut } from "next-auth/react";
 
 interface Props{
     children?: ReactNode,
@@ -56,11 +57,9 @@ const Header: Function  = ({children}: Props) :JSX.Element => {
             </HStack>
         ) : (
             <HStack spacing="10%" w="200px" justify="end" >
-                <Link href="#">
-                    <Box as="a" href="#" h="42px" w="87px" padding="8px 10px" fontWeight="semibold" display={{ base:"none", md:"unset" }} border="1px" borderColor="white" borderRadius="10px" color="white" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }}>新規登録</Box>
-                </Link>
-                <Link href="#">
-                    <Box as="a" href="#" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
+                <Button onClick={() => signIn()}>新規登録</Button>
+                <Link href="/login">
+                    <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
                 </Link>
             </HStack>
         )
