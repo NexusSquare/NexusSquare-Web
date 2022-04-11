@@ -24,7 +24,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
     const [solvedQACardsData,setSolvedQACardsData] = useState<question[]>([])
     const [primeQACardsData,setPrimeQACardsData] = useState<question[]>([])
     const [queryOption,setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
-    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
+    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : ''
     useEffect(
         () => {
             setNotSolvedQACardsData(data)
