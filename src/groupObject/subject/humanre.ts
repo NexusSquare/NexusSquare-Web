@@ -1,6 +1,6 @@
 import Subject from "./subject"
 
 const Humanre: Subject = {
-    none: "専攻未確認"
+    human: "人間発達学専攻"
 }
 export default Humanre

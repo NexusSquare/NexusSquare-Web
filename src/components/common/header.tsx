@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ReactNode } from "react";
 import ChakraNextImage from "./chakraNextImage";
 import { useSession,signIn,signOut } from "next-auth/react";
+import { memo } from "react";
 
 interface Props{
     children?: ReactNode,
@@ -16,7 +17,7 @@ interface headerFuncProps{
     isComp: boolean,
     funcName: string
 }
-const Header: Function  = ({children}: Props) :JSX.Element => {
+const Header  = ({children}: Props) :JSX.Element => {
     
     const LOGO_URL: string = "/images/logo.jpg"
     const ICON_IMAGE_URL: string = (process.env.DEFAULT_PROFILE_IMAGE_PATH) ? process.env.DEFAULT_PROFILE_IMAGE_PATH : ""
@@ -91,4 +92,4 @@ const Header: Function  = ({children}: Props) :JSX.Element => {
     )
 }
 
-export default Header
+export default memo(Header)

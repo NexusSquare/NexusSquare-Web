@@ -7,6 +7,6 @@ const Department = {
     globalre: "国際文化研究科",
     humanre: "人間発達学研究科",
     nursere: "看護学研究科",
-    infore: "情報科学絵研究科",
+    infore: "情報科学研究科",
  } as const
 export default Department
