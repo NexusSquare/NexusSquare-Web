@@ -1,5 +1,6 @@
 import { Box, Button, FormControl, FormErrorMessage, HStack, Input, Select, Text, VStack } from "@chakra-ui/react"
 import { NextPage } from "next"
+import { useSession } from "next-auth/react"
 import { useCallback } from "react"
 import { useEffect } from "react"
 import { useMemo } from "react"
@@ -23,9 +24,11 @@ import Teach from "../../groupObject/subject/teach"
 const Register: NextPage = () => {
     const { register, handleSubmit, watch, resetField, formState: { errors,isSubmitting } } = useForm<PostUser>()
     const [selectSubjects,setSelectSubjects] = useState<string[]>([])
+    const { data: session,status } = useSession()
     const watchDepartment = watch("department")
     const MAX_GRADE = 4
     useEffect(() => {
+        console.log(session)
         resetField("subject")
         switch(watchDepartment){
             case "外国語学部":
