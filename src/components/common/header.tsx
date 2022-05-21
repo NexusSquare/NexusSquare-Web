@@ -7,6 +7,7 @@ import { ReactNode } from "react";
 import ChakraNextImage from "./chakraNextImage";
 import { useSession,signIn,signOut } from "next-auth/react";
 import { memo } from "react";
+import { useEffect } from "react";
 
 interface Props{
     children?: ReactNode,
@@ -20,9 +21,15 @@ interface headerFuncProps{
 const Header  = ({children}: Props) :JSX.Element => {
     
     const LOGO_URL: string = "/images/logo.jpg"
-    const ICON_IMAGE_URL: string = (process.env.DEFAULT_PROFILE_IMAGE_PATH) ? process.env.DEFAULT_PROFILE_IMAGE_PATH : ""
-    const [isLogined,setIsLogined] = useState(false)
+    const ICON_IMAGE_URL: string = (process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH) ? process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH : ""
+    const { data: session,status } = useSession()
+    const [isLogined,setIsLogined] = useState(status === "authenticated")
     const [isNotice,setIsNotice] = useState(false)
+    useEffect(
+        () => {
+            console.log(`ログイン状態:${status}`) 
+            setIsLogined(status === "authenticated")},[status])
+    if(status === "loading") return <Box>ちょい待ち</Box>
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return (
             (props.isComp) ? (
@@ -55,10 +62,11 @@ const Header  = ({children}: Props) :JSX.Element => {
                 <Box width="40px" height="40px" >
                     <ChakraNextImage src={ICON_IMAGE_URL} alt="プロフィール" borderRadius="50%" width={50} height={50}></ChakraNextImage>
                 </Box>
+                <Button onClick={() => signOut()}>サインアウト</Button>
             </HStack>
         ) : (
             <HStack spacing="10%" w="200px" justify="end" >
-                <Button onClick={() => signIn()}>新規登録</Button>
+                <Button onClick={() => signIn('cognito')}>新規登録</Button>
                 <Link href="/login" passHref>
                     <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
                 </Link>
