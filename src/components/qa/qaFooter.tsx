@@ -15,7 +15,7 @@ const QAFooter: Function = ({ children }: Props): JSX.Element => {
                 </Link>
                 <Link href="/rule" passHref>
                     <Box as="a" href="/rule" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >利用規約</Box>
-                </Link>
+                </Link>       
 
                 <Link href="/privacy" passHref>
                     <Box as="a" href="/privacy" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >プライバシー・ポリシー</Box>

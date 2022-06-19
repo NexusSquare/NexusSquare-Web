@@ -1,5 +1,5 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
-import answer from '../../entity/qa/answer'
+import answer from '../../types/domain/qa/answer'
 import ChakraNextImage from '../../components/common/chakraNextImage'
 
 const AnswerCard: React.VFC<answer> = (props) => {

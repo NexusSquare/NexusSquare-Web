@@ -68,7 +68,7 @@ const Header  = ({children}: Props) :JSX.Element => {
             <HStack spacing="10%" w="200px" justify="end" >
                 <Button onClick={() => signIn('cognito')}>新規登録</Button>
                 <Link href="/login" passHref>
-                    <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
+                    <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" fontSize={{md:'',base:'sm'}} bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
                 </Link>
             </HStack>
         )

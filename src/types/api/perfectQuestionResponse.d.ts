@@ -1,4 +1,4 @@
-import perfectQuestion from "./perfectQuestion";
+import perfectQuestion from "../domain/qa/perfectQuestion";
 
 type perfectQResponse = {
     data: perfectQuestion,

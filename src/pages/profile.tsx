@@ -2,7 +2,7 @@ import { Box, Button, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VSt
 import { NextPage } from "next";
 import Link from "next/link";
 import { useState } from "react";
-import history from "../entity/history";
+import history from "../types/domain/account/history";
 
 const Profile: NextPage = () => {
     const [histories,setHistories] = useState<history[]>([])

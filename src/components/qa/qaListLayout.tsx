@@ -8,7 +8,7 @@ import QACardWindow from "./qaCardWindow";
 import QALayout from "./qaLayout";
 import QALeftBar from "./qaLeftBar";
 import QaRightBar from "./qaRightBar";
-import question from "../../entity/qa/question";
+import question from "../../types/domain/qa/question";
 
 interface Props{
     children?: ReactNode,
