@@ -1,4 +1,4 @@
-import answer from "../domain/qa/answer"
+import answer from "../../domain/qa/answer"
 
 type answerResponse = {
     data:answer[],

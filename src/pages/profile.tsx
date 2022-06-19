@@ -13,7 +13,7 @@ const Profile: NextPage = () => {
                     histories.map(
                         (history) => {
                             return(
-                                <HStack>
+                                <HStack key={history.userId}>
                                     <Box></Box>
                                     <VStack>
                                         <Text>{history.createAt}</Text>

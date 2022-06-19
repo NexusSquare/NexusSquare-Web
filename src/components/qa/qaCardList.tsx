@@ -8,7 +8,7 @@ import { ReactNode } from "react";
 import QACard from "./qaCard";
 import question from "../../types/domain/qa/question";
 import queryOptions from "../../groupObject/qa/queryOptions";
-import QAResponse from "../../types/api/qaResponse";
+import QAResponse from "../../types/api/qa/qaResponse";
 import QueryProps from "../../groupObject/qa/queryGroup";
 
 interface Props{

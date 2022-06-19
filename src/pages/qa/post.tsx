@@ -6,7 +6,7 @@ import { Router, useRouter } from "next/router";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import DefaultLayout from "../../components/common/defaultLayout";
-import QARequest from "../../types/domain/qa/qaRequest";
+import QARequest from "../../types/api/qa/qaRequest";
 import QACategories from "../../groupObject/qa/qaCategories";
 
 type QACategoriesType = typeof QACategories

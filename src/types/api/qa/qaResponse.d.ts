@@ -1,4 +1,4 @@
-import question from "../domain/qa/question"
+import question from "../../domain/qa/question"
 
 type QAResponse = {
     data: question[],
