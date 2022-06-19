@@ -1,6 +1,6 @@
 import { Box, Button, HStack, Spacer, Text, VStack } from "@chakra-ui/react"
 import Link from "next/link"
-import question from "../../entity/qa/question"
+import question from "../../types/domain/qa/question"
 import ChakraNextImage from "../common/chakraNextImage"
 
 const QACard: React.VFC<question> = (props) => {

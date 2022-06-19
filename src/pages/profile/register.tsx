@@ -81,6 +81,7 @@ const Register: NextPage = () => {
             )
         return list
     },[])
+    // eslint-disable-next-line react/display-name
     const RegisterForm = memo(() => {
         return (
             <Box as="form" onSubmit={handleSubmit((data) => console.log(`${data.subject}送信完了`))} w={{ base:"100%",sm:"80vw",md:"calc(100vw - 270px)",lg:"50vw" }} paddingTop="20px" alignItems="center">

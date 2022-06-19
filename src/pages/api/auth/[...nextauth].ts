@@ -4,7 +4,7 @@ import { Session } from 'inspector'
 import NextAuth, { User } from 'next-auth'
 import { JWT } from 'next-auth/jwt'
 import CognitoProvider from 'next-auth/providers/cognito'
-import refreshAccessToken from '../../../entity/refreshTokens'
+import refreshAccessToken from '../../../types/nextAuth/refreshTokens'
 
 const refreshAccessToken = async(token: JWT) => {
     try {

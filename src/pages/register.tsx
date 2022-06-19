@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import Layout from "../components/common/layout";
-import mail from "../entity/mail";
+import mail from "../types/domain/account/mail";
 
 const Register: NextPage = () => {
     const router = useRouter()

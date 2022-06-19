@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import QARequest from "../entity/qa/qaRequest";
-import userPost from "../entity/userPost"
+import QARequest from "../types/api/qa/qaRequest";
+import userPost from "../types/domain/account/userPost"
 import Layout from '../components/common/layout';
 
 const LoginPage: NextPage = () => {

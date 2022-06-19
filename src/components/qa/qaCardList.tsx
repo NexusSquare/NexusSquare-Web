@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { ReactNode } from "react";
 import QACard from "./qaCard";
-import question from "../../entity/qa/question";
+import question from "../../types/domain/qa/question";
 import queryOptions from "../../groupObject/qa/queryOptions";
-import QAResponse from "../../entity/qa/qaResponse";
+import QAResponse from "../../types/api/qa/qaResponse";
 import QueryProps from "../../groupObject/qa/queryGroup";
 
 interface Props{

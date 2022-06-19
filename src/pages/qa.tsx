@@ -3,8 +3,8 @@ import axios, { AxiosResponse } from "axios";
 import { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import QAListLayout from "../components/qa/qaListLayout";
-import QAResponse from "../entity/qa/qaResponse";
-import question from "../entity/qa/question";
+import QAResponse from "../types/api/qa/qaResponse";
+import question from "../types/domain/qa/question";
 import queryOptions from "../groupObject/qa/queryOptions";
 
 interface Props{
