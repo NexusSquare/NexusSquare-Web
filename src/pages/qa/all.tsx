@@ -14,7 +14,7 @@ interface Props{
 const All = (props:Props) => {
     return (
         <QAListLayout pageName="Q&A一覧" data={props.content}>
-            <Box h="100px" w="100%" marginTop={{base:'40px',md:'0px'}} display='flex' alignItems='center'>
+            <Box h="100px" w="100%" display='flex' alignItems='center'>
                 <Text paddingLeft={{ base:'5%',md:'10%' }} fontSize="4xl" textAlign="left">全ての投稿</Text>
             </Box>
         </QAListLayout>

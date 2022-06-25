@@ -5,6 +5,12 @@ import type { AppProps } from 'next/app'
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = extendTheme(
     {
+      colors: {
+        mainColor: '#FF9037',
+        subColor: '#FBF6F0',
+        subSubColor: '#FFDA77',
+        accentColor: '#3DB2FF'
+      },
       styles :{
         global: {
           html: { height:"100%" },

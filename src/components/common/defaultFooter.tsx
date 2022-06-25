@@ -12,26 +12,20 @@ const DefaultFooter: Function = () => {
                     <ChakraNextImage src={LOGO_URL} alt="ロゴ" width={270} height={54} ></ChakraNextImage>
                 </Box>
                 <Spacer/>
-                <Wrap as="nav" direction={{ base:'column',md:'row'}} align="center" spacing='30px'>
-                    <WrapItem>
+                <Stack as="nav" direction={{ base:'column',md:'row'}} align="center" spacing='30px'>
                         <Link href="/" passHref>
-                            <Box as="a" href="/" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} textAlign="center" >About</Box>
+                            <Box as="a" href="/" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }}>About</Box>
                         </Link>
-                    </WrapItem>
-                    <WrapItem>
                         <Link href="/rule" passHref>
                             <Box as="a" href="/rule" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >利用規約</Box>
                         </Link>
-                    </WrapItem>
-                    <WrapItem>
                         <Link href="/privacy" passHref>
                             <Box as="a" href="/" whiteSpace="nowrap" fontWeight="700" color="white" fontSize="large" _hover={{ textDecoration:"underline" }} >プライバシー・ポリシー</Box>
                         </Link>
-                    </WrapItem>
-                </Wrap>
+                </Stack>
             </Stack>
             <Spacer/>
-            <HStack paddingTop='50px' justifyContent={{ base:'center',md:'end'}} w={{base: "100%",md:'80%'}}>
+            <HStack paddingTop='30px' justifyContent={{ base:'center',md:'end'}} w={{base: "100%",md:'80%'}}>
                 <Link href={TWITTER_URL} passHref>
                     <HStack as='a' target="_blank">
                         <BsTwitter size={50} color='white'/>
@@ -39,7 +33,7 @@ const DefaultFooter: Function = () => {
                 </Link>
             </HStack>
             <Spacer/>
-            <Text align={{base:'center',md:'end'}} w={{base: "100%",md:'80%'}} color="#FFDA77" paddingTop='50px' paddingBottom='5px'>&copy; 2022 Nexus Square</Text>
+            <Text align={{base:'center',md:'end'}} w={{base: "100%",md:'80%'}} color="#FFDA77" paddingTop='30px' paddingBottom='5px'>&copy; 2022 Nexus Square</Text>
         </VStack>
     )
 }

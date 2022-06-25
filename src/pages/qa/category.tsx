@@ -70,7 +70,7 @@ const CategorySelect = (props:Props) => {
     }
     return (
         <QAListLayout pageName="カテゴリで絞り込む" data={displayData} query={searchQuery} >
-            <Box h="100px" w="100%" marginTop={{base:'40px',md:'0px'}} display='flex' justifyContent='center' flexDirection='column'>
+            <Box h="100px" w="100%" display='flex' justifyContent='center' flexDirection='column'>
                 <Text paddingLeft={{ base:'5%',md:'10%' }} fontSize="4xl" textAlign="left">カテゴリで絞り込む</Text>
                 <RadioButtonList/>
             </Box>
