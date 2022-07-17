@@ -11,7 +11,7 @@ interface Props{
 const Layout: Function = ({children, pageName}: Props) :JSX.Element =>{
     const siteTitle: string = `nexussquare - ${pageName}`
     return (
-        <Box>
+        <Box paddingTop={{ base:'100px',md:'60px'}} >
             <Head>
             <link rel="icon" href="/favicon.ico" />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />

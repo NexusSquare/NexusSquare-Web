@@ -1,5 +1,15 @@
 const QACategories = {
-    eng: "英米",
-    info: "情報科学"
+    American: "英米",
+    French: "フランス",
+    Spanish: "スペイン",
+    German: "ドイツ",
+    Chinese: "中国",
+    InterCultural: "国際関係",
+    jpLangage: "国語国文",
+    jpHistory: "歴史文化",
+    eduDevelopmental: "教育発達",
+    welfare: "社会福祉",
+    nurse: "看護",
+    infoScience: "情報科学",
  } as const
 export default QACategories

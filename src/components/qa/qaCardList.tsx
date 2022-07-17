@@ -10,6 +10,7 @@ import question from "../../types/domain/qa/question";
 import queryOptions from "../../groupObject/qa/queryOptions";
 import QAResponse from "../../types/api/qa/qaResponse";
 import QueryProps from "../../groupObject/qa/queryGroup";
+import { useRouter } from "next/router";
 
 interface Props{
     children?: ReactNode,
@@ -24,44 +25,69 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
     const [solvedQACardsData,setSolvedQACardsData] = useState<question[]>([])
     const [primeQACardsData,setPrimeQACardsData] = useState<question[]>([])
     const [queryOption,setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
-    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : ''
+    const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
+    const router = useRouter()
+
+    const fetchSolvedQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+        const params = new URLSearchParams(query as string);
+		const url = defaultUrl + `/${queryOption}?${params}`
+        await axios.get(url)
+        .then(
+            (res: AxiosResponse<QAResponse>) => {
+                const { data, status } = res
+                setSolvedQACardsData(data.data)
+            }
+        ).catch(
+            (error) => {
+                router.replace("/500")
+                return error
+            }
+        )
+    }
+
+    const fetchPrimeQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+        const params = new URLSearchParams(query as string);
+		const url = defaultUrl + `/${queryOption}?${params}`
+        await axios.get(url)
+        .then(
+            (res: AxiosResponse<QAResponse>) => {
+                const { data, status } = res
+                setPrimeQACardsData(data.data)
+            }
+        ).catch(
+            (error) => {
+                router.replace("/500")
+                return error
+            }
+        )
+    }
+
     useEffect(
         () => {
-            setNotSolvedQACardsData(data)
-            console.log("first fetch")
-        },[query,data]
+            switch(queryOption){
+                case "solved":
+                    fetchSolvedQusetion(queryOption,query)
+                    break
+                case "not-solved":
+                    setNotSolvedQACardsData(data)
+                    break
+                case "prime":
+                    fetchPrimeQusetion(queryOption,query)
+                    break
+            }
+            //console.log("first fetch")
+        },[query,data,queryOption]
     )
     const onNotSolvedClickHandler = () => {
         setQueryOption(queryOptions.notSolved)
     }
-    const onSolvedClickHandler = async () => {
+    const onSolvedClickHandler = () => {
         setQueryOption(queryOptions.solved)
-        if(solvedQACardsData.length < 1){
-            const url = defaultUrl + `?option=${queryOptions.solved}`
-            await axios.get(url)
-            .then(
-                (res: AxiosResponse<QAResponse>) => {
-                    const { data, status } = res
-                    setSolvedQACardsData(data.data)
-                }
-            )
-            console.log(url)
-        }
     }
-    const onPrimeClickHandler = async () => {
-
+    const onPrimeClickHandler = () => {
         setQueryOption(queryOptions.prime)
-        if(primeQACardsData.length < 1){
-            const url = defaultUrl + `?option=${queryOptions.prime}`
-            await axios.get(url)
-            .then(
-                (res: AxiosResponse<QAResponse>) => {
-                    const { data, status } = res
-                    setPrimeQACardsData(data.data)
-                }
-            )
-        }
     }
+
     const NotSolvedQACardList:Function = useCallback(() => {
         if(!Array.isArray(notSolvedQACardsData)){
             return <Box>読み込みに失敗しました</Box>

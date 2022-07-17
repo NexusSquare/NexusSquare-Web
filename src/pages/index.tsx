@@ -3,12 +3,24 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Layout from '../components/common/layout'
+import DefaultLayout from '../components/common/defaultLayout'
+import { TopInfo } from '../components/top/TopInfo'
+import { TopAbout } from '../components/top/TopAbout'
+import { TopFeature } from '../components/top/TopFeature'
+import { TopButtonArea } from '../components/top/TopButtonArea'
+import { TopSupporters } from '../components/top/TopSupporters '
 
 const Home: NextPage = () => {
   return (
-    <Layout pageName="トップ">
-      <Box paddingTop="60px">これはメインコンテンツです</Box>
-    </Layout>
+    <DefaultLayout pageName="トップ">
+      <Box w='full'>
+        <TopInfo/>
+        <TopAbout/>
+        <TopFeature/>
+        <TopButtonArea/>
+        <TopSupporters/>
+      </Box>
+    </DefaultLayout>
   )
 }
 

@@ -27,7 +27,7 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
         </Link>
     )
     return (
-        <VStack w="100%" paddingTop="60px">
+        <VStack w="100%">
             {children}
             <HStack w="100%" h="250px" margin="10px 20px" minW={{ base:"210px",sm:"420px" }}>
                 <Spacer />

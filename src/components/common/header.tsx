@@ -68,7 +68,7 @@ const Header  = ({children}: Props) :JSX.Element => {
             <HStack spacing="10%" w="200px" justify="end" >
                 <Button onClick={() => signIn('cognito')}>新規登録</Button>
                 <Link href="/login" passHref>
-                    <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" fontSize={{md:'',base:'sm'}} bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
+                    <Box as="a" href="/login" h="40px" w="85px" padding="8px 10px" fontWeight="semibold" fontSize={{md:'md',base:'sm'}} bgColor="#FFDA77" borderRadius="10px" _hover= {{ opacity:"50%" }} _active={{ opacity:"50%",outline:"none" }} _focus={{ outline: "none" }} >ログイン</Box>
                 </Link>
             </HStack>
         )
@@ -92,7 +92,7 @@ const Header  = ({children}: Props) :JSX.Element => {
                 <Spacer/>
                 <LoginOrProfile />
             </HStack>
-            <HStack as="nav" spacing="12%" paddingY="0px" paddingX={{ base:"10px",sm:"50px" }} aria-labelledby="jump to other functions - mini version" display={{ base:"flex",md:"none" }} alignSelf="start" >
+            <HStack h="40px" as="nav" spacing="12%" paddingY="0px" paddingX={{ base:"10px",sm:"50px" }} aria-labelledby="jump to other functions - mini version" display={{ base:"flex",md:"none" }} alignSelf="start" >
                 <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
                 <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
             </HStack>

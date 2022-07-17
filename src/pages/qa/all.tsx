@@ -14,7 +14,7 @@ interface Props{
 const All = (props:Props) => {
     return (
         <QAListLayout pageName="Q&A一覧" data={props.content}>
-            <Box h="100px" w="100%" marginTop={{base:'40px',md:'0px'}} display='flex' alignItems='center'>
+            <Box h="100px" w="100%" display='flex' alignItems='center'>
                 <Text paddingLeft={{ base:'5%',md:'10%' }} fontSize="4xl" textAlign="left">全ての投稿</Text>
             </Box>
         </QAListLayout>
@@ -23,7 +23,7 @@ const All = (props:Props) => {
 export const getServerSideProps: GetServerSideProps = async() => {
     try{
         const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-        const url = defaultUrl + `?option=${queryOptions.notSolved}`
+        const url = defaultUrl + `/${queryOptions.notSolved}`
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data,status } = response
         const props:Props = {
