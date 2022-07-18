@@ -12,7 +12,7 @@ import QACategories from "../../groupObject/qa/qaCategories"
 import { useEffect } from "react"
 import { useCallback } from "react"
 import useSWR, { mutate, useSWRConfig } from "swr"
-import { fetcherQusetion } from "../../repositories/qa/fetcherQusetion"
+import { fetcherQusetion } from "../../repositores/qa/fetcherQusetion"
 
 interface Props{
     content:question[],
@@ -30,12 +30,13 @@ const CategorySelect = (props:Props) => {
     
 	const { data, error, mutate } = useSWR<question[]>(()=>{
         const params = new URLSearchParams(searchQuery as string);
-		return defaultUrl + `/${queryOptions.notSolved}?${params}`
+		return defaultUrl + `?option=${queryOptions.notSolved}&${params}`
         
     }, fetcherQusetion, {revalidateOnMount:false})
 
     useEffect(
         () => {
+            console.log('not-soleved')
             data&&setDisplayData(data)
         },[data]
     )
@@ -73,7 +74,7 @@ const CategorySelect = (props:Props) => {
 export const getServerSideProps: GetServerSideProps = async() => {
     try{
         const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-        const url = defaultUrl + `/${queryOptions.notSolved}`
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data,status } = response
         const props:Props = {

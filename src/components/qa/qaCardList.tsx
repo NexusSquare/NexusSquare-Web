@@ -30,7 +30,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
 
     const fetchSolvedQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
         const params = new URLSearchParams(query as string);
-		const url = defaultUrl + `/${queryOption}?${params}`
+		const url = defaultUrl + `?option=${queryOption}&${params}`
         await axios.get(url)
         .then(
             (res: AxiosResponse<QAResponse>) => {
@@ -47,7 +47,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
 
     const fetchPrimeQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
         const params = new URLSearchParams(query as string);
-		const url = defaultUrl + `/${queryOption}?${params}`
+		const url = defaultUrl + `?option=${queryOption}?${params}`
         await axios.get(url)
         .then(
             (res: AxiosResponse<QAResponse>) => {
