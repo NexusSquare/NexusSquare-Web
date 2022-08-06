@@ -12,7 +12,8 @@ import QACategories from "../../groupObject/qa/qaCategories"
 import { useEffect } from "react"
 import { useCallback } from "react"
 import useSWR, { mutate, useSWRConfig } from "swr"
-import { fetcherQusetion } from "../../repositores/qa/fetcherQusetion"
+import { fetcherQuestion } from "../../repositories/qa/fetcherQuestion"
+
 
 interface Props{
     content:question[],
@@ -27,12 +28,12 @@ const CategorySelect = (props:Props) => {
     const [displayData,setDisplayData] = useState<question[]>(props.content)
     const [searchQuery,setSearchQuery] = useState<QueryProps>({})
     const [checkValue,setCheckValue] = useState<string>("")
-    
+
 	const { data, error, mutate } = useSWR<question[]>(()=>{
         const params = new URLSearchParams(searchQuery as string);
 		return defaultUrl + `?option=${queryOptions.notSolved}&${params}`
-        
-    }, fetcherQusetion, {revalidateOnMount:false})
+
+    }, fetcherQuestion, {revalidateOnMount:false})
 
     useEffect(
         () => {

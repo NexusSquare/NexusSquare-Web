@@ -28,7 +28,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
     const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
     const router = useRouter()
 
-    const fetchSolvedQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+    const fetchSolvedQuestion = async (queryOption:queryOptions,query?:QueryProps) => {
         const params = new URLSearchParams(query as string);
 		const url = defaultUrl + `?option=${queryOption}&${params}`
         await axios.get(url)
@@ -45,7 +45,7 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         )
     }
 
-    const fetchPrimeQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+    const fetchPrimeQuestion = async (queryOption:queryOptions,query?:QueryProps) => {
         const params = new URLSearchParams(query as string);
 		const url = defaultUrl + `?option=${queryOption}?${params}`
         await axios.get(url)
@@ -66,13 +66,13 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         () => {
             switch(queryOption){
                 case "solved":
-                    fetchSolvedQusetion(queryOption,query)
+                    fetchSolvedQuestion(queryOption,query)
                     break
                 case "not-solved":
                     setNotSolvedQACardsData(data)
                     break
                 case "prime":
-                    fetchPrimeQusetion(queryOption,query)
+                    fetchPrimeQuestion(queryOption,query)
                     break
             }
             //console.log("first fetch")
