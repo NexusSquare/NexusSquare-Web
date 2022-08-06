@@ -9,13 +9,13 @@ import QALayout from "./qaLayout";
 import QALeftBar from "./qaLeftBar";
 import QaRightBar from "./qaRightBar";
 import question from "../../types/domain/qa/question";
-import QueryProps from "../../groupObject/qa/queryGroup";
+import QAQueryProps from "../../groupObject/qa/queryGroup";
 
 interface Props{
     children?: ReactNode,
     pageName: string
     data: question[]
-    query?: QueryProps
+    query?: QAQueryProps
 }
 
 const QAListLayout: Function = ({ children,pageName,data,query }: Props): JSX.Element => {
