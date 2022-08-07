@@ -5,18 +5,19 @@ import { useRouter } from "next/router"
 import QAListLayout from "../../components/qa/qaListLayout"
 import QAResponse from "../../types/api/qa/qaResponse"
 import question from "../../types/domain/qa/question"
-import QueryProps from "../../groupObject/qa/queryGroup"
+import QAQueryProps from "../../groupObject/qa/queryGroup"
 import queryOptions from "../../groupObject/qa/queryOptions"
 import React, { useRef, useState } from "react"
 import QACategories from "../../groupObject/qa/qaCategories"
 import { useEffect } from "react"
 import { useCallback } from "react"
 import useSWR, { mutate, useSWRConfig } from "swr"
-import { fetcherQusetion } from "../../repositories/qa/fetcherQusetion"
+import { fetcherQuestion } from "../../repositories/qa/fetcherQuestion"
+
 
 interface Props{
     content:question[],
-    query:QueryProps
+    query:QAQueryProps
 }
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -25,17 +26,18 @@ const CategorySelect = (props:Props) => {
     const categoryList = Object.values(QACategories)
     const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
     const [displayData,setDisplayData] = useState<question[]>(props.content)
-    const [searchQuery,setSearchQuery] = useState<QueryProps>({})
+    const [searchQuery,setSearchQuery] = useState<QAQueryProps>({})
     const [checkValue,setCheckValue] = useState<string>("")
-    
+
 	const { data, error, mutate } = useSWR<question[]>(()=>{
         const params = new URLSearchParams(searchQuery as string);
-		return defaultUrl + `/${queryOptions.notSolved}?${params}`
-        
-    }, fetcherQusetion, {revalidateOnMount:false})
+		return defaultUrl + `?option=${queryOptions.notSolved}&${params}`
+
+    }, fetcherQuestion, {revalidateOnMount:false})
 
     useEffect(
         () => {
+            console.log('not-soleved')
             data&&setDisplayData(data)
         },[data]
     )
@@ -73,7 +75,7 @@ const CategorySelect = (props:Props) => {
 export const getServerSideProps: GetServerSideProps = async() => {
     try{
         const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-        const url = defaultUrl + `/${queryOptions.notSolved}`
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data,status } = response
         const props:Props = {

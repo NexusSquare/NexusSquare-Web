@@ -9,12 +9,12 @@ import QACard from "./qaCard";
 import question from "../../types/domain/qa/question";
 import queryOptions from "../../groupObject/qa/queryOptions";
 import QAResponse from "../../types/api/qa/qaResponse";
-import QueryProps from "../../groupObject/qa/queryGroup";
+import QAQueryProps from "../../groupObject/qa/queryGroup";
 import { useRouter } from "next/router";
 
 interface Props{
     children?: ReactNode,
-    query?: QueryProps
+    query?: QAQueryProps
     data: question[]
 }
 type queryOptionType = typeof queryOptions
@@ -28,9 +28,9 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
     const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
     const router = useRouter()
 
-    const fetchSolvedQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+    const fetchSolvedQuestion = async (queryOption:queryOptions,query?:QAQueryProps) => {
         const params = new URLSearchParams(query as string);
-		const url = defaultUrl + `/${queryOption}?${params}`
+		const url = defaultUrl + `?option=${queryOption}&${params}`
         await axios.get(url)
         .then(
             (res: AxiosResponse<QAResponse>) => {
@@ -45,9 +45,9 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         )
     }
 
-    const fetchPrimeQusetion = async (queryOption:queryOptions,query?:QueryProps) => {
+    const fetchPrimeQuestion = async (queryOption:queryOptions,query?:QAQueryProps) => {
         const params = new URLSearchParams(query as string);
-		const url = defaultUrl + `/${queryOption}?${params}`
+		const url = defaultUrl + `?option=${queryOption}?${params}`
         await axios.get(url)
         .then(
             (res: AxiosResponse<QAResponse>) => {
@@ -66,13 +66,13 @@ const QACardListBox = ({children,query,data}: Props): JSX.Element => {
         () => {
             switch(queryOption){
                 case "solved":
-                    fetchSolvedQusetion(queryOption,query)
+                    fetchSolvedQuestion(queryOption,query)
                     break
                 case "not-solved":
                     setNotSolvedQACardsData(data)
                     break
                 case "prime":
-                    fetchPrimeQusetion(queryOption,query)
+                    fetchPrimeQuestion(queryOption,query)
                     break
             }
             //console.log("first fetch")

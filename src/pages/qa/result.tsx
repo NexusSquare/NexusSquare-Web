@@ -25,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async(context) => {
     try{
         const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
         const title: string|string[] = (context.query.title) ? context.query.title : ""
-        const url = defaultUrl + `/${queryOptions.notSolved}`
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data,status } = response
         const props:Props = {

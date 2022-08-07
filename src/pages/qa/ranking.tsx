@@ -5,12 +5,12 @@ import { useRouter } from "next/router"
 import QAListLayout from "../../components/qa/qaListLayout"
 import QAResponse from "../../types/api/qa/qaResponse"
 import question from "../../types/domain/qa/question"
-import QueryProps from "../../groupObject/qa/queryGroup"
+import QAQueryProps from "../../groupObject/qa/queryGroup"
 import queryOptions from "../../groupObject/qa/queryOptions"
 
 interface Props{
     content:question[],
-    query:QueryProps
+    query:QAQueryProps
 }
 
 const Ranking = (props: Props) => {
@@ -25,7 +25,7 @@ const Ranking = (props: Props) => {
 export const getServerSideProps: GetServerSideProps = async() => {
     try{
         const defaultUrl:string = (process.env.GET_QUESTION_URL) ? process.env.GET_QUESTION_URL : 'http://localhost:4000/dev/question'
-        const url = defaultUrl + `/${queryOptions.notSolved}`
+        const url = defaultUrl + `?option=${queryOptions.notSolved}`
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data,status } = response
         const props:Props = {

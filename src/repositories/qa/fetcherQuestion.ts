@@ -4,7 +4,7 @@ import QAResponse from "../../types/api/qa/qaResponse";
 import question from "../../types/domain/qa/question";
 
 
-export const fetcherQusetion = (url: string): Promise<question[]> => {
+export const fetcherQuestion = (url: string): Promise<question[]> => {
     console.log('fetch question')
     return (
         axios.get(url)
