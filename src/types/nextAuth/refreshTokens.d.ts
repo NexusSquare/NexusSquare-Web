@@ -1,7 +1,7 @@
 type AuthenticationResult = {
-    AccessToken: string,
-    ExpiresIn: number,
-    IdToken: string,
+    AccessToken: string
+    ExpiresIn: number
+    IdToken: string
     RefreshToken: string
 }
 type refreshAccessToken = {

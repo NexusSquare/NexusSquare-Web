@@ -5,11 +5,11 @@ import Image from 'next/image'
 import Layout from '../components/common/layout'
 
 const Home: NextPage = () => {
-  return (
-    <Layout pageName="トップ">
-      <Box paddingTop="60px">これはメインコンテンツです</Box>
-    </Layout>
-  )
+    return (
+        <Layout pageName="トップ">
+            <Box paddingTop="60px">これはメインコンテンツです</Box>
+        </Layout>
+    )
 }
 
 export default Home

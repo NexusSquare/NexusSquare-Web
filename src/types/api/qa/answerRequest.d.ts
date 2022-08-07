@@ -1,7 +1,7 @@
 type answerRequest = {
-    questionId: string,
-    postedby: string,
-    content: string,
-    authorIcon: string,
+    questionId: string
+    postedby: string
+    content: string
+    authorIcon: string
 }
 export default answerRequest
