@@ -1,5 +1,5 @@
 type userPost = {
-    id:string,
-    password:string
+    id: string
+    password: string
 }
 export default userPost

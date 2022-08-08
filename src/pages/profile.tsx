@@ -1,38 +1,36 @@
-import { Box, Button, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from "@chakra-ui/react";
-import { NextPage } from "next";
-import Link from "next/link";
-import { useState } from "react";
-import history from "../types/domain/account/history";
+import { Box, Button, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react'
+import { NextPage } from 'next'
+import Link from 'next/link'
+import { useState } from 'react'
+import history from '../types/domain/account/history'
 
 const Profile: NextPage = () => {
-    const [histories,setHistories] = useState<history[]>([])
+    const [histories, setHistories] = useState<history[]>([])
     const pointHistory = () => {
         return (
             <VStack>
-                {
-                    histories.map(
-                        (history) => {
-                            return(
-                                <HStack key={history.userId}>
-                                    <Box></Box>
-                                    <VStack>
-                                        <Text>{history.createAt}</Text>
-                                        <HStack>
-                                            <Text>{history.history}</Text>
-                                            <Text>+{history.point}pt</Text>
-                                        </HStack>
-                                    </VStack>
+                {histories.map((history) => {
+                    return (
+                        <HStack key={history.userId}>
+                            <Box></Box>
+                            <VStack>
+                                <Text>{history.createAt}</Text>
+                                <HStack>
+                                    <Text>{history.history}</Text>
+                                    <Text>+{history.point}pt</Text>
                                 </HStack>
-                            )
-                        }
+                            </VStack>
+                        </HStack>
                     )
-                }
+                })}
             </VStack>
         )
     }
     return (
         <VStack>
-            <HStack><Text color="#FF9037">◀︎ ホーム</Text></HStack>
+            <HStack>
+                <Text color="#FF9037">◀︎ ホーム</Text>
+            </HStack>
             <HStack>
                 <VStack>
                     <HStack>
@@ -51,7 +49,10 @@ const Profile: NextPage = () => {
             </HStack>
             <VStack>
                 <Text>保有ポイント</Text>
-                <HStack><Text>1500</Text><Text>pt</Text></HStack>
+                <HStack>
+                    <Text>1500</Text>
+                    <Text>pt</Text>
+                </HStack>
             </VStack>
             <Link href="/gift">
                 <HStack>
@@ -60,16 +61,67 @@ const Profile: NextPage = () => {
             </Link>
             <Tabs w="100%" isLazy defaultIndex={1}>
                 <TabList>
-                    <Tab w="33.3%" border="1px" color="#FF9037" bgColor="white" borderRadius="5px" fontSize="2xl" _selected={{ bgColor:"#FF9037",borderColor:"gray.400",color:"white" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>ポイント履歴</Tab>
-                    <Tab w="33.4%" border="1px" color="#FF9037" bgColor="white" borderRadius="5px" fontSize="2xl" _selected={{ bgColor:"#FF9037",borderColor:"gray.400",color:"white" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>質問</Tab>
-                    <Tab w="33.3%" border="1px" color="#FF9037" bgColor="white" borderRadius="5px" fontSize="2xl" _selected={{ bgColor:"#FF9037",borderColor:"gray.400",color:"white" }} _active={{ outline:"none" }} _focus={{ outline: "none" }}>回答</Tab>
+                    <Tab
+                        w="33.3%"
+                        border="1px"
+                        color="#FF9037"
+                        bgColor="white"
+                        borderRadius="5px"
+                        fontSize="2xl"
+                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        _active={{ outline: 'none' }}
+                        _focus={{ outline: 'none' }}
+                    >
+                        ポイント履歴
+                    </Tab>
+                    <Tab
+                        w="33.4%"
+                        border="1px"
+                        color="#FF9037"
+                        bgColor="white"
+                        borderRadius="5px"
+                        fontSize="2xl"
+                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        _active={{ outline: 'none' }}
+                        _focus={{ outline: 'none' }}
+                    >
+                        質問
+                    </Tab>
+                    <Tab
+                        w="33.3%"
+                        border="1px"
+                        color="#FF9037"
+                        bgColor="white"
+                        borderRadius="5px"
+                        fontSize="2xl"
+                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        _active={{ outline: 'none' }}
+                        _focus={{ outline: 'none' }}
+                    >
+                        回答
+                    </Tab>
                 </TabList>
                 <TabPanels>
-                    <TabPanel padding="0px"><VStack></VStack><Box w="100%" textAlign="center"><Button w="100%">さらに読み込む</Button></Box></TabPanel>
-                    <TabPanel padding="0px"><VStack></VStack><Box w="100%" textAlign="center"><Button w="100%">さらに読み込む</Button></Box></TabPanel>
-                    <TabPanel padding="0px"><VStack></VStack><Box w="100%" textAlign="center"><Button w="100%">さらに読み込む</Button></Box></TabPanel>
+                    <TabPanel padding="0px">
+                        <VStack></VStack>
+                        <Box w="100%" textAlign="center">
+                            <Button w="100%">さらに読み込む</Button>
+                        </Box>
+                    </TabPanel>
+                    <TabPanel padding="0px">
+                        <VStack></VStack>
+                        <Box w="100%" textAlign="center">
+                            <Button w="100%">さらに読み込む</Button>
+                        </Box>
+                    </TabPanel>
+                    <TabPanel padding="0px">
+                        <VStack></VStack>
+                        <Box w="100%" textAlign="center">
+                            <Button w="100%">さらに読み込む</Button>
+                        </Box>
+                    </TabPanel>
                 </TabPanels>
-        </Tabs>
+            </Tabs>
         </VStack>
     )
 }

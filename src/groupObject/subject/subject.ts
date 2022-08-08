@@ -1,4 +1,2 @@
-type Subject = {
-
-}
+type Subject = {}
 export default Subject
