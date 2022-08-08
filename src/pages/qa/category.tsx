@@ -45,7 +45,7 @@ const CategorySelect = (props: Props) => {
         ? process.env.GET_QUESTION_URL
         : 'http://localhost:4000/dev/question'
     const [displayData, setDisplayData] = useState<question[]>(props.content)
-    const [searchQuery, setSearchQuery] = useState<QAQueryProps>({})
+    const [searchQuery, setSearchQuery] = useState<QAQueryProps>({ option: queryOptions.notSolved })
     const [checkValue, setCheckValue] = useState<string>('')
 
     const { data, error, mutate } = useSWR<question[]>(
@@ -64,7 +64,7 @@ const CategorySelect = (props: Props) => {
 
     const onChangeHandler = (value: string) => {
         setCheckValue(value)
-        setSearchQuery({ category: value })
+        setSearchQuery({ ...searchQuery, category: value })
     }
 
     const RadioButtonList = () => {
@@ -93,7 +93,6 @@ const CategorySelect = (props: Props) => {
         </QAListLayout>
     )
 }
-
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const defaultUrl: string = process.env.GET_QUESTION_URL
@@ -104,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const { data, status } = response
         const props: Props = {
             content: data.data,
-            query: {},
+            query: { option: queryOptions.notSolved },
         }
         return { props }
     } catch (error) {

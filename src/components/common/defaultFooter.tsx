@@ -2,6 +2,7 @@ import { Box, HStack, Spacer, Stack, Text, VStack, Wrap, WrapItem } from '@chakr
 import Link from 'next/link'
 import ChakraNextImage from './chakraNextImage'
 import { BsTwitter } from 'react-icons/bs'
+
 const DefaultFooter: Function = () => {
     const LOGO_URL: string = '/images/logo.jpg'
     const TWITTER_URL: string = 'https://twitter.com/NexusSquare_apu'

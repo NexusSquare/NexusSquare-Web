@@ -34,7 +34,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const { data, status } = response
         const props: Props = {
             content: data.data,
-            query: { sortby: 'weeklyAccessNum' },
+            query: { option: queryOptions.notSolved, sortby: 'weeklyAccessNum' },
         }
         return { props }
     } catch (error) {
