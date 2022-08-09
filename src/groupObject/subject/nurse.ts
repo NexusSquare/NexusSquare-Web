@@ -1,6 +1,6 @@
-import Subject from "./subject"
+import Subject from './subject'
 
 const Nurse: Subject = {
-    nurse: "看護学科"
+    nurse: '看護学科',
 } as const
 export default Nurse

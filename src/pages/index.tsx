@@ -11,17 +11,17 @@ import { TopButtonArea } from '../components/top/TopButtonArea'
 import { TopSupporters } from '../components/top/TopSupporters '
 
 const Home: NextPage = () => {
-  return (
-    <DefaultLayout pageName="トップ">
-      <Box w='full'>
-        <TopInfo/>
-        <TopAbout/>
-        <TopFeature/>
-        <TopButtonArea/>
-        <TopSupporters/>
-      </Box>
-    </DefaultLayout>
-  )
+    return (
+        <DefaultLayout pageName="トップ">
+            <Box w="full">
+                <TopInfo />
+                <TopAbout />
+                <TopFeature />
+                <TopButtonArea />
+                <TopSupporters />
+            </Box>
+        </DefaultLayout>
+    )
 }
 
 export default Home
