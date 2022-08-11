@@ -18,7 +18,7 @@ import { NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import DefaultLayout from '../../components/common/defaultLayout'
+import DefaultLayout from '../../components/common/DefaultLayout'
 import QARequest from '../../types/api/qa/qaRequest'
 import QACategories from '../../groupObject/qa/qaCategories'
 

@@ -20,7 +20,7 @@ import {
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import QAListLayout from '../../components/qa/qaListLayout'
+import QAListLayout from '../../components/qa/QAListLayout'
 import QAResponse from '../../types/api/qa/qaResponse'
 import question from '../../types/domain/qa/question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'

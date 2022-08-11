@@ -2,7 +2,7 @@ import { HStack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import React from 'react'
 
-const QaButton = (): JSX.Element => {
+const QAButton = (): JSX.Element => {
     return (
         <Link href="/qa/post" passHref>
             <HStack
@@ -10,14 +10,14 @@ const QaButton = (): JSX.Element => {
                 spacing="0px"
                 as="a"
                 href="/qa/post"
-                bgColor="#FF9037"
+                bgColor="mainColor"
                 h="60px"
                 w="210px"
                 whiteSpace="nowrap"
                 borderRadius="30px"
                 boxShadow="md"
                 color="white"
-                _hover={{ opacity: '50%' }}
+                _hover={{ bgColor: 'subSubColor' }}
                 _active={{ opacity: '50%', outline: 'none' }}
                 _focus={{ outline: 'none' }}
             >
@@ -30,4 +30,4 @@ const QaButton = (): JSX.Element => {
     )
 }
 
-export default QaButton
+export default QAButton

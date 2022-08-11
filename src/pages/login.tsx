@@ -19,7 +19,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import QARequest from '../types/api/qa/qaRequest'
 import userPost from '../types/domain/account/userPost'
-import Layout from '../components/common/layout'
+import Layout from '../components/common/Layout'
 
 const LoginPage: NextPage = () => {
     const [userId, setUserId] = useState<string>('')

@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
-import DefaultFooter from './defaultFooter'
-import Layout from './layout'
+import DefaultFooter from './DefaultFooter'
+import Layout from './Layout'
 
 interface Props {
     children?: ReactNode

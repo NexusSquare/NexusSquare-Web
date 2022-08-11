@@ -2,7 +2,7 @@ import { Box, Button, FormControl, FormErrorMessage, FormLabel, Input, Text, VSt
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import Layout from '../components/common/layout'
+import Layout from '../components/common/Layout'
 import mail from '../types/domain/account/mail'
 
 const Register: NextPage = () => {

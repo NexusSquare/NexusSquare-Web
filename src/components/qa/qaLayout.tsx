@@ -1,8 +1,8 @@
 import { HStack } from '@chakra-ui/react'
 import { ReactNode } from 'react'
-import Layout from '../common/layout'
-import QALeftBar from './qaLeftBar'
-import QaRightBar from './qaRightBar'
+import Layout from '../common/Layout'
+import QALeftBar from './QALeftBar'
+import QARightBar from './QARightBar'
 
 interface Props {
     children?: ReactNode
@@ -15,7 +15,7 @@ const QALayout: Function = ({ children, pageName }: Props): JSX.Element => {
             <HStack spacing="0px">
                 <QALeftBar />
                 {children}
-                <QaRightBar />
+                <QARightBar />
             </HStack>
         </Layout>
     )

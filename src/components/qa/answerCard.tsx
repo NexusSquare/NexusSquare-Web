@@ -1,6 +1,6 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
 import answer from '../../types/domain/qa/answer'
-import ChakraNextImage from '../../components/common/chakraNextImage'
+import ChakraNextImage from '../common/chakraNextImage'
 
 const AnswerCard: React.VFC<answer> = (props) => {
     const DEFAULT_ICON_IMAGE_PATH: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
