@@ -3,7 +3,7 @@ import React from 'react'
 import { RiQuestionAnswerLine } from 'react-icons/ri'
 import ChakraNextImage from '../common/chakraNextImage'
 import { FaCoins } from 'react-icons/fa'
-import { FeatureContent } from './TopFeatureContent'
+import { FeatureContent } from './FeatureContent'
 
 export const TopFeature = () => {
     return (
