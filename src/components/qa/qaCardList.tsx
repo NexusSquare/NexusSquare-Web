@@ -20,7 +20,7 @@ import { ReactNode } from 'react'
 import QACard from './QACard'
 import question from '../../types/domain/qa/question'
 import queryOptions from '../../groupObject/qa/queryOptions'
-import QAResponse from '../../types/api/qa/qaResponse'
+import QAResponse from '../../types/api/res/qa/qaResponse'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 import { useRouter } from 'next/router'
 

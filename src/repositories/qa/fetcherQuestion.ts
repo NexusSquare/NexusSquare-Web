@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import router from 'next/router'
-import QAResponse from '../../types/api/qa/qaResponse'
+import QAResponse from '../../types/api/res/qa/qaResponse'
 import question from '../../types/domain/qa/question'
 
 export const fetcherQuestion = (url: string): Promise<question[]> => {
