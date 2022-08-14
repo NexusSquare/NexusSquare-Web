@@ -133,14 +133,7 @@ const LeftBar: Function = ({ children }: Props): JSX.Element => {
                             _focus={{ outline: 'none' }}
                             display={{ base: 'flex', xl: 'none' }}
                         >
-                            <Box
-                                as="circle"
-                                bgColor="white"
-                                borderRadius="50%"
-                                h="50px"
-                                w="50px"
-                                padding="15px 10px 5px"
-                            >
+                            <Box bgColor="white" borderRadius="50%" h="50px" w="50px" padding="15px 10px 5px">
                                 <SearchIcon viewBox="0 0 24 24" boxSize="20px" />
                             </Box>
                         </Button>

@@ -1,7 +1,7 @@
-type history = {
-    userId: string
-    history: string
+type History = {
+    id: string
     point: number
     createAt: string
+    category: 'answer' | 'question' | 'present'
 }
-export default history
+export default History

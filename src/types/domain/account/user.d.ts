@@ -1,4 +1,4 @@
-type user = {
+type User = {
     id: string
     department: string
     subject: string
@@ -8,10 +8,9 @@ type user = {
     firstnameFurigana: string
     lastnameFurigana: string
     point: number
-    createAt: string
-    mailAdress: string
+    updateAt: string
     imageUrl?: string
     isNameAnonymous: boolean
     isDepartmentAnonymous: boolean
 }
-export default user
+export default User

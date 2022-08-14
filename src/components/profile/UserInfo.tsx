@@ -15,10 +15,17 @@ import {
 import { AiFillCamera } from 'react-icons/ai'
 import React from 'react'
 import ChakraNextImage from '../common/chakraNextImage'
+import User from '../../types/domain/account/User'
+import { useRouter } from 'next/router'
 
-export const UserInfo = () => {
+interface Props {
+    user: User
+}
+
+export const UserInfo = ({ user }: Props) => {
     const POINT_IMAGE_PATH: string = '/images/point.png'
     const DEFAULT_AVATAR_URL: string = 'https://bit.ly/broken-link'
+    console.log(user)
     return (
         <>
             <HStack
@@ -52,19 +59,22 @@ export const UserInfo = () => {
                 <VStack>
                     <HStack>
                         <Box>
-                            <Text>みょうじ</Text>
+                            <Text>{user.firstnameFurigana}</Text>
                             <Text fontWeight="bold" fontSize={{ base: '2xl', md: '3xl' }}>
-                                苗字
+                                {user.firstname}
                             </Text>
                         </Box>
                         <Box>
-                            <Text>たろう</Text>
+                            <Text>{user.lastnameFurigana}</Text>
                             <Text fontWeight="bold" fontSize={{ base: '2xl', md: '3xl' }}>
-                                太郎
+                                {user.lastname}
                             </Text>
                         </Box>
                     </HStack>
-                    <Text>外国語学部英米学科</Text>
+                    <Text>
+                        {user.department}
+                        {user.subject}
+                    </Text>
                 </VStack>
                 <VStack height={'full'}>
                     <Text fontSize={{ base: 'xl', md: '2xl' }}>1学年</Text>
@@ -87,7 +97,7 @@ export const UserInfo = () => {
                     <ChakraNextImage src={POINT_IMAGE_PATH} alt={'ポイント'} width={25} height={25} pt="4" />
                 </HStack>
                 <HStack fontSize={{ base: '2xl', md: '6xl' }} fontWeight={{ base: 'bold', md: 'normal' }}>
-                    <Text>1500</Text>
+                    <Text>{user.point}</Text>
                     <Text>pt</Text>
                 </HStack>
             </VStack>

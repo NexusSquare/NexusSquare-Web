@@ -2,8 +2,13 @@ import { HStack, VStack, Text, TabList, Tabs, Tab, TabPanels, TabPanel, Box, But
 import React from 'react'
 import { HistoryCard } from './HistoryCard'
 import { HistoryList } from './HistoryList'
+import History from '../../types/domain/account/History'
 
-export const History = () => {
+interface Props {
+    history: History
+}
+
+export const UserHistory = ({ history }: Props) => {
     return (
         <>
             <Tabs w="100%" isLazy defaultIndex={1}>
@@ -48,7 +53,7 @@ export const History = () => {
                         回答
                     </Tab>
                 </TabList>
-                <HistoryList />
+                <HistoryList history={history} />
                 <TabPanels>
                     <TabPanel padding="0px">
                         <VStack></VStack>
