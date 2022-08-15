@@ -2,14 +2,14 @@ import { Box, Text } from '@chakra-ui/react'
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
-import QAListLayout from '../../components/qa/qaListLayout'
-import QAResponse from '../../types/api/qa/qaResponse'
-import question from '../../types/domain/qa/question'
+import QAListLayout from '../../components/qa/QAListLayout'
+import QAResponse from '../../types/api/res//qa/qaResponse'
+import Question from '../../types/domain/qa/Question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 import queryOptions from '../../groupObject/qa/queryOptions'
 
 interface Props {
-    content: question[]
+    content: Question[]
     query: QAQueryProps
 }
 

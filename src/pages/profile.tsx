@@ -1,128 +1,65 @@
 import { Box, Button, HStack, Tab, TabList, TabPanel, TabPanels, Tabs, Text, VStack } from '@chakra-ui/react'
-import { NextPage } from 'next'
+import axios, { AxiosResponse } from 'axios'
+import { GetServerSideProps, NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useState } from 'react'
-import history from '../types/domain/account/history'
+import Footer from '../components/common/Footer'
+import Layout from '../components/common/Layout'
+import LeftBar from '../components/common/LeftBar'
+import RightBar from '../components/common/RigthBar'
+import { ProfileContent } from '../components/profile/ProfileContent'
+import History from '../types/domain/account/History'
+import User from '../types/domain/account/User'
 
-const Profile: NextPage = () => {
-    const [histories, setHistories] = useState<history[]>([])
-    const pointHistory = () => {
-        return (
-            <VStack>
-                {histories.map((history) => {
-                    return (
-                        <HStack key={history.userId}>
-                            <Box></Box>
-                            <VStack>
-                                <Text>{history.createAt}</Text>
-                                <HStack>
-                                    <Text>{history.history}</Text>
-                                    <Text>+{history.point}pt</Text>
-                                </HStack>
-                            </VStack>
-                        </HStack>
-                    )
-                })}
-            </VStack>
-        )
-    }
+interface Props {
+    user: User
+}
+
+const Profile = ({ user }: Props) => {
+    const [histories, setHistories] = useState<History[]>([])
     return (
-        <VStack>
-            <HStack>
-                <Text color="#FF9037">◀︎ ホーム</Text>
-            </HStack>
-            <HStack>
-                <VStack>
-                    <HStack>
-                        <VStack>
-                            <Text>みょうじ</Text>
-                            <Text>苗字</Text>
-                        </VStack>
-                        <VStack>
-                            <Text>たろう</Text>
-                            <Text>太郎</Text>
-                        </VStack>
-                    </HStack>
-                    <Text>学部学科</Text>
+        <Layout pageName={'プロフィール'}>
+            <HStack spacing="0px">
+                <LeftBar />
+                <VStack
+                    w={{
+                        base: '100%',
+                        sm: '100vw',
+                        md: 'calc(100vw - 210px)',
+                        lg: 'calc(100vw - 210px)',
+                        xl: 'calc(400px + 50vw)',
+                    }}
+                    paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
+                >
+                    <ProfileContent user={user} />
+                    <Footer />
                 </VStack>
-                <Text>学年</Text>
+
+                <RightBar />
             </HStack>
-            <VStack>
-                <Text>保有ポイント</Text>
-                <HStack>
-                    <Text>1500</Text>
-                    <Text>pt</Text>
-                </HStack>
-            </VStack>
-            <Link href="/gift">
-                <HStack>
-                    <Text>応募する</Text>
-                </HStack>
-            </Link>
-            <Tabs w="100%" isLazy defaultIndex={1}>
-                <TabList>
-                    <Tab
-                        w="33.3%"
-                        border="1px"
-                        color="#FF9037"
-                        bgColor="white"
-                        borderRadius="5px"
-                        fontSize="2xl"
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        ポイント履歴
-                    </Tab>
-                    <Tab
-                        w="33.4%"
-                        border="1px"
-                        color="#FF9037"
-                        bgColor="white"
-                        borderRadius="5px"
-                        fontSize="2xl"
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        質問
-                    </Tab>
-                    <Tab
-                        w="33.3%"
-                        border="1px"
-                        color="#FF9037"
-                        bgColor="white"
-                        borderRadius="5px"
-                        fontSize="2xl"
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        回答
-                    </Tab>
-                </TabList>
-                <TabPanels>
-                    <TabPanel padding="0px">
-                        <VStack></VStack>
-                        <Box w="100%" textAlign="center">
-                            <Button w="100%">さらに読み込む</Button>
-                        </Box>
-                    </TabPanel>
-                    <TabPanel padding="0px">
-                        <VStack></VStack>
-                        <Box w="100%" textAlign="center">
-                            <Button w="100%">さらに読み込む</Button>
-                        </Box>
-                    </TabPanel>
-                    <TabPanel padding="0px">
-                        <VStack></VStack>
-                        <Box w="100%" textAlign="center">
-                            <Button w="100%">さらに読み込む</Button>
-                        </Box>
-                    </TabPanel>
-                </TabPanels>
-            </Tabs>
-        </VStack>
+        </Layout>
     )
+}
+export const getServerSideProps: GetServerSideProps = async () => {
+    try {
+        const defaultUrl: string = process.env.GET_USER_URL
+            ? process.env.GET_USER_URL
+            : 'http://localhost:4000/dev/user/'
+        const url = defaultUrl + ``
+        const response: AxiosResponse<User> = await axios.get(url)
+        const { data: user, status } = response
+        const props: Props = {
+            user: user,
+        }
+        console.log(user)
+        return { props }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(error.message)
+            return { notFound: true }
+        }
+    }
+    return { notFound: true }
 }
 export default Profile

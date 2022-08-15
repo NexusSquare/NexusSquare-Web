@@ -20,9 +20,9 @@ import {
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
-import QAListLayout from '../../components/qa/qaListLayout'
-import QAResponse from '../../types/api/qa/qaResponse'
-import question from '../../types/domain/qa/question'
+import QAListLayout from '../../components/qa/QAListLayout'
+import QAResponse from '../../types/api/res//qa/qaResponse'
+import Question from '../../types/domain/qa/Question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 import queryOptions from '../../groupObject/qa/queryOptions'
 import React, { useRef, useState } from 'react'
@@ -33,7 +33,7 @@ import useSWR, { mutate, useSWRConfig } from 'swr'
 import { fetcherQuestion } from '../../repositories/qa/fetcherQuestion'
 
 interface Props {
-    content: question[]
+    content: Question[]
     query: QAQueryProps
 }
 type QACategoriesType = typeof QACategories
@@ -44,11 +44,11 @@ const CategorySelect = (props: Props) => {
     const defaultUrl: string = process.env.GET_QUESTION_URL
         ? process.env.GET_QUESTION_URL
         : 'http://localhost:4000/dev/question'
-    const [displayData, setDisplayData] = useState<question[]>(props.content)
+    const [displayData, setDisplayData] = useState<Question[]>(props.content)
     const [searchQuery, setSearchQuery] = useState<QAQueryProps>({ option: queryOptions.notSolved })
     const [checkValue, setCheckValue] = useState<string>('')
 
-    const { data, error, mutate } = useSWR<question[]>(
+    const { data, error, mutate } = useSWR<Question[]>(
         () => {
             const params = new URLSearchParams(searchQuery as string)
             return defaultUrl + `?option=${queryOptions.notSolved}&${params}`

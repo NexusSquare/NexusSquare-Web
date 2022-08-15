@@ -38,7 +38,7 @@ interface NavButtonProps {
     url: string
 }
 
-const QALeftBar: Function = ({ children }: Props): JSX.Element => {
+const LeftBar: Function = ({ children }: Props): JSX.Element => {
     const CATEGORY_IMAGE_PATH: string = '/images/category.png'
     const ALL_Q_IMAGE_PATH: string = '/images/all.png'
     const RANKING_IMAGE_PATH: string = '/images/crown.png'
@@ -169,4 +169,4 @@ const QALeftBar: Function = ({ children }: Props): JSX.Element => {
         </VStack>
     )
 }
-export default QALeftBar
+export default LeftBar

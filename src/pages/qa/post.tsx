@@ -6,21 +6,28 @@ import {
     FormLabel,
     HStack,
     Input,
+    ListItem,
     Select,
     Spacer,
     Text,
     Textarea,
+    UnorderedList,
     VStack,
 } from '@chakra-ui/react'
+import { BsChatRightText } from 'react-icons/bs'
 import axios from 'axios'
 import _ from 'lodash'
 import { NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import DefaultLayout from '../../components/common/defaultLayout'
-import QARequest from '../../types/api/qa/qaRequest'
+import DefaultLayout from '../../components/common/DefaultLayout'
+import QARequest from '../../types/api/req/qa/QARequest'
 import QACategories from '../../groupObject/qa/qaCategories'
+import Layout from '../../components/common/Layout'
+import LeftBar from '../../components/common/LeftBar'
+import RightBar from '../../components/common/RigthBar'
+import Footer from '../../components/common/Footer'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -32,6 +39,10 @@ interface categorySelectProps {
     value: string
 }
 
+interface RequiredLabelProps {
+    isRequired: boolean
+}
+
 const Post: NextPage = () => {
     const list1 = Object.values(QACategories)
     const list2 = _.cloneDeep(Object.values(QACategories))
@@ -41,27 +52,32 @@ const Post: NextPage = () => {
         watch,
         formState: { errors, isSubmitting },
     } = useForm<QARequest>()
-    const [title, setTitle] = useState<string>('')
-    const [content, setContent] = useState<string>('')
+    const [contentLength, setContentLength] = useState(0)
     const router = useRouter()
-    const [category1, setCategory1] = useState<string>()
-    const [category2, setCategory2] = useState<string>()
-    const onCategory1ChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.preventDefault()
-        const nowCategory1 = e.target.value
-        setCategory1(nowCategory1)
+
+    const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContentLength(e.target.value.length)
     }
-    const onCategory2ChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        e.preventDefault()
-        const nowCategory2 = e.target.value
-        setCategory2(nowCategory2)
+    const RequiredLabel = ({ isRequired }: RequiredLabelProps) => {
+        const bgColor = isRequired ? 'mainColor' : 'gray.400'
+        const text = isRequired ? '必須' : '任意'
+        return (
+            <Box as="span" bgColor={bgColor} color="white" fontWeight={'bold'} rounded="md" p="1" fontSize="sm">
+                {text}
+            </Box>
+        )
     }
     const CategorySelecter1 = () => {
         return (
-            <VStack>
-                <Box>
+            <VStack w="full">
+                <Box w="full">
                     <FormControl isInvalid={errors.category1 !== undefined}>
-                        <FormLabel htmlFor="category1">カテゴリ1</FormLabel>
+                        <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'xl' }}>
+                            <HStack>
+                                <Text>カテゴリ1</Text>
+                                <RequiredLabel isRequired={true} />
+                            </HStack>
+                        </FormLabel>
                         <Select required placeholder="カテゴリを選択" {...register('category1')}>
                             {list1.map((category) => {
                                 return (
@@ -78,10 +94,15 @@ const Post: NextPage = () => {
     }
     const CategorySelecter2 = () => {
         return (
-            <VStack>
-                <Box>
+            <VStack w="full">
+                <Box w="full">
                     <FormControl isInvalid={errors.category2 !== undefined}>
-                        <FormLabel htmlFor="category2">カテゴリ2</FormLabel>
+                        <FormLabel htmlFor="category2" fontSize={{ base: 'lg', md: 'xl' }}>
+                            <HStack>
+                                <Text>カテゴリ2</Text>
+                                <RequiredLabel isRequired={false} />
+                            </HStack>
+                        </FormLabel>
                         <Select placeholder="カテゴリを選択" {...register('category2')}>
                             {list2.map((category) => {
                                 return (
@@ -97,17 +118,8 @@ const Post: NextPage = () => {
             </VStack>
         )
     }
-    const onTitleChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        e.preventDefault()
-        const nowTitle = e.target.value
-        setTitle(nowTitle)
-    }
-    const onTextAreaChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        e.preventDefault()
-        const nowText = e.target.value
-        setContent(nowText)
-    }
     const onSubmitHandler = async (data: QARequest) => {
+        console.log(data)
         const defaultUrl: string = process.env.GET_QUESTION_URL
             ? process.env.GET_QUESTION_URL
             : 'http://localhost:4000/dev/question'
@@ -123,54 +135,114 @@ const Post: NextPage = () => {
             })
     }
     return (
-        <DefaultLayout>
-            <VStack>
-                <Box>
-                    <Text>質問の投稿</Text>
-                </Box>
-                <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)}>
-                    <CategorySelecter1 />
-                    <CategorySelecter2 />
-                    <Box>
-                        <FormControl isInvalid={errors.title !== undefined}>
-                            <FormLabel htmlFor="title">タイトル</FormLabel>
-                            <Input
-                                {...register('title', {
-                                    required: 'This is required',
-                                    minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
-                                    maxLength: { value: 50, message: 'タイトルは50文字までです' },
-                                })}
-                            ></Input>
-                            <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
-                        </FormControl>
-                    </Box>
-                    <Box>
-                        <FormControl isInvalid={errors.content !== undefined}>
-                            <FormLabel>内容</FormLabel>
-                            <Textarea
-                                {...register('content', {
-                                    required: 'This is required',
-                                    minLength: { value: 1, message: '質問は最小1文字必要です' },
-                                    maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
-                                })}
-                            ></Textarea>
-                        </FormControl>
-                        <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
-                    </Box>
-                    <HStack>
-                        <Input type="image"></Input>
-                        <Spacer />
-                        <Text>あと文字</Text>
-                    </HStack>
-                    <Box>
-                        <Button type="button" onClick={() => router.back()}>
-                            キャンセル
-                        </Button>
-                        <Button type="submit">質問を投稿する</Button>
-                    </Box>
+        <Layout pageName={'質問の投稿'}>
+            <HStack spacing="0px">
+                <LeftBar />
+                <VStack
+                    w={{
+                        base: '100%',
+                        sm: '100vw',
+                        md: 'calc(100vw - 210px)',
+                        lg: 'calc(100vw - 210px)',
+                        xl: 'calc(400px + 50vw)',
+                    }}
+                    paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
+                >
+                    <VStack w="full" p="5%">
+                        <HStack w="full">
+                            <Box as="span" boxSize="20px" bgColor="mainColor" rounded="full"></Box>
+                            <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">
+                                質問の投稿
+                            </Text>
+                        </HStack>
+                        <Box w="full" borderBottom="1px" borderTop="1px" py="2" borderColor="gray.300">
+                            <UnorderedList>
+                                <ListItem>誹謗中はお控え下さい</ListItem>
+                                <ListItem>
+                                    学生間での情報共有サービスですので、医療や法律などの
+                                    <Box fontWeight={'bold'} as="span">
+                                        専門的な知識
+                                    </Box>
+                                    を必要とする投稿はお控え下さい。
+                                </ListItem>
+                            </UnorderedList>
+                        </Box>
+                        <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full">
+                            <CategorySelecter1 />
+                            <CategorySelecter2 />
+                            <Box w="full">
+                                <FormControl isInvalid={errors.title !== undefined}>
+                                    <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'xl' }}>
+                                        <HStack>
+                                            <Text>タイトル</Text>
+                                            <RequiredLabel isRequired={true} />
+                                        </HStack>
+                                    </FormLabel>
+                                    <Input
+                                        {...register('title', {
+                                            required: 'This is required',
+                                            minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
+                                            maxLength: { value: 50, message: 'タイトルは50文字までです' },
+                                        })}
+                                    ></Input>
+                                    <FormErrorMessage>{errors.title && 'タイトルを入力してください'}</FormErrorMessage>
+                                </FormControl>
+                            </Box>
+                            <Box w="full">
+                                <FormControl isInvalid={errors.content !== undefined}>
+                                    <FormLabel fontSize={{ base: 'lg', md: 'xl' }}>
+                                        <HStack>
+                                            <Text>内容</Text>
+                                            <RequiredLabel isRequired={true} />
+                                        </HStack>
+                                    </FormLabel>
+                                    <Textarea
+                                        minH="48"
+                                        {...register('content', {
+                                            required: 'This is required',
+                                            minLength: { value: 1, message: '質問は最小1文字必要です' },
+                                            maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
+                                        })}
+                                        onChange={countContent}
+                                    ></Textarea>
+                                </FormControl>
+                                <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
+                            </Box>
+                            <HStack w="full">
+                                <Text>{contentLength} / 5000</Text>
+                            </HStack>
+                            <HStack w="full">
+                                <Button
+                                    type="button"
+                                    onClick={() => router.back()}
+                                    color="mainColor"
+                                    bgColor="white"
+                                    borderWidth={1}
+                                    borderColor="mainColor"
+                                    _hover={{ bgColor: 'mainColor', color: 'white' }}
+                                    w="50%"
+                                >
+                                    キャンセル
+                                </Button>
+                                <Button
+                                    type="submit"
+                                    color="white"
+                                    bgColor="mainColor"
+                                    _hover={{ bgColor: 'subSubColor' }}
+                                    leftIcon={<BsChatRightText />}
+                                    w="full"
+                                >
+                                    質問を投稿する
+                                </Button>
+                            </HStack>
+                        </VStack>
+                    </VStack>
+                    <Footer />
                 </VStack>
-            </VStack>
-        </DefaultLayout>
+
+                <RightBar />
+            </HStack>
+        </Layout>
     )
 }
 export default Post
