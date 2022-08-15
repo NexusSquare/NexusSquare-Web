@@ -1,9 +1,10 @@
-import { Box, HStack, IconButton, Image, Spacer, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, Divider, HStack, IconButton, Image, Spacer, Text, VStack } from '@chakra-ui/react'
+import { BsChatRightText } from 'react-icons/bs'
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
 import QAResponse from '../../types/api/res//qa/qaResponse'
 import axios, { Axios, AxiosError, AxiosResponse } from 'axios'
-import perfectQuestion from '../../types/domain/qa/perfectQuestion'
+import PerfectQuestion from '../../types/domain/qa/PerfectQuestion'
 import QALayout from '../../components/qa/QALayout'
 import perfectQResponse from '../../types/api/res/qa/perfectQuestionResponse'
 import question from '../../types/domain/qa/question'
@@ -19,42 +20,18 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useMemo } from 'react'
 import { useCallback } from 'react'
+import { QAPerfectCard } from '../../components/qa/QAPerfectCard'
+import AnswerCard from '../../components/qa/AnswerCard'
 
 interface Props {
-    content: perfectQuestion
+    content: PerfectQuestion
 }
 
 const Question: NextPage<Props> = ({ content }) => {
     const router = useRouter()
-    if (!router.isFallback && !content) router.push('/404')
-    if (router.isFallback) {
-        return <Box>now loading</Box>
-    }
-    const DEFAULT_ICON_IMAGE_PATH: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
-        ? `/images/${process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH}`
-        : ''
-    const question: perfectQuestion = content
+    const question: PerfectQuestion = content
     const [answers, setAnswers] = useState<answer[]>([])
-    const ICON_IMAGE_URL: string = question.userIcon ? question.userIcon : DEFAULT_ICON_IMAGE_PATH
-    const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
-    const createTimeResult = content.createAt.match(REGEX)
-    const updateTimeResult = content.updateAt.match(REGEX)
-    const createDate: string = createTimeResult
-        ? `${createTimeResult[1]}年${createTimeResult[2]}月${createTimeResult[3]}日`
-        : '読み込めませんでした'
-    const updateDate: string = updateTimeResult
-        ? `${updateTimeResult[1]}年${updateTimeResult[2]}月${updateTimeResult[3]}日`
-        : '読み込めませんでした'
-    const categoryTxt = content.category2 ? `${content.category1}、${content.category2}` : content.category1
-    const ContentImage = () => {
-        return content.imageUrl ? (
-            <Box>
-                <ChakraNextImage src={content.imageUrl} alt="質問の画像" width={200} height={200} />
-            </Box>
-        ) : (
-            <Box></Box>
-        )
-    }
+
     useEffect(() => {
         if (!process.env.NEXT_PUBLIC_GET_QUESTION_URL) {
             console.error('urlの読み込みに失敗しました')
@@ -87,6 +64,7 @@ const Question: NextPage<Props> = ({ content }) => {
             abortController.abort()
         }
     }, [])
+
     const AnswerList = useCallback(() => {
         if (!Array.isArray(answers)) {
             return <Box>回答の取得に失敗しました</Box>
@@ -94,38 +72,18 @@ const Question: NextPage<Props> = ({ content }) => {
             return <Box>この質問への回答はまだありません</Box>
         }
         return (
-            <VStack>
+            <VStack w="full" spacing={0}>
                 {answers.map((answer: answer) => {
-                    const userImage: string = answer.userIcon ? answer.userIcon : DEFAULT_ICON_IMAGE_PATH
-                    return (
-                        <VStack key={answer.id}>
-                            <HStack>
-                                <Box as="figure" width="30px" height="30px">
-                                    <ChakraNextImage
-                                        src={userImage}
-                                        alt="回答者アイコン"
-                                        borderRadius="50%"
-                                        width={30}
-                                        height={30}
-                                    />
-                                </Box>
-                                <VStack spacing="0px">
-                                    <Text fontWeight="400">{answer.postedby}</Text>
-                                    <HStack>
-                                        <Text fontWeight="400" fontSize="sm" color="gray.400">
-                                            作成日:{answer.createAt}
-                                        </Text>
-                                    </HStack>
-                                </VStack>
-                            </HStack>
-                            <Text>{answer.content}</Text>
-                        </VStack>
-                    )
+                    return <AnswerCard answer={answer} key={answer.id} />
                 })}
             </VStack>
         )
     }, [answers])
 
+    if (!router.isFallback && !content) router.push('/404')
+    if (router.isFallback) {
+        return <Box>now loading</Box>
+    }
     return (
         <QALayout>
             <VStack
@@ -137,66 +95,35 @@ const Question: NextPage<Props> = ({ content }) => {
                     lg: 'calc(100vw - 210px)',
                     xl: 'calc(400px + 50vw)',
                 }}
-                paddingLeft={{ base: '0', sm: '60px', md: 'calc((100vw - 800px) / 2)' }}
+                paddingLeft={{ base: '0', sm: '100px', md: 'calc((100vw - 800px) / 2)' }}
                 paddingTop="100px"
+                spacing="8"
             >
-                <VStack as="section" bgColor="red" w="90%" minH="300px">
-                    <HStack>
-                        <Box as="figure" width="30px" height="30px">
-                            <ChakraNextImage
-                                src={ICON_IMAGE_URL}
-                                alt="プロフィール"
-                                borderRadius="50%"
-                                width={30}
-                                height={30}
-                            />
-                        </Box>
-                        <VStack spacing="0px">
-                            <Text fontWeight="400">{content.postedBy}</Text>
-                            <HStack>
-                                <Text fontWeight="400" fontSize="sm" color="gray.400">
-                                    作成日:{createDate}
-                                </Text>
-                                <Text fontWeight="400" fontSize="sm" color="gray.400">
-                                    更新日:{updateDate}
-                                </Text>
-                            </HStack>
-                        </VStack>
-                        <Spacer />
-                        <HStack>
-                            c <Text as="h2">{content.ansNum}</Text>
-                            <Text>回答</Text>
-                        </HStack>
-                    </HStack>
-                    <Text fontSize="4xl" fontWeight="semibold">
-                        {content.title}
+                <QAPerfectCard question={question} />
+                <Button
+                    bgColor="mainColor"
+                    color="white"
+                    _hover={{ bgColor: 'subSubColor' }}
+                    leftIcon={<BsChatRightText />}
+                >
+                    回答
+                </Button>
+                <VStack as="section" w="full" p="5%" spacing={2}>
+                    <Text as="h2" fontSize="4xl" fontWeight="semibold" w="full">
+                        解答
                     </Text>
-                    <Text color="gray.400">{categoryTxt}</Text>
-                    <Text>{content.content}</Text>
-                    <ContentImage />
-                    <Spacer />
-                    <HStack w="100%">
-                        <Spacer />
-                        <IconButton aria-label="通報する" icon={<NotAllowedIcon />}></IconButton>
-                    </HStack>
+                    <Divider />
+                    <AnswerList />
                 </VStack>
-                <VStack>
-                    <Text>回答する</Text>
-                </VStack>
-                <HStack w="100%" h="200px">
-                    <Box w="180px" h="180px" bgColor="red">
+                <HStack h="200px">
+                    <Box w="180px" h="180px" bgColor="gray.200">
                         広告枠
                     </Box>
-                    <Box w="180px" h="180px" bgColor="red">
+                    <Box w="180px" h="180px" bgColor="gray.200">
                         広告枠
                     </Box>
                 </HStack>
-                <VStack as="section">
-                    <Text as="h2" fontSize="4xl" fontWeight="semibold">
-                        Answer
-                    </Text>
-                    <AnswerList />
-                </VStack>
+                s
                 <QAFooter />
             </VStack>
         </QALayout>
@@ -214,7 +141,8 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
     }
     try {
         const url: string = defaultUrl + `/${params.id}`
-        const response: AxiosResponse<perfectQuestion> = await axios.get(url)
+        const response: AxiosResponse<PerfectQuestion> = await axios.get(url)
+        console.log(url)
         const { data, status } = response
         if (status !== 200 || !data) {
             console.error('質問の取得に失敗しました')
@@ -223,6 +151,7 @@ export const getStaticProps: GetStaticProps<Props> = async ({ params }) => {
         const props: Props = {
             content: data,
         }
+        console.log(props.content)
         return { props: props, revalidate: 10 }
     } catch (error) {
         if (axios.isAxiosError(error)) {

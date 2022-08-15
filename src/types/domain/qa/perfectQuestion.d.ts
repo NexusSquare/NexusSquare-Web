@@ -1,4 +1,4 @@
-type perfectQuestion = {
+type PerfectQuestion = {
     id: string
     category1: string
     category2?: string
@@ -12,4 +12,4 @@ type perfectQuestion = {
     imageUrl?: string
 }
 
-export default perfectQuestion
+export default PerfectQuestion
