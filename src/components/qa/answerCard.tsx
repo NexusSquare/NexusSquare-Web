@@ -1,10 +1,10 @@
 import { NotAllowedIcon } from '@chakra-ui/icons'
 import { Avatar, Box, HStack, IconButton, Spacer, Text, VStack } from '@chakra-ui/react'
-import answer from '../../types/domain/qa/answer'
+import Answer from '../../types/domain/qa/Answer'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
-    answer: answer
+    answer: Answer
 }
 
 const AnswerCard = ({ answer }: Props): JSX.Element => {

@@ -1,4 +1,5 @@
 type question = {
+    userId: string
     id: string
     category1: string
     category2?: string

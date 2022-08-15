@@ -18,7 +18,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { ReactNode } from 'react'
 import QACard from './QACard'
-import question from '../../types/domain/qa/question'
+import Question from '../../types/domain/qa/Question'
 import queryOptions from '../../groupObject/qa/queryOptions'
 import QAResponse from '../../types/api/res/qa/qaResponse'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
@@ -27,15 +27,15 @@ import { useRouter } from 'next/router'
 interface Props {
     children?: ReactNode
     query?: QAQueryProps
-    data: question[]
+    data: Question[]
 }
 type queryOptionType = typeof queryOptions
 type queryOptions = typeof queryOptions[keyof queryOptionType]
 
 const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
-    const [notSolvedQACardsData, setNotSolvedQACardsData] = useState<question[]>([])
-    const [solvedQACardsData, setSolvedQACardsData] = useState<question[]>([])
-    const [primeQACardsData, setPrimeQACardsData] = useState<question[]>([])
+    const [notSolvedQACardsData, setNotSolvedQACardsData] = useState<Question[]>([])
+    const [solvedQACardsData, setSolvedQACardsData] = useState<Question[]>([])
+    const [primeQACardsData, setPrimeQACardsData] = useState<Question[]>([])
     const [queryOption, setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
     const defaultUrl: string = process.env.GET_QUESTION_URL
         ? process.env.GET_QUESTION_URL
@@ -102,9 +102,10 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
         } else if (notSolvedQACardsData.length < 1) {
             return <Box>この質問への回答はまだありません</Box>
         }
-        return notSolvedQACardsData.map((qaCardData: question) => {
+        return notSolvedQACardsData.map((qaCardData: Question) => {
             return (
                 <QACard
+                    userId={qaCardData.userId}
                     key={qaCardData.id}
                     id={qaCardData.id}
                     category1={qaCardData.category1}
@@ -124,9 +125,10 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
         } else if (solvedQACardsData.length < 1) {
             return <Box>この質問への回答はまだありません</Box>
         }
-        return solvedQACardsData.map((qaCardData: question) => {
+        return solvedQACardsData.map((qaCardData: Question) => {
             return (
                 <QACard
+                    userId={qaCardData.userId}
                     key={qaCardData.id}
                     id={qaCardData.id}
                     category1={qaCardData.category1}
@@ -146,9 +148,10 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
         } else if (primeQACardsData.length < 1) {
             return <Box>この質問への回答はまだありません</Box>
         }
-        return primeQACardsData.map((qaCardData: question) => {
+        return primeQACardsData.map((qaCardData: Question) => {
             return (
                 <QACard
+                    userId={qaCardData.userId}
                     key={qaCardData.id}
                     id={qaCardData.id}
                     category1={qaCardData.category1}

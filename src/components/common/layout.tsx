@@ -11,6 +11,7 @@ interface Props {
 
 const Layout: Function = ({ children, pageName }: Props): JSX.Element => {
     const siteTitle: string = `nexussquare - ${pageName}`
+    console.log('call')
     return (
         <Box paddingTop={{ base: '100px', md: '60px' }}>
             <CommonMeta siteTitle={siteTitle} />

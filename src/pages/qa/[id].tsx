@@ -7,7 +7,7 @@ import axios, { Axios, AxiosError, AxiosResponse } from 'axios'
 import PerfectQuestion from '../../types/domain/qa/PerfectQuestion'
 import QALayout from '../../components/qa/QALayout'
 import perfectQResponse from '../../types/api/res/qa/perfectQuestionResponse'
-import question from '../../types/domain/qa/question'
+import Question from '../../types/domain/qa/Question'
 import Error from 'next/error'
 import { copyFile } from 'fs'
 import ChakraNextImage from '../../components/common/chakraNextImage'
@@ -15,7 +15,7 @@ import { NotAllowedIcon } from '@chakra-ui/icons'
 import DefaultFooter from '../../components/common/DefaultFooter'
 import QAFooter from '../../components/qa/QAFooter'
 import answerResponse from '../../types/api/res/qa/answerResponse'
-import answer from '../../types/domain/qa/answer'
+import Answer from '../../types/domain/qa/Answer'
 import { useState } from 'react'
 import { useEffect } from 'react'
 import { useMemo } from 'react'
@@ -30,7 +30,7 @@ interface Props {
 const Question: NextPage<Props> = ({ content }) => {
     const router = useRouter()
     const question: PerfectQuestion = content
-    const [answers, setAnswers] = useState<answer[]>([])
+    const [answers, setAnswers] = useState<Answer[]>([])
 
     useEffect(() => {
         if (!process.env.NEXT_PUBLIC_GET_QUESTION_URL) {
@@ -49,7 +49,7 @@ const Question: NextPage<Props> = ({ content }) => {
                     return
                 }
                 console.log('取得した')
-                const resAns: answer[] = data.data
+                const resAns: Answer[] = data.data
                 setAnswers((nowans) => [...nowans, ...resAns])
             } catch (error) {
                 if (axios.isAxiosError(error)) {
@@ -73,7 +73,7 @@ const Question: NextPage<Props> = ({ content }) => {
         }
         return (
             <VStack w="full" spacing={0}>
-                {answers.map((answer: answer) => {
+                {answers.map((answer: Answer) => {
                     return <AnswerCard answer={answer} key={answer.id} />
                 })}
             </VStack>
@@ -172,7 +172,7 @@ export const getStaticPaths = async () => {
         const defaultUrl: string = process.env.GET_QUESTION_URL
             ? process.env.GET_QUESTION_URL
             : 'http://localhost:4000/dev/question'
-        const response: AxiosResponse<question[]> = await axios.get(defaultUrl)
+        const response: AxiosResponse<Question[]> = await axios.get(defaultUrl)
         const { data, status } = response
         if (status !== 200 || !data) {
             return { paths: [], fallback: true }

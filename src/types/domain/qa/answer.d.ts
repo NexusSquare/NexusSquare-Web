@@ -1,4 +1,5 @@
-type answer = {
+type Answer = {
+    userId: string
     id: string
     postedby: string
     content: string
@@ -6,4 +7,4 @@ type answer = {
     isBest: boolean
     createAt: string
 }
-export default answer
+export default Answer

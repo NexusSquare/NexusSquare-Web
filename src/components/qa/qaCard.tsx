@@ -1,9 +1,9 @@
 import { Box, Button, HStack, Spacer, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
-import question from '../../types/domain/qa/question'
+import Question from '../../types/domain/qa/Question'
 import ChakraNextImage from '../common/chakraNextImage'
 
-const QACard: React.VFC<question> = (props) => {
+const QACard: React.VFC<Question> = (props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = props.createAt.toString().match(REGEX)

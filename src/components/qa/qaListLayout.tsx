@@ -8,13 +8,13 @@ import QACardWindow from './QACardWindow'
 import QALayout from './QALayout'
 import QALeftBar from './QALeftBar'
 import QaRightBar from './QARightBar'
-import question from '../../types/domain/qa/question'
+import Question from '../../types/domain/qa/Question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 
 interface Props {
     children?: ReactNode
     pageName: string
-    data: question[]
+    data: Question[]
     query?: QAQueryProps
 }
 

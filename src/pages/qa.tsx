@@ -4,11 +4,11 @@ import { GetServerSideProps, NextPage } from 'next'
 import { useRouter } from 'next/router'
 import QAListLayout from '../components/qa/QAListLayout'
 import QAResponse from '../types/api/res/qa/qaResponse'
-import question from '../types/domain/qa/question'
+import Question from '../types/domain/qa/Question'
 import queryOptions from '../groupObject/qa/queryOptions'
 
 interface Props {
-    content: question[]
+    content: Question[]
 }
 
 const QAHome = (props: Props) => {
