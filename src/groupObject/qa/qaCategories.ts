@@ -11,5 +11,17 @@ const QACategories = {
     welfare: '社会福祉',
     nurse: '看護',
     infoScience: '情報科学',
+    freshman: '新入生',
+    graduateschool: '大学院',
+    culturalsubject: '一般教養科目',
+    registration: '履修登録',
+    test: 'テスト',
+    club: 'サークル',
+    laboratory: 'ゼミ・研究室',
+    abroad: '留学',
+    jobhunting: '就活',
+    qualification: '資格・免許',
+    event: '学内イベント・サービス',
+    other: 'その他',
 } as const
 export default QACategories
