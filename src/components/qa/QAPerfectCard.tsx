@@ -1,7 +1,7 @@
 import { NotAllowedIcon } from '@chakra-ui/icons'
 import { Avatar, Box, HStack, IconButton, Image, Spacer, Stack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
-import PerfectQuestion from '../../types/domain/qa/perfectQuestion'
+import PerfectQuestion from '../../types/domain/qa/PerfectQuestion'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
