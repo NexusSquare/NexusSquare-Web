@@ -186,7 +186,7 @@ const Post: NextPage = () => {
                         </Box>
                         <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full">
                             <CategorySelecter1 />
-                            <CategorySelecter2 duplicateError={duplicateError} />
+                            <CategorySelecter2 />
                             <Box w="full">
                                 <FormControl isInvalid={errors.title !== undefined}>
                                     <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'xl' }}>
