@@ -28,6 +28,7 @@ import Layout from '../../components/common/Layout'
 import LeftBar from '../../components/common/LeftBar'
 import RightBar from '../../components/common/RigthBar'
 import Footer from '../../components/common/Footer'
+import { addAbortSignal } from 'stream'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -46,6 +47,7 @@ interface RequiredLabelProps {
 const Post: NextPage = () => {
     const list1 = Object.values(QACategories)
     const list2 = _.cloneDeep(Object.values(QACategories))
+    const [duplicateError, setValue] = useState(false)
     const {
         register,
         handleSubmit,
@@ -54,6 +56,10 @@ const Post: NextPage = () => {
     } = useForm<QARequest>()
     const [contentLength, setContentLength] = useState(0)
     const router = useRouter()
+    const onChangeHandler = () => {
+        console.log(duplicateError)
+        setValue(false)
+    }
 
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
@@ -78,7 +84,12 @@ const Post: NextPage = () => {
                                 <RequiredLabel isRequired={true} />
                             </HStack>
                         </FormLabel>
-                        <Select required placeholder="カテゴリを選択" {...register('category1')}>
+                        <Select
+                            required
+                            placeholder="カテゴリを選択"
+                            {...register('category1')}
+                            onChange={onChangeHandler}
+                        >
                             {list1.map((category) => {
                                 return (
                                     <Box as="option" value={category} key={category}>
@@ -103,7 +114,7 @@ const Post: NextPage = () => {
                                 <RequiredLabel isRequired={false} />
                             </HStack>
                         </FormLabel>
-                        <Select placeholder="カテゴリを選択" {...register('category2')}>
+                        <Select placeholder="カテゴリを選択" {...register('category2')} onChange={onChangeHandler}>
                             {list2.map((category) => {
                                 return (
                                     <Box as="option" value={category} key={category}>
@@ -112,14 +123,20 @@ const Post: NextPage = () => {
                                 )
                             })}
                         </Select>
-                        <FormErrorMessage>{errors.category2 && errors.category2.message}</FormErrorMessage>
                     </FormControl>
+                    <Text color={'#E53E3E'} fontSize="14">
+                        {duplicateError && 'カテゴリが重複しています'}
+                    </Text>
                 </Box>
             </VStack>
         )
     }
     const onSubmitHandler = async (data: QARequest) => {
-        console.log(data)
+        setValue(data.category1 === data.category2)
+        if (data.category1 === data.category2) {
+            return
+        }
+
         const defaultUrl: string = process.env.GET_QUESTION_URL
             ? process.env.GET_QUESTION_URL
             : 'http://localhost:4000/dev/question'
@@ -169,7 +186,7 @@ const Post: NextPage = () => {
                         </Box>
                         <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full">
                             <CategorySelecter1 />
-                            <CategorySelecter2 />
+                            <CategorySelecter2 duplicateError={duplicateError} />
                             <Box w="full">
                                 <FormControl isInvalid={errors.title !== undefined}>
                                     <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'xl' }}>
