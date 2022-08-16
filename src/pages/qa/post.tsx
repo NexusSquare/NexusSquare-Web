@@ -28,7 +28,6 @@ import Layout from '../../components/common/Layout'
 import LeftBar from '../../components/common/LeftBar'
 import RightBar from '../../components/common/RigthBar'
 import Footer from '../../components/common/Footer'
-import { addAbortSignal } from 'stream'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -47,7 +46,7 @@ interface RequiredLabelProps {
 const Post: NextPage = () => {
     const list1 = Object.values(QACategories)
     const list2 = _.cloneDeep(Object.values(QACategories))
-    const [duplicateError, setValue] = useState(false)
+    const [duplicateError, setDuplicateError] = useState(false)
     const {
         register,
         handleSubmit,
@@ -57,8 +56,7 @@ const Post: NextPage = () => {
     const [contentLength, setContentLength] = useState(0)
     const router = useRouter()
     const onChangeHandler = () => {
-        console.log(duplicateError)
-        setValue(false)
+        setDuplicateError(false)
     }
 
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -132,7 +130,7 @@ const Post: NextPage = () => {
         )
     }
     const onSubmitHandler = async (data: QARequest) => {
-        setValue(data.category1 === data.category2)
+        setDuplicateError(data.category1 === data.category2)
         if (data.category1 === data.category2) {
             return
         }
