@@ -3,6 +3,7 @@ import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const getLayout = Component.getLayout || ((page) => page)
     const theme = extendTheme({
         colors: {
             mainColor: '#FF9037',
