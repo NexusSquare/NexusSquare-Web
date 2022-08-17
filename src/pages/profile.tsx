@@ -68,7 +68,6 @@ const Profile: NextPage = () => {
             })
     }
     const updateProfile = async (updateUser: UpdateUser) => {
-        console.log(updateUser)
         await clientApi
             .put(`/user/${userId}`, updateUser, {
                 headers: {
