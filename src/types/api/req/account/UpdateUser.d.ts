@@ -1,5 +1,4 @@
-type User = {
-    mailAddress: string
+type UpdateUser = {
     department: string
     subject: string
     grade: number
@@ -7,11 +6,8 @@ type User = {
     lastname: string
     firstnameFurigana: string
     lastnameFurigana: string
-    point: number
-    updateAt: string
-    createAt: string
     imageUrl?: string
     isNameAnonymous: boolean
     isDepartmentAnonymous: boolean
 }
-export default User
+export default UpdateUser

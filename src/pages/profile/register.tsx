@@ -26,12 +26,11 @@ import { useMemo } from 'react'
 import { memo } from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChancelButton } from '../../components/common/chancelButton'
+import { ChancelButton } from '../../components/common/ChancelButton'
 import { DefaultModal } from '../../components/common/DefaultModal'
 import Layout from '../../components/common/Layout'
 import { PrimaryButton } from '../../components/common/PrimaryButton'
 import Department from '../../groupObject/department'
-import PostUser from '../../groupObject/postUser'
 import Foreign from '../../groupObject/subject/foreign'
 import Globalre from '../../groupObject/subject/globalre'
 import Humanre from '../../groupObject/subject/humanre'
@@ -43,6 +42,7 @@ import Nursere from '../../groupObject/subject/nursere'
 import Subject from '../../groupObject/subject/subject'
 import Teach from '../../groupObject/subject/teach'
 import { clientApi } from '../../lib/axios'
+import PostUser from '../../types/api/req/account/PostUser'
 import RegisterInfo from '../../types/domain/account/RegisterInfo'
 import User from '../../types/domain/account/User'
 
@@ -66,10 +66,10 @@ const Register: NextPage = () => {
         onOpen()
         setRegisterInfo(data)
     }
-    const registerUser = () => {
+    const registerUser = async () => {
         const mailAddress = session?.user?.email
         const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
-        clientApi
+        await clientApi
             .post('/user', perfectRegisterInfo, {
                 headers: {
                     Authorization: `${session?.idToken}`,

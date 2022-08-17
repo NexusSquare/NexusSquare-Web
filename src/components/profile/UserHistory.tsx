@@ -5,10 +5,10 @@ import { HistoryList } from './HistoryList'
 import History from '../../types/domain/account/History'
 
 interface Props {
-    history: History
+    historyList: History[]
 }
 
-export const UserHistory = ({ history }: Props) => {
+export const UserHistory = ({ historyList }: Props) => {
     return (
         <>
             <Tabs w="100%" isLazy defaultIndex={1}>
@@ -53,7 +53,7 @@ export const UserHistory = ({ history }: Props) => {
                         回答
                     </Tab>
                 </TabList>
-                <HistoryList history={history} />
+                <HistoryList historyList={historyList} />
                 <TabPanels>
                     <TabPanel padding="0px">
                         <VStack></VStack>
