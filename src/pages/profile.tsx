@@ -31,7 +31,7 @@ import History from '../types/domain/account/History'
 import PostUser from '../types/api/req/account/PostUser'
 import User from '../types/domain/account/User'
 import UpdateUser from '../types/api/req/account/UpdateUser'
-import { useErrorToast } from '../hools/useErrorToast'
+import { useErrorToast } from '../hooks/useErrorToast'
 
 const Profile: NextPage = () => {
     const { data: session, status } = useSession()
