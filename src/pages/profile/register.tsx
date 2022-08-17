@@ -1,13 +1,35 @@
-import { Box, Button, FormControl, FormErrorMessage, HStack, Input, Select, Text, VStack } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    HStack,
+    Input,
+    Select,
+    Text,
+    VStack,
+    Radio,
+    RadioGroup,
+    Stack,
+    Checkbox,
+    useDisclosure,
+    ModalBody,
+    ModalFooter,
+} from '@chakra-ui/react'
+import axios from 'axios'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
+import Router, { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useMemo } from 'react'
 import { memo } from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { ChancelButton } from '../../components/common/chancelButton'
+import { DefaultModal } from '../../components/common/DefaultModal'
 import Layout from '../../components/common/Layout'
+import { PrimaryButton } from '../../components/common/PrimaryButton'
 import Department from '../../groupObject/department'
 import PostUser from '../../groupObject/postUser'
 import Foreign from '../../groupObject/subject/foreign'
@@ -20,6 +42,9 @@ import Nurse from '../../groupObject/subject/nurse'
 import Nursere from '../../groupObject/subject/nursere'
 import Subject from '../../groupObject/subject/subject'
 import Teach from '../../groupObject/subject/teach'
+import { clientApi } from '../../lib/axios'
+import RegisterInfo from '../../types/domain/account/RegisterInfo'
+import User from '../../types/domain/account/User'
 
 const Register: NextPage = () => {
     const {
@@ -29,12 +54,37 @@ const Register: NextPage = () => {
         resetField,
         formState: { errors, isSubmitting },
     } = useForm<PostUser>()
-    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
+    const router = useRouter()
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const { data: session, status } = useSession()
+    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
+    const [registerInfo, setRegisterInfo] = useState<RegisterInfo>()
     const watchDepartment = watch('department')
     const MAX_GRADE = 4
+
+    const onSubmitHandler = (data: RegisterInfo) => {
+        onOpen()
+        setRegisterInfo(data)
+    }
+    const registerUser = () => {
+        const mailAddress = session?.user?.email
+        const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
+        clientApi
+            .post('/user', perfectRegisterInfo, {
+                headers: {
+                    Authorization: `${session?.idToken}`,
+                },
+            })
+            .then(() => {
+                router.replace('/qa')
+            })
+            .catch((err) => {
+                throw err
+            })
+        onClose()
+    }
+
     useEffect(() => {
-        console.log(session)
         resetField('subject')
         switch (watchDepartment) {
             case '外国語学部':
@@ -102,7 +152,7 @@ const Register: NextPage = () => {
         return (
             <Box
                 as="form"
-                onSubmit={handleSubmit((data) => console.log(`${data.subject}送信完了`))}
+                onSubmit={handleSubmit(onSubmitHandler)}
                 w={{ base: '100%', sm: '80vw', md: 'calc(100vw - 270px)', lg: '50vw' }}
                 paddingTop="20px"
                 alignItems="center"
@@ -167,6 +217,13 @@ const Register: NextPage = () => {
                     </FormControl>
                 </HStack>
                 <br />
+                <FormControl isInvalid={errors.isNameAnonymous !== undefined}>
+                    <Checkbox id="isNameAnonymous" {...register('isNameAnonymous')}>
+                        名前を非表示にする
+                    </Checkbox>
+                    <FormErrorMessage>{errors.isNameAnonymous && errors.isNameAnonymous.message}</FormErrorMessage>
+                </FormControl>
+                <br />
                 <FormControl isInvalid={errors.department !== undefined}>
                     <Select
                         id="department"
@@ -206,9 +263,29 @@ const Register: NextPage = () => {
                     <FormErrorMessage>{errors.grade && errors.grade.message}</FormErrorMessage>
                 </FormControl>
                 <br />
+                <FormControl isInvalid={errors.isDepartmentAnonymous !== undefined}>
+                    <Checkbox id="isDepartmentAnonymous" {...register('isDepartmentAnonymous')}>
+                        学部を非表示にする
+                    </Checkbox>
+                    <FormErrorMessage>
+                        {errors.isDepartmentAnonymous && errors.isDepartmentAnonymous.message}
+                    </FormErrorMessage>
+                </FormControl>
+                <br />
                 <Button type="submit" justifySelf="center">
                     送信する
                 </Button>
+                <DefaultModal isOpen={isOpen} onClose={onClose} title="ユーザ登録しますか？">
+                    <>
+                        <ModalBody>登録情報はあとで変更することが可能です。</ModalBody>
+                        <ModalFooter>
+                            <HStack>
+                                <ChancelButton buttonText="キャンセル" onClick={onClose} />
+                                <PrimaryButton buttonText="登録する" onClick={registerUser} />
+                            </HStack>
+                        </ModalFooter>
+                    </>
+                </DefaultModal>
             </Box>
         )
     })
