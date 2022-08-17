@@ -12,6 +12,9 @@ import {
     RadioGroup,
     Stack,
     Checkbox,
+    useDisclosure,
+    ModalBody,
+    ModalFooter,
 } from '@chakra-ui/react'
 import axios from 'axios'
 import { NextPage } from 'next'
@@ -23,7 +26,10 @@ import { useMemo } from 'react'
 import { memo } from 'react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { ChancelButton } from '../../components/common/chancelButton'
+import { DefaultModal } from '../../components/common/DefaultModal'
 import Layout from '../../components/common/Layout'
+import { PrimaryButton } from '../../components/common/PrimaryButton'
 import Department from '../../groupObject/department'
 import PostUser from '../../groupObject/postUser'
 import Foreign from '../../groupObject/subject/foreign'
@@ -49,10 +55,19 @@ const Register: NextPage = () => {
         formState: { errors, isSubmitting },
     } = useForm<PostUser>()
     const router = useRouter()
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const { data: session, status } = useSession()
-    const registerUser = (registerInfo: RegisterInfo) => {
-        const idToken = session?.idToken
-        const mailAddress = 'test5@hoge.com'
+    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
+    const [registerInfo, setRegisterInfo] = useState<RegisterInfo>()
+    const watchDepartment = watch('department')
+    const MAX_GRADE = 4
+
+    const onSubmitHandler = (data: RegisterInfo) => {
+        onOpen()
+        setRegisterInfo(data)
+    }
+    const registerUser = () => {
+        const mailAddress = session?.user?.email
         const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
         clientApi
             .post('/user', perfectRegisterInfo, {
@@ -66,10 +81,9 @@ const Register: NextPage = () => {
             .catch((err) => {
                 throw err
             })
+        onClose()
     }
-    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
-    const watchDepartment = watch('department')
-    const MAX_GRADE = 4
+
     useEffect(() => {
         resetField('subject')
         switch (watchDepartment) {
@@ -138,7 +152,7 @@ const Register: NextPage = () => {
         return (
             <Box
                 as="form"
-                onSubmit={handleSubmit(registerUser)}
+                onSubmit={handleSubmit(onSubmitHandler)}
                 w={{ base: '100%', sm: '80vw', md: 'calc(100vw - 270px)', lg: '50vw' }}
                 paddingTop="20px"
                 alignItems="center"
@@ -261,6 +275,17 @@ const Register: NextPage = () => {
                 <Button type="submit" justifySelf="center">
                     送信する
                 </Button>
+                <DefaultModal isOpen={isOpen} onClose={onClose} title="ユーザ登録しますか？">
+                    <>
+                        <ModalBody>登録情報はあとで変更することが可能です。</ModalBody>
+                        <ModalFooter>
+                            <HStack>
+                                <ChancelButton buttonText="キャンセル" onClick={onClose} />
+                                <PrimaryButton buttonText="登録する" onClick={registerUser} />
+                            </HStack>
+                        </ModalFooter>
+                    </>
+                </DefaultModal>
             </Box>
         )
     })
