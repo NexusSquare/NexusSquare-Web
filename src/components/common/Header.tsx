@@ -21,10 +21,11 @@ import ChakraNextImage from './chakraNextImage'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { memo } from 'react'
 import { useEffect } from 'react'
+import axios from 'axios'
+import { clientApi } from '../../lib/axios'
 
 interface Props {
     children?: ReactNode
-    isLogined: boolean
 }
 interface headerFuncProps {
     url: string
