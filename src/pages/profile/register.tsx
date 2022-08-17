@@ -1,6 +1,22 @@
-import { Box, Button, FormControl, FormErrorMessage, HStack, Input, Select, Text, VStack } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    FormControl,
+    FormErrorMessage,
+    HStack,
+    Input,
+    Select,
+    Text,
+    VStack,
+    Radio,
+    RadioGroup,
+    Stack,
+    Checkbox,
+} from '@chakra-ui/react'
+import axios from 'axios'
 import { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
+import Router, { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
 import { useMemo } from 'react'
@@ -20,6 +36,9 @@ import Nurse from '../../groupObject/subject/nurse'
 import Nursere from '../../groupObject/subject/nursere'
 import Subject from '../../groupObject/subject/subject'
 import Teach from '../../groupObject/subject/teach'
+import { clientApi } from '../../lib/axios'
+import RegisterInfo from '../../types/domain/account/RegisterInfo'
+import User from '../../types/domain/account/User'
 
 const Register: NextPage = () => {
     const {
@@ -29,12 +48,29 @@ const Register: NextPage = () => {
         resetField,
         formState: { errors, isSubmitting },
     } = useForm<PostUser>()
-    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
+    const router = useRouter()
     const { data: session, status } = useSession()
+    const registerUser = (registerInfo: RegisterInfo) => {
+        const idToken = session?.idToken
+        const mailAddress = 'test5@hoge.com'
+        const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
+        clientApi
+            .post('/user', perfectRegisterInfo, {
+                headers: {
+                    Authorization: `${session?.idToken}`,
+                },
+            })
+            .then(() => {
+                router.replace('/qa')
+            })
+            .catch((err) => {
+                throw err
+            })
+    }
+    const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const watchDepartment = watch('department')
     const MAX_GRADE = 4
     useEffect(() => {
-        console.log(session)
         resetField('subject')
         switch (watchDepartment) {
             case '外国語学部':
@@ -102,7 +138,7 @@ const Register: NextPage = () => {
         return (
             <Box
                 as="form"
-                onSubmit={handleSubmit((data) => console.log(`${data.subject}送信完了`))}
+                onSubmit={handleSubmit(registerUser)}
                 w={{ base: '100%', sm: '80vw', md: 'calc(100vw - 270px)', lg: '50vw' }}
                 paddingTop="20px"
                 alignItems="center"
@@ -167,6 +203,13 @@ const Register: NextPage = () => {
                     </FormControl>
                 </HStack>
                 <br />
+                <FormControl isInvalid={errors.isNameAnonymous !== undefined}>
+                    <Checkbox id="isNameAnonymous" {...register('isNameAnonymous')}>
+                        名前を非表示にする
+                    </Checkbox>
+                    <FormErrorMessage>{errors.isNameAnonymous && errors.isNameAnonymous.message}</FormErrorMessage>
+                </FormControl>
+                <br />
                 <FormControl isInvalid={errors.department !== undefined}>
                     <Select
                         id="department"
@@ -204,6 +247,15 @@ const Register: NextPage = () => {
                         <GradeList />
                     </Select>
                     <FormErrorMessage>{errors.grade && errors.grade.message}</FormErrorMessage>
+                </FormControl>
+                <br />
+                <FormControl isInvalid={errors.isDepartmentAnonymous !== undefined}>
+                    <Checkbox id="isDepartmentAnonymous" {...register('isDepartmentAnonymous')}>
+                        学部を非表示にする
+                    </Checkbox>
+                    <FormErrorMessage>
+                        {errors.isDepartmentAnonymous && errors.isDepartmentAnonymous.message}
+                    </FormErrorMessage>
                 </FormControl>
                 <br />
                 <Button type="submit" justifySelf="center">
