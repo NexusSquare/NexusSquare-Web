@@ -7,8 +7,7 @@ type PostUser = {
     firstnameFurigana: string
     lastnameFurigana: string
     point: number
-    createAt: string
-    mailAdress: string
+    mailAddress: string
     imageUrl?: string
     isNameAnonymous: boolean
     isDepartmentAnonymous: boolean

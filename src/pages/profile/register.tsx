@@ -31,7 +31,7 @@ import { DefaultModal } from '../../components/common/DefaultModal'
 import Layout from '../../components/common/Layout'
 import { PrimaryButton } from '../../components/common/PrimaryButton'
 import Department from '../../groupObject/department'
-import PostUser from '../../groupObject/postUser'
+import PostUser from '../../types/api/req/account/PostUser.'
 import Foreign from '../../groupObject/subject/foreign'
 import Globalre from '../../groupObject/subject/globalre'
 import Humanre from '../../groupObject/subject/humanre'
@@ -66,10 +66,10 @@ const Register: NextPage = () => {
         onOpen()
         setRegisterInfo(data)
     }
-    const registerUser = () => {
+    const registerUser = async () => {
         const mailAddress = session?.user?.email
         const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
-        clientApi
+        await clientApi
             .post('/user', perfectRegisterInfo, {
                 headers: {
                     Authorization: `${session?.idToken}`,

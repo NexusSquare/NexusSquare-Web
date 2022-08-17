@@ -11,21 +11,29 @@ import {
     Button,
     Avatar,
     WrapItem,
+    IconButton,
+    Spacer,
+    useDisclosure,
 } from '@chakra-ui/react'
-import { AiFillCamera } from 'react-icons/ai'
+import { FiEdit } from 'react-icons/fi'
 import React from 'react'
 import ChakraNextImage from '../common/chakraNextImage'
 import User from '../../types/domain/account/User'
 import { useRouter } from 'next/router'
-
+import { AiFillCamera } from 'react-icons/ai'
+import { EditForm } from './EditForm'
+import { DefaultModal } from '../common/DefaultModal'
+import UpdateUser from '../../types/api/req/account/UpdateUser'
 interface Props {
     user: User
+    updateProfile: (value: UpdateUser) => Promise<void>
 }
 
-export const UserInfo = ({ user }: Props) => {
+export const UserInfo = ({ user, updateProfile }: Props) => {
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const POINT_IMAGE_PATH: string = '/images/point.png'
     const DEFAULT_AVATAR_URL: string = 'https://bit.ly/broken-link'
-    console.log(user)
+    const { updateAt, createAt, point, mailAddress, ...updateUser } = user
     return (
         <>
             <HStack
@@ -37,7 +45,17 @@ export const UserInfo = ({ user }: Props) => {
                 boxShadow="md"
                 justifyContent="space-evenly"
                 py="0"
+                position="relative"
             >
+                <IconButton
+                    position="absolute"
+                    right="0"
+                    bottom="0"
+                    aria-label="通報する"
+                    icon={<FiEdit />}
+                    variant="outline"
+                    onClick={onOpen}
+                ></IconButton>
                 <Box
                     w={{ base: '100px', md: '150px' }}
                     h={{ base: '100px', md: '150px' }}
@@ -59,25 +77,25 @@ export const UserInfo = ({ user }: Props) => {
                 <VStack>
                     <HStack>
                         <Box>
-                            <Text>{user.firstnameFurigana}</Text>
-                            <Text fontWeight="bold" fontSize={{ base: '2xl', md: '3xl' }}>
-                                {user.firstname}
-                            </Text>
-                        </Box>
-                        <Box>
                             <Text>{user.lastnameFurigana}</Text>
                             <Text fontWeight="bold" fontSize={{ base: '2xl', md: '3xl' }}>
                                 {user.lastname}
                             </Text>
                         </Box>
+                        <Box>
+                            <Text>{user.firstnameFurigana}</Text>
+                            <Text fontWeight="bold" fontSize={{ base: '2xl', md: '3xl' }}>
+                                {user.firstname}
+                            </Text>
+                        </Box>
                     </HStack>
-                    <Text>
-                        {user.department}
-                        {user.subject}
-                    </Text>
+                    <HStack>
+                        <Text>{user.department}</Text>
+                        <Text>{user.subject}</Text>
+                    </HStack>
                 </VStack>
                 <VStack height={'full'}>
-                    <Text fontSize={{ base: 'xl', md: '2xl' }}>1学年</Text>
+                    <Text fontSize={{ base: 'xl', md: '2xl' }}>{user.grade}学年</Text>
                 </VStack>
             </HStack>
             <VStack
@@ -100,6 +118,9 @@ export const UserInfo = ({ user }: Props) => {
                     <Text>{user.point}</Text>
                     <Text>pt</Text>
                 </HStack>
+                <DefaultModal isOpen={isOpen} onClose={onClose} title={'プロフィール編集'}>
+                    <EditForm updateUser={updateUser} updateProfile={updateProfile} onClose={onClose} />
+                </DefaultModal>
             </VStack>
         </>
     )
