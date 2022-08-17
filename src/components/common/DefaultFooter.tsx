@@ -4,7 +4,7 @@ import ChakraNextImage from './chakraNextImage'
 import { BsTwitter } from 'react-icons/bs'
 
 const DefaultFooter: Function = () => {
-    const LOGO_URL: string = '/images/logo.jpg'
+    const LOGO_URL: string = '/images/nexus-square.png'
     const TWITTER_URL: string = 'https://twitter.com/NexusSquare_apu'
     return (
         <VStack as="footer" bgColor="#FF9037" spacing="0px" w="100%" minH="200px" paddingTop="50px">
