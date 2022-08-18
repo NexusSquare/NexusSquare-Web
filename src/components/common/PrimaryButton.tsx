@@ -3,10 +3,17 @@ import React from 'react'
 interface Props {
     buttonText: string
     onClick: () => void
+    isLoading?: boolean
 }
-export const PrimaryButton = ({ buttonText, onClick }: Props) => {
+export const PrimaryButton = ({ buttonText, onClick, isLoading }: Props) => {
     return (
-        <Button color="white" bgColor="mainColor" _hover={{ bgColor: 'subSubColor' }} onClick={onClick}>
+        <Button
+            isLoading={isLoading}
+            color="white"
+            bgColor="mainColor"
+            _hover={{ bgColor: 'subSubColor' }}
+            onClick={onClick}
+        >
             {buttonText}
         </Button>
     )
