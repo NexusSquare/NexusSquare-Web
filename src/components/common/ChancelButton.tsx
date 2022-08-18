@@ -4,10 +4,12 @@ import React from 'react'
 interface Props {
     buttonText: string
     onClick: () => void
+    isLoading?: boolean
 }
-export const ChancelButton = ({ buttonText, onClick }: Props) => {
+export const ChancelButton = ({ buttonText, onClick, isLoading }: Props) => {
     return (
         <Button
+            isLoading={isLoading}
             color="mainColor"
             bgColor="white"
             borderWidth={1}

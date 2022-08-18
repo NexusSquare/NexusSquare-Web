@@ -6,5 +6,5 @@ export const clientApi: AxiosInstance = axios.create({
 })
 export const qaApi: AxiosInstance = axios.create({
     baseURL: process.env.NEXT_PUBLIC_QA_API_URL!,
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', Authorization: process.env.NEXT_PUBLIC_QA_TOKEN! },
 })
