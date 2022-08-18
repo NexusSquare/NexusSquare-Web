@@ -187,7 +187,7 @@ const Post: NextPage = () => {
                     }}
                     paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
                 >
-                    <VStack w="full" p="5%">
+                    <VStack w="full" p="5%" spacing={4}>
                         <HStack w="full">
                             <Box as="span" boxSize="20px" bgColor="mainColor" rounded="full"></Box>
                             <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">
@@ -206,7 +206,7 @@ const Post: NextPage = () => {
                                 </ListItem>
                             </UnorderedList>
                         </Box>
-                        <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full">
+                        <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full" spacing={4}>
                             <CategorySelecter1 />
                             <CategorySelecter2 />
                             <Box w="full">
