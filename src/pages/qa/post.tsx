@@ -7,15 +7,18 @@ import {
     HStack,
     Input,
     ListItem,
+    ModalBody,
+    ModalFooter,
     Select,
     Spacer,
     Text,
     Textarea,
     UnorderedList,
+    useDisclosure,
     VStack,
 } from '@chakra-ui/react'
 import { BsChatRightText } from 'react-icons/bs'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import _ from 'lodash'
 import { NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
@@ -29,6 +32,12 @@ import LeftBar from '../../components/common/LeftBar'
 import RightBar from '../../components/common/RigthBar'
 import Footer from '../../components/common/Footer'
 import Question from '../../types/domain/qa/Question'
+import { useSession } from 'next-auth/react'
+import { qaApi } from '../../lib/axios'
+import { useErrorToast } from '../../hooks/useErrorToast'
+import { DefaultModal } from '../../components/common/DefaultModal'
+import { PrimaryButton } from '../../components/common/PrimaryButton'
+import { ChancelButton } from '../../components/common/ChancelButton'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -44,6 +53,13 @@ interface RequiredLabelProps {
     isRequired: boolean
 }
 
+interface preQuestion {
+    title: string
+    category1: string
+    category2?: string
+    content: string
+}
+
 const Post: NextPage = () => {
     const list1 = Object.values(QACategories)
     const list2 = _.cloneDeep(Object.values(QACategories))
@@ -55,14 +71,40 @@ const Post: NextPage = () => {
         formState: { errors, isSubmitting },
     } = useForm<QARequest>()
     const [contentLength, setContentLength] = useState(0)
-    const [question, setQuestion] = useState<Question>()
+    const [loading, setLoading] = useState(false)
+    const [question, setQuestion] = useState<preQuestion>()
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter()
+    const { data: session, status } = useSession()
+    const errorToast = useErrorToast()
     const onChangeHandler = () => {
         setDuplicateError(false)
     }
 
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
+    }
+    const onSubmitHandler = (data: preQuestion) => {
+        setDuplicateError(data.category1 === data.category2)
+        if (data.category1 === data.category2) {
+            return
+        }
+        onOpen()
+        setQuestion(data)
+    }
+    const postQuestion = async () => {
+        const userId = session?.user?.email!
+        const questionReq: QARequest = { ...question!, userId }
+        setLoading(true)
+        await qaApi
+            .post('/', questionReq)
+            .then(() => {
+                router.replace('/qa')
+            })
+            .catch(() => {
+                errorToast()
+            })
+        setLoading(false)
     }
     const RequiredLabel = ({ isRequired }: RequiredLabelProps) => {
         const bgColor = isRequired ? 'mainColor' : 'gray.400'
@@ -130,26 +172,6 @@ const Post: NextPage = () => {
                 </Box>
             </VStack>
         )
-    }
-    const onSubmitHandler = async (data: QARequest) => {
-        setDuplicateError(data.category1 === data.category2)
-        if (data.category1 === data.category2) {
-            return
-        }
-        console.log(data)
-        const defaultUrl: string = process.env.GET_QUESTION_URL
-            ? process.env.GET_QUESTION_URL
-            : 'http://localhost:4000/dev/question'
-        await axios
-            .post(defaultUrl, data)
-            .then((res) => {
-                console.log(res.data)
-                alert('質問を投稿しました')
-                //router.push('/qa')
-            })
-            .catch((res) => {
-                alert('質問の投稿に失敗しました')
-            })
     }
     return (
         <Layout pageName={'質問の投稿'}>
@@ -251,6 +273,28 @@ const Post: NextPage = () => {
                                 >
                                     質問を投稿する
                                 </Button>
+                                <DefaultModal isOpen={isOpen} onClose={onClose} title="質問を投稿しますか？">
+                                    <>
+                                        <ModalBody>
+                                            注意書き注意書き注意書き注意書き注意書き注意書き注意書き注意書き
+                                            注意書き注意書き
+                                        </ModalBody>
+                                        <ModalFooter>
+                                            <HStack>
+                                                <ChancelButton
+                                                    isLoading={loading}
+                                                    buttonText="キャンセル"
+                                                    onClick={onClose}
+                                                />
+                                                <PrimaryButton
+                                                    isLoading={loading}
+                                                    buttonText="投稿する"
+                                                    onClick={postQuestion}
+                                                />
+                                            </HStack>
+                                        </ModalFooter>
+                                    </>
+                                </DefaultModal>
                             </HStack>
                         </VStack>
                     </VStack>
