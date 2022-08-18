@@ -28,6 +28,7 @@ import Layout from '../../components/common/Layout'
 import LeftBar from '../../components/common/LeftBar'
 import RightBar from '../../components/common/RigthBar'
 import Footer from '../../components/common/Footer'
+import Question from '../../types/domain/qa/Question'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -54,6 +55,7 @@ const Post: NextPage = () => {
         formState: { errors, isSubmitting },
     } = useForm<QARequest>()
     const [contentLength, setContentLength] = useState(0)
+    const [question, setQuestion] = useState<Question>()
     const router = useRouter()
     const onChangeHandler = () => {
         setDuplicateError(false)
@@ -134,7 +136,7 @@ const Post: NextPage = () => {
         if (data.category1 === data.category2) {
             return
         }
-
+        console.log(data)
         const defaultUrl: string = process.env.GET_QUESTION_URL
             ? process.env.GET_QUESTION_URL
             : 'http://localhost:4000/dev/question'
@@ -143,7 +145,7 @@ const Post: NextPage = () => {
             .then((res) => {
                 console.log(res.data)
                 alert('質問を投稿しました')
-                router.push('/qa')
+                //router.push('/qa')
             })
             .catch((res) => {
                 alert('質問の投稿に失敗しました')

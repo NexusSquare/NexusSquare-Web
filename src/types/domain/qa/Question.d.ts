@@ -1,4 +1,4 @@
-type question = {
+type Question = {
     userId: string
     id: string
     category1: string
@@ -10,4 +10,4 @@ type question = {
     ansNum: number
 }
 
-export default question
+export default Question
