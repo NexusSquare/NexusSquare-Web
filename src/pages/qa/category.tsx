@@ -13,7 +13,9 @@ import {
     Radio,
     RadioGroup,
     RadioGroupProps,
+    Select,
     Text,
+    VStack,
     Wrap,
     WrapItem,
 } from '@chakra-ui/react'
@@ -25,12 +27,15 @@ import QAResponse from '../../types/api/res//qa/qaResponse'
 import Question from '../../types/domain/qa/Question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 import queryOptions from '../../groupObject/qa/queryOptions'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useMemo } from 'react'
 import QACategories from '../../groupObject/qa/qaCategories'
+import QARequest from '../../types/api/req/qa/QARequest'
 import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { useCallback } from 'react'
 import useSWR, { mutate, useSWRConfig } from 'swr'
 import { fetcherQuestion } from '../../repositories/qa/fetcherQuestion'
+import { values } from 'lodash'
 
 interface Props {
     content: Question[]
@@ -47,6 +52,7 @@ const CategorySelect = (props: Props) => {
     const [displayData, setDisplayData] = useState<Question[]>(props.content)
     const [searchQuery, setSearchQuery] = useState<QAQueryProps>({ option: queryOptions.notSolved })
     const [checkValue, setCheckValue] = useState<string>('')
+    const { register } = useForm<QARequest>()
 
     const { data, error, mutate } = useSWR<Question[]>(
         () => {
@@ -61,27 +67,30 @@ const CategorySelect = (props: Props) => {
         console.log('not-soleved')
         data && setDisplayData(data)
     }, [data])
+    useEffect(() => {
+        console.log(searchQuery)
+    }, [searchQuery])
 
-    const onChangeHandler = (value: string) => {
-        setCheckValue(value)
+    const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>): void => {
+        const value = e.target.value
         setSearchQuery({ ...searchQuery, category: value })
     }
 
-    const RadioButtonList = () => {
+    const RadioButtonList = useCallback(() => {
         return (
-            <RadioGroup onChange={onChangeHandler} value={checkValue}>
-                <Wrap>
+            <VStack align={'center'}>
+                <Select width={{ base: '8%', md: '80%' }} placeholder="カテゴリを選択" onChange={onChangeHandler}>
                     {categoryList.map((category) => {
                         return (
-                            <WrapItem key={category}>
-                                <Radio value={category}>{category}</Radio>
-                            </WrapItem>
+                            <Box as="option" value={category} key={category}>
+                                {category}
+                            </Box>
                         )
                     })}
-                </Wrap>
-            </RadioGroup>
+                </Select>
+            </VStack>
         )
-    }
+    }, [])
     return (
         <QAListLayout pageName="カテゴリで絞り込む" data={displayData} query={searchQuery}>
             <Box h="100px" w="100%" display="flex" justifyContent="center" flexDirection="column">
