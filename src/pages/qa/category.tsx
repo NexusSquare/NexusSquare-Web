@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import {
     Box,
     Button,
@@ -27,7 +28,7 @@ import QAResponse from '../../types/api/res//qa/qaResponse'
 import Question from '../../types/domain/qa/Question'
 import QAQueryProps from '../../groupObject/qa/queryGroup'
 import queryOptions from '../../groupObject/qa/queryOptions'
-import React, { useRef, useState, useMemo } from 'react'
+import React, { useRef, useState, useMemo, memo } from 'react'
 import QACategories from '../../groupObject/qa/qaCategories'
 import QARequest from '../../types/api/req/qa/QARequest'
 import { useEffect } from 'react'
@@ -51,8 +52,7 @@ const CategorySelect = (props: Props) => {
         : 'http://localhost:4000/dev/question'
     const [displayData, setDisplayData] = useState<Question[]>(props.content)
     const [searchQuery, setSearchQuery] = useState<QAQueryProps>({ option: queryOptions.notSolved })
-    const [checkValue, setCheckValue] = useState<string>('')
-    const { register } = useForm<QARequest>()
+    const [category, setCategory] = useState('')
 
     const { data, error, mutate } = useSWR<Question[]>(
         () => {
@@ -67,19 +67,20 @@ const CategorySelect = (props: Props) => {
         console.log('not-soleved')
         data && setDisplayData(data)
     }, [data])
-    useEffect(() => {
-        console.log(searchQuery)
-    }, [searchQuery])
 
     const onChangeHandler = (e: React.ChangeEvent<HTMLSelectElement>): void => {
-        const value = e.target.value
-        setSearchQuery({ ...searchQuery, category: value })
+        const checkedCategory = e.target.value
+        setCategory(checkedCategory)
+        setSearchQuery({ ...searchQuery, category: checkedCategory })
     }
 
-    const RadioButtonList = useCallback(() => {
+    const SelectBox = () => {
         return (
             <VStack align={'center'}>
-                <Select width={{ base: '8%', md: '80%' }} placeholder="カテゴリを選択" onChange={onChangeHandler}>
+                <Select width={'80%'} value={category} onChange={onChangeHandler}>
+                    <Box as="option" disabled value={''}>
+                        カテゴリーを選択してください
+                    </Box>
                     {categoryList.map((category) => {
                         return (
                             <Box as="option" value={category} key={category}>
@@ -90,14 +91,14 @@ const CategorySelect = (props: Props) => {
                 </Select>
             </VStack>
         )
-    }, [])
+    }
     return (
         <QAListLayout pageName="カテゴリで絞り込む" data={displayData} query={searchQuery}>
             <Box h="100px" w="100%" display="flex" justifyContent="center" flexDirection="column">
                 <Text paddingLeft={{ base: '5%', md: '10%' }} fontSize="4xl" textAlign="left">
                     カテゴリで絞り込む
                 </Text>
-                <RadioButtonList />
+                <SelectBox />
             </Box>
         </QAListLayout>
     )
