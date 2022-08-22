@@ -37,7 +37,6 @@ interface headerFuncProps {
     funcName: string
 }
 const Header = ({ children }: Props): JSX.Element => {
-    console.log('render Header')
     const LOGO_URL: string = '/images/nexus-square.png'
     const ICON_IMAGE_URL: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
         ? process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
