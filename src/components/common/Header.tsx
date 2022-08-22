@@ -8,6 +8,7 @@ import {
     HStack,
     IconButton,
     Spacer,
+    Spinner,
     Stack,
     StackDivider,
     Text,
@@ -21,8 +22,11 @@ import ChakraNextImage from './chakraNextImage'
 import { useSession, signIn, signOut } from 'next-auth/react'
 import { memo } from 'react'
 import { useEffect } from 'react'
-import axios from 'axios'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import { clientApi } from '../../lib/axios'
+import User from '../../types/domain/account/User'
+import { useErrorToast } from '../../hooks/useErrorToast'
+import { useRouter } from 'next/router'
 
 interface Props {
     children?: ReactNode
@@ -33,18 +37,57 @@ interface headerFuncProps {
     funcName: string
 }
 const Header = ({ children }: Props): JSX.Element => {
+    console.log('render Header')
     const LOGO_URL: string = '/images/nexus-square.png'
     const ICON_IMAGE_URL: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
         ? process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
         : ''
     const { data: session, status } = useSession()
+    const userId = session?.user?.email
     const [isLogined, setIsLogined] = useState(status === 'authenticated')
     const [isNotice, setIsNotice] = useState(false)
+    const router = useRouter()
+    const errorToast = useErrorToast()
+
+    const fetchProfile = async () => {
+        await clientApi
+            .get(`/user/${userId}`, {
+                headers: {
+                    Authorization: `${session?.idToken}`,
+                },
+            })
+            .then(() => {
+                return
+            })
+            .catch((err: AxiosError) => {
+                if (!err.response) {
+                    errorToast()
+                }
+                if (err.response?.status === 500) {
+                    // 本番だと405
+                    router.push('/profile/register')
+                } else {
+                    errorToast()
+                }
+            })
+    }
+
     useEffect(() => {
-        console.log(`ログイン状態:${status}`)
         setIsLogined(status === 'authenticated')
     }, [status])
-    if (status === 'loading') return <Box>ちょい待ち</Box>
+
+    useEffect(() => {
+        if (!isLogined) return
+        fetchProfile()
+    }, [isLogined])
+
+    if (status === 'loading') {
+        return (
+            <HStack d={'flex'} justifyContent={'center'}>
+                <Spinner />
+            </HStack>
+        )
+    }
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return props.isComp ? (
             <Link href={props.url} passHref>
