@@ -14,7 +14,6 @@ const Layout: Function = ({ children, pageName }: Props): JSX.Element => {
     return (
         <Box paddingTop={{ base: '100px', md: '60px' }}>
             <CommonMeta siteTitle={siteTitle} />
-            <Header />
             {children}
         </Box>
     )
