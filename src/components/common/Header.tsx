@@ -1,12 +1,21 @@
 import { BellIcon } from '@chakra-ui/icons'
 import {
+    Avatar,
     baseStyle,
     Box,
     Button,
     chakra,
     ChakraComponent,
+    Divider,
     HStack,
     IconButton,
+    Popover,
+    PopoverArrow,
+    PopoverBody,
+    PopoverCloseButton,
+    PopoverContent,
+    PopoverHeader,
+    PopoverTrigger,
     Spacer,
     Spinner,
     Stack,
@@ -27,6 +36,8 @@ import { clientApi } from '../../lib/axios'
 import User from '../../types/domain/account/User'
 import { useErrorToast } from '../../hooks/useErrorToast'
 import { useRouter } from 'next/router'
+import { FiEdit } from 'react-icons/fi'
+import { VscSignOut } from 'react-icons/vsc'
 
 interface Props {
     children?: ReactNode
@@ -37,14 +48,13 @@ interface headerFuncProps {
     funcName: string
 }
 const Header = ({ children }: Props): JSX.Element => {
-    const LOGO_URL: string = '/images/nexus-square.png'
-    const ICON_IMAGE_URL: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
-        ? process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
-        : ''
+    const LOGO_URL: string = '/images/logo2.jpg'
+    const ICON_IMAGE_URL: string = 'https://bit.ly/broken-link'
     const { data: session, status } = useSession()
     const userId = session?.user?.email
-    const [isLogined, setIsLogined] = useState(status === 'authenticated')
+    const [isLoggedIn, setIsLoggedIn] = useState(status === 'authenticated')
     const [isNotice, setIsNotice] = useState(false)
+    const [user, setUser] = useState<User>()
     const router = useRouter()
     const errorToast = useErrorToast()
 
@@ -55,12 +65,14 @@ const Header = ({ children }: Props): JSX.Element => {
                     Authorization: `${session?.idToken}`,
                 },
             })
-            .then(() => {
-                return
+            .then((res: AxiosResponse<User>) => {
+                setUser(res.data)
+                console.log(res.data)
             })
             .catch((err: AxiosError) => {
                 if (!err.response) {
                     errorToast()
+                    return
                 }
                 if (err.response?.status === 500) {
                     // 本番だと405
@@ -72,13 +84,13 @@ const Header = ({ children }: Props): JSX.Element => {
     }
 
     useEffect(() => {
-        setIsLogined(status === 'authenticated')
+        setIsLoggedIn(status === 'authenticated')
     }, [status])
 
     useEffect(() => {
-        if (!isLogined) return
+        if (!isLoggedIn) return
         fetchProfile()
-    }, [isLogined])
+    }, [isLoggedIn])
 
     if (status === 'loading') {
         return (
@@ -151,41 +163,73 @@ const Header = ({ children }: Props): JSX.Element => {
             </Box>
         )
     const LoginOrProfile = () =>
-        isLogined ? (
+        isLoggedIn ? (
             <HStack spacing="10%" w="105px">
                 <NotificateButton />
-                <Box width="40px" height="40px">
-                    <ChakraNextImage
-                        src={ICON_IMAGE_URL}
-                        alt="プロフィール"
-                        borderRadius="50%"
-                        width={50}
-                        height={50}
-                    ></ChakraNextImage>
-                </Box>
-                <Button onClick={() => signOut()}>サインアウト</Button>
+                <Popover>
+                    <PopoverTrigger>
+                        <Avatar as="button" width="40px" height="40px" src={ICON_IMAGE_URL} />
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        <PopoverHeader fontWeight="semibold">
+                            <HStack py="4" px="2" spacing="4">
+                                <Avatar as="button" width="40px" height="40px" src={ICON_IMAGE_URL} />
+                                <VStack w="full" alignItems={'left'} spacing="0">
+                                    <Text>
+                                        {user?.lastname} {user?.firstname}
+                                    </Text>
+                                    <Text fontSize={'xs'}>{user?.mailAddress}</Text>
+                                </VStack>
+                            </HStack>
+                        </PopoverHeader>
+                        <PopoverArrow />
+                        <PopoverCloseButton />
+                        <PopoverBody>
+                            <HStack
+                                as="button"
+                                py="4"
+                                px="2"
+                                w="full"
+                                _hover={{ bgColor: 'gray.100' }}
+                                onClick={() => router.push('/profile')}
+                            >
+                                <FiEdit />
+                                <Text>プロフィールを確認する</Text>
+                            </HStack>
+                            <Divider />
+                            <HStack
+                                as="button"
+                                py="4"
+                                px="2"
+                                w="full"
+                                onClick={() => signOut()}
+                                _hover={{ bgColor: 'gray.100' }}
+                            >
+                                <VscSignOut />
+                                <Text>サインアウト</Text>
+                            </HStack>
+                        </PopoverBody>
+                    </PopoverContent>
+                </Popover>
             </HStack>
         ) : (
             <HStack spacing="10%" w="200px" justify="end">
-                <Button onClick={() => signIn('cognito')}>新規登録</Button>
-                <Link href="/login" passHref>
-                    <Box
-                        as="a"
-                        href="/login"
-                        h="40px"
-                        w="85px"
-                        padding="8px 10px"
-                        fontWeight="semibold"
-                        fontSize={{ md: 'md', base: 'sm' }}
-                        bgColor="#FFDA77"
-                        borderRadius="10px"
-                        _hover={{ opacity: '50%' }}
-                        _active={{ opacity: '50%', outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
+                <Button
+                    onClick={() => signIn('cognito')}
+                    bgColor="mainColor"
+                    color="white"
+                    borderWidth={1}
+                    borderColor="white"
+                    fontWeight={'bold'}
+                    _hover={{ bgColor: 'white', color: 'mainColor' }}
+                >
+                    新規登録
+                </Button>
+                <Button bgColor="#FFF">
+                    <Link href="/login" passHref>
                         ログイン
-                    </Box>
-                </Link>
+                    </Link>
+                </Button>
             </HStack>
         )
 
@@ -219,11 +263,11 @@ const Header = ({ children }: Props): JSX.Element => {
                             <ChakraNextImage
                                 src={LOGO_URL}
                                 alt="ロゴ"
-                                minW="150px"
+                                minW="120px"
                                 minH="30px"
-                                maxW="225px"
+                                maxW="180px"
                                 maxH="45px"
-                                width={225}
+                                width={180}
                                 height={45}
                                 borderColor="#FF9037"
                             ></ChakraNextImage>
