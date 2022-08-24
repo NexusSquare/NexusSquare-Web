@@ -202,7 +202,9 @@ const Header = ({ children }: Props): JSX.Element => {
                                 py="4"
                                 px="2"
                                 w="full"
-                                onClick={() => signOut()}
+                                onClick={() => {
+                                    signOut()
+                                }}
                                 _hover={{ bgColor: 'gray.100' }}
                             >
                                 <VscSignOut />
