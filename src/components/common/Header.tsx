@@ -67,7 +67,6 @@ const Header = ({ children }: Props): JSX.Element => {
             })
             .then((res: AxiosResponse<User>) => {
                 setUser(res.data)
-                console.log(res.data)
             })
             .catch((err: AxiosError) => {
                 if (!err.response) {
