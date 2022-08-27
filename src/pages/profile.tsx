@@ -120,38 +120,35 @@ const Profile = ({ user }: Props) => {
                     }}
                     paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
                 >
-                    {profile ? (
-                        <VStack w={'full'} spacing={10}>
-                            <HStack w={'full'} p="4" mb="8">
-                                <Link href="/qa" passHref>
-                                    <Text fontSize="lg" fontWeight="bold" cursor="pointer">
-                                        <Box as="span" color="mainColor">
-                                            ◀︎
-                                        </Box>
-                                        ホーム
-                                    </Text>
-                                </Link>
-                            </HStack>
-                            <UserInfo user={profile} updateProfile={updateProfile} />
-                            <Link href="/gift" passHref>
-                                <Button
-                                    leftIcon={<AiOutlineGift />}
-                                    as="a"
-                                    color="white"
-                                    bgColor="red.400"
-                                    _hover={{ bgColor: 'red.200' }}
-                                    size="lg"
-                                    fontSize={{ base: 'lg', md: '2xl' }}
-                                    boxShadow="md"
-                                >
-                                    応募する
-                                </Button>
+                    <VStack w={'full'} spacing={10}>
+                        <HStack w={'full'} p="4" mb="8">
+                            <Link href="/qa" passHref>
+                                <Text fontSize="lg" fontWeight="bold" cursor="pointer">
+                                    <Box as="span" color="mainColor">
+                                        ◀︎
+                                    </Box>
+                                    ホーム
+                                </Text>
                             </Link>
-                            <UserHistory historyList={historyList} />
-                        </VStack>
-                    ) : (
-                        <Loading />
-                    )}
+                        </HStack>
+                        <UserInfo user={profile} updateProfile={updateProfile} />
+                        <Link href="/gift" passHref>
+                            <Button
+                                leftIcon={<AiOutlineGift />}
+                                as="a"
+                                color="white"
+                                bgColor="red.400"
+                                _hover={{ bgColor: 'red.200' }}
+                                size="lg"
+                                fontSize={{ base: 'lg', md: '2xl' }}
+                                boxShadow="md"
+                            >
+                                応募する
+                            </Button>
+                        </Link>
+                        <UserHistory historyList={historyList} />
+                    </VStack>
+
                     <Footer />
                 </VStack>
 
