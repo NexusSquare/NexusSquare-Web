@@ -1,7 +1,7 @@
 type AnswerRequest = {
     userId: string
     questionId: string
-    postedby: string
+    postBy: string
     content: string
     authorIcon: string
 }

@@ -1,4 +1,21 @@
-import { Box, Button, Divider, HStack, IconButton, Image, Spacer, Text, VStack } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    Divider,
+    FormControl,
+    FormErrorMessage,
+    FormLabel,
+    HStack,
+    IconButton,
+    Image,
+    ModalBody,
+    ModalFooter,
+    Spacer,
+    Text,
+    Textarea,
+    useDisclosure,
+    VStack,
+} from '@chakra-ui/react'
 import { BsChatRightText } from 'react-icons/bs'
 import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
@@ -22,6 +39,12 @@ import { useMemo } from 'react'
 import { useCallback } from 'react'
 import { QAPerfectCard } from '../../components/qa/QAPerfectCard'
 import AnswerCard from '../../components/qa/AnswerCard'
+import { DefaultModal } from '../../components/common/DefaultModal'
+import { ChancelButton } from '../../components/common/ChancelButton'
+import { PrimaryButton } from '../../components/common/PrimaryButton'
+import { useForm } from 'react-hook-form'
+import { PostForm } from '../../components/qa/PostForm'
+import { useSession } from 'next-auth/react'
 
 interface Props {
     content: PerfectQuestion
@@ -31,7 +54,14 @@ const Question: NextPage<Props> = ({ content }) => {
     const router = useRouter()
     const question: PerfectQuestion = content
     const [answers, setAnswers] = useState<Answer[]>([])
+    const { isOpen, onOpen, onClose } = useDisclosure()
+    const { data: session, status } = useSession()
 
+    const onSubmitHandler = (submitValue: { content: string }) => {
+        const userId: string = session?.user?.email!
+        const questionId: string = question.id
+        const postBy: string = session?.user?.name!
+    }
     useEffect(() => {
         if (!process.env.NEXT_PUBLIC_GET_QUESTION_URL) {
             console.error('urlの読み込みに失敗しました')
@@ -105,9 +135,13 @@ const Question: NextPage<Props> = ({ content }) => {
                     color="white"
                     _hover={{ bgColor: 'subSubColor' }}
                     leftIcon={<BsChatRightText />}
+                    onClick={onOpen}
                 >
                     回答
                 </Button>
+                <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
+                    <PostForm onClose={onClose} />
+                </DefaultModal>
                 <VStack as="section" w="full" p="5%" spacing={2}>
                     <Text as="h2" fontSize="4xl" fontWeight="semibold" w="full">
                         解答
@@ -123,7 +157,6 @@ const Question: NextPage<Props> = ({ content }) => {
                         広告枠
                     </Box>
                 </HStack>
-                s
                 <QAFooter />
             </VStack>
         </QALayout>
