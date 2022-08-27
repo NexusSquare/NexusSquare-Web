@@ -14,9 +14,9 @@ import {
 } from '@chakra-ui/react'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import { GetServerSideProps, NextPage } from 'next'
-import { useSession } from 'next-auth/react'
+import { getSession, useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { AiOutlineGift } from 'react-icons/ai'
 import Footer from '../components/common/Footer'
@@ -32,11 +32,17 @@ import PostUser from '../types/api/req/account/PostUser'
 import User from '../types/domain/account/User'
 import UpdateUser from '../types/api/req/account/UpdateUser'
 import { useErrorToast } from '../hooks/useErrorToast'
+import { RiContactsBookLine } from 'react-icons/ri'
 
-const Profile: NextPage = () => {
+interface Props {
+    user: User
+}
+
+const Profile = ({ user }: Props) => {
     const { data: session, status } = useSession()
-    const [profile, setProfile] = useState<User>()
+    const [profile, setProfile] = useState<User>(user)
     const [historyList, setHistoryList] = useState<History[]>([])
+    const router = useRouter()
     const userId = session?.user?.email
     const errorToast = useErrorToast()
     const fetchProfile = async () => {
@@ -83,7 +89,7 @@ const Profile: NextPage = () => {
     }
     const deleteProfile = async () => {
         await clientApi
-            .put(`/user/${userId}`, {
+            .delete(`/user/${userId}`, {
                 headers: {
                     Authorization: `${session?.idToken}`,
                 },
@@ -97,10 +103,8 @@ const Profile: NextPage = () => {
     }
 
     useEffect(() => {
-        if (!userId) return
-        fetchProfile()
         fetchHistory()
-    }, [userId])
+    }, [])
 
     return (
         <Layout pageName={'プロフィール'}>
@@ -155,6 +159,42 @@ const Profile: NextPage = () => {
             </HStack>
         </Layout>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    const session = await getSession(context)
+    if (!session) {
+        return {
+            redirect: {
+                destination: '/login',
+                permanent: false,
+            },
+        }
+    }
+    try {
+        const userId = session.user?.email
+        const response: AxiosResponse<User> = await clientApi.get(`/user/${userId}`, {
+            headers: {
+                Authorization: `${session.idToken}`,
+            },
+        })
+        const { data } = response
+        const props: Props = {
+            user: data,
+        }
+        return { props }
+    } catch (error) {
+        if (axios.isAxiosError(error)) {
+            console.error(error.message)
+            return {
+                redirect: {
+                    destination: 'profile/register',
+                    permanent: false,
+                },
+            }
+        }
+    }
+    return { notFound: true }
 }
 
 export default Profile
