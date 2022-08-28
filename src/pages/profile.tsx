@@ -32,7 +32,6 @@ import PostUser from '../types/api/req/account/PostUser'
 import User from '../types/domain/account/User'
 import UpdateUser from '../types/api/req/account/UpdateUser'
 import { useErrorToast } from '../hooks/useErrorToast'
-import { useFetchCallbackClient } from '../hooks/useFetchClient'
 
 const Profile: NextPage = () => {
     const { data: session, status } = useSession()
@@ -40,7 +39,7 @@ const Profile: NextPage = () => {
     const [historyList, setHistoryList] = useState<History[]>([])
     const userId = session?.user?.email
     const errorToast = useErrorToast()
-    const { fetcher } = useFetchCallbackClient({ url: `/user/${userId}`, method: 'PUT' })
+
     const fetchProfile = async () => {
         await clientApi
             .get(`/user/${userId}`, {
