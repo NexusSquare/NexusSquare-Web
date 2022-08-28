@@ -7,6 +7,10 @@ interface Params {
     [key: string]: any
 }
 
+interface Body {
+    [key: string]: any
+}
+
 interface FetchRequest {
     url: string
     params?: Params
@@ -16,10 +20,24 @@ interface FetchRequest {
 interface FetchResponse<T> {
     data?: T | null
     refetch: (value?: Params) => Promise<void>
-    error: any
+    error: AxiosError | null
     hasError: boolean
     isLoading: boolean
 }
+
+interface CallbackRequest {
+    method: 'POST' | 'PUT' | 'DELETE'
+    url: string
+}
+
+interface CallbackResponse {
+    fetcher: (value?: Body) => Promise<void>
+    error: AxiosError | null
+    hasError: boolean
+    isLoading: boolean
+}
+
+// レスポンスの値が必要なときに使用
 export function useFetchClient<T>({ url, params, skip }: FetchRequest): FetchResponse<T> {
     const { data: session, status } = useSession()
     const [data, setData] = useState<T | null>(null)
@@ -63,6 +81,39 @@ export function useFetchClient<T>({ url, params, skip }: FetchRequest): FetchRes
     return {
         data,
         refetch: fetch,
+        error,
+        hasError,
+        isLoading,
+    }
+}
+
+// レスポンスの値を必要としないときに使用
+export function useFetchCallbackClient({ url, method }: CallbackRequest): CallbackResponse {
+    const { data: session, status } = useSession()
+    const [isLoading, setLoading] = useState(false)
+    const [error, setError] = useState<AxiosError | null>(null)
+    const [hasError, setHasError] = useState(false)
+
+    const fetch = async (body?: Body) => {
+        setLoading(true)
+        await clientApi(url, {
+            data: body,
+            method: method,
+            headers: {
+                Authorization: `${session?.idToken}`,
+            },
+        })
+            .catch((err: AxiosError) => {
+                setError(err)
+                setHasError(true)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    return {
+        fetcher: fetch,
         error,
         hasError,
         isLoading,

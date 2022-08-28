@@ -6,6 +6,10 @@ interface Params {
     [key: string]: any
 }
 
+interface Body {
+    [key: string]: any
+}
+
 interface FetchRequest {
     url: string
     params?: Params
@@ -19,6 +23,19 @@ interface FetchResponse<T> {
     hasError: boolean
     isLoading: boolean
 }
+interface CallbackRequest {
+    method: 'POST' | 'PUT' | 'DELETE'
+    url: string
+}
+
+interface CallbackResponse {
+    fetcher: (value?: Body) => Promise<void>
+    error: AxiosError | null
+    hasError: boolean
+    isLoading: boolean
+}
+
+// レスポンスの値が必要なときに使用
 export function useFetchQA<T>({ url, params, skip }: FetchRequest): FetchResponse<T> {
     const [data, setData] = useState<T | null>(null)
     const [isLoading, setLoading] = useState(false)
@@ -55,6 +72,34 @@ export function useFetchQA<T>({ url, params, skip }: FetchRequest): FetchRespons
     return {
         data,
         refetch: fetch,
+        error,
+        hasError,
+        isLoading,
+    }
+}
+// レスポンスの値を必要としないときに使用
+export function useFetchCallbackQA({ url, method }: CallbackRequest): CallbackResponse {
+    const [isLoading, setLoading] = useState(false)
+    const [error, setError] = useState<AxiosError | null>(null)
+    const [hasError, setHasError] = useState(false)
+
+    const fetch = async (body?: Body) => {
+        setLoading(true)
+        await qaApi(url, {
+            data: body,
+            method: method,
+        })
+            .catch((err: AxiosError) => {
+                setError(err)
+                setHasError(true)
+            })
+            .finally(() => {
+                setLoading(false)
+            })
+    }
+
+    return {
+        fetcher: fetch,
         error,
         hasError,
         isLoading,
