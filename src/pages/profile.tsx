@@ -123,7 +123,7 @@ const Profile = ({ user }: Props) => {
                     <VStack w={'full'} spacing={10}>
                         <HStack w={'full'} p="4" mb="8">
                             <Link href="/qa" passHref>
-                                <Text fontSize="lg" fontWeight="bold" cursor="pointer">
+                                <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
                                     <Box as="span" color="mainColor">
                                         ◀︎
                                     </Box>
