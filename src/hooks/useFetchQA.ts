@@ -10,10 +10,12 @@ interface Body {
     [key: string]: any
 }
 
-interface FetchRequest {
+interface FetchRequest<T> {
     url: string
     params?: Params
     skip?: boolean
+    onSuccess?: () => void
+    onError?: () => void
 }
 
 interface FetchResponse<T> {
@@ -26,6 +28,8 @@ interface FetchResponse<T> {
 interface CallbackRequest {
     method: 'POST' | 'PUT' | 'DELETE'
     url: string
+    onSuccess?: () => void
+    onError?: () => void
 }
 
 interface CallbackResponse {
@@ -36,7 +40,7 @@ interface CallbackResponse {
 }
 
 // レスポンスの値が必要なときに使用
-export function useFetchQA<T>({ url, params, skip }: FetchRequest): FetchResponse<T> {
+export function useFetchQA<T>({ url, params, skip, onSuccess, onError }: FetchRequest<T>): FetchResponse<T> {
     const [data, setData] = useState<T | null>(null)
     const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState<AxiosError | null>(null)
@@ -47,10 +51,12 @@ export function useFetchQA<T>({ url, params, skip }: FetchRequest): FetchRespons
         await qaApi(url, { params: query, method: 'GET' })
             .then((res) => {
                 setData(res.data)
+                onSuccess?.()
             })
             .catch((err: AxiosError) => {
                 setError(err)
                 setHasError(true)
+                onError?.()
             })
             .finally(() => {
                 setLoading(false)
@@ -78,7 +84,7 @@ export function useFetchQA<T>({ url, params, skip }: FetchRequest): FetchRespons
     }
 }
 // レスポンスの値を必要としないときに使用
-export function useFetchCallbackQA({ url, method }: CallbackRequest): CallbackResponse {
+export function useFetchCallbackQA({ url, method, onSuccess, onError }: CallbackRequest): CallbackResponse {
     const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState<AxiosError | null>(null)
     const [hasError, setHasError] = useState(false)
@@ -89,9 +95,13 @@ export function useFetchCallbackQA({ url, method }: CallbackRequest): CallbackRe
             data: body,
             method: method,
         })
+            .then(() => {
+                onSuccess?.()
+            })
             .catch((err: AxiosError) => {
                 setError(err)
                 setHasError(true)
+                onError?.()
             })
             .finally(() => {
                 setLoading(false)
