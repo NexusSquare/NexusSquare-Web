@@ -15,8 +15,6 @@ interface FetchRequest {
     url: string
     params?: Params
     skip?: boolean
-    onSuccess?: () => void
-    onError?: () => void
 }
 
 interface FetchResponse<T> {
@@ -30,8 +28,6 @@ interface FetchResponse<T> {
 interface CallbackRequest {
     method: 'POST' | 'PUT' | 'DELETE'
     url: string
-    onSuccess?: () => void
-    onError?: () => void
 }
 
 interface CallbackResponse {
@@ -42,7 +38,7 @@ interface CallbackResponse {
 }
 
 // レスポンスの値が必要なときに使用
-export function useFetchClient<T>({ url, params, skip, onSuccess, onError }: FetchRequest): FetchResponse<T> {
+export function useFetchClient<T>({ url, params, skip }: FetchRequest): FetchResponse<T> {
     const { data: session, status } = useSession()
     const [data, setData] = useState<T | null>(null)
     const [isLoading, setLoading] = useState(false)
@@ -60,12 +56,10 @@ export function useFetchClient<T>({ url, params, skip, onSuccess, onError }: Fet
         })
             .then((res) => {
                 setData(res.data)
-                onSuccess?.()
             })
             .catch((err: AxiosError) => {
                 setError(err)
                 setHasError(true)
-                onError?.()
             })
             .finally(() => {
                 setLoading(false)
@@ -94,7 +88,7 @@ export function useFetchClient<T>({ url, params, skip, onSuccess, onError }: Fet
 }
 
 // レスポンスの値を必要としないときに使用
-export function useFetchCallbackClient({ url, method, onSuccess, onError }: CallbackRequest): CallbackResponse {
+export function useFetchCallbackClient({ url, method }: CallbackRequest): CallbackResponse {
     const { data: session, status } = useSession()
     const [isLoading, setLoading] = useState(false)
     const [error, setError] = useState<AxiosError | null>(null)
@@ -109,13 +103,9 @@ export function useFetchCallbackClient({ url, method, onSuccess, onError }: Call
                 Authorization: `${session?.idToken}`,
             },
         })
-            .then(() => {
-                onSuccess?.()
-            })
             .catch((err: AxiosError) => {
                 setError(err)
                 setHasError(true)
-                onError?.()
             })
             .finally(() => {
                 setLoading(false)
