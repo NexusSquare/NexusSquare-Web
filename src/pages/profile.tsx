@@ -45,6 +45,7 @@ const Profile = ({ user }: Props) => {
     const router = useRouter()
     const userId = session?.user?.email
     const errorToast = useErrorToast()
+
     const fetchProfile = async () => {
         await clientApi
             .get(`/user/${userId}`, {
@@ -87,6 +88,7 @@ const Profile = ({ user }: Props) => {
                 errorToast()
             })
     }
+
     const deleteProfile = async () => {
         await clientApi
             .delete(`/user/${userId}`, {
