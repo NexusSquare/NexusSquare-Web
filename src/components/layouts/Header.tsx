@@ -27,8 +27,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { ReactNode } from 'react'
-import ChakraNextImage from './chakraNextImage'
-import { useSession, signIn, signOut } from 'next-auth/react'
 import { memo } from 'react'
 import { useEffect } from 'react'
 import axios, { AxiosError, AxiosResponse } from 'axios'
@@ -38,6 +36,7 @@ import { useErrorToast } from '../../hooks/useErrorToast'
 import { useRouter } from 'next/router'
 import { FiEdit } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
+import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
     children?: ReactNode
@@ -47,57 +46,17 @@ interface headerFuncProps {
     isComp: boolean
     funcName: string
 }
-const Header = ({ children }: Props): JSX.Element => {
+
+export const Header = ({ children }: Props): JSX.Element => {
+    console.log('render')
     const LOGO_URL: string = '/images/logo2.jpg'
     const ICON_IMAGE_URL: string = 'https://bit.ly/broken-link'
-    const { data: session, status } = useSession()
-    const userId = session?.user?.email
-    const [isLoggedIn, setIsLoggedIn] = useState(status === 'authenticated')
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isNotice, setIsNotice] = useState(false)
     const [user, setUser] = useState<User>()
     const router = useRouter()
     const errorToast = useErrorToast()
 
-    const fetchProfile = async () => {
-        await clientApi
-            .get(`/user/${userId}`, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
-            .then((res: AxiosResponse<User>) => {
-                setUser(res.data)
-            })
-            .catch((err: AxiosError) => {
-                if (!err.response) {
-                    errorToast()
-                    return
-                }
-                if (err.response?.status === 500) {
-                    // 本番だと405
-                    router.push('/profile/register')
-                } else {
-                    errorToast()
-                }
-            })
-    }
-
-    useEffect(() => {
-        setIsLoggedIn(status === 'authenticated')
-    }, [status])
-
-    useEffect(() => {
-        if (!isLoggedIn) return
-        fetchProfile()
-    }, [isLoggedIn])
-
-    if (status === 'loading') {
-        return (
-            <HStack d={'flex'} justifyContent={'center'}>
-                <Spinner />
-            </HStack>
-        )
-    }
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return props.isComp ? (
             <Link href={props.url} passHref>
@@ -128,7 +87,7 @@ const Header = ({ children }: Props): JSX.Element => {
             </Box>
         )
     }
-    const NotificateButton = () =>
+    const NotificationButton = () =>
         isNotice ? (
             <Box>
                 <IconButton
@@ -164,7 +123,7 @@ const Header = ({ children }: Props): JSX.Element => {
     const LoginOrProfile = () =>
         isLoggedIn ? (
             <HStack spacing="10%" w="105px">
-                <NotificateButton />
+                <NotificationButton />
                 <Popover>
                     <PopoverTrigger>
                         <Avatar as="button" width="40px" height="40px" src={ICON_IMAGE_URL} />
@@ -196,16 +155,7 @@ const Header = ({ children }: Props): JSX.Element => {
                                 <Text>プロフィールを確認する</Text>
                             </HStack>
                             <Divider />
-                            <HStack
-                                as="button"
-                                py="4"
-                                px="2"
-                                w="full"
-                                onClick={() => {
-                                    signOut()
-                                }}
-                                _hover={{ bgColor: 'gray.100' }}
-                            >
+                            <HStack as="button" py="4" px="2" w="full" _hover={{ bgColor: 'gray.100' }}>
                                 <VscSignOut />
                                 <Text>サインアウト</Text>
                             </HStack>
@@ -216,7 +166,6 @@ const Header = ({ children }: Props): JSX.Element => {
         ) : (
             <HStack spacing="10%" w="200px" justify="end">
                 <Button
-                    onClick={() => signIn('cognito')}
                     bgColor="mainColor"
                     color="white"
                     borderWidth={1}
@@ -305,5 +254,3 @@ const Header = ({ children }: Props): JSX.Element => {
         </VStack>
     )
 }
-
-export default memo(Header)

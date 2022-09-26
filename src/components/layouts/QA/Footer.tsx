@@ -6,7 +6,7 @@ interface Props {
     children?: ReactNode
 }
 
-const Footer: Function = ({ children }: Props): JSX.Element => {
+export const Footer = ({ children }: Props): JSX.Element => {
     return (
         <VStack as="footer" bgColor="#FF9037" spacing="0px" w="100%">
             <VStack
@@ -65,5 +65,3 @@ const Footer: Function = ({ children }: Props): JSX.Element => {
         </VStack>
     )
 }
-
-export default Footer

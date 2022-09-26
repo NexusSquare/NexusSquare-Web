@@ -1,9 +1,9 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
 import { SessionProvider } from 'next-auth/react'
-import type { AppProps } from 'next/app'
-import Header from '../components/common/Header'
+import type { AppProps, AppPropsWithLayout } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const getLayout = Component.getLayout ?? ((page) => page)
     const theme = extendTheme({
         colors: {
             mainColor: '#FF9037',
@@ -18,14 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             },
         },
     })
-    return (
-        <ChakraProvider theme={theme}>
-            <SessionProvider session={pageProps.session}>
-                <Header />
-                <Component {...pageProps} />
-            </SessionProvider>
-        </ChakraProvider>
-    )
+    return <ChakraProvider theme={theme}>{getLayout(<Component {...pageProps} />)}</ChakraProvider>
 }
 
 export default MyApp
