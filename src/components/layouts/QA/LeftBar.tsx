@@ -25,7 +25,7 @@ import { useRouter } from 'next/router'
 import React, { FormEventHandler, ReactNode } from 'react'
 import { useState } from 'react'
 import { useRef } from 'react'
-import ChakraNextImage from '../common/chakraNextImage'
+import ChakraNextImage from '../../common/chakraNextImage'
 
 interface Props {
     children?: ReactNode
@@ -38,7 +38,7 @@ interface NavButtonProps {
     url: string
 }
 
-const LeftBar: Function = ({ children }: Props): JSX.Element => {
+export const LeftBar: Function = ({ children }: Props): JSX.Element => {
     const CATEGORY_IMAGE_PATH: string = '/images/category.png'
     const ALL_Q_IMAGE_PATH: string = '/images/all.png'
     const RANKING_IMAGE_PATH: string = '/images/crown.png'
@@ -169,4 +169,3 @@ const LeftBar: Function = ({ children }: Props): JSX.Element => {
         </VStack>
     )
 }
-export default LeftBar

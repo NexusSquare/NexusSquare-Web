@@ -1,9 +1,9 @@
-import { Box, HStack, Spacer, Stack, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, HStack, Text, VStack, Flex, Wrap, WrapItem, Stack, Spacer } from '@chakra-ui/react'
 import Link from 'next/link'
-import ChakraNextImage from './chakraNextImage'
 import { BsTwitter } from 'react-icons/bs'
+import ChakraNextImage from '../common/chakraNextImage'
 
-const DefaultFooter: Function = () => {
+export const Footer = (): JSX.Element => {
     const LOGO_URL: string = '/images/nexus-square.png'
     const TWITTER_URL: string = 'https://twitter.com/NexusSquare_apu'
     return (
@@ -76,4 +76,3 @@ const DefaultFooter: Function = () => {
         </VStack>
     )
 }
-export default DefaultFooter

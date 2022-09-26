@@ -19,9 +19,9 @@ import { useState } from 'react'
 import { ReactNode } from 'react'
 import QACard from './QACard'
 import Question from '../../types/domain/qa/Question'
-import queryOptions from '../../groupObject/qa/queryOptions'
+import queryOptions from '../../constants/qa/queryOptions'
 import QAResponse from '../../types/api/res/qa/qaResponse'
-import QAQueryProps from '../../groupObject/qa/queryGroup'
+import QAQueryProps from '../../constants/qa/queryGroup'
 import { useRouter } from 'next/router'
 
 interface Props {

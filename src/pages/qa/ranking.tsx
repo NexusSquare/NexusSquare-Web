@@ -1,29 +1,23 @@
 import { Box, Text } from '@chakra-ui/react'
 import axios, { AxiosResponse } from 'axios'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps, NextPage, NextPageWithLayout } from 'next'
 import { useRouter } from 'next/router'
-import QAListLayout from '../../components/qa/QAListLayout'
-import QAResponse from '../../types/api/res//qa/qaResponse'
+import { Layout } from '../../components/layouts/QA/Layout'
+import { Page } from '../../components/pages/QA/Ranking/Page'
+import QAQueryProps from '../../constants/qa/queryGroup'
+import queryOptions from '../../constants/qa/queryOptions'
+import QAResponse from '../../types/api/res/qa/qaResponse'
 import Question from '../../types/domain/qa/Question'
-import QAQueryProps from '../../groupObject/qa/queryGroup'
-import queryOptions from '../../groupObject/qa/queryOptions'
 
 interface Props {
-    content: Question[]
+    questions: Question[]
     query: QAQueryProps
 }
 
-const Ranking = (props: Props) => {
-    return (
-        <QAListLayout pageName="QAランキング" data={props.content} query={props.query}>
-            <Box h="100px" w="100%" display="flex" alignItems="center">
-                <Text paddingLeft={{ base: '5%', md: '10%' }} fontSize="4xl">
-                    週間アクセスランキング
-                </Text>
-            </Box>
-        </QAListLayout>
-    )
-}
+const Ranking: NextPageWithLayout<Props> = ({ questions, query }) => <Page questions={questions} query={query} />
+
+Ranking.getLayout = (page) => <Layout pageName="カテゴリで絞り込む">{page}</Layout>
+
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const defaultUrl: string = process.env.GET_QUESTION_URL
@@ -33,7 +27,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data, status } = response
         const props: Props = {
-            content: data.data,
+            questions: data.data,
             query: { option: queryOptions.notSolved, sortby: 'weeklyAccessNum' },
         }
         return { props }

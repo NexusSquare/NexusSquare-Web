@@ -1,28 +1,21 @@
 import { Box, Text } from '@chakra-ui/react'
 import axios, { AxiosResponse } from 'axios'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps, NextPage, NextPageWithLayout } from 'next'
 import { useRouter } from 'next/router'
-import QAListLayout from '../components/qa/QAListLayout'
-import QAResponse from '../types/api/res/qa/qaResponse'
-import Question from '../types/domain/qa/Question'
-import queryOptions from '../groupObject/qa/queryOptions'
+import { Layout } from '../../components/layouts/QA/Layout'
+import { Page } from '../../components/pages/QA/Page'
+import queryOptions from '../../constants/qa/queryOptions'
+import QAResponse from '../../types/api/res/qa/qaResponse'
+import Question from '../../types/domain/qa/Question'
 
 interface Props {
-    content: Question[]
+    questions: Question[]
 }
 
-const QAHome = (props: Props) => {
-    console.log(props.content)
-    return (
-        <QAListLayout pageName="QAトップ" data={props.content}>
-            <Box h="100px" w="100%" display="flex" alignItems="center">
-                <Text paddingLeft={{ base: '5%', md: '10%' }} fontSize="4xl" textAlign="left">
-                    最新の投稿
-                </Text>
-            </Box>
-        </QAListLayout>
-    )
-}
+const QAHome: NextPageWithLayout<Props> = ({ questions }) => <Page questions={questions} />
+
+QAHome.getLayout = (page) => <Layout pageName="Q&Aトップ">{page}</Layout>
+
 export const getServerSideProps: GetServerSideProps = async () => {
     try {
         const defaultUrl: string = process.env.GET_QUESTION_URL
@@ -32,7 +25,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         const response: AxiosResponse<QAResponse> = await axios.get(url)
         const { data, status } = response
         const props: Props = {
-            content: data.data,
+            questions: data.data,
         }
         return { props }
     } catch (error) {

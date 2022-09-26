@@ -1,13 +1,13 @@
 import { Box, Button, HStack, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import QAButton from '../qa/QAButton'
+import QAButton from '../../qa/QAButton'
 
 interface Props {
     children?: ReactNode
 }
 
-const RightBar: Function = ({ children }: Props): JSX.Element => {
+export const RightBar = ({ children }: Props): JSX.Element => {
     return (
         <VStack
             as="aside"
@@ -32,4 +32,3 @@ const RightBar: Function = ({ children }: Props): JSX.Element => {
         </VStack>
     )
 }
-export default RightBar
