@@ -4,7 +4,7 @@ import { GetServerSideProps, GetStaticProps, NextPage, NextPageWithLayout } from
 import { useRouter } from 'next/router'
 import { Layout } from '../../components/layouts/QA/Layout'
 import { Page } from '../../components/pages/QA/Detail/Page'
-import queryOptions from '../../groupObject/qa/queryOptions'
+import queryOptions from '../../constants/qa/queryOptions'
 import QAResponse from '../../types/api/res/qa/qaResponse'
 import PerfectQuestion from '../../types/domain/qa/PerfectQuestion'
 import Question from '../../types/domain/qa/Question'

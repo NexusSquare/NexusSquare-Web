@@ -26,7 +26,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import QARequest from '../../../../types/api/req/qa/QARequest'
-import QACategories from '../../../../groupObject/qa/qaCategories'
+import QACategories from '../../../../constants/qa/qaCategories'
 
 import Question from '../../../../types/domain/qa/Question'
 import { useSession } from 'next-auth/react'

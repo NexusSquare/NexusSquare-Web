@@ -4,7 +4,7 @@ import Question from '../../../types/domain/qa/Question'
 
 import QACardWindow from '../../qa/QACardWindow'
 import QACardList from '../../qa/QACardList'
-import QAQueryProps from '../../../groupObject/qa/queryGroup'
+import QAQueryProps from '../../../constants/qa/queryGroup'
 
 interface Props {
     questions: Question[]
