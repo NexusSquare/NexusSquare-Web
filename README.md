@@ -10,8 +10,9 @@
 ## Usage
 
 ### デバック
+ 
 
-npm run dev
+    npm run dev
 
 ## functions
 
