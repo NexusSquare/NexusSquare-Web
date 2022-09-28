@@ -15,6 +15,7 @@ import {
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { LINKS } from '../../../constants/links'
 import account from '../../../types/domain/account/account'
 import { PrimaryButton } from '../../common/PrimaryButton'
 
@@ -26,8 +27,11 @@ export const Page = (): JSX.Element => {
         formState: { errors, isSubmitting },
     } = useForm<account>()
 
+    const onClickLogin = () => {
+        router.push(LINKS.LOGIN)
+    }
     return (
-        <Box w="100%" bg="subColor" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
+        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
             <VStack
                 bg="white"
                 w={{ base: 'full', md: '2xl' }}
@@ -42,7 +46,7 @@ export const Page = (): JSX.Element => {
 
                 <VStack
                     as="form"
-                    onSubmit={handleSubmit((data) => console.log(`${data}送信完了`))}
+                    onSubmit={handleSubmit((data) => console.log(data))}
                     w={'full'}
                     paddingTop="20px"
                     alignItems="center"
@@ -91,6 +95,15 @@ export const Page = (): JSX.Element => {
                     </FormControl>
                     <PrimaryButton buttonText="新規登録" type="submit" width={48} />
                 </VStack>
+                <Text
+                    fontWeight={'bold'}
+                    fontSize={'sm'}
+                    as="button"
+                    _hover={{ textDecoration: 'underline' }}
+                    onClick={onClickLogin}
+                >
+                    ログインはこちら
+                </Text>
             </VStack>
         </Box>
     )

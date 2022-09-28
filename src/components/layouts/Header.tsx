@@ -49,10 +49,13 @@ export const Header = ({ children }: Props): JSX.Element => {
     const [isNotice, setIsNotice] = useState(false)
     const [user, setUser] = useState<User>()
     const router = useRouter()
-    const errorToast = useErrorToast()
 
     const onClickRegister = () => {
         router.push(LINKS.REGISTER)
+    }
+
+    const onClickLogin = () => {
+        router.push(LINKS.LOGIN)
     }
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
@@ -170,11 +173,11 @@ export const Header = ({ children }: Props): JSX.Element => {
                         alignItems={'center'}
                     >
                         <FiUserPlus size={20} color={'white'} />
-                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
+                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
                             新規登録
                         </Text>
                     </VStack>
-                    <VStack as="button" spacing={1}>
+                    <VStack as="button" spacing={1} onClick={onClickLogin}>
                         <FiLogIn size={20} color={'white'} />
                         <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
                             ログイン
@@ -183,7 +186,15 @@ export const Header = ({ children }: Props): JSX.Element => {
                 </HStack>
                 <HStack spacing={4} w="200px" justify="end" display={{ base: 'none', md: 'flex' }}>
                     {/* <PrimaryButton buttonText="新規登録" type="button" /> */}
-                    <Button type="button" color="white" bgColor="mainColor" borderWidth={2} borderColor="white">
+                    <Button
+                        type="button"
+                        color="white"
+                        bgColor="mainColor"
+                        borderWidth={2}
+                        borderColor="white"
+                        _hover={{ bgColor: 'white', color: 'mainColor' }}
+                        onClick={onClickRegister}
+                    >
                         新規登録
                     </Button>
                     <HStack as="button" spacing={1} _hover={{ color: 'mainColor' }}>
@@ -191,9 +202,10 @@ export const Header = ({ children }: Props): JSX.Element => {
                         <Text
                             fontSize={'md'}
                             color={'white'}
-                            _hover={{ color: 'mainColor' }}
                             w="full"
                             fontWeight={'bold'}
+                            _hover={{ textDecoration: 'underline' }}
+                            onClick={onClickLogin}
                         >
                             ログイン
                         </Text>
@@ -266,14 +278,14 @@ export const Header = ({ children }: Props): JSX.Element => {
                 <LoginOrProfile />
             </HStack>
             <HStack
-                h="40px"
+                w="full"
                 as="nav"
-                spacing="12%"
-                paddingY="0px"
-                paddingX={{ base: '10px', sm: '50px' }}
+                spacing={4}
+                paddingY={2}
+                paddingX={{ base: 4, sm: '50px' }}
                 aria-labelledby="jump to other functions - mini version"
                 display={{ base: 'flex', md: 'none' }}
-                alignSelf="start"
+                justify={'space-between'}
             >
                 <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
                 <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />

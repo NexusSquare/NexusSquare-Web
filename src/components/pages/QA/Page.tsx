@@ -14,10 +14,10 @@ export const Page = ({ questions }: Props) => {
     return (
         <>
             <VStack paddingY={4} w="100%" display="flex" alignItems="center">
-                <Box display={{ base: 'block', md: 'none' }} w="full">
+                <Box display={{ base: 'block', xl: 'none' }} w="full">
                     <SearchForm />
                 </Box>
-                <Box display={{ base: 'none', md: 'block' }} w="full">
+                <Box display={{ base: 'none', xl: 'block' }} w="full">
                     <Text as="h2" fontWeight={'bold'} fontSize={'2xl'} paddingX={4}>
                         学生生活Q&A
                     </Text>

@@ -7,7 +7,7 @@ export const SearchForm = () => {
     return (
         <VStack w="full" paddingX={4}>
             <HStack w="full">
-                <Input placeholder="キーワド検索" w="full" borderRadius={'sm'}></Input>
+                <Input placeholder="キーワード検索" w="full" borderRadius={'sm'}></Input>
                 <Button bgColor={'mainColor'} color="white" borderRadius={'sm'}>
                     <SearchIcon />
                 </Button>

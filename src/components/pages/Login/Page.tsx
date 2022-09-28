@@ -1,90 +1,109 @@
-import type { NextPage } from 'next'
 import {
     Box,
     Button,
+    Divider,
+    FormControl,
+    FormErrorMessage,
+    FormHelperText,
+    FormLabel,
     HStack,
-    IconButton,
-    Image,
+    Input,
     Spacer,
     Text,
     VStack,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    Input,
 } from '@chakra-ui/react'
-import { useForm } from 'react-hook-form'
-import { useState } from 'react'
-import Link from 'next/link'
+import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import userPost from '../../../types/domain/account/userPost'
+import { useForm } from 'react-hook-form'
+import { LINKS } from '../../../constants/links'
+import account from '../../../types/domain/account/account'
+import { PrimaryButton } from '../../common/PrimaryButton'
 
 export const Page = (): JSX.Element => {
-    const [userId, setUserId] = useState<string>('')
     const router = useRouter()
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors, isSubmitting },
-    } = useForm<userPost>()
-    const back2Before = () => {
-        router.back()
+    } = useForm<account>()
+    const onClickRegister = () => {
+        router.push(LINKS.REGISTER)
     }
     return (
-        <>
-            <Button margin="10px 2% 0px" alignSelf="start" bgColor="#FF9037" color="white" onClick={back2Before}>
-                戻る
-            </Button>
+        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
             <VStack
-                bgColor="whitesmoke"
-                borderRadius="24px"
-                w={{ base: '100%', sm: '80vw', md: 'calc(100vw - 270px)', lg: '50vw' }}
-                h="500px"
-                paddingY="15px"
+                bg="white"
+                w={{ base: 'full', md: '2xl' }}
+                marginX={'auto'}
+                paddingY={12}
+                paddingX={{ base: 8, md: 24 }}
             >
-                <Text as="h2" fontSize="4xl" fontWeight="semibold">
+                <Box as="h2" fontWeight={'bold'} fontSize={'xl'}>
                     ログイン
-                </Text>
-                <Box
+                </Box>
+                <Divider />
+
+                <VStack
                     as="form"
-                    onSubmit={handleSubmit((data) => console.log(`${data}送信完了`))}
-                    w="90%"
-                    textAlign="center"
+                    onSubmit={handleSubmit((data) => console.log(data))}
+                    w={'full'}
+                    paddingTop="20px"
+                    alignItems="center"
+                    spacing={8}
                 >
-                    <FormControl isInvalid={errors.id !== undefined} padding="10px 0px 20px">
-                        <FormLabel htmlFor="id">ID</FormLabel>
+                    <FormControl isInvalid={errors.email !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'}>メールアドレス</FormLabel>
                         <Input
-                            id="id"
-                            {...register('id', {
+                            id="mail"
+                            {...register('email', {
                                 required: '必須項目です',
-                                minLength: { value: 1, message: 'idは最小1文字必要です' },
-                                maxLength: { value: 50, message: 'idは50文字までです' },
+                                minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
+                                maxLength: { value: 50, message: 'タイトルは50文字までです' },
+                                pattern: {
+                                    value: /^[a-z]{2}[0-9]{6}@[a-z]+\.aichi\-pu\.ac\.jp$/,
+                                    message: '愛知県立大学のメールアドレスを入力してください',
+                                },
                             })}
-                            placeholder="idを入力"
-                            bgColor="white"
+                            placeholder="xx000000.xxx.aichi-pu.ac.jp"
+                            type="email"
                         />
-                        <FormErrorMessage>{errors.id && errors.id.message}</FormErrorMessage>
+                        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+                        <FormHelperText>愛知県立県大学のメールアドレスを入力</FormHelperText>
                     </FormControl>
-                    <FormControl isInvalid={errors.password !== undefined} padding="10px 0px 20px">
-                        <FormLabel htmlFor="password">パスワード</FormLabel>
+
+                    <FormControl isInvalid={errors.password !== undefined} isRequired>
+                        <FormLabel htmlFor="password" fontWeight={'bold'}>
+                            パスワード
+                        </FormLabel>
                         <Input
                             id="password"
                             {...register('password', {
                                 required: '必須項目です',
-                                minLength: { value: 1, message: 'idは最小1文字必要です' },
-                                maxLength: { value: 300, message: 'idは50文字までです' },
+                                minLength: { value: 8, message: 'パスワードは最小8文字必要です' },
+                                maxLength: { value: 16, message: 'パスワードは16文字までです' },
+                                pattern: {
+                                    value: /^[A-Za-z0-9]+$/i,
+                                    message: '半角英数を含めて下さい',
+                                },
                             })}
-                            placeholder="パスワードを入力"
-                            bgColor="white"
+                            placeholder="********"
+                            type="password"
                         />
                         <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+                        <FormHelperText>半角英数8~16</FormHelperText>
                     </FormControl>
-                    <Button type="submit" margin="10px 0px 20px" bgColor="#FF9037" color="white">
-                        ログイン
-                    </Button>
-                </Box>
+                    <PrimaryButton buttonText="ログイン" type="submit" width={48} />
+                </VStack>
+                <Text
+                    fontWeight={'bold'}
+                    fontSize={'sm'}
+                    as="button"
+                    _hover={{ textDecoration: 'underline' }}
+                    onClick={onClickRegister}
+                >
+                    新規登録はこちら
+                </Text>
             </VStack>
-        </>
+        </Box>
     )
 }
