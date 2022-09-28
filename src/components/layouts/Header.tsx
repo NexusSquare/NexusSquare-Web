@@ -1,11 +1,8 @@
 import { BellIcon } from '@chakra-ui/icons'
 import {
     Avatar,
-    baseStyle,
     Box,
     Button,
-    chakra,
-    ChakraComponent,
     Divider,
     HStack,
     IconButton,
@@ -17,8 +14,6 @@ import {
     PopoverHeader,
     PopoverTrigger,
     Spacer,
-    Spinner,
-    Stack,
     StackDivider,
     Text,
     VStack,
@@ -27,16 +22,13 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
 import { ReactNode } from 'react'
-import { memo } from 'react'
-import { useEffect } from 'react'
-import axios, { AxiosError, AxiosResponse } from 'axios'
-import { clientApi } from '../../lib/axios'
 import User from '../../types/domain/account/User'
 import { useErrorToast } from '../../hooks/useErrorToast'
 import { useRouter } from 'next/router'
 import { FiEdit } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
 import ChakraNextImage from '../common/chakraNextImage'
+import { LINKS } from '../../constants/links'
 
 interface Props {
     children?: ReactNode
@@ -56,6 +48,10 @@ export const Header = ({ children }: Props): JSX.Element => {
     const [user, setUser] = useState<User>()
     const router = useRouter()
     const errorToast = useErrorToast()
+
+    const onClickRegister = () => {
+        router.push(LINKS.REGISTER)
+    }
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return props.isComp ? (
@@ -166,6 +162,7 @@ export const Header = ({ children }: Props): JSX.Element => {
         ) : (
             <HStack spacing="10%" w="200px" justify="end">
                 <Button
+                    onClick={onClickRegister}
                     bgColor="mainColor"
                     color="white"
                     borderWidth={1}

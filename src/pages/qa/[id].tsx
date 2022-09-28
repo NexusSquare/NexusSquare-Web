@@ -79,4 +79,4 @@ export const getStaticPaths = async () => {
     }
     return { paths: [], fallback: true }
 }
-export default Question
+export default Detail

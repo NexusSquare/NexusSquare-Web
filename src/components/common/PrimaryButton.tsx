@@ -1,11 +1,14 @@
 import { Button } from '@chakra-ui/react'
-import React from 'react'
+import React, { MouseEventHandler } from 'react'
 interface Props {
     buttonText: string
-    onClick: () => void
+    onClick?: MouseEventHandler<HTMLButtonElement>
     isLoading?: boolean
+    type: 'submit' | 'button'
+    width?: string | number
+    disabled?: boolean
 }
-export const PrimaryButton = ({ buttonText, onClick, isLoading }: Props) => {
+export const PrimaryButton = ({ buttonText, onClick, isLoading, type, width, disabled }: Props) => {
     return (
         <Button
             isLoading={isLoading}
@@ -13,6 +16,9 @@ export const PrimaryButton = ({ buttonText, onClick, isLoading }: Props) => {
             bgColor="mainColor"
             _hover={{ bgColor: 'subSubColor' }}
             onClick={onClick}
+            type={type}
+            width={width}
+            disabled={disabled}
         >
             {buttonText}
         </Button>
