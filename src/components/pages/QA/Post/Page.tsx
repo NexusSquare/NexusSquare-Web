@@ -29,7 +29,6 @@ import QARequest from '../../../../types/api/req/qa/QARequest'
 import QACategories from '../../../../constants/qa/qaCategories'
 
 import Question from '../../../../types/domain/qa/Question'
-import { useSession } from 'next-auth/react'
 import { qaApi } from '../../../../lib/axios'
 
 import { DefaultModal } from '../../../../components/common/DefaultModal'
@@ -73,7 +72,7 @@ export const Page = (): JSX.Element => {
     const [question, setQuestion] = useState<preQuestion>()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter()
-    const { data: session, status } = useSession()
+    const session = undefined
     const errorToast = useErrorToast()
     const onChangeHandler = () => {
         setDuplicateError(false)
@@ -91,7 +90,7 @@ export const Page = (): JSX.Element => {
         setQuestion(data)
     }
     const postQuestion = async () => {
-        const userId = session?.user?.email!
+        const userId = 'session?.user?.email!'
         const questionReq: QARequest = { ...question!, userId }
         setLoading(true)
         await qaApi
@@ -266,7 +265,12 @@ export const Page = (): JSX.Element => {
                             <ModalFooter>
                                 <HStack>
                                     <ChancelButton isLoading={loading} buttonText="キャンセル" onClick={onClose} />
-                                    <PrimaryButton isLoading={loading} buttonText="投稿する" onClick={postQuestion} />
+                                    <PrimaryButton
+                                        type="button"
+                                        isLoading={loading}
+                                        buttonText="投稿する"
+                                        onClick={postQuestion}
+                                    />
                                 </HStack>
                             </ModalFooter>
                         </>

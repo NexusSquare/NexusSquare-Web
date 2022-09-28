@@ -13,7 +13,7 @@ export const HistoryCard = ({ history }: Props) => {
             <HStack bgColor="subColor" p="4" justify="center" spacing={{ base: '2', md: '12' }}>
                 <Text fontSize={{ base: 'sm', md: 'lg' }}>{history.createAt}</Text>
                 <HStack>
-                    <Text fontSize={{ base: 'lg', md: '2xl' }}>質問に答えた</Text>
+                    <Text fontSize={{ base: 'md', md: '2xl' }}>質問に答えた</Text>
                     <HiOutlineLightBulb size="30" />
                 </HStack>
                 <Text fontSize={{ base: 'md', md: '2xl' }} color="red.400">

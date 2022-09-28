@@ -10,14 +10,26 @@ interface Props {
     size?: 'xs' | 'sm' | 'md' | 'lg'
     borderRadius?: 'none' | 'sm' | 'base' | 'md' | 'lg' | 'xl' | 'full'
 }
-export const PrimaryButton = ({ buttonText, onClick, isLoading, type, width, disabled, size, borderRadius }: Props) => {
+
+export const SecondaryButton = ({
+    buttonText,
+    onClick,
+    isLoading,
+    type,
+    width,
+    disabled,
+    size,
+    borderRadius,
+}: Props) => {
     return (
         <Button
             isLoading={isLoading}
-            color="white"
-            bgColor="mainColor"
-            _hover={{ bgColor: 'subSubColor' }}
             onClick={onClick}
+            color="mainColor"
+            bgColor="white"
+            borderWidth={1}
+            borderColor="mainColor"
+            _hover={{ bgColor: 'mainColor', color: 'white' }}
             type={type}
             width={width}
             disabled={disabled}

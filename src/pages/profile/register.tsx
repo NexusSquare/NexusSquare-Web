@@ -1,5 +1,5 @@
 import { NextPageWithLayout } from 'next'
-import Layout from '../../components/common/Layout'
+import { Layout } from '../../components/layouts/Form/Layout'
 import { Page } from '../../components/pages/Profile/Register/Page'
 
 const Register: NextPageWithLayout = () => <Page />

@@ -21,6 +21,8 @@ import {
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
+import { AiOutlinePlus } from 'react-icons/ai'
+import { BsQuestionLg } from 'react-icons/bs'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
@@ -66,37 +68,33 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
             </HStack>
             <Box w="100%" position="sticky" bottom="0">
                 <Box
-                    display="flex"
-                    justifyContent="center"
+                    justifyContent="end"
                     alignItems="center"
                     marginRight="0px"
-                    paddingBottom="10px"
+                    paddingBottom={4}
+                    paddingRight={4}
                     zIndex="1"
+                    display={{ base: 'flex', md: 'none' }}
                 >
                     <Link href="/qa/post" passHref>
                         <Box as="a" href="/qa/post">
                             <HStack
-                                paddingLeft="13px"
                                 spacing="0px"
                                 bgColor="#FF9037"
-                                h="60px"
-                                w="210px"
                                 borderRadius="30px"
                                 boxShadow="md"
                                 color="white"
                                 _hover={{ bgColor: '#FFDA77' }}
                                 _active={{ opacity: '50%', outline: 'none' }}
                                 _focus={{ outline: 'none' }}
+                                padding={2}
                             >
-                                <Text fontSize="3xl">？</Text>
-                                <Text fontWeight="700" fontSize="2xl">
-                                    質問してみる
-                                </Text>
+                                <AiOutlinePlus size={32} />
                             </HStack>
                         </Box>
                     </Link>
                 </Box>
-                <HStack
+                {/* <HStack
                     w="100%"
                     h="50px"
                     paddingX="10%"
@@ -129,7 +127,7 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
                             </PopoverBody>
                         </PopoverContent>
                     </Popover>
-                </HStack>
+                </HStack> */}
             </Box>
         </VStack>
     )

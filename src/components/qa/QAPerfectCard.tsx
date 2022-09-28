@@ -34,7 +34,7 @@ export const QAPerfectCard = ({ question }: Props) => {
         )
     }
     return (
-        <VStack as="section" p="4" w="90%" border="1px" borderColor="gray.200" boxShadow="md" minH="300px">
+        <VStack as="section" p="4" border="1px" borderColor="gray.200" boxShadow="md" minH="300px" bgColor={'white'}>
             <HStack w="full">
                 <Box as="figure" width="30px" height="30px">
                     <Avatar width="full" height="full" src={ICON_IMAGE_URL} />
@@ -58,7 +58,7 @@ export const QAPerfectCard = ({ question }: Props) => {
                     <Text>回答</Text>
                 </HStack>
             </HStack>
-            <Text fontSize="4xl" fontWeight="semibold" w="full">
+            <Text fontSize="2xl" fontWeight="semibold" w="full">
                 {question.title}
             </Text>
             <Text color="gray.400" w="full">

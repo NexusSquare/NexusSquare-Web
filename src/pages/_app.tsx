@@ -10,6 +10,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
             subColor: '#FBF6F0',
             subSubColor: '#FFDA77',
             accentColor: '#3DB2FF',
+            textPrimary: '#1A202C',
         },
         styles: {
             global: {
