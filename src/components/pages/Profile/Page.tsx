@@ -3,6 +3,7 @@ import {
     Button,
     HStack,
     Spinner,
+    VStack,
     Tab,
     TabList,
     TabPanel,
@@ -10,11 +11,8 @@ import {
     Tabs,
     Text,
     useToast,
-    VStack,
 } from '@chakra-ui/react'
 import axios, { AxiosError, AxiosResponse } from 'axios'
-import { GetServerSideProps, NextPage } from 'next'
-import { getSession, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import Router, { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
@@ -32,21 +30,20 @@ import UpdateUser from '../../../types/api/req/account/UpdateUser'
 import { useErrorToast } from '../../../hooks/useErrorToast'
 import { RiContactsBookLine } from 'react-icons/ri'
 
-export const Page = () => {
-    const { data: session, status } = useSession()
+interface Props {
+    user: User
+    histories: History[]
+}
+export const Page = ({ user, histories }: Props): JSX.Element => {
     const [profile, setProfile] = useState<User>()
-    const [historyList, setHistoryList] = useState<History[]>([])
+    const [historyList, setHistoryList] = useState<History[]>(histories)
     const router = useRouter()
-    const userId = session?.user?.email
+    const userId = 'session?.user?.email'
     const errorToast = useErrorToast()
 
     const fetchProfile = async () => {
         await clientApi
-            .get(`/user/${userId}`, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
+            .get(`/user/${userId}`, {})
             .then((res: AxiosResponse<User>) => {
                 setProfile(res.data)
             })
@@ -56,11 +53,7 @@ export const Page = () => {
     }
     const fetchHistory = async () => {
         await clientApi
-            .get(`/user/${userId}/history`, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
+            .get(`/user/${userId}/history`, {})
             .then((res: AxiosResponse<History[]>) => {
                 setHistoryList(res.data)
             })
@@ -70,11 +63,7 @@ export const Page = () => {
     }
     const updateProfile = async (updateUser: UpdateUser) => {
         await clientApi
-            .put(`/user/${userId}`, updateUser, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
+            .put(`/user/${userId}`, updateUser, {})
             .then(() => {
                 fetchProfile()
             })
@@ -85,11 +74,7 @@ export const Page = () => {
 
     const deleteProfile = async () => {
         await clientApi
-            .delete(`/user/${userId}`, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
+            .delete(`/user/${userId}`, {})
             .then((res: AxiosResponse) => {
                 console.log(res)
             })
@@ -98,12 +83,8 @@ export const Page = () => {
             })
     }
 
-    useEffect(() => {
-        fetchHistory()
-    }, [])
-
     return (
-        <>
+        <VStack w="full" spacing={12}>
             <HStack w={'full'} p="4" mb="8">
                 <Link href="/qa" passHref>
                     <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
@@ -114,8 +95,8 @@ export const Page = () => {
                     </Text>
                 </Link>
             </HStack>
-            <UserInfo user={profile!} updateProfile={updateProfile} />
-            <Link href="/gift" passHref>
+            <UserInfo user={user!} updateProfile={updateProfile} />
+            {/* <Link href="/gift" passHref>
                 <Button
                     leftIcon={<AiOutlineGift />}
                     as="a"
@@ -128,8 +109,8 @@ export const Page = () => {
                 >
                     応募する
                 </Button>
-            </Link>
-            <UserHistory historyList={historyList} />
-        </>
+            </Link> */}
+            <UserHistory historyList={histories} />
+        </VStack>
     )
 }

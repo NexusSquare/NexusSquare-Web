@@ -29,7 +29,6 @@ import QARequest from '../../../../types/api/req/qa/QARequest'
 import QACategories from '../../../../constants/qa/qaCategories'
 
 import Question from '../../../../types/domain/qa/Question'
-import { useSession } from 'next-auth/react'
 import { qaApi } from '../../../../lib/axios'
 
 import { DefaultModal } from '../../../../components/common/DefaultModal'
@@ -73,7 +72,7 @@ export const Page = (): JSX.Element => {
     const [question, setQuestion] = useState<preQuestion>()
     const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter()
-    const { data: session, status } = useSession()
+    const session = undefined
     const errorToast = useErrorToast()
     const onChangeHandler = () => {
         setDuplicateError(false)
@@ -91,7 +90,7 @@ export const Page = (): JSX.Element => {
         setQuestion(data)
     }
     const postQuestion = async () => {
-        const userId = session?.user?.email!
+        const userId = 'session?.user?.email!'
         const questionReq: QARequest = { ...question!, userId }
         setLoading(true)
         await qaApi
@@ -115,64 +114,45 @@ export const Page = (): JSX.Element => {
     }
     const CategorySelecter1 = () => {
         return (
-            <VStack w="full">
-                <Box w="full">
-                    <FormControl isInvalid={errors.category1 !== undefined}>
-                        <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'xl' }}>
-                            <HStack>
-                                <Text>カテゴリ1</Text>
-                                <RequiredLabel isRequired={true} />
-                            </HStack>
-                        </FormLabel>
-                        <Select
-                            required
-                            placeholder="カテゴリを選択"
-                            {...register('category1')}
-                            onChange={onChangeHandler}
-                        >
-                            {list1.map((category) => {
-                                return (
-                                    <Box as="option" value={category} key={category}>
-                                        {category}
-                                    </Box>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                </Box>
-            </VStack>
+            <FormControl isInvalid={errors.category1 !== undefined} isRequired>
+                <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
+                    カテゴリ1
+                </FormLabel>
+                <Select required placeholder="カテゴリを選択" {...register('category1')} onChange={onChangeHandler}>
+                    {list1.map((category) => {
+                        return (
+                            <Box as="option" value={category} key={category}>
+                                {category}
+                            </Box>
+                        )
+                    })}
+                </Select>
+            </FormControl>
         )
     }
     const CategorySelecter2 = () => {
         return (
-            <VStack w="full">
-                <Box w="full">
-                    <FormControl isInvalid={errors.category2 !== undefined}>
-                        <FormLabel htmlFor="category2" fontSize={{ base: 'lg', md: 'xl' }}>
-                            <HStack>
-                                <Text>カテゴリ2</Text>
-                                <RequiredLabel isRequired={false} />
-                            </HStack>
-                        </FormLabel>
-                        <Select placeholder="カテゴリを選択" {...register('category2')} onChange={onChangeHandler}>
-                            {list2.map((category) => {
-                                return (
-                                    <Box as="option" value={category} key={category}>
-                                        {category}
-                                    </Box>
-                                )
-                            })}
-                        </Select>
-                    </FormControl>
-                    <Text color={'#E53E3E'} fontSize="14">
-                        {duplicateError && 'カテゴリが重複しています'}
-                    </Text>
-                </Box>
-            </VStack>
+            <FormControl isInvalid={errors.category2 !== undefined}>
+                <FormLabel htmlFor="category2" fontSize={{ base: 'lg', md: 'lg' }}>
+                    カテゴリ2
+                </FormLabel>
+                <Select placeholder="カテゴリを選択" {...register('category2')} onChange={onChangeHandler}>
+                    {list2.map((category) => {
+                        return (
+                            <Box as="option" value={category} key={category}>
+                                {category}
+                            </Box>
+                        )
+                    })}
+                </Select>
+                <Text color={'#E53E3E'} fontSize="14">
+                    {duplicateError && 'カテゴリが重複しています'}
+                </Text>
+            </FormControl>
         )
     }
     return (
-        <VStack w="full" p="5%" spacing={4}>
+        <VStack w="full" px={4} py={6} spacing={4}>
             <HStack w="full">
                 <Box as="span" boxSize="20px" bgColor="mainColor" rounded="full"></Box>
                 <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">
@@ -194,44 +174,35 @@ export const Page = (): JSX.Element => {
             <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full" spacing={4}>
                 <CategorySelecter1 />
                 <CategorySelecter2 />
-                <Box w="full">
-                    <FormControl isInvalid={errors.title !== undefined}>
-                        <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'xl' }}>
-                            <HStack>
-                                <Text>タイトル</Text>
-                                <RequiredLabel isRequired={true} />
-                            </HStack>
-                        </FormLabel>
-                        <Input
-                            {...register('title', {
-                                required: 'This is required',
-                                minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
-                                maxLength: { value: 50, message: 'タイトルは50文字までです' },
-                            })}
-                        ></Input>
-                        <FormErrorMessage>{errors.title && 'タイトルを入力してください'}</FormErrorMessage>
-                    </FormControl>
-                </Box>
-                <Box w="full">
-                    <FormControl isInvalid={errors.content !== undefined}>
-                        <FormLabel fontSize={{ base: 'lg', md: 'xl' }}>
-                            <HStack>
-                                <Text>内容</Text>
-                                <RequiredLabel isRequired={true} />
-                            </HStack>
-                        </FormLabel>
-                        <Textarea
-                            minH="48"
-                            {...register('content', {
-                                required: 'This is required',
-                                minLength: { value: 1, message: '質問は最小1文字必要です' },
-                                maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
-                            })}
-                            onChange={countContent}
-                        ></Textarea>
-                    </FormControl>
-                    <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
-                </Box>
+
+                <FormControl isInvalid={errors.title !== undefined} isRequired>
+                    <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'lg' }}>
+                        タイトル
+                    </FormLabel>
+                    <Input
+                        {...register('title', {
+                            required: 'This is required',
+                            minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
+                            maxLength: { value: 50, message: 'タイトルは50文字までです' },
+                        })}
+                    ></Input>
+                    <FormErrorMessage>{errors.title && 'タイトルを入力してください'}</FormErrorMessage>
+                </FormControl>
+
+                <FormControl isInvalid={errors.content !== undefined} isRequired>
+                    <FormLabel fontSize={{ base: 'lg', md: 'lg' }}>内容</FormLabel>
+                    <Textarea
+                        minH="48"
+                        {...register('content', {
+                            required: 'This is required',
+                            minLength: { value: 1, message: '質問は最小1文字必要です' },
+                            maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
+                        })}
+                        onChange={countContent}
+                    ></Textarea>
+                </FormControl>
+                <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
+
                 <HStack w="full">
                     <Text>{contentLength} / 5000</Text>
                 </HStack>
@@ -266,7 +237,12 @@ export const Page = (): JSX.Element => {
                             <ModalFooter>
                                 <HStack>
                                     <ChancelButton isLoading={loading} buttonText="キャンセル" onClick={onClose} />
-                                    <PrimaryButton isLoading={loading} buttonText="投稿する" onClick={postQuestion} />
+                                    <PrimaryButton
+                                        type="button"
+                                        isLoading={loading}
+                                        buttonText="投稿する"
+                                        onClick={postQuestion}
+                                    />
                                 </HStack>
                             </ModalFooter>
                         </>

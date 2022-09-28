@@ -1,11 +1,10 @@
 import { Box, HStack, VStack } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
 import CommonMeta from '../CommonMeta'
+import { Footer } from '../QA/Footer'
 import { Header } from '../Header'
-import { Footer } from './Footer'
+import { RightBar } from '../QA/RigthBar'
 import { LeftBar } from './LeftBar'
-import { LeftBar2 } from './LeftBar2'
-import { RightBar } from './RigthBar'
 
 interface Props {
     children?: ReactNode
@@ -19,7 +18,7 @@ export const Layout = ({ children, pageName }: Props): JSX.Element => {
             <CommonMeta siteTitle={siteTitle} />
             <Header />
             <HStack spacing="0px" paddingTop={{ base: '100px', md: '60px' }}>
-                <LeftBar2 />
+                <LeftBar />
                 <VStack
                     w={{
                         base: '100%',

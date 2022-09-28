@@ -169,17 +169,17 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
         <Tabs w="100%" isLazy defaultIndex={1}>
             <TabList>
                 <Tab
-                    w="33.3%"
+                    w="50%"
                     border="1px"
                     color="gray.400"
                     bgColor="gray.200"
                     borderRadius="5px"
-                    fontSize={{ base: 'lg', sm: '2xl' }}
+                    fontSize={{ base: 'lg', sm: 'xl' }}
                     onClick={onSolvedClickHandler}
                     _selected={{
                         bgColor: 'white',
                         borderColor: 'gray.400',
-                        borderBottomColor: '#3DB2FF',
+                        borderBottomColor: 'mainColor',
                         borderBottomWidth: '5px',
                         color: 'black',
                     }}
@@ -189,17 +189,17 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
                     解決済み
                 </Tab>
                 <Tab
-                    w="33.4%"
+                    w="50%"
                     border="1px"
                     color="gray.400"
                     bgColor="gray.200"
                     borderRadius="5px"
-                    fontSize={{ base: 'lg', sm: '2xl' }}
+                    fontSize={{ base: 'lg', sm: 'xl' }}
                     onClick={onNotSolvedClickHandler}
                     _selected={{
                         bgColor: 'white',
                         borderColor: 'gray.400',
-                        borderBottomColor: '#3DB2FF',
+                        borderBottomColor: 'mainColor',
                         borderBottomWidth: '5px',
                         color: 'black',
                     }}
@@ -207,26 +207,6 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
                     _focus={{ outline: 'none' }}
                 >
                     回答募集中
-                </Tab>
-                <Tab
-                    w="33.3%"
-                    border="1px"
-                    color="gray.400"
-                    bgColor="gray.200"
-                    borderRadius="5px"
-                    fontSize={{ base: 'lg', sm: '2xl' }}
-                    onClick={onPrimeClickHandler}
-                    _selected={{
-                        bgColor: 'white',
-                        borderColor: 'gray.400',
-                        borderBottomColor: '#3DB2FF',
-                        borderBottomWidth: '5px',
-                        color: 'black',
-                    }}
-                    _active={{ outline: 'none' }}
-                    _focus={{ outline: 'none' }}
-                >
-                    回答急募
                 </Tab>
             </TabList>
             <TabPanels>

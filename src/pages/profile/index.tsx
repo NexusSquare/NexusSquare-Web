@@ -1,9 +1,9 @@
 import { NextPageWithLayout } from 'next'
-import Layout from '../../components/common/Layout'
+import { Layout } from '../../components/layouts/Form/Layout'
 import { Page } from '../../components/pages/Profile/Page'
 
-const Register: NextPageWithLayout = () => <Page />
+const Profile: NextPageWithLayout = () => <Page />
 
-Register.getLayout = (page) => <Layout pageName="プロフィール">{page}</Layout>
+Profile.getLayout = (page) => <Layout pageName="プロフィール">{page}</Layout>
 
-export default Register
+export default Profile

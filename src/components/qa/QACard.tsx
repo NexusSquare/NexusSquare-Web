@@ -20,13 +20,14 @@ const QACard: React.VFC<Question> = (props) => {
                     border="1px"
                     borderColor="gray.300"
                     _hover={{ opacity: '50%' }}
+                    bgColor={'white'}
                 >
                     <HStack>
                         <Text color="gray.400">{categoryText}</Text>
                         <Spacer />
                         <Text color="gray.400">{date}</Text>
                     </HStack>
-                    <Text as="h3" paddingTop="10px" fontSize="2xl" fontWeight="bold" isTruncated>
+                    <Text as="h3" paddingTop="10px" fontSize="xl" fontWeight="bold" isTruncated>
                         {props.title}
                     </Text>
                     <Text paddingBottom="15px" color="gray.400" isTruncated>

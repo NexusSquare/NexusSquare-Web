@@ -1,10 +1,11 @@
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import Question from '../../../types/domain/qa/Question'
 
 import QACardWindow from '../../qa/QACardWindow'
 import QACardList from '../../qa/QACardList'
 import QAQueryProps from '../../../constants/qa/queryGroup'
+import { SearchForm } from '../../qa/SearchForm'
 
 interface Props {
     questions: Question[]
@@ -12,11 +13,16 @@ interface Props {
 export const Page = ({ questions }: Props) => {
     return (
         <>
-            <Box h="100px" w="100%" display="flex" alignItems="center">
-                <Text paddingLeft={{ base: '5%', md: '10%' }} fontSize="4xl" textAlign="left">
-                    最新の投稿
-                </Text>
-            </Box>
+            <VStack paddingY={4} w="100%" display="flex" alignItems="center">
+                <Box display={{ base: 'block', xl: 'none' }} w="full">
+                    <SearchForm />
+                </Box>
+                <Box display={{ base: 'none', xl: 'block' }} w="full">
+                    <Text as="h2" fontWeight={'bold'} fontSize={'2xl'} paddingX={4}>
+                        学生生活Q&A
+                    </Text>
+                </Box>
+            </VStack>
             <QACardWindow>
                 <QACardList data={questions} />
             </QACardWindow>

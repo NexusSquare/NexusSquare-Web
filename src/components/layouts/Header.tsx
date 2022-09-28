@@ -25,10 +25,12 @@ import { ReactNode } from 'react'
 import User from '../../types/domain/account/User'
 import { useErrorToast } from '../../hooks/useErrorToast'
 import { useRouter } from 'next/router'
-import { FiEdit } from 'react-icons/fi'
+import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
 import ChakraNextImage from '../common/chakraNextImage'
+import { FaUserFriends, FaUserPlus } from 'react-icons/fa'
 import { LINKS } from '../../constants/links'
+import { PrimaryButton } from '../common/PrimaryButton'
 
 interface Props {
     children?: ReactNode
@@ -47,10 +49,13 @@ export const Header = ({ children }: Props): JSX.Element => {
     const [isNotice, setIsNotice] = useState(false)
     const [user, setUser] = useState<User>()
     const router = useRouter()
-    const errorToast = useErrorToast()
 
     const onClickRegister = () => {
         router.push(LINKS.REGISTER)
+    }
+
+    const onClickLogin = () => {
+        router.push(LINKS.LOGIN)
     }
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
@@ -59,11 +64,10 @@ export const Header = ({ children }: Props): JSX.Element => {
                 <Box
                     as="a"
                     href={props.url}
-                    paddingTop="10px"
                     whiteSpace="nowrap"
-                    fontWeight="700"
-                    color="white"
-                    fontSize="large"
+                    fontWeight="bold"
+                    color="#FEEBC8"
+                    fontSize="sm"
                     _hover={{ textDecoration: 'underline' }}
                 >
                     {props.funcName}
@@ -72,12 +76,11 @@ export const Header = ({ children }: Props): JSX.Element => {
         ) : (
             <Box
                 whiteSpace="nowrap"
-                paddingTop="10px"
                 onClick={() => alert('今後実装予定！お楽しみに！')}
                 _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
-                fontWeight="700"
-                color="white"
-                fontSize="large"
+                fontWeight="bold"
+                color="#FEEBC8"
+                fontSize="sm"
             >
                 {props.funcName}
             </Box>
@@ -160,43 +163,77 @@ export const Header = ({ children }: Props): JSX.Element => {
                 </Popover>
             </HStack>
         ) : (
-            <HStack spacing="10%" w="200px" justify="end">
-                <Button
-                    onClick={onClickRegister}
-                    bgColor="mainColor"
-                    color="white"
-                    borderWidth={1}
-                    borderColor="white"
-                    fontWeight={'bold'}
-                    _hover={{ bgColor: 'white', color: 'mainColor' }}
-                >
-                    新規登録
-                </Button>
-                <Button bgColor="#FFF">
-                    <Link href="/login" passHref>
-                        ログイン
-                    </Link>
-                </Button>
-            </HStack>
+            <>
+                <HStack spacing={2} w="200px" justify="end" display={{ base: 'flex', md: 'none' }}>
+                    <VStack
+                        as="button"
+                        _hover={{ color: 'mainColor' }}
+                        spacing={1}
+                        justify={'center'}
+                        alignItems={'center'}
+                    >
+                        <FiUserPlus size={20} color={'white'} />
+                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
+                            新規登録
+                        </Text>
+                    </VStack>
+                    <VStack as="button" spacing={1} onClick={onClickLogin}>
+                        <FiLogIn size={20} color={'white'} />
+                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
+                            ログイン
+                        </Text>
+                    </VStack>
+                </HStack>
+                <HStack spacing={4} w="200px" justify="end" display={{ base: 'none', md: 'flex' }}>
+                    {/* <PrimaryButton buttonText="新規登録" type="button" /> */}
+                    <Button
+                        type="button"
+                        color="white"
+                        bgColor="mainColor"
+                        borderWidth={2}
+                        borderColor="white"
+                        _hover={{ bgColor: 'white', color: 'mainColor' }}
+                        onClick={onClickRegister}
+                    >
+                        新規登録
+                    </Button>
+                    <HStack as="button" spacing={1} _hover={{ color: 'mainColor' }}>
+                        <FiLogIn size={30} color={'white'} />
+                        <Text
+                            fontSize={'md'}
+                            color={'white'}
+                            w="full"
+                            fontWeight={'bold'}
+                            _hover={{ textDecoration: 'underline' }}
+                            onClick={onClickLogin}
+                        >
+                            ログイン
+                        </Text>
+                    </HStack>
+                </HStack>
+            </>
         )
 
     return (
         <VStack
             as="header"
             w="100%"
-            bgColor="#FF9037"
+            bgColor="mainColor"
             spacing="0px"
-            divider={<StackDivider borderColor="#FFDA77" />}
+            divider={<StackDivider borderColor="gray.200" />}
             position="fixed"
             top="0"
             zIndex={'sticky'}
+            borderBottom={'1px'}
+            borderColor={'gray.200'}
+            boxShadow="sm"
         >
             <HStack
                 h="60px"
                 paddingX={{ base: '10px', sm: '50px' }}
                 paddingY={{ base: '0px', md: '10px' }}
                 w="100%"
-                bgColor="#FF9037"
+                bgColor="mainColor"
             >
                 <Box
                     as="h1"
@@ -207,7 +244,7 @@ export const Header = ({ children }: Props): JSX.Element => {
                 >
                     <Link href="/" passHref>
                         <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
-                            <ChakraNextImage
+                            {/* <ChakraNextImage
                                 src={LOGO_URL}
                                 alt="ロゴ"
                                 minW="120px"
@@ -217,7 +254,10 @@ export const Header = ({ children }: Props): JSX.Element => {
                                 width={180}
                                 height={45}
                                 borderColor="#FF9037"
-                            ></ChakraNextImage>
+                            ></ChakraNextImage> */}
+                            <Box as="h2" color={'white'} fontWeight={'bold'} fontSize="2xl" mr={2}>
+                                NexusSquare
+                            </Box>
                         </Box>
                     </Link>
                 </Box>
@@ -228,24 +268,27 @@ export const Header = ({ children }: Props): JSX.Element => {
                     paddingX="0.5%"
                     aria-labelledby="jump to other functions"
                     display={{ base: 'none', md: 'flex' }}
+                    paddingTop={2}
                 >
                     <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
+                    <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
                     <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
                 </HStack>
                 <Spacer />
                 <LoginOrProfile />
             </HStack>
             <HStack
-                h="40px"
+                w="full"
                 as="nav"
-                spacing="12%"
-                paddingY="0px"
-                paddingX={{ base: '10px', sm: '50px' }}
+                spacing={4}
+                paddingY={2}
+                paddingX={{ base: 4, sm: '50px' }}
                 aria-labelledby="jump to other functions - mini version"
                 display={{ base: 'flex', md: 'none' }}
-                alignSelf="start"
+                justify={'space-between'}
             >
                 <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
+                <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
                 <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
             </HStack>
         </VStack>

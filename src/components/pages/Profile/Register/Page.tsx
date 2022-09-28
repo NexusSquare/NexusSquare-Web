@@ -18,7 +18,6 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 import { NextPage } from 'next'
-import { useSession } from 'next-auth/react'
 import Router, { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { useEffect } from 'react'
@@ -55,7 +54,7 @@ export const Page = (): JSX.Element => {
     } = useForm<PostUser>()
     const router = useRouter()
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { data: session, status } = useSession()
+    const session = undefined
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const [registerInfo, setRegisterInfo] = useState<RegisterInfo>()
     const watchDepartment = watch('department')
@@ -66,14 +65,10 @@ export const Page = (): JSX.Element => {
         setRegisterInfo(data)
     }
     const registerUser = async () => {
-        const mailAddress = session?.user?.email
+        const mailAddress = 'session?.user?.email'
         const perfectRegisterInfo = { ...registerInfo, mailAddress, point: 0 }
         await clientApi
-            .post('/user', perfectRegisterInfo, {
-                headers: {
-                    Authorization: `${session?.idToken}`,
-                },
-            })
+            .post('/user', perfectRegisterInfo, {})
             .then(() => {
                 router.replace('/qa')
             })
@@ -280,7 +275,7 @@ export const Page = (): JSX.Element => {
                         <ModalFooter>
                             <HStack>
                                 <ChancelButton buttonText="キャンセル" onClick={onClose} />
-                                <PrimaryButton buttonText="登録する" onClick={registerUser} />
+                                <PrimaryButton buttonText="登録する" onClick={registerUser} type="button" />
                             </HStack>
                         </ModalFooter>
                     </>

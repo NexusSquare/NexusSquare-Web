@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const HistoryList = ({ historyList }: Props) => {
-    if (historyList.length == 0) {
+    if (!historyList) {
         return (
             <VStack p="4">
                 <Text fontSize={'md'}>質問履歴が存在しません</Text>
@@ -20,6 +20,9 @@ export const HistoryList = ({ historyList }: Props) => {
             {historyList.map((history) => {
                 ;<HistoryCard history={history} key={history.id} />
             })}
+            <HistoryCard history={historyList[0]} key={1} />
+            <HistoryCard history={historyList[1]} key={2} />
+            <HistoryCard history={historyList[2]} key={3} />
         </VStack>
     )
 }

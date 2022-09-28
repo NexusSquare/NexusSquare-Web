@@ -1,53 +1,55 @@
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps, NextPageWithLayout } from 'next'
 import { getSession } from 'next-auth/react'
-import { Layout } from '../components/layouts/Layout'
+import { Layout } from '../components/layouts/Profile/Layout'
+
 import { Page } from '../components/pages/Profile/Page'
-import { clientApi } from '../lib/axios'
+import History from '../types/domain/account/History'
+
 import User from '../types/domain/account/User'
 
 interface Props {
     user: User
 }
 
-const Profile: NextPageWithLayout = () => <Page />
+const dummyUser: User = {
+    department: '外国語学部',
+    subject: '英米学科',
+    grade: 1,
+    firstname: '苗字',
+    lastname: '太郎',
+    firstnameFurigana: 'みょうじ',
+    lastnameFurigana: 'たろう',
+    point: 1500,
+    updateAt: '2020.03.09',
+    imageUrl: '',
+    isNameAnonymous: false,
+    isDepartmentAnonymous: false,
+    mailAddres: 'hoge@example.com',
+}
+
+const dummyHistories: History[] = [
+    {
+        id: 'hoge@example.com',
+        point: 20,
+        createAt: '2020.03.09',
+        category: 'answer',
+    },
+    {
+        id: 'hoge@example.com',
+        point: 20,
+        createAt: '2020.03.09',
+        category: 'question',
+    },
+    {
+        id: 'hoge@example.com',
+        point: 20,
+        createAt: '2020.03.09',
+        category: 'answer',
+    },
+]
+const Profile: NextPageWithLayout = () => <Page user={dummyUser} histories={dummyHistories} />
 
 Profile.getLayout = (page) => <Layout pageName="プライバシーポリシー">{page}</Layout>
-
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const session = await getSession(context)
-    if (!session) {
-        return {
-            redirect: {
-                destination: '/login',
-                permanent: false,
-            },
-        }
-    }
-    try {
-        const userId = session.user?.email
-        const response: AxiosResponse<User> = await clientApi.get(`/user/${userId}`, {
-            headers: {
-                Authorization: `${session.idToken}`,
-            },
-        })
-        const { data } = response
-        const props: Props = {
-            user: data,
-        }
-        return { props }
-    } catch (error) {
-        if (axios.isAxiosError(error)) {
-            console.error(error.message)
-            return {
-                redirect: {
-                    destination: 'profile/register',
-                    permanent: false,
-                },
-            }
-        }
-    }
-    return { notFound: true }
-}
 
 export default Profile
