@@ -19,7 +19,6 @@ if (typeof window !== 'undefined' && !getApps().length) {
     initializeApp(firebaseConfig)
 }
 
-export const analytics = getAnalytics()
 export const db = getFirestore()
 export const storage = getStorage()
 export const auth = getAuth()

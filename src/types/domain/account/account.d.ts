@@ -1,5 +1,5 @@
-type account = {
+type Account = {
     email: string
     password: string
 }
-export default account
+export default Account

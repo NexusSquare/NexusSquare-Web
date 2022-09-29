@@ -3,11 +3,12 @@ import React from 'react'
 
 export const useErrorToast = () => {
     const toast = useToast()
-    return () => {
+    const errorToast = (message: string) => {
         toast({
-            title: `サーバーでエラーが発生しました。`,
+            title: message,
             status: 'error',
             isClosable: true,
         })
     }
+    return errorToast
 }

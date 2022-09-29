@@ -3,7 +3,7 @@ export const LINKS = {
     PROFILE: 'profile',
     REGISTER: '/register',
     LOGIN: '/login',
-    QUESTION: '/question',
+    QUESTION: '/qa',
     RULE: '/rule',
     PRIVACY: 'privacy',
 } as const
