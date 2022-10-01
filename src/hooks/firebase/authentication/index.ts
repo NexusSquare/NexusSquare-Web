@@ -1,4 +1,6 @@
+import { signOut } from '@firebase/auth'
 import {
+    useAuthState,
     useCreateUserWithEmailAndPassword,
     useSendEmailVerification,
     useSignInWithEmailAndPassword,
@@ -15,6 +17,15 @@ export const useCreateUser = () => {
     }
 }
 
+export const useAuth = () => {
+    const [user, loading, error] = useAuthState(auth)
+    return {
+        user: user,
+        loading: loading,
+        error: error,
+    }
+}
+
 export const useLogin = () => {
     const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth)
     return {
@@ -23,6 +34,10 @@ export const useLogin = () => {
         loading: loading,
         error: error,
     }
+}
+
+export const logOut = () => {
+    signOut(auth)
 }
 
 export const useSendEmail = () => {

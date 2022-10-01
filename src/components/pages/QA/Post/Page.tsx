@@ -34,7 +34,7 @@ import { qaApi } from '../../../../lib/axios'
 import { DefaultModal } from '../../../../components/common/DefaultModal'
 import { PrimaryButton } from '../../../../components/common/PrimaryButton'
 import { ChancelButton } from '../../../../components/common/ChancelButton'
-import { useErrorToast } from '../../../../hooks/useErrorToast'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -98,9 +98,7 @@ export const Page = (): JSX.Element => {
             .then(() => {
                 router.replace('/qa')
             })
-            .catch(() => {
-                errorToast()
-            })
+            .catch(() => {})
         setLoading(false)
     }
     const RequiredLabel = ({ isRequired }: RequiredLabelProps) => {

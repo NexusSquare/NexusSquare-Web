@@ -17,31 +17,42 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/firebase/authentication'
-import { useErrorToast } from '../../../hooks/useErrorToast'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import Account from '../../../types/domain/account/Account'
 import { PrimaryButton } from '../../common/PrimaryButton'
+import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
+import { useEffect } from 'react'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<Account>()
-    const { login, user, loading, error } = useLogin()
-    const errorToast = useErrorToast()
+    const { login, user, loading, error: loginError } = useLogin()
+    const { alertLoginError } = useAlertLoginError()
 
     const onSubmitAccount = async (account: Account) => {
         const { email, password } = account
         await login(email, password)
-        if (error) {
-            errorToast('ログインに失敗しました。')
+    }
+
+    // エラーの状態がセットされるまでに時間差があるため使用
+    useEffect(() => {
+        if (loginError) {
+            alertLoginError(loginError.code)
+            console.log(loginError.code)
             return
         }
-        router.push(LINKS.QUESTION)
-    }
+        if (user?.user.emailVerified) {
+            router.push(LINKS.QUESTION)
+            return
+        }
+    }, [loginError, user])
+
     const onClickRegister = () => {
-        router.push(LINKS.REGISTER)
+        router.push(LINKS.REGISTER.STEP1)
     }
     return (
         <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>

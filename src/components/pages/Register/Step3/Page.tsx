@@ -15,12 +15,12 @@ import {
 import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { ERROR } from '../../../constants/errors'
-import { LINKS } from '../../../constants/links'
-import { useCreateUser } from '../../../hooks/firebase/authentication'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import Account from '../../../types/domain/account/Account'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { ERROR } from '../../../../constants/errors'
+import { LINKS } from '../../../../constants/links'
+import { useCreateUser } from '../../../../hooks/firebase/authentication'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import Account from '../../../../types/domain/account/Account'
+import { PrimaryButton } from '../../../common/PrimaryButton'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

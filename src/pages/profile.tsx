@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps, NextPageWithLayout } from 'next'
-import { getSession } from 'next-auth/react'
 import { Layout } from '../components/layouts/Profile/Layout'
 
 import { Page } from '../components/pages/Profile/Page'
