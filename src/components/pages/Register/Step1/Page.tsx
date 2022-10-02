@@ -15,7 +15,7 @@ import {
 import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { ERROR } from '../../../../constants/errors'
+import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { useCreateUser } from '../../../../hooks/firebase/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
@@ -37,11 +37,11 @@ export const Page = (): JSX.Element => {
         const { email, password } = account
         await createUser(email, password)
         if (authError?.code === ERROR.EMAIL_ALREADY_EXISTS) {
-            errorToast('既にメールアドレスは登録されています。')
+            errorToast(ERROR_MESSAGE.EMAIL_ALREADY_EXISTS)
             return
         } else if (authError?.code) {
-            errorToast('サーバー側でエラーが発生しました。')
-            console.log(console.error)
+            errorToast(ERROR_MESSAGE.SERVER)
+            console.log(authError)
             return
         }
     }
@@ -49,7 +49,7 @@ export const Page = (): JSX.Element => {
         router.push(LINKS.LOGIN)
     }
     return (
-        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
+        <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
             <VStack
                 bg="white"
                 w={{ base: 'full', md: '2xl' }}
@@ -129,6 +129,6 @@ export const Page = (): JSX.Element => {
                     ログインはこちら
                 </Text>
             </VStack>
-        </Box>
+        </HStack>
     )
 }

@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { ERROR } from '../../constants/errors'
+import { ERROR, ERROR_MESSAGE } from '../../constants/errors'
 import { useErrorToast } from './useErrorToast'
 
 export const useAlertLoginError = () => {
@@ -7,16 +7,16 @@ export const useAlertLoginError = () => {
     const alertLoginError = useCallback((message: string) => {
         switch (message) {
             case ERROR.INVALID_EMAIL:
-                errorToast('メールアドレスが正しくありません')
+                errorToast(ERROR_MESSAGE.INVALID_EMAIL)
                 break
             case ERROR.WRONG_PASSWORD:
-                errorToast('パスワードが間違っています')
+                errorToast(ERROR_MESSAGE.WRONG_PASSWORD)
                 break
             case ERROR.USER_NOT_FOUND:
-                errorToast('ユーザーが存在しません')
+                errorToast(ERROR_MESSAGE.USER_NOT_FOUND)
                 break
             default:
-                errorToast('サーバーエラー')
+                errorToast(ERROR_MESSAGE.SERVER)
         }
     }, [])
     return { alertLoginError: alertLoginError }

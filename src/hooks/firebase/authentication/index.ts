@@ -1,11 +1,12 @@
 import { signOut } from '@firebase/auth'
+import { AuthError, sendEmailVerification } from 'firebase/auth'
+import { useState } from 'react'
 import {
     useAuthState,
     useCreateUserWithEmailAndPassword,
-    useSendEmailVerification,
     useSignInWithEmailAndPassword,
 } from 'react-firebase-hooks/auth'
-import { auth } from '../../../plugins/firebase'
+import { actionCodeSettings, auth } from '../../../plugins/firebase'
 
 export const useCreateUser = () => {
     const [createUserWithEmailAndPassword, user, loading, error] = useCreateUserWithEmailAndPassword(auth)
@@ -41,9 +42,26 @@ export const logOut = () => {
 }
 
 export const useSendEmail = () => {
-    const [sendEmailVerification, sending, error] = useSendEmailVerification(auth)
+    const [error, setError] = useState<AuthError>()
+    const [sending, setSending] = useState<boolean>(false)
+
+    const sendEmail = async () => {
+        setSending(true)
+        setError(undefined)
+        try {
+            if (auth.currentUser) {
+                await sendEmailVerification(auth.currentUser, actionCodeSettings)
+            } else {
+                setError(new Error('No user is logged in') as AuthError)
+            }
+        } catch (err) {
+            setError(err as AuthError)
+        } finally {
+            setSending(false)
+        }
+    }
     return {
-        sendEmail: sendEmailVerification,
+        sendEmail: sendEmail,
         sending: sending,
         error: error,
     }

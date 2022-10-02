@@ -12,44 +12,21 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { async } from '@firebase/util'
-import { useRouter } from 'next/router'
-import { useForm } from 'react-hook-form'
-import { ERROR } from '../../../../constants/errors'
-import { LINKS } from '../../../../constants/links'
-import { useCreateUser } from '../../../../hooks/firebase/authentication'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import Account from '../../../../types/domain/account/Account'
+import { useState } from 'react'
+import { useSendEmail } from '../../../../hooks/firebase/authentication'
+
 import { PrimaryButton } from '../../../common/PrimaryButton'
 
 export const Page = (): JSX.Element => {
-    const router = useRouter()
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<Account>()
-
-    const { createUser, loading, error: authError } = useCreateUser()
-    const errorToast = useErrorToast()
-
-    const onSubmitAccount = async (account: Account) => {
-        const { email, password } = account
-        await createUser(email, password)
-        if (authError?.code === ERROR.EMAIL_ALREADY_EXISTS) {
-            errorToast('既にメールアドレスは登録されています。')
-            return
-        } else if (authError?.code) {
-            errorToast('サーバー側でエラーが発生しました。')
-            console.log(console.error)
-            return
-        }
-    }
-    const onClickLogin = () => {
-        router.push(LINKS.LOGIN)
+    const { sendEmail, sending, error } = useSendEmail()
+    const [hasSentEmail, setHasSentEmail] = useState(false)
+    const onClickSendEmail = async () => {
+        await sendEmail()
+        if (error) console.log(error)
+        else setHasSentEmail(true)
     }
     return (
-        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
+        <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
             <VStack
                 bg="white"
                 w={{ base: 'full', md: '2xl' }}
@@ -61,74 +38,21 @@ export const Page = (): JSX.Element => {
                     メールアドレス認証
                 </Box>
                 <Divider />
-
-                <VStack
-                    as="form"
-                    onSubmit={handleSubmit((account) => onSubmitAccount(account))}
-                    w={'full'}
-                    paddingTop="20px"
-                    alignItems="center"
-                    spacing={8}
-                >
-                    <FormControl isInvalid={errors.email !== undefined} isRequired>
-                        <FormLabel fontWeight={'bold'}>メールアドレス</FormLabel>
-                        <Input
-                            id="mail"
-                            {...register('email', {
-                                required: '必須項目です',
-                                minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
-                                maxLength: { value: 50, message: 'タイトルは50文字までです' },
-                                pattern: {
-                                    value: /^[a-z]{2}[0-9]{6}@[a-z]+\.aichi\-pu\.ac\.jp$/,
-                                    message: '愛知県立大学のメールアドレスを入力してください',
-                                },
-                            })}
-                            placeholder="xx000000.xxx.aichi-pu.ac.jp"
-                            type="email"
-                        />
-                        <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-                        <FormHelperText>愛知県立県大学のメールアドレスを入力</FormHelperText>
-                    </FormControl>
-
-                    <FormControl isInvalid={errors.password !== undefined} isRequired>
-                        <FormLabel htmlFor="password" fontWeight={'bold'}>
-                            パスワード
-                        </FormLabel>
-                        <Input
-                            id="password"
-                            {...register('password', {
-                                required: '必須項目です',
-                                minLength: { value: 8, message: 'パスワードは最小8文字必要です' },
-                                maxLength: { value: 16, message: 'パスワードは16文字までです' },
-                                pattern: {
-                                    value: /^(?=.*?[a-zA-z])(?=.*?\d)[a-zA-z\d]{8,16}$/i,
-                                    message: '半角英数を含めて下さい',
-                                },
-                            })}
-                            placeholder="********"
-                            type="password"
-                        />
-                        <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-                        <FormHelperText>半角英数8~16</FormHelperText>
-                    </FormControl>
+                <VStack spacing={8}>
+                    <Box mt={8}>
+                        <Text>登録されたメールアドレス宛に受信確認メールを送信しました。</Text>
+                        <Text>メールをご確認いただき、メールに記載されてURLをクリックし、本登録を完了させて下さい</Text>
+                    </Box>
+                    {hasSentEmail && <Text color={'red.500'}>メールを送信しました。</Text>}
                     <PrimaryButton
-                        buttonText="新規登録"
-                        type="submit"
-                        width={48}
-                        isLoading={loading}
-                        disabled={loading}
+                        buttonText="もう一度認証メールを送る"
+                        type="button"
+                        isLoading={sending}
+                        disabled={sending}
+                        onClick={onClickSendEmail}
                     />
                 </VStack>
-                <Text
-                    fontWeight={'bold'}
-                    fontSize={'sm'}
-                    as="button"
-                    _hover={{ textDecoration: 'underline' }}
-                    onClick={onClickLogin}
-                >
-                    ログインはこちら
-                </Text>
             </VStack>
-        </Box>
+        </HStack>
     )
 }
