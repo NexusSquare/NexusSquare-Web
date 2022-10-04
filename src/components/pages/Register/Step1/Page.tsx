@@ -12,26 +12,55 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
+import { async } from '@firebase/util'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { LINKS } from '../../../constants/links'
-import account from '../../../types/domain/account/account'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
+import { LINKS } from '../../../../constants/links'
+import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import Account from '../../../../types/domain/account/Account'
+import { PrimaryButton } from '../../../common/PrimaryButton'
+import { AuthError } from '../../../../types/error'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<account>()
+        formState: { errors },
+    } = useForm<Account>()
+    const errorToast = useErrorToast()
+
+    const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
+    const { mutate: sendEmail } = useSendEmail()
+
+    const onSuccessCreateAccount = async () => {
+        await sendEmail()
+        router.push(LINKS.REGISTER.STEP2)
+    }
+
+    const displayErrorMessage = (errorMessage: string) => {
+        if (errorMessage === ERROR.EMAIL_ALREADY_EXISTS) {
+            errorToast(ERROR_MESSAGE.EMAIL_ALREADY_EXISTS)
+        } else {
+            errorToast(ERROR_MESSAGE.SERVER)
+        }
+    }
+
+    // TODO errorハンドリングが隠蔽できていない。
+    const onSubmitAccount = async (account: Account) => {
+        createAccount(account, {
+            onSuccess: onSuccessCreateAccount,
+            onError: (error: AuthError) => displayErrorMessage(error.code),
+        })
+    }
 
     const onClickLogin = () => {
         router.push(LINKS.LOGIN)
     }
     return (
-        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
+        <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
             <VStack
                 bg="white"
                 w={{ base: 'full', md: '2xl' }}
@@ -46,7 +75,7 @@ export const Page = (): JSX.Element => {
 
                 <VStack
                     as="form"
-                    onSubmit={handleSubmit((data) => console.log(data))}
+                    onSubmit={handleSubmit((account) => onSubmitAccount(account))}
                     w={'full'}
                     paddingTop="20px"
                     alignItems="center"
@@ -83,7 +112,7 @@ export const Page = (): JSX.Element => {
                                 minLength: { value: 8, message: 'パスワードは最小8文字必要です' },
                                 maxLength: { value: 16, message: 'パスワードは16文字までです' },
                                 pattern: {
-                                    value: /^[A-Za-z0-9]+$/i,
+                                    value: /^(?=.*?[a-zA-z])(?=.*?\d)[a-zA-z\d]{8,16}$/i,
                                     message: '半角英数を含めて下さい',
                                 },
                             })}
@@ -93,7 +122,13 @@ export const Page = (): JSX.Element => {
                         <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                         <FormHelperText>半角英数8~16</FormHelperText>
                     </FormControl>
-                    <PrimaryButton buttonText="新規登録" type="submit" width={48} />
+                    <PrimaryButton
+                        buttonText="新規登録"
+                        type="submit"
+                        width={48}
+                        isLoading={createUserLoading}
+                        disabled={createUserLoading}
+                    />
                 </VStack>
                 <Text
                     fontWeight={'bold'}
@@ -105,6 +140,6 @@ export const Page = (): JSX.Element => {
                     ログインはこちら
                 </Text>
             </VStack>
-        </Box>
+        </HStack>
     )
 }

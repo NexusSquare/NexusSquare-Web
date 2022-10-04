@@ -15,12 +15,14 @@ const firebaseConfig = {
     measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 }
 
-if (typeof window !== 'undefined' && !getApps().length) {
-    initializeApp(firebaseConfig)
-}
+const app = initializeApp(firebaseConfig)
 
-export const analytics = getAnalytics()
-export const db = getFirestore()
-export const storage = getStorage()
+export const db = getFirestore(app)
+export const storage = getStorage(app)
 export const auth = getAuth()
 export const funcions = getFunctions()
+
+export const actionCodeSettings = {
+    url: process.env.NEXT_PUBLIC_AFTER_CONFIRMATION_EMAIL_URL!,
+    handleCodeInApp: true,
+}

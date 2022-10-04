@@ -16,18 +16,34 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
-import account from '../../../types/domain/account/account'
+import { useLogin } from '../../../hooks/authentication'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import Account from '../../../types/domain/account/Account'
 import { PrimaryButton } from '../../common/PrimaryButton'
+import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
+import { useEffect } from 'react'
+import { AuthError } from '../../../types/error'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const {
         register,
         handleSubmit,
-        formState: { errors, isSubmitting },
-    } = useForm<account>()
+        formState: { errors },
+    } = useForm<Account>()
+    const { alertLoginError } = useAlertLoginError()
+
+    const { mutate: login, isLoading: loading } = useLogin()
+
+    const onSubmitAccount = async (account: Account) => {
+        login(account, {
+            onSuccess: () => router.push(LINKS.QUESTION),
+            onError: (error) => alertLoginError(error.code),
+        })
+    }
+
     const onClickRegister = () => {
-        router.push(LINKS.REGISTER)
+        router.push(LINKS.REGISTER.STEP1)
     }
     return (
         <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
@@ -45,7 +61,7 @@ export const Page = (): JSX.Element => {
 
                 <VStack
                     as="form"
-                    onSubmit={handleSubmit((data) => console.log(data))}
+                    onSubmit={handleSubmit((account) => onSubmitAccount(account))}
                     w={'full'}
                     paddingTop="20px"
                     alignItems="center"
@@ -82,7 +98,7 @@ export const Page = (): JSX.Element => {
                                 minLength: { value: 8, message: 'パスワードは最小8文字必要です' },
                                 maxLength: { value: 16, message: 'パスワードは16文字までです' },
                                 pattern: {
-                                    value: /^[A-Za-z0-9]+$/i,
+                                    value: /^(?=.*?[a-zA-z])(?=.*?\d)[a-zA-z\d]{8,16}$/i,
                                     message: '半角英数を含めて下さい',
                                 },
                             })}
@@ -92,7 +108,13 @@ export const Page = (): JSX.Element => {
                         <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                         <FormHelperText>半角英数8~16</FormHelperText>
                     </FormControl>
-                    <PrimaryButton buttonText="ログイン" type="submit" width={48} />
+                    <PrimaryButton
+                        buttonText="ログイン"
+                        type="submit"
+                        width={48}
+                        isLoading={loading}
+                        disabled={loading}
+                    />
                 </VStack>
                 <Text
                     fontWeight={'bold'}

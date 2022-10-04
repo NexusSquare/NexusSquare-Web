@@ -1,9 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
 import { GetServerSideProps, NextPageWithLayout } from 'next'
-import { getSession } from 'next-auth/react'
 import { Layout } from '../components/layouts/Profile/Layout'
 
 import { Page } from '../components/pages/Profile/Page'
+import { UserGuards } from '../guards/UserGuards'
 import History from '../types/domain/account/History'
 
 import User from '../types/domain/account/User'
@@ -48,7 +48,11 @@ const dummyHistories: History[] = [
         category: 'answer',
     },
 ]
-const Profile: NextPageWithLayout = () => <Page user={dummyUser} histories={dummyHistories} />
+const Profile: NextPageWithLayout = () => (
+    <UserGuards>
+        <Page user={dummyUser} histories={dummyHistories} />
+    </UserGuards>
+)
 
 Profile.getLayout = (page) => <Layout pageName="プライバシーポリシー">{page}</Layout>
 

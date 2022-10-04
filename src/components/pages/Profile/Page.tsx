@@ -27,7 +27,7 @@ import History from '../../../types/domain/account/History'
 import PostUser from '../../../types/api/req/account/PostUser'
 import User from '../../../types/domain/account/User'
 import UpdateUser from '../../../types/api/req/account/UpdateUser'
-import { useErrorToast } from '../../../hooks/useErrorToast'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { RiContactsBookLine } from 'react-icons/ri'
 
 interface Props {
@@ -47,9 +47,7 @@ export const Page = ({ user, histories }: Props): JSX.Element => {
             .then((res: AxiosResponse<User>) => {
                 setProfile(res.data)
             })
-            .catch((err: AxiosError) => {
-                errorToast()
-            })
+            .catch((err: AxiosError) => {})
     }
     const fetchHistory = async () => {
         await clientApi
@@ -57,9 +55,7 @@ export const Page = ({ user, histories }: Props): JSX.Element => {
             .then((res: AxiosResponse<History[]>) => {
                 setHistoryList(res.data)
             })
-            .catch(() => {
-                errorToast()
-            })
+            .catch(() => {})
     }
     const updateProfile = async (updateUser: UpdateUser) => {
         await clientApi
@@ -67,9 +63,7 @@ export const Page = ({ user, histories }: Props): JSX.Element => {
             .then(() => {
                 fetchProfile()
             })
-            .catch(() => {
-                errorToast()
-            })
+            .catch(() => {})
     }
 
     const deleteProfile = async () => {
@@ -78,9 +72,7 @@ export const Page = ({ user, histories }: Props): JSX.Element => {
             .then((res: AxiosResponse) => {
                 console.log(res)
             })
-            .catch(() => {
-                errorToast()
-            })
+            .catch(() => {})
     }
 
     return (
