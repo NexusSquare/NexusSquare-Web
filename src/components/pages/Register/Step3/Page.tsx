@@ -1,6 +1,5 @@
 import {
     Box,
-    Button,
     Checkbox,
     Divider,
     FormControl,
@@ -21,13 +20,11 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { usePostUser } from '../../../../hooks/user'
-import { useAuth } from '../../../../hooks/authentication'
 import { UserReq } from '../../../../types/api/req/userReq'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const { register, handleSubmit, errors, isSubmitting, selectSubjects } = useCreateUserForm()
-    // NOTE ログインしているユーザーのみ用事されるため、currentUserは存在する
     const [userMutate, userMetaMutate] = usePostUser()
     const { mutate: postUser, isLoading: postUserLoading } = userMutate
     const { mutate: postUserMeta, isLoading: postUserMetaLoading } = userMetaMutate
