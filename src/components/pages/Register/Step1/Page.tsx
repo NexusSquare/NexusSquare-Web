@@ -17,10 +17,11 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
-import { useCreateUser } from '../../../../hooks/firebase/authentication'
+import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import Account from '../../../../types/domain/account/Account'
 import { PrimaryButton } from '../../../common/PrimaryButton'
+import { AuthError } from '../../../../types/error'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -29,22 +30,32 @@ export const Page = (): JSX.Element => {
         handleSubmit,
         formState: { errors },
     } = useForm<Account>()
-
-    const { createUser, loading, error: authError } = useCreateUser()
     const errorToast = useErrorToast()
 
-    const onSubmitAccount = async (account: Account) => {
-        const { email, password } = account
-        await createUser(email, password)
-        if (authError?.code === ERROR.EMAIL_ALREADY_EXISTS) {
+    const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
+    const { mutate: sendEmail } = useSendEmail()
+
+    const onSuccessCreateAccount = async () => {
+        await sendEmail()
+        router.push(LINKS.REGISTER.STEP2)
+    }
+
+    const displayErrorMessage = (errorMessage: string) => {
+        if (errorMessage === ERROR.EMAIL_ALREADY_EXISTS) {
             errorToast(ERROR_MESSAGE.EMAIL_ALREADY_EXISTS)
-            return
-        } else if (authError?.code) {
+        } else {
             errorToast(ERROR_MESSAGE.SERVER)
-            console.log(authError)
-            return
         }
     }
+
+    // TODO errorハンドリングが隠蔽できていない。
+    const onSubmitAccount = async (account: Account) => {
+        createAccount(account, {
+            onSuccess: onSuccessCreateAccount,
+            onError: (error: AuthError) => displayErrorMessage(error.code),
+        })
+    }
+
     const onClickLogin = () => {
         router.push(LINKS.LOGIN)
     }
@@ -115,8 +126,8 @@ export const Page = (): JSX.Element => {
                         buttonText="新規登録"
                         type="submit"
                         width={48}
-                        isLoading={loading}
-                        disabled={loading}
+                        isLoading={createUserLoading}
+                        disabled={createUserLoading}
                     />
                 </VStack>
                 <Text

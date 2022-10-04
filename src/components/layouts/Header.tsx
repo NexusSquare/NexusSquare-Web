@@ -31,8 +31,10 @@ import ChakraNextImage from '../common/chakraNextImage'
 import { FaUserFriends, FaUserPlus } from 'react-icons/fa'
 import { LINKS } from '../../constants/links'
 import { PrimaryButton } from '../common/PrimaryButton'
-import { logOut } from '../../hooks/firebase/authentication'
+
 import { useLoginState } from '../../hooks/useLoginState'
+import { useLogOut } from '../../hooks/authentication'
+import { useUser, useUserMeta } from '../../store/atom'
 
 interface Props {
     children?: ReactNode
@@ -47,9 +49,11 @@ export const Header = ({ children }: Props): JSX.Element => {
     console.log('render')
     const LOGO_URL: string = '/images/logo2.jpg'
     const ICON_IMAGE_URL: string = 'https://bit.ly/broken-link'
-    const isLoggedIn = useLoginState()
+    const { user } = useUser()
+    const { userMeta } = useUserMeta()
+    const { mutate: logOut } = useLogOut()
     const [isNotice, setIsNotice] = useState(false)
-    // const [user, setUser] = useState<User>()
+
     const router = useRouter()
 
     const onClickRegister = () => {
@@ -58,6 +62,10 @@ export const Header = ({ children }: Props): JSX.Element => {
 
     const onClickLogin = () => {
         router.push(LINKS.LOGIN)
+    }
+
+    const onClickLogOut = () => {
+        logOut()
     }
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
@@ -122,22 +130,20 @@ export const Header = ({ children }: Props): JSX.Element => {
             </Box>
         )
     const LoginOrProfile = () =>
-        isLoggedIn ? (
+        user ? (
             <HStack spacing="10%" w="105px">
                 <NotificationButton />
                 <Popover>
                     <PopoverTrigger>
-                        <Avatar as="button" width="40px" height="40px" src={ICON_IMAGE_URL} />
+                        <Avatar as="button" width="40px" height="40px" src={user.imageUrl} />
                     </PopoverTrigger>
                     <PopoverContent>
                         <PopoverHeader fontWeight="semibold">
                             <HStack py="4" px="2" spacing="4">
-                                <Avatar as="button" width="40px" height="40px" src={ICON_IMAGE_URL} />
+                                <Avatar as="button" width="40px" height="40px" src={user.imageUrl} />
                                 <VStack w="full" alignItems={'left'} spacing="0">
-                                    {/* <Text>
-                                        {user?.lastname} {user?.firstname}
-                                    </Text>
-                                    <Text fontSize={'xs'}>{user?.mailAddress}</Text> */}
+                                    <Text>{userMeta?.name}</Text>
+                                    <Text fontSize={'xs'}>{userMeta?.email}</Text>
                                 </VStack>
                             </HStack>
                         </PopoverHeader>
@@ -162,7 +168,7 @@ export const Header = ({ children }: Props): JSX.Element => {
                                 px="2"
                                 w="full"
                                 _hover={{ bgColor: 'gray.100' }}
-                                onClick={logOut}
+                                onClick={onClickLogOut}
                             >
                                 <VscSignOut />
                                 <Text>サインアウト</Text>

@@ -10,32 +10,50 @@ import {
     HStack,
     Input,
     Select,
-    Spacer,
-    Text,
     VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { PrimaryButton } from '../../../common/PrimaryButton'
 import { useCreateUserForm } from '../../../../hooks/useCreateUserForm'
-import { UserInfoFormValue } from '../../../../types/domain/form'
 import Department from '../../../../constants/department'
 import { gradeList } from '../../../../constants/grade'
-import { usePostUser } from '../../../../hooks/firebase/user'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { LINKS } from '../../../../constants/links'
+import { usePostUser } from '../../../../hooks/user'
+import { useAuth } from '../../../../hooks/authentication'
+import { UserReq } from '../../../../types/api/req/userReq'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const { register, handleSubmit, errors, isSubmitting, selectSubjects } = useCreateUserForm()
-    const { postUser, error: postError, loading } = usePostUser()
+    // NOTE ログインしているユーザーのみ用事されるため、currentUserは存在する
+    const [userMutate, userMetaMutate] = usePostUser()
+    const { mutate: postUser, isLoading: postUserLoading } = userMutate
+    const { mutate: postUserMeta, isLoading: postUserMetaLoading } = userMetaMutate
+    const loading: boolean = postUserLoading || postUserMetaLoading
     const errorToast = useErrorToast()
 
-    const onSubmitUserProfile = async (formValue: UserInfoFormValue) => {
-        await postUser(formValue)
-        if (postError) {
-            console.log(postError)
-            errorToast(ERROR_MESSAGE.SERVER)
-        }
+    const onSuccessPostUser = async (formValue: UserReq) => {
+        postUserMeta(formValue, {
+            onSuccess: () => {
+                router.push(LINKS.QUESTION)
+            },
+            onError: () => {
+                errorToast(ERROR_MESSAGE.SERVER)
+            },
+        })
+    }
+
+    const onSubmitUserProfile = async (formValue: UserReq) => {
+        postUser(formValue, {
+            onSuccess: () => {
+                onSuccessPostUser(formValue)
+            },
+            onError: () => {
+                errorToast(ERROR_MESSAGE.SERVER)
+            },
+        })
     }
 
     return (
@@ -48,7 +66,7 @@ export const Page = (): JSX.Element => {
                 paddingX={{ base: 8, md: 24 }}
             >
                 <Box as="h2" fontWeight={'bold'} fontSize={'xl'}>
-                    プロフィール登録
+                    アカウント登録
                 </Box>
                 <Divider />
 
@@ -158,7 +176,7 @@ export const Page = (): JSX.Element => {
                         </FormErrorMessage>
                     </FormControl>
                     <PrimaryButton
-                        buttonText="プロフィール登録"
+                        buttonText="アカウント登録"
                         type="submit"
                         width={48}
                         isLoading={loading}

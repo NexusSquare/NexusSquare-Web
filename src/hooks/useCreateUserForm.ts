@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Foreign, Globalre, Humanre, Info, Infore, Japan, Nurse, Nursere, Teach } from '../constants/subject'
-import { UserInfoFormValue } from '../types/domain/form'
+import { UserReq } from '../types/api/req/userReq'
 
 export const useCreateUserForm = () => {
     const {
@@ -9,8 +9,10 @@ export const useCreateUserForm = () => {
         handleSubmit,
         resetField,
         watch,
+        getValues,
         formState: { errors, isSubmitting },
-    } = useForm<UserInfoFormValue>()
+    } = useForm<UserReq>()
+    const [formValue, setFormValue] = useState(undefined)
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const watchDepartment = watch('department')
 
@@ -49,6 +51,7 @@ export const useCreateUserForm = () => {
                 break
         }
     }, [watchDepartment])
+
     return {
         register,
         handleSubmit,

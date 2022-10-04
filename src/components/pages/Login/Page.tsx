@@ -16,12 +16,13 @@ import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
-import { useLogin } from '../../../hooks/firebase/authentication'
+import { useLogin } from '../../../hooks/authentication'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import Account from '../../../types/domain/account/Account'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
 import { useEffect } from 'react'
+import { AuthError } from '../../../types/error'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -30,26 +31,16 @@ export const Page = (): JSX.Element => {
         handleSubmit,
         formState: { errors },
     } = useForm<Account>()
-    const { login, user, loading, error: loginError } = useLogin()
     const { alertLoginError } = useAlertLoginError()
 
-    const onSubmitAccount = async (account: Account) => {
-        const { email, password } = account
-        await login(email, password)
-    }
+    const { mutate: login, isLoading: loading } = useLogin()
 
-    // エラーの状態がセットされるまでに時間差があるため使用
-    useEffect(() => {
-        if (loginError) {
-            alertLoginError(loginError.code)
-            console.log(loginError.code)
-            return
-        }
-        if (user?.user.emailVerified) {
-            router.push(LINKS.QUESTION)
-            return
-        }
-    }, [loginError, user])
+    const onSubmitAccount = async (account: Account) => {
+        login(account, {
+            onSuccess: () => router.push(LINKS.QUESTION),
+            onError: (error) => alertLoginError(error.code),
+        })
+    }
 
     const onClickRegister = () => {
         router.push(LINKS.REGISTER.STEP1)

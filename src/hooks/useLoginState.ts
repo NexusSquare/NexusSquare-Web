@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react'
-import { useAuth } from './firebase/authentication'
+import { useUser, useUserMeta } from '../store/atom'
+import { useAuth } from './authentication'
 
 export const useLoginState = () => {
-    const { user, loading, error } = useAuth()
+    const { user } = useUser()
+    const { userMeta } = useUserMeta()
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     useEffect(() => {
-        if (error) console.log(error)
-        if (loading) return
         if (user) {
             setIsLoggedIn(true)
+        } else {
+            setIsLoggedIn(false)
         }
     }, [user])
     return isLoggedIn

@@ -13,18 +13,24 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import { useState } from 'react'
-import { useSendEmail } from '../../../../hooks/firebase/authentication'
+import { useSendEmail } from '../../../../hooks/authentication'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/PrimaryButton'
 
 export const Page = (): JSX.Element => {
-    const { sendEmail, sending, error } = useSendEmail()
+    const { mutate: sendEmail, isLoading: sending, error } = useSendEmail()
     const [hasSentEmail, setHasSentEmail] = useState(false)
+    const errorToast = useErrorToast()
     const onClickSendEmail = async () => {
-        await sendEmail()
-        if (error) console.log(error)
-        else setHasSentEmail(true)
+        await sendEmail({
+            onSuccess: () => setHasSentEmail(true),
+            onError: () => {
+                errorToast('メールが送信されませんでした。')
+            },
+        })
     }
+
     return (
         <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
             <VStack
