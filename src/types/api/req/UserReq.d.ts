@@ -6,5 +6,4 @@ export type UserReq = {
     imageUrl?: string
     isDepartmentAnonymous: boolean
     name: string
-    name: string
 }

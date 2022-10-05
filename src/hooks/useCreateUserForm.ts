@@ -3,7 +3,8 @@ import { useForm } from 'react-hook-form'
 import { Foreign, Globalre, Humanre, Info, Infore, Japan, Nurse, Nursere, Teach } from '../constants/subject'
 import { UserReq } from '../types/api/req/userReq'
 
-export const useCreateUserForm = () => {
+// NOTE optionsの型推論が効かない。UseFormProps
+export const useCreateUserForm = (options?: any) => {
     const {
         register,
         handleSubmit,
@@ -11,7 +12,7 @@ export const useCreateUserForm = () => {
         watch,
         getValues,
         formState: { errors, isSubmitting },
-    } = useForm<UserReq>()
+    } = useForm<UserReq>(options)
     const [formValue, setFormValue] = useState(undefined)
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const watchDepartment = watch('department')

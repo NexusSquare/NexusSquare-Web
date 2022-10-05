@@ -1,7 +1,7 @@
 export type User = {
-    department?: string | null
-    subject?: string | null
-    grade?: number | null
+    department: string
+    subject: string
+    grade: number
     nickname: string
     imageUrl: string
     updateAt: Timestamp

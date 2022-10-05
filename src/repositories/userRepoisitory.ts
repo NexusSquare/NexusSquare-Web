@@ -14,7 +14,7 @@ export const userRepository = {
         return await setDoc(userRef, user)
     },
 
-    async update(uid: string, user: User): Promise<void> {
+    async update(user: Partial<User>, uid: string): Promise<void> {
         const userRef = doc(db, 'users', uid)
         return await updateDoc(userRef, user)
     },

@@ -14,39 +14,57 @@ export const UserHistory = ({ historyList }: Props) => {
             <Tabs w="100%" isLazy defaultIndex={1}>
                 <TabList>
                     <Tab
-                        w="33.3%"
+                        w="full"
                         border="1px"
-                        color="#FF9037"
-                        bgColor="white"
+                        color="gray.400"
+                        bgColor="gray.200"
                         borderRadius="5px"
-                        fontSize={{ base: 'md', md: '2xl' }}
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        fontSize={{ base: 'lg', sm: 'xl' }}
+                        _selected={{
+                            bgColor: 'white',
+                            borderColor: 'gray.400',
+                            borderBottomColor: 'mainColor',
+                            borderBottomWidth: '5px',
+                            color: 'black',
+                        }}
                         _active={{ outline: 'none' }}
                         _focus={{ outline: 'none' }}
                     >
-                        ポイント履歴
+                        履歴
                     </Tab>
                     <Tab
-                        w="33.4%"
+                        w="full"
                         border="1px"
-                        color="#FF9037"
-                        bgColor="white"
+                        color="gray.400"
+                        bgColor="gray.200"
                         borderRadius="5px"
-                        fontSize={{ base: 'md', md: '2xl' }}
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        fontSize={{ base: 'lg', sm: 'xl' }}
+                        _selected={{
+                            bgColor: 'white',
+                            borderColor: 'gray.400',
+                            borderBottomColor: 'mainColor',
+                            borderBottomWidth: '5px',
+                            color: 'black',
+                        }}
                         _active={{ outline: 'none' }}
                         _focus={{ outline: 'none' }}
                     >
                         質問
                     </Tab>
                     <Tab
-                        w="33.3%"
+                        w="full"
                         border="1px"
-                        color="#FF9037"
-                        bgColor="white"
+                        color="gray.400"
+                        bgColor="gray.200"
                         borderRadius="5px"
-                        fontSize={{ base: 'md', md: '2xl' }}
-                        _selected={{ bgColor: '#FF9037', borderColor: 'gray.400', color: 'white' }}
+                        fontSize={{ base: 'lg', sm: 'xl' }}
+                        _selected={{
+                            bgColor: 'white',
+                            borderColor: 'gray.400',
+                            borderBottomColor: 'mainColor',
+                            borderBottomWidth: '5px',
+                            color: 'black',
+                        }}
                         _active={{ outline: 'none' }}
                         _focus={{ outline: 'none' }}
                     >

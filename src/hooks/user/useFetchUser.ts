@@ -2,15 +2,18 @@ import { useQuery, UseQueryOptions } from 'react-query'
 import { QUERY_KEYS } from '../../constants/query'
 import { userMetaService } from '../../services/userMetaService'
 import { userService } from '../../services/userService'
+import { User, UserMeta } from '../../types/domain/user'
 
-export const useFetchUser = (uid?: string, queryOptions?: UseQueryOptions) => {
-    return useQuery([QUERY_KEYS.USER(uid), { enabled: uid !== undefined }], () => userService.findOne(uid!), {
+// NOTE sessionストレージがnullを撮るため、nullを許す
+// uidが存在するときのみfetchされる
+export const useFetchUser = (uid?: string | null, queryOptions?: UseQueryOptions<User>) => {
+    return useQuery<User>([QUERY_KEYS.USER(uid), { enabled: Boolean(uid) }], () => userService.findOne(uid!), {
         ...queryOptions,
     })
 }
 
-export const useFetchUserMeta = (uid?: string, queryOptions?: UseQueryOptions) => {
-    return useQuery([QUERY_KEYS.USER_META, { enabled: uid !== undefined }], () => userMetaService.findOne(uid!), {
+export const useFetchUserMeta = (uid?: string | null, queryOptions?: UseQueryOptions<UserMeta>) => {
+    return useQuery<UserMeta>([QUERY_KEYS.USER_META, { enabled: Boolean(uid) }], () => userMetaService.findOne(uid!), {
         ...queryOptions,
     })
 }

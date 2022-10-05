@@ -18,11 +18,11 @@ import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/authentication'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import Account from '../../../types/domain/account/Account'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
 import { useEffect } from 'react'
 import { AuthError } from '../../../types/error'
+import Account from '../../../types/domain/account/Account'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

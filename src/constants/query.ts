@@ -1,5 +1,5 @@
 export const QUERY_KEYS = {
-    USER: (uid?: string) => uid,
+    USER: (uid?: string | null) => uid,
     MY_USER: 'user',
     USER_META: 'userMeta',
     QUESTION: (questionId?: string) => questionId,
