@@ -9,8 +9,8 @@ interface Props {
 
 export const HistoryCard = ({ history }: Props) => {
     return (
-        <Box bgColor="mainColor" boxShadow="xl" w="full" p="2px" pl="64px" cursor="pointer" key={history.id}>
-            <HStack bgColor="subColor" p="4" justify="center" spacing={{ base: '2', md: '12' }}>
+        <Box bgColor="mainColor" boxShadow="xl" w="full" p="2px" cursor="pointer" key={history.id} rounded="md">
+            <HStack bgColor="white" p="4" justify="center" spacing={{ base: '2', md: '12' }}>
                 <Text fontSize={{ base: 'sm', md: 'lg' }}>{history.createAt}</Text>
                 <HStack>
                     <Text fontSize={{ base: 'md', md: '2xl' }}>質問に答えた</Text>

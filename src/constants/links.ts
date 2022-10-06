@@ -1,6 +1,6 @@
 export const LINKS = {
     HOME: '/',
-    PROFILE: 'profile',
+    PROFILE: (id: string) => `/profile/${id}`,
     REGISTER: {
         STEP1: '/register/step1',
         STEP2: '/register/step2',
@@ -8,6 +8,7 @@ export const LINKS = {
     },
     LOGIN: '/login',
     QUESTION: '/qa',
+    QUESTION_DETAIL: (id: string) => `/qa/${id}`,
     RULE: '/rule',
     PRIVACY: 'privacy',
 } as const

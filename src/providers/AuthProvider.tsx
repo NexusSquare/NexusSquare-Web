@@ -15,6 +15,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     // NOTE idが存在するときのみfetchされる
     // NOTE メール認証がされている場合、アカウント登録されている確認
+    // NOTE プロフィールを編集するとキャッシュクリアされ、グローバルstateも更新される。
     const { data: user } = useFetchUser(currentUser?.uid, {
         onSuccess: (data) => {
             if (!currentUser?.emailVerified) return

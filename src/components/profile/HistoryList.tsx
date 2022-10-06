@@ -16,7 +16,7 @@ export const HistoryList = ({ historyList }: Props) => {
         )
     }
     return (
-        <VStack m="0" w="full" p="2%">
+        <VStack m="0" w="full" pt="4">
             {historyList.map((history) => {
                 ;<HistoryCard history={history} key={history.id} />
             })}

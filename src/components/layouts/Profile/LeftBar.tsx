@@ -65,7 +65,7 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
         <VStack
             as="nav"
             aria-labelledby="QA navigation"
-            bgColor="#FBF6F0"
+            bgColor="subColor"
             paddingTop={6}
             h="calc(100vh - 60px)"
             w={{ base: 'calc((100vw - 800px) / 2)', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}

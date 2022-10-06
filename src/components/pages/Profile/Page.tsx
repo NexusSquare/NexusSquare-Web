@@ -1,82 +1,70 @@
-import {
-    Box,
-    Button,
-    HStack,
-    Spinner,
-    VStack,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    Text,
-    useToast,
-} from '@chakra-ui/react'
-import axios, { AxiosError, AxiosResponse } from 'axios'
+import { Box, HStack, VStack, Text, useDisclosure } from '@chakra-ui/react'
 import Link from 'next/link'
-import Router, { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
-import { AiOutlineGift } from 'react-icons/ai'
-
-import { Loading } from '../../../components/common/Loading'
-
-import { UserHistory } from '../../../components/profile/UserHistory'
-import { UserInfo } from '../../../components/profile/UserInfo'
-import { clientApi } from '../../../lib/axios'
+import { useCallback, useEffect, useState } from 'react'
+import { UserHistory } from '../../profile/UserHistory'
+import { UserInfo } from '../../profile/UserInfo'
 import History from '../../../types/domain/account/History'
-import PostUser from '../../../types/api/req/account/PostUser'
 import User from '../../../types/domain/account/User'
-import UpdateUser from '../../../types/api/req/account/UpdateUser'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import { RiContactsBookLine } from 'react-icons/ri'
+import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
+import { USER_ID } from '../../../constants/token'
+import { useSession } from '../../../hooks/useSession'
+import { Loading } from '../../common/Loading'
+import { useUpdateUser } from '../../../hooks/user/useUpdateUser'
+import { ERROR_MESSAGE } from '../../../constants/errors'
+import { UserReq } from '../../../types/api/req/userReq'
+import { OthersInfo } from '../../profile/OthersInfo'
+
+import { useFile } from '../../../hooks/useFile'
+import { useUploadFile } from '../../../hooks/storege/useUploadFile'
+import { STORAGE_URL } from '../../../constants/storage'
 
 interface Props {
-    user: User
     histories: History[]
+    userId: string
 }
-export const Page = ({ user, histories }: Props): JSX.Element => {
-    const [profile, setProfile] = useState<User>()
-    const [historyList, setHistoryList] = useState<History[]>(histories)
-    const router = useRouter()
-    const userId = 'session?.user?.email'
+export const Page = ({ histories, userId }: Props): JSX.Element => {
+    const { value: myUserId } = useSession(USER_ID)
+    const { data: user, refetch } = useFetchUser(userId)
+    const { data: userMeta } = useFetchUserMeta(userId)
+    const { mutate: updateUser, isLoading: updateLoading } = useUpdateUser()
+    const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
+    const { inputRef, file: image, onChangeFile: onChangeImage, onClickFile: onClickEditImage } = useFile()
+    const { uploadFile: uploadFileToStorage, getFileUrl, uploading } = useUploadFile()
     const errorToast = useErrorToast()
 
-    const fetchProfile = async () => {
-        await clientApi
-            .get(`/user/${userId}`, {})
-            .then((res: AxiosResponse<User>) => {
-                setProfile(res.data)
-            })
-            .catch((err: AxiosError) => {})
-    }
-    const fetchHistory = async () => {
-        await clientApi
-            .get(`/user/${userId}/history`, {})
-            .then((res: AxiosResponse<History[]>) => {
-                setHistoryList(res.data)
-            })
-            .catch(() => {})
-    }
-    const updateProfile = async (updateUser: UpdateUser) => {
-        await clientApi
-            .put(`/user/${userId}`, updateUser, {})
-            .then(() => {
-                fetchProfile()
-            })
-            .catch(() => {})
+    const onClickEditUser = useCallback(async (userReq: Partial<UserReq>) => {
+        updateUser(userReq, {
+            onSuccess: () => refetch(),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            onSettled: () => onCloseEditForm(),
+        })
+    }, [])
+
+    const uploadImage = async (image: File) => {
+        if (!myUserId) return
+        // NOTE: userIdがファイル名としてstorageに保存される
+        const result = await uploadFileToStorage(image, STORAGE_URL.USERS(myUserId))
+        if (!result) return errorToast(ERROR_MESSAGE.SERVER)
+
+        // NOTE DBの画像パスを更新
+        const imageUrl = await getFileUrl(STORAGE_URL.USERS(myUserId))
+        const imageReq: Partial<UserReq> = { imageUrl: imageUrl }
+        updateUser(imageReq, {
+            onSuccess: () => refetch(),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+        })
     }
 
-    const deleteProfile = async () => {
-        await clientApi
-            .delete(`/user/${userId}`, {})
-            .then((res: AxiosResponse) => {
-                console.log(res)
-            })
-            .catch(() => {})
-    }
+    //　NOTE 画像がセットされるとstorageに保存される。
+    useEffect(() => {
+        if (!image) return
+        uploadImage(image)
+    }, [image])
 
+    if (!user) return <Loading />
     return (
-        <VStack w="full" spacing={12}>
+        <VStack w="full" pb="4" spacing={8}>
             <HStack w={'full'} p="4" mb="8">
                 <Link href="/qa" passHref>
                     <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
@@ -87,21 +75,23 @@ export const Page = ({ user, histories }: Props): JSX.Element => {
                     </Text>
                 </Link>
             </HStack>
-            <UserInfo user={user!} updateProfile={updateProfile} />
-            {/* <Link href="/gift" passHref>
-                <Button
-                    leftIcon={<AiOutlineGift />}
-                    as="a"
-                    color="white"
-                    bgColor="red.400"
-                    _hover={{ bgColor: 'red.200' }}
-                    size="lg"
-                    fontSize={{ base: 'lg', md: '2xl' }}
-                    boxShadow="md"
-                >
-                    応募する
-                </Button>
-            </Link> */}
+            {userId === myUserId ? (
+                <UserInfo
+                    user={user}
+                    userMeta={userMeta}
+                    onClickEditUser={onClickEditUser}
+                    isLoading={updateLoading}
+                    isOpenEditForm={isOpenEditForm}
+                    onOpenEditForm={onOpenEditForm}
+                    onCloseEditForm={onCloseEditForm}
+                    inputRef={inputRef}
+                    onChangeImage={onChangeImage}
+                    onClickEditImage={onClickEditImage}
+                    avatarUploading={uploading}
+                />
+            ) : (
+                <OthersInfo user={user} />
+            )}
             <UserHistory historyList={histories} />
         </VStack>
     )
