@@ -30,13 +30,8 @@ export const userService = {
     async update(userReq: Partial<User>): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const user: Partial<User> = {
-            department: userReq.department,
-            subject: userReq.subject,
-            grade: userReq.grade,
-            nickname: userReq.nickname,
-            imageUrl: userReq.imageUrl,
+            ...userReq,
             updateAt: Timestamp.now(),
-            isDepartmentAnonymous: userReq.isDepartmentAnonymous,
         }
         return userRepository.update(user, userId!)
     },

@@ -7,6 +7,9 @@ export const useSession = (key: string) => {
     useEffect(() => {
         if (!user) return
         setValue(sessionStorage.getItem(key))
+        return () => {
+            setValue(null)
+        }
     }, [user])
     return {
         value,

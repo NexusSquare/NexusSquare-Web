@@ -1,12 +1,10 @@
-import { Box, Button, HStack, Spinner, VStack, Text, useToast, useDisclosure } from '@chakra-ui/react'
+import { Box, HStack, VStack, Text, useDisclosure } from '@chakra-ui/react'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
-
+import { useCallback, useEffect, useState } from 'react'
 import { UserHistory } from '../../profile/UserHistory'
 import { UserInfo } from '../../profile/UserInfo'
 import History from '../../../types/domain/account/History'
 import User from '../../../types/domain/account/User'
-import UpdateUser from '../../../types/api/req/account/UpdateUser'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
 import { USER_ID } from '../../../constants/token'
@@ -16,6 +14,10 @@ import { useUpdateUser } from '../../../hooks/user/useUpdateUser'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { UserReq } from '../../../types/api/req/userReq'
 import { OthersInfo } from '../../profile/OthersInfo'
+
+import { useFile } from '../../../hooks/useFile'
+import { useUploadFile } from '../../../hooks/storege/useUploadFile'
+import { STORAGE_URL } from '../../../constants/storage'
 
 interface Props {
     histories: History[]
@@ -27,8 +29,8 @@ export const Page = ({ histories, userId }: Props): JSX.Element => {
     const { data: userMeta } = useFetchUserMeta(userId)
     const { mutate: updateUser, isLoading: updateLoading } = useUpdateUser()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
-    const [profile, setProfile] = useState<User>()
-    const [historyList, setHistoryList] = useState<History[]>(histories)
+    const { inputRef, file: image, onChangeFile: onChangeImage, onClickFile: onClickEditImage } = useFile()
+    const { uploadFile: uploadFileToStorage, getFileUrl, uploading } = useUploadFile()
     const errorToast = useErrorToast()
 
     const onClickEditUser = useCallback(async (userReq: Partial<UserReq>) => {
@@ -38,6 +40,27 @@ export const Page = ({ histories, userId }: Props): JSX.Element => {
             onSettled: () => onCloseEditForm(),
         })
     }, [])
+
+    const uploadImage = async (image: File) => {
+        if (!myUserId) return
+        // NOTE: userIdがファイル名としてstorageに保存される
+        const result = await uploadFileToStorage(image, STORAGE_URL.USERS(myUserId))
+        if (!result) return errorToast(ERROR_MESSAGE.SERVER)
+
+        // NOTE DBの画像パスを更新
+        const imageUrl = await getFileUrl(STORAGE_URL.USERS(myUserId))
+        const imageReq: Partial<UserReq> = { imageUrl: imageUrl }
+        updateUser(imageReq, {
+            onSuccess: () => refetch(),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+        })
+    }
+
+    //　NOTE 画像がセットされるとstorageに保存される。
+    useEffect(() => {
+        if (!image) return
+        uploadImage(image)
+    }, [image])
 
     if (!user) return <Loading />
     return (
@@ -61,11 +84,14 @@ export const Page = ({ histories, userId }: Props): JSX.Element => {
                     isOpenEditForm={isOpenEditForm}
                     onOpenEditForm={onOpenEditForm}
                     onCloseEditForm={onCloseEditForm}
+                    inputRef={inputRef}
+                    onChangeImage={onChangeImage}
+                    onClickEditImage={onClickEditImage}
+                    avatarUploading={uploading}
                 />
             ) : (
                 <OthersInfo user={user} />
             )}
-
             <UserHistory historyList={histories} />
         </VStack>
     )

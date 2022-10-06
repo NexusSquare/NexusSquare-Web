@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import { BellIcon } from '@chakra-ui/icons'
 import {
     Avatar,
@@ -41,10 +42,9 @@ interface headerFuncProps {
     funcName: string
 }
 
-export const Header = ({ children }: Props): JSX.Element => {
+export const Header = memo(({ children }: Props): JSX.Element => {
     console.log('render')
     const LOGO_URL: string = '/images/logo2.jpg'
-    const ICON_IMAGE_URL: string = 'https://bit.ly/broken-link'
     const { value: uid } = useSession(USER_ID)
     const { user } = useUser()
     const { userMeta } = useUserMeta()
@@ -137,12 +137,20 @@ export const Header = ({ children }: Props): JSX.Element => {
                 <NotificationButton />
                 <Popover>
                     <PopoverTrigger>
-                        <Avatar as="button" width="40px" height="40px" src={user.imageUrl} />
+                        <Avatar as="button" width="40px" height="40px" src={user.imageUrl} bg="mainColor" />
                     </PopoverTrigger>
                     <PopoverContent>
                         <PopoverHeader fontWeight="semibold">
                             <HStack py="4" px="2" spacing="4">
-                                <Avatar as="button" width="40px" height="40px" src={user.imageUrl} />
+                                <Avatar
+                                    as="button"
+                                    width="40px"
+                                    height="40px"
+                                    src={user.imageUrl}
+                                    bg="white"
+                                    borderWidth={'1px'}
+                                    borderColor={'gray.200'}
+                                />
                                 <VStack w="full" alignItems={'left'} spacing="0">
                                     <Text>{userMeta?.name}</Text>
                                     <Text fontSize={'xs'}>{userMeta?.email}</Text>
@@ -161,7 +169,7 @@ export const Header = ({ children }: Props): JSX.Element => {
                                 onClick={onClickProfile}
                             >
                                 <FiEdit />
-                                <Text>プロフィール確認</Text>
+                                <Text>プロフィール</Text>
                             </HStack>
                             <Divider />
                             <HStack
@@ -309,4 +317,4 @@ export const Header = ({ children }: Props): JSX.Element => {
             </HStack>
         </VStack>
     )
-}
+})

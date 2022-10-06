@@ -10,7 +10,6 @@ export const useCreateUserForm = (options?: any) => {
         handleSubmit,
         resetField,
         watch,
-        getValues,
         formState: { errors, isSubmitting },
     } = useForm<UserReq>(options)
     const [formValue, setFormValue] = useState(undefined)
@@ -50,6 +49,10 @@ export const useCreateUserForm = (options?: any) => {
             default:
                 setSelectSubjects([])
                 break
+        }
+        return () => {
+            setFormValue(undefined)
+            setSelectSubjects([])
         }
     }, [watchDepartment])
 

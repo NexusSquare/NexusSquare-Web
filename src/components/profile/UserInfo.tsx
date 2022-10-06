@@ -1,24 +1,10 @@
 /* eslint-disable react/display-name */
-import {
-    HStack,
-    VStack,
-    Text,
-    Box,
-    Button,
-    Avatar,
-    WrapItem,
-    IconButton,
-    Spacer,
-    useDisclosure,
-} from '@chakra-ui/react'
+import { HStack, VStack, Text, Box, Avatar, IconButton, Input, Spinner } from '@chakra-ui/react'
 import { FiEdit } from 'react-icons/fi'
-import React, { memo } from 'react'
-import ChakraNextImage from '../common/chakraNextImage'
-import { useRouter } from 'next/router'
+import React, { memo, RefObject } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
 import { EditForm } from './EditForm'
 import { DefaultModal } from '../common/DefaultModal'
-import UpdateUser from '../../types/api/req/account/UpdateUser'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../types/domain/user'
 import { UserReq } from '../../types/api/req/userReq'
@@ -31,10 +17,25 @@ interface Props {
     isOpenEditForm: boolean
     onOpenEditForm: () => void
     onCloseEditForm: () => void
+    inputRef: RefObject<HTMLInputElement>
+    onChangeImage: (event: React.ChangeEvent<HTMLInputElement>) => void
+    onClickEditImage: () => void
+    avatarUploading: boolean
 }
 
 export const UserInfo = memo(
-    ({ user, onClickEditUser, isLoading, isOpenEditForm, onOpenEditForm, onCloseEditForm }: Props) => {
+    ({
+        user,
+        onClickEditUser,
+        isLoading,
+        isOpenEditForm,
+        onOpenEditForm,
+        onCloseEditForm,
+        inputRef,
+        onChangeImage,
+        onClickEditImage,
+        avatarUploading,
+    }: Props) => {
         return (
             <>
                 <HStack
@@ -65,7 +66,14 @@ export const UserInfo = memo(
                         top={{ base: '-5', md: '-10' }}
                         position="relative"
                     >
-                        <Avatar width="full" height="full" src={user.imageUrl} />
+                        <Avatar
+                            width="full"
+                            height="full"
+                            src={user.imageUrl}
+                            bg="white"
+                            borderColor={'gray.200'}
+                            borderWidth="1px"
+                        />
                         <Box
                             boxSize={{ base: '8', md: '10' }}
                             position="absolute"
@@ -73,9 +81,11 @@ export const UserInfo = memo(
                             right="0"
                             opacity={'0.6'}
                             as="button"
+                            onClick={onClickEditImage}
                         >
-                            <AiFillCamera size={'full'} />
+                            {avatarUploading || isLoading ? <Spinner /> : <AiFillCamera size={'full'} />}
                         </Box>
+                        <Input type="file" ref={inputRef} accept="image/*" hidden onChange={onChangeImage} multiple />
                     </Box>
                     <VStack>
                         <HStack>
