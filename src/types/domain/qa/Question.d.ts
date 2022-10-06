@@ -1,13 +1,19 @@
-type Question = {
-    userId: string
-    id: string
-    category1: string
-    category2?: string
-    createAt: string
+export type Question = {
+    userId: userId
+    postUser: {
+        nickname: string
+        department: string
+        subject: string
+        imageUrl: string
+        isDepartmentAnonymous: boolean
+    }
+    categories: string[]
+    createAt: timestamp
+    updateAt: timestamp
     title: string
-    postedBy: string
     content: string
     ansNum: number
+    imageUrl?: string | null
+    isEdited: boolean
+    status: string
 }
-
-export default Question
