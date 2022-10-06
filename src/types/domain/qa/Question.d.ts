@@ -2,8 +2,8 @@ export type Question = {
     userId: userId
     postUser: {
         nickname: string
-        department: string
-        subject: string
+        department: string | null
+        subject: string | null
         imageUrl: string
         isDepartmentAnonymous: boolean
     }

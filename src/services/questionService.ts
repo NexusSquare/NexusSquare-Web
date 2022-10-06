@@ -13,8 +13,8 @@ export const questionService = {
             userId: userId!,
             postUser: {
                 nickname: postUser.nickname,
-                department: postUser.department,
-                subject: postUser.subject,
+                department: postUser.isDepartmentAnonymous ? null : postUser.department,
+                subject: postUser.isDepartmentAnonymous ? null : postUser.subject,
                 imageUrl: postUser.imageUrl,
                 isDepartmentAnonymous: postUser.isDepartmentAnonymous,
             },
