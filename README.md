@@ -23,7 +23,6 @@
 | /qa | Q&Aのトップ |
 | /qa/category | カテゴリごとの質問表示画面 |
 | /qa/all?sortBy=x&isDesc=y | 全ての質問(質問日時以外でも並べ替え可能) |
-| /qa/ranking | アクセス数ランキング |
 | /qa/result?title=x | 検索結果 |
 | /qa/[qaId] | 質問のページ(回答もここからできる) |
 | /qa/post | 質問の投稿ページ |
