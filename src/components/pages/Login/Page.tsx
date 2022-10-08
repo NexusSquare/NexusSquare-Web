@@ -18,7 +18,7 @@ import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/authentication'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
-import { Account } from '../../../types/domain/account/Account'
+import { Account } from '../../../types/domain/account'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

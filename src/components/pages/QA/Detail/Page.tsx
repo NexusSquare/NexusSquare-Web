@@ -1,18 +1,10 @@
 import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VStack } from '@chakra-ui/react'
 import { BsChatRightText } from 'react-icons/bs'
 import { Router, useRouter } from 'next/router'
-import axios, { Axios, AxiosError, AxiosResponse } from 'axios'
-import PerfectQuestion from '../../../../types/domain/qa/PerfectQuestion'
-import answerResponse from '../../../../types/api/res/qa/answerResponse'
-import Answer from '../../../../types/domain/qa/Answer'
-import { useState } from 'react'
-import { useEffect } from 'react'
-import { useCallback } from 'react'
 import { QAPerfectCard } from '../../../../components/qa/QAPerfectCard'
 import AnswerCard from '../../../../components/qa/AnswerCard'
 import { DefaultModal } from '../../../../components/common/DefaultModal'
 import { PostForm } from '../../../../components/qa/PostForm'
-import { Question } from '../../../../types/domain/qa'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 
 interface Props {

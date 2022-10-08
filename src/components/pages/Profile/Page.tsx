@@ -1,10 +1,7 @@
 import { Box, HStack, VStack, Text, useDisclosure } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useCallback, useEffect, useState } from 'react'
-import { UserHistory } from '../../profile/UserHistory'
 import { UserInfo } from '../../profile/UserInfo'
-import History from '../../../types/domain/account/History'
-import User from '../../../types/domain/account/User'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
 import { USER_ID } from '../../../constants/token'
@@ -20,10 +17,9 @@ import { useUploadFile } from '../../../hooks/storege/useUploadFile'
 import { STORAGE_URL } from '../../../constants/storage'
 
 interface Props {
-    histories: History[]
     userId: string
 }
-export const Page = ({ histories, userId }: Props): JSX.Element => {
+export const Page = ({ userId }: Props): JSX.Element => {
     const { value: myUserId } = useSession(USER_ID)
     const { data: user, refetch } = useFetchUser(userId)
     const { data: userMeta } = useFetchUserMeta(userId)
@@ -92,7 +88,7 @@ export const Page = ({ histories, userId }: Props): JSX.Element => {
             ) : (
                 <OthersInfo user={user} />
             )}
-            <UserHistory historyList={histories} />
+            {/* <UserHistory historyList={histories} /> */}
         </VStack>
     )
 }

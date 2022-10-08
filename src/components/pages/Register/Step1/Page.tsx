@@ -8,20 +8,20 @@ import {
     FormLabel,
     HStack,
     Input,
-    Spacer,
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { async } from '@firebase/util'
+
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import Account from '../../../../types/domain/account/Account'
+
 import { PrimaryButton } from '../../../common/PrimaryButton'
 import { AuthError } from '../../../../types/error'
+import { Account } from '../../../../types/domain/account'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

@@ -1,8 +1,7 @@
 import { HStack, VStack, Text, TabList, Tabs, Tab, TabPanels, TabPanel, Box, Button } from '@chakra-ui/react'
 import React from 'react'
-import { HistoryCard } from './HistoryCard'
+import { History } from '../../types/domain/history'
 import { HistoryList } from './HistoryList'
-import History from '../../types/domain/account/History'
 
 interface Props {
     historyList: History[]
