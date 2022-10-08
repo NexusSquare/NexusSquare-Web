@@ -1,5 +1,6 @@
 export type Question = {
-    userId: userId
+    questionId: string
+    userId: string
     postUser: {
         nickname: string
         department: string | null

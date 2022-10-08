@@ -7,10 +7,15 @@ import { Question } from '../types/domain/qa/Question'
 import { User } from '../types/domain/user'
 
 export const questionService = {
+    async find(): Promise<Question[]> {
+        return questionRepository.find()
+    },
+    async findById(id: string): Promise<Question> {
+        return questionRepository.findById(id)
+    },
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
-        const question: Question = {
-            userId: userId!,
+        const question: Partial<Question> = {
             postUser: {
                 nickname: postUser.nickname,
                 department: postUser.isDepartmentAnonymous ? null : postUser.department,

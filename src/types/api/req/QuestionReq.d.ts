@@ -3,5 +3,5 @@ export type QuestionReq = {
     category2?: string
     title: string
     content: string
-    imageUrl?: string
+    imageUrl?: string | null
 }

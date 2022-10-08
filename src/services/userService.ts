@@ -27,7 +27,7 @@ export const userService = {
         }
         return userRepository.save(user, userId!)
     },
-    async update(userReq: Partial<User>): Promise<void> {
+    async update(userReq: Partial<UserReq>): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const user: Partial<User> = {
             ...userReq,
