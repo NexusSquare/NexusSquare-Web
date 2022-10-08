@@ -1,6 +1,8 @@
+import { Timestamp } from 'firebase/firestore'
+
 export type History = {
     historyId: string
     point: number
-    createAt: timestamp
+    createAt: Timestamp
     type: string
 }
