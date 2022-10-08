@@ -13,16 +13,7 @@ import { OthersInfo } from '../../profile/OthersInfo'
 import { useFile } from '../../../hooks/useFile'
 import { useUploadFile } from '../../../hooks/storege/useUploadFile'
 import { STORAGE_URL } from '../../../constants/storage'
-interface UserReq {
-    department: string
-    subject: string
-    grade: number
-    nickname: string
-    imageUrl?: string
-    isDepartmentAnonymous: boolean
-    name: string
-}
-
+import UserReq from '../../../types/api/req/UserReq'
 interface Props {
     userId: string
 }

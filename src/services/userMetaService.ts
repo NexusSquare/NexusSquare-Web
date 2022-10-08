@@ -1,6 +1,6 @@
 import { EMAIL, USER_ID } from '../constants/token'
 import { userMetaRepository } from '../repositories/userMetaRepository'
-import { UserReq } from '../types/api/req'
+import UserReq from '../types/api/req/UserReq'
 import { UserMeta } from '../types/domain/user'
 
 export const userMetaService = {

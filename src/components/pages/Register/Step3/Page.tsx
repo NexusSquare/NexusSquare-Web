@@ -20,7 +20,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { usePostUser } from '../../../../hooks/user'
-import { UserReq } from '../../../../types/api/req/userReq'
+import UserReq from '../../../../types/api/req/userReq'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
