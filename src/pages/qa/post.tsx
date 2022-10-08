@@ -1,7 +1,4 @@
-import { Box, Text } from '@chakra-ui/react'
-import axios, { AxiosResponse } from 'axios'
-import { GetServerSideProps, NextPage, NextPageWithLayout } from 'next'
-import { useRouter } from 'next/router'
+import { NextPage, NextPageWithLayout } from 'next'
 import { Layout } from '../../components/layouts/QA/Layout'
 import { Page } from '../../components/pages/QA/Post/Page'
 import { UserGuards } from '../../guards/UserGuards'

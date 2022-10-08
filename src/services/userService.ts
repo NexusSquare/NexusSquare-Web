@@ -2,7 +2,7 @@ import { Timestamp } from 'firebase/firestore'
 import { DEFAULT_AVATAR_IMAGE_URL } from '../constants/image'
 import { USER_ID } from '../constants/token'
 import { userRepository } from '../repositories/userRepoisitory'
-import { UserReq } from '../types/api/req'
+import { UserReq } from '../types/api/req/userReq'
 import { User } from '../types/domain/user'
 
 export const userService = {
