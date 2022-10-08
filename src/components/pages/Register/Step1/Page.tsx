@@ -20,7 +20,6 @@ import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/PrimaryButton'
-import { AuthError } from '../../../../types/error'
 import { UserAccount } from '../../../../types/domain/user'
 
 export const Page = (): JSX.Element => {
