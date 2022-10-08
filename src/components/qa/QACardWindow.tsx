@@ -22,7 +22,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { BsQuestionLg } from 'react-icons/bs'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
@@ -58,10 +57,10 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
             {children}
             <HStack w="100%" h="250px" margin="10px 20px" minW={{ base: '210px', sm: '420px' }}>
                 <Spacer />
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="red">
+                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200">
                     広告枠3
                 </Box>
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="red" display={{ base: 'none', sm: 'flex' }}>
+                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200" display={{ base: 'none', sm: 'flex' }}>
                     広告枠4
                 </Box>
                 <Spacer />

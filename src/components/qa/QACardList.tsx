@@ -1,170 +1,31 @@
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    HStack,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    useRadio,
-    useRadioGroup,
-} from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, HStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import React from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { useCallback, useMemo } from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
-import { ReactNode } from 'react'
 import QACard from './QACard'
-import Question from '../../types/domain/qa/Question'
 import queryOptions from '../../constants/qa/queryOptions'
-import QAResponse from '../../types/api/res/qa/qaResponse'
 import QAQueryProps from '../../constants/qa/queryGroup'
-import { useRouter } from 'next/router'
+import { Question } from '../../types/domain/qa'
 
 interface Props {
-    children?: ReactNode
     query?: QAQueryProps
-    data: Question[]
+    questions: Question[]
 }
 type queryOptionType = typeof queryOptions
 type queryOptions = typeof queryOptions[keyof queryOptionType]
 
-const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
-    const [notSolvedQACardsData, setNotSolvedQACardsData] = useState<Question[]>([])
-    const [solvedQACardsData, setSolvedQACardsData] = useState<Question[]>([])
-    const [primeQACardsData, setPrimeQACardsData] = useState<Question[]>([])
+const QACardListBox = ({ query, questions }: Props): JSX.Element => {
     const [queryOption, setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
-    const defaultUrl: string = process.env.GET_QUESTION_URL
-        ? process.env.GET_QUESTION_URL
-        : 'http://localhost:4000/dev/question'
-    const router = useRouter()
-
-    const fetchSolvedQuestion = async (queryOption: queryOptions, query?: QAQueryProps) => {
-        const params = new URLSearchParams(query as string)
-        const url = defaultUrl + `?option=${queryOption}&${params}`
-        await axios
-            .get(url)
-            .then((res: AxiosResponse<QAResponse>) => {
-                const { data, status } = res
-                setSolvedQACardsData(data.data)
-            })
-            .catch((error) => {
-                router.replace('/500')
-                return error
-            })
-    }
-
-    const fetchPrimeQuestion = async (queryOption: queryOptions, query?: QAQueryProps) => {
-        const params = new URLSearchParams(query as string)
-        const url = defaultUrl + `?option=${queryOption}?${params}`
-        await axios
-            .get(url)
-            .then((res: AxiosResponse<QAResponse>) => {
-                const { data, status } = res
-                setPrimeQACardsData(data.data)
-            })
-            .catch((error) => {
-                router.replace('/500')
-                return error
-            })
-    }
-
-    useEffect(() => {
-        switch (queryOption) {
-            case 'solved':
-                fetchSolvedQuestion(queryOption, query)
-                break
-            case 'not-solved':
-                setNotSolvedQACardsData(data)
-                break
-            case 'prime':
-                fetchPrimeQuestion(queryOption, query)
-                break
-        }
-        //console.log("first fetch")
-    }, [query, data, queryOption])
+    console.log(questions)
     const onNotSolvedClickHandler = () => {
         setQueryOption(queryOptions.notSolved)
     }
     const onSolvedClickHandler = () => {
         setQueryOption(queryOptions.solved)
     }
-    const onPrimeClickHandler = () => {
-        setQueryOption(queryOptions.prime)
-    }
 
-    const NotSolvedQACardList: Function = useCallback(() => {
-        if (!Array.isArray(notSolvedQACardsData)) {
-            return <Box>読み込みに失敗しました</Box>
-        } else if (notSolvedQACardsData.length < 1) {
-            return <Box>この質問への回答はまだありません</Box>
-        }
-        return notSolvedQACardsData.map((qaCardData: Question) => {
-            return (
-                <QACard
-                    userId={qaCardData.userId}
-                    key={qaCardData.id}
-                    id={qaCardData.id}
-                    category1={qaCardData.category1}
-                    category2={qaCardData.category2}
-                    createAt={qaCardData.createAt}
-                    title={qaCardData.title}
-                    postedBy={qaCardData.postedBy}
-                    content={qaCardData.content}
-                    ansNum={qaCardData.ansNum}
-                />
-            )
-        })
-    }, [notSolvedQACardsData])
-    const SolvedQACardList: Function = useCallback(() => {
-        if (!Array.isArray(solvedQACardsData)) {
-            return <Box>読み込みに失敗しました</Box>
-        } else if (solvedQACardsData.length < 1) {
-            return <Box>この質問への回答はまだありません</Box>
-        }
-        return solvedQACardsData.map((qaCardData: Question) => {
-            return (
-                <QACard
-                    userId={qaCardData.userId}
-                    key={qaCardData.id}
-                    id={qaCardData.id}
-                    category1={qaCardData.category1}
-                    category2={qaCardData.category2}
-                    createAt={qaCardData.createAt}
-                    title={qaCardData.title}
-                    postedBy={qaCardData.postedBy}
-                    content={qaCardData.content}
-                    ansNum={qaCardData.ansNum}
-                />
-            )
-        })
-    }, [solvedQACardsData])
-    const PrimeQACardList: Function = useCallback(() => {
-        if (!Array.isArray(primeQACardsData)) {
-            return <Box>読み込みに失敗しました</Box>
-        } else if (primeQACardsData.length < 1) {
-            return <Box>この質問への回答はまだありません</Box>
-        }
-        return primeQACardsData.map((qaCardData: Question) => {
-            return (
-                <QACard
-                    userId={qaCardData.userId}
-                    key={qaCardData.id}
-                    id={qaCardData.id}
-                    category1={qaCardData.category1}
-                    category2={qaCardData.category2}
-                    createAt={qaCardData.createAt}
-                    title={qaCardData.title}
-                    postedBy={qaCardData.postedBy}
-                    content={qaCardData.content}
-                    ansNum={qaCardData.ansNum}
-                />
-            )
-        })
-    }, [primeQACardsData])
     return (
         <Tabs w="100%" isLazy defaultIndex={1}>
             <TabList>
@@ -211,16 +72,18 @@ const QACardListBox = ({ children, query, data }: Props): JSX.Element => {
             </TabList>
             <TabPanels>
                 <TabPanel padding="0px">
-                    <SolvedQACardList />
+                    {questions.map((question: Question) => {
+                        return <QACard question={question} key={question.questionId} />
+                    })}
+
                     <Box w="100%" textAlign="center">
                         <Button w="100%">さらに読み込む</Button>
                     </Box>
                 </TabPanel>
                 <TabPanel padding="0px">
-                    <NotSolvedQACardList />
-                </TabPanel>
-                <TabPanel padding="0px">
-                    <PrimeQACardList />
+                    {questions.map((question: Question) => {
+                        return <QACard question={question} key={question.questionId} />
+                    })}
                 </TabPanel>
             </TabPanels>
         </Tabs>

@@ -7,10 +7,8 @@ import { useRouter } from 'next/router'
 import { AiFillCamera } from 'react-icons/ai'
 import { EditForm } from './EditForm'
 import { DefaultModal } from '../common/DefaultModal'
-import UpdateUser from '../../types/api/req/account/UpdateUser'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../types/domain/user'
-import { UserReq } from '../../types/api/req/userReq'
 
 interface Props {
     user: User

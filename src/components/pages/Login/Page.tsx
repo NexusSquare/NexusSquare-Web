@@ -12,17 +12,13 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/authentication'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
-import { useEffect } from 'react'
-import { AuthError } from '../../../types/error'
-import Account from '../../../types/domain/account/Account'
+import { UserAccount } from '../../../types/domain/user'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -30,12 +26,12 @@ export const Page = (): JSX.Element => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Account>()
+    } = useForm<UserAccount>()
     const { alertLoginError } = useAlertLoginError()
 
     const { mutate: login, isLoading: loading } = useLogin()
 
-    const onSubmitAccount = async (account: Account) => {
+    const onSubmitAccount = async (account: UserAccount) => {
         login(account, {
             onSuccess: () => router.push(LINKS.QUESTION),
             onError: (error) => alertLoginError(error.code),

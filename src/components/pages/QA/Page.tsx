@@ -1,16 +1,15 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
-import Question from '../../../types/domain/qa/Question'
-
+import React, { useEffect } from 'react'
 import QACardWindow from '../../qa/QACardWindow'
 import QACardList from '../../qa/QACardList'
-import QAQueryProps from '../../../constants/qa/queryGroup'
 import { SearchForm } from '../../qa/SearchForm'
+import { useFetchQuestions } from '../../../hooks/question/useFetchQuestion'
 
-interface Props {
-    questions: Question[]
-}
-export const Page = ({ questions }: Props) => {
+export const Page = () => {
+    const { data: questions, isLoading } = useFetchQuestions()
+    useEffect(() => {
+        console.log(questions)
+    }, [questions])
     return (
         <>
             <VStack paddingY={4} w="100%" display="flex" alignItems="center">
@@ -23,9 +22,7 @@ export const Page = ({ questions }: Props) => {
                     </Text>
                 </Box>
             </VStack>
-            <QACardWindow>
-                <QACardList data={questions} />
-            </QACardWindow>
+            <QACardWindow>{questions && <QACardList questions={questions} />}</QACardWindow>
         </>
     )
 }

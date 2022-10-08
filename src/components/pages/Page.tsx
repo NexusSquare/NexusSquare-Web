@@ -3,7 +3,7 @@ import { TopAbout } from '../top/TopAbout'
 import { TopButtonArea } from '../top/TopButtonArea'
 import { TopFeature } from '../top/TopFeature'
 import { TopInfo } from '../top/TopInfo'
-import { TopSupporters } from '../top/TopSupporters '
+import { TopSupporters } from '../top/TopSupporters'
 
 export const Page = (): JSX.Element => {
     return (

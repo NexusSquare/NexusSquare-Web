@@ -1,7 +1,7 @@
 import { Box, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
-import History from '../../types/domain/account/History'
+import { History } from '../../types/domain/history'
 
 interface Props {
     history: History
@@ -9,7 +9,7 @@ interface Props {
 
 export const HistoryCard = ({ history }: Props) => {
     return (
-        <Box bgColor="mainColor" boxShadow="xl" w="full" p="2px" cursor="pointer" key={history.id} rounded="md">
+        <Box bgColor="mainColor" boxShadow="xl" w="full" p="2px" cursor="pointer" key={history.historyId} rounded="md">
             <HStack bgColor="white" p="4" justify="center" spacing={{ base: '2', md: '12' }}>
                 <Text fontSize={{ base: 'sm', md: 'lg' }}>{history.createAt}</Text>
                 <HStack>

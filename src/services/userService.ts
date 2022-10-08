@@ -1,10 +1,8 @@
 import { Timestamp } from 'firebase/firestore'
 import { DEFAULT_AVATAR_IMAGE_URL } from '../constants/image'
 import { USER_ID } from '../constants/token'
-import { db } from '../plugins/firebase'
-import { userMetaRepository } from '../repositories/userMetaRepository'
 import { userRepository } from '../repositories/userRepoisitory'
-import { UserReq } from '../types/api/req/userReq'
+import { UserReq } from '../types/api/req/UserReq'
 import { User } from '../types/domain/user'
 
 export const userService = {
@@ -27,7 +25,7 @@ export const userService = {
         }
         return userRepository.save(user, userId!)
     },
-    async update(userReq: Partial<User>): Promise<void> {
+    async update(userReq: Partial<UserReq>): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const user: Partial<User> = {
             ...userReq,

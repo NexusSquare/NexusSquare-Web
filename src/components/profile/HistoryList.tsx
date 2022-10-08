@@ -1,7 +1,7 @@
 import { VStack, Text } from '@chakra-ui/react'
 import React from 'react'
+import { History } from '../../types/domain/history'
 import { HistoryCard } from './HistoryCard'
-import History from '../../types/domain/account/History'
 
 interface Props {
     historyList: History[]
@@ -18,11 +18,8 @@ export const HistoryList = ({ historyList }: Props) => {
     return (
         <VStack m="0" w="full" pt="4">
             {historyList.map((history) => {
-                ;<HistoryCard history={history} key={history.id} />
+                return <HistoryCard history={history} key={history.historyId} />
             })}
-            <HistoryCard history={historyList[0]} key={1} />
-            <HistoryCard history={historyList[1]} key={2} />
-            <HistoryCard history={historyList[2]} key={3} />
         </VStack>
     )
 }

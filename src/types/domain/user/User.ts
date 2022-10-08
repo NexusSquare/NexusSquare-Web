@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore'
+
 export type User = {
     department: string
     subject: string

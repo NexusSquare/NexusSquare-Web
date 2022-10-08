@@ -7,7 +7,7 @@ import { EditForm } from './EditForm'
 import { DefaultModal } from '../common/DefaultModal'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../types/domain/user'
-import { UserReq } from '../../types/api/req/userReq'
+import { UserReq } from '../../types/api/req/UserReq'
 
 interface Props {
     user: User

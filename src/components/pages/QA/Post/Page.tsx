@@ -7,8 +7,6 @@ import {
     HStack,
     Input,
     ListItem,
-    ModalBody,
-    ModalFooter,
     Select,
     Spacer,
     Text,
@@ -18,137 +16,63 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import { BsChatRightText } from 'react-icons/bs'
-import axios, { AxiosError } from 'axios'
 import _ from 'lodash'
-import { NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-
-import QARequest from '../../../../types/api/req/qa/QARequest'
-import QACategories from '../../../../constants/qa/qaCategories'
-
-import Question from '../../../../types/domain/qa/Question'
-import { qaApi } from '../../../../lib/axios'
-
-import { DefaultModal } from '../../../../components/common/DefaultModal'
-import { PrimaryButton } from '../../../../components/common/PrimaryButton'
-import { ChancelButton } from '../../../../components/common/ChancelButton'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useUser } from '../../../../store/atom'
+import { usePostQuestion } from '../../../../hooks/question'
+import { async } from '@firebase/util'
+import { LINKS } from '../../../../constants/links'
+import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { QuestionReq } from '../../../../types/api/req'
+import QACategories from '../../../../constants/qa/qaCategories'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
 
-interface categorySelectProps {
-    isRequired: boolean
-    categoryText: string
-    onChange: void
-    value: string
-}
-
-interface RequiredLabelProps {
-    isRequired: boolean
-}
-
-interface preQuestion {
-    title: string
-    category1: string
-    category2?: string
-    content: string
-}
-
 export const Page = (): JSX.Element => {
-    const list1 = Object.values(QACategories)
-    const list2 = _.cloneDeep(Object.values(QACategories))
-    const [duplicateError, setDuplicateError] = useState(false)
+    const { user: postUser } = useUser()
+    const { mutate: postQuestion, isLoading } = usePostQuestion()
     const {
         register,
         handleSubmit,
+        resetField,
         watch,
-        formState: { errors, isSubmitting },
-    } = useForm<QARequest>()
+        formState: { errors },
+    } = useForm<QuestionReq>()
+    const watchCategory1 = watch('category1')
+    const category1List = Object.values(QACategories)
+    const [category2List, setCategory2List] = useState<string[]>([])
     const [contentLength, setContentLength] = useState(0)
-    const [loading, setLoading] = useState(false)
-    const [question, setQuestion] = useState<preQuestion>()
-    const { isOpen, onOpen, onClose } = useDisclosure()
     const router = useRouter()
-    const session = undefined
     const errorToast = useErrorToast()
-    const onChangeHandler = () => {
-        setDuplicateError(false)
-    }
+
+    //　NOTE　カテゴリー1が選択されるとカテゴリー2が生成される。
+    useEffect(() => {
+        resetField('category2')
+        setCategory2List([...category1List.filter((category) => category !== watchCategory1)])
+        return () => {
+            setCategory2List([])
+        }
+    }, [watchCategory1])
 
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
-    const onSubmitHandler = (data: preQuestion) => {
-        setDuplicateError(data.category1 === data.category2)
-        if (data.category1 === data.category2) {
-            return
-        }
-        onOpen()
-        setQuestion(data)
-    }
-    const postQuestion = async () => {
-        const userId = 'session?.user?.email!'
-        const questionReq: QARequest = { ...question!, userId }
-        setLoading(true)
-        await qaApi
-            .post('/', questionReq)
-            .then(() => {
-                router.replace('/qa')
-            })
-            .catch(() => {})
-        setLoading(false)
-    }
-    const RequiredLabel = ({ isRequired }: RequiredLabelProps) => {
-        const bgColor = isRequired ? 'mainColor' : 'gray.400'
-        const text = isRequired ? '必須' : '任意'
-        return (
-            <Box as="span" bgColor={bgColor} color="white" fontWeight={'bold'} rounded="md" p="1" fontSize="sm">
-                {text}
-            </Box>
+    const onSubmitQuestion = async (questionReq: QuestionReq) => {
+        if (!postUser) return
+        // NOTE FireStoreの仕様上、Userを渡す
+        postQuestion(
+            { questionReq, postUser },
+            {
+                onSuccess: () => router.push(LINKS.QUESTION),
+                onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            }
         )
     }
-    const CategorySelecter1 = () => {
-        return (
-            <FormControl isInvalid={errors.category1 !== undefined} isRequired>
-                <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
-                    カテゴリ1
-                </FormLabel>
-                <Select required placeholder="カテゴリを選択" {...register('category1')} onChange={onChangeHandler}>
-                    {list1.map((category) => {
-                        return (
-                            <Box as="option" value={category} key={category}>
-                                {category}
-                            </Box>
-                        )
-                    })}
-                </Select>
-            </FormControl>
-        )
-    }
-    const CategorySelecter2 = () => {
-        return (
-            <FormControl isInvalid={errors.category2 !== undefined}>
-                <FormLabel htmlFor="category2" fontSize={{ base: 'lg', md: 'lg' }}>
-                    カテゴリ2
-                </FormLabel>
-                <Select placeholder="カテゴリを選択" {...register('category2')} onChange={onChangeHandler}>
-                    {list2.map((category) => {
-                        return (
-                            <Box as="option" value={category} key={category}>
-                                {category}
-                            </Box>
-                        )
-                    })}
-                </Select>
-                <Text color={'#E53E3E'} fontSize="14">
-                    {duplicateError && 'カテゴリが重複しています'}
-                </Text>
-            </FormControl>
-        )
-    }
+
     return (
         <VStack w="full" px={4} py={6} spacing={4}>
             <HStack w="full">
@@ -169,9 +93,36 @@ export const Page = (): JSX.Element => {
                     </ListItem>
                 </UnorderedList>
             </Box>
-            <VStack as="form" onSubmit={handleSubmit(onSubmitHandler)} w="full" spacing={4}>
-                <CategorySelecter1 />
-                <CategorySelecter2 />
+            <VStack as="form" onSubmit={handleSubmit(onSubmitQuestion)} w="full" spacing={4}>
+                <FormControl isInvalid={errors.category1 !== undefined} isRequired>
+                    <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
+                        カテゴリ1
+                    </FormLabel>
+                    <Select required placeholder="カテゴリを選択" {...register('category1')}>
+                        {category1List.map((category) => {
+                            return (
+                                <Box as="option" value={category} key={category}>
+                                    {category}
+                                </Box>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
+
+                <FormControl isInvalid={errors.category2 !== undefined}>
+                    <FormLabel htmlFor="category2" fontSize={{ base: 'lg', md: 'lg' }}>
+                        カテゴリ2
+                    </FormLabel>
+                    <Select placeholder="カテゴリを選択" {...register('category2')}>
+                        {category2List.map((category) => {
+                            return (
+                                <Box as="option" value={category} key={category}>
+                                    {category}
+                                </Box>
+                            )
+                        })}
+                    </Select>
+                </FormControl>
 
                 <FormControl isInvalid={errors.title !== undefined} isRequired>
                     <FormLabel htmlFor="title" fontSize={{ base: 'lg', md: 'lg' }}>
@@ -224,27 +175,10 @@ export const Page = (): JSX.Element => {
                         _hover={{ bgColor: 'subSubColor' }}
                         leftIcon={<BsChatRightText />}
                         w="full"
+                        isLoading={isLoading}
                     >
                         質問を投稿する
                     </Button>
-                    <DefaultModal isOpen={isOpen} onClose={onClose} title="質問を投稿しますか？">
-                        <>
-                            <ModalBody>
-                                注意書き注意書き注意書き注意書き注意書き注意書き注意書き注意書き 注意書き注意書き
-                            </ModalBody>
-                            <ModalFooter>
-                                <HStack>
-                                    <ChancelButton isLoading={loading} buttonText="キャンセル" onClick={onClose} />
-                                    <PrimaryButton
-                                        type="button"
-                                        isLoading={loading}
-                                        buttonText="投稿する"
-                                        onClick={postQuestion}
-                                    />
-                                </HStack>
-                            </ModalFooter>
-                        </>
-                    </DefaultModal>
                 </HStack>
             </VStack>
         </VStack>

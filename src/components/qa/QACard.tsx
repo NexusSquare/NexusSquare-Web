@@ -1,18 +1,26 @@
 import { Box, Button, HStack, Spacer, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
-import Question from '../../types/domain/qa/Question'
+import { memo } from 'react'
+import { Question } from '../../types/domain/qa/Question'
 import ChakraNextImage from '../common/chakraNextImage'
 
-const QACard: React.VFC<Question> = (props) => {
+interface Props {
+    question: Question
+}
+
+const QACard = ({ question }: Props) => {
+    console.log(question)
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
-    const result = props.createAt.toString().match(REGEX)
+    const result = question.createAt.toString().match(REGEX)
     const date: string = result ? result[1] + '年' + result[2] + '月' + result[3] + '日' : '読み込めませんでした'
-    const categoryText: string = props.category2 ? `${props.category1}、${props.category2}` : props.category1
+    const categoryText: string = question.categories[1]
+        ? `${question.categories[0]}、${question.categories[1]}`
+        : question.categories[0]
 
     return (
-        <Link href={'/qa/' + props.id} passHref>
-            <Box as="a" href={'/qa/' + props.id}>
+        <Link href={'/qa/' + question.questionId} passHref>
+            <Box as="a">
                 <Box
                     as="section"
                     w="100%"
@@ -28,10 +36,10 @@ const QACard: React.VFC<Question> = (props) => {
                         <Text color="gray.400">{date}</Text>
                     </HStack>
                     <Text as="h3" paddingTop="10px" fontSize="xl" fontWeight="bold" isTruncated>
-                        {props.title}
+                        {question.title}
                     </Text>
                     <Text paddingBottom="15px" color="gray.400" isTruncated>
-                        by {props.postedBy}
+                        {question.postUser.nickname}
                     </Text>
                     <Text
                         marginX="5px"
@@ -41,7 +49,7 @@ const QACard: React.VFC<Question> = (props) => {
                         overflowWrap="break-word"
                         noOfLines={3}
                     >
-                        {props.content}
+                        {question.content}
                     </Text>
                     <HStack paddingTop="10px">
                         <Spacer />
@@ -53,7 +61,7 @@ const QACard: React.VFC<Question> = (props) => {
                             minW="25px"
                             minH="25px"
                         />
-                        <Text>{props.ansNum}</Text>
+                        <Text>{question.ansNum}</Text>
                     </HStack>
                 </Box>
             </Box>
@@ -61,4 +69,4 @@ const QACard: React.VFC<Question> = (props) => {
     )
 }
 
-export default QACard
+export default memo(QACard)

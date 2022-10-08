@@ -8,20 +8,19 @@ import {
     FormLabel,
     HStack,
     Input,
-    Spacer,
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { async } from '@firebase/util'
+
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import Account from '../../../../types/domain/account/Account'
+
 import { PrimaryButton } from '../../../common/PrimaryButton'
-import { AuthError } from '../../../../types/error'
+import { UserAccount } from '../../../../types/domain/user'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -29,7 +28,7 @@ export const Page = (): JSX.Element => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Account>()
+    } = useForm<UserAccount>()
     const errorToast = useErrorToast()
 
     const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
@@ -49,10 +48,10 @@ export const Page = (): JSX.Element => {
     }
 
     // TODO errorハンドリングが隠蔽できていない。
-    const onSubmitAccount = async (account: Account) => {
+    const onSubmitAccount = async (account: UserAccount) => {
         createAccount(account, {
             onSuccess: onSuccessCreateAccount,
-            onError: (error: AuthError) => displayErrorMessage(error.code),
+            onError: (error) => displayErrorMessage(error.code),
         })
     }
 
