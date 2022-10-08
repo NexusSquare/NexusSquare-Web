@@ -1,6 +1,6 @@
 import { NotAllowedIcon } from '@chakra-ui/icons'
 import { Avatar, Box, HStack, IconButton, Spacer, Text, VStack } from '@chakra-ui/react'
-import Answer from '../../types/domain/qa/Answer'
+import { Answer } from '../../types/domain/qa/Answer'
 
 interface Props {
     answer: Answer

@@ -22,7 +22,6 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
-import { BsQuestionLg } from 'react-icons/bs'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
