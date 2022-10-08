@@ -1,9 +1,15 @@
 import { Box, Button, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
+import { LINKS } from '../../constants/links'
 import ChakraNextImage from '../common/chakraNextImage'
 
 export const TopInfo = () => {
     const TOP_INFO_URL: string = '/images/ui_img.png'
+    const router = useRouter()
+    const onClickLogin = () => {
+        router.push(LINKS.LOGIN)
+    }
 
     return (
         <Box
@@ -14,8 +20,8 @@ export const TopInfo = () => {
         >
             <Stack direction={{ base: 'column-reverse', md: 'row' }} spacing="50px">
                 <HStack w={{ base: '100%', md: '50%' }}>
-                    <VStack align="start" spacing="30px">
-                        <Heading lineHeight="150%" fontSize={{ base: '3xl', md: '4xl' }}>
+                    <VStack align="start" spacing="30px" pb={12}>
+                        <Heading lineHeight="150%" fontSize={{ base: '2xl', md: '4xl' }}>
                             <Box borderBottom="2px solid" as="span" borderColor="mainColor">
                                 大学生活でわからないことがあるときはここで解決！
                             </Box>
@@ -32,6 +38,7 @@ export const TopInfo = () => {
                             borderColor="mainColor"
                             _hover={{ bgColor: 'mainColor', color: 'white' }}
                             w={{ base: 'full', md: 'auto' }}
+                            onClick={onClickLogin}
                         >
                             新規登録 / ログイン
                         </Button>

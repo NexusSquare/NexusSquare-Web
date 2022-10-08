@@ -9,9 +9,9 @@ export const Footer = (): JSX.Element => {
     return (
         <VStack as="footer" bgColor="#FF9037" spacing="0px" w="100%" minH="200px" paddingTop="50px">
             <Stack w={{ base: '100%', md: '80%' }} direction={{ base: 'column', md: 'row' }}>
-                <Box d="flex" justifyContent="center">
+                {/* <Box d="flex" justifyContent="center">
                     <ChakraNextImage src={LOGO_URL} alt="ロゴ" width={270} height={54}></ChakraNextImage>
-                </Box>
+                </Box> */}
                 <Spacer />
                 <Stack as="nav" direction={{ base: 'column', md: 'row' }} align="center" spacing="30px">
                     <Link href="/" passHref>
@@ -59,7 +59,7 @@ export const Footer = (): JSX.Element => {
             <HStack paddingTop="30px" justifyContent={{ base: 'center', md: 'end' }} w={{ base: '100%', md: '80%' }}>
                 <Link href={TWITTER_URL} passHref>
                     <HStack as="a" target="_blank">
-                        <BsTwitter size={50} color="white" />
+                        <BsTwitter size={30} color="white" />
                     </HStack>
                 </Link>
             </HStack>
