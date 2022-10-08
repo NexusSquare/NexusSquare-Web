@@ -18,29 +18,18 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import { BsChatRightText } from 'react-icons/bs'
-import axios, { AxiosError } from 'axios'
 import _ from 'lodash'
-import { NextPage } from 'next'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-
-import QARequest from '../../../../types/api/req/qa/QARequest'
-import QACategories from '../../../../constants/qa/qaCategories'
-
-import Question from '../../../../types/domain/qa/Question'
-import { qaApi } from '../../../../lib/axios'
-
-import { DefaultModal } from '../../../../components/common/DefaultModal'
-import { PrimaryButton } from '../../../../components/common/PrimaryButton'
-import { ChancelButton } from '../../../../components/common/ChancelButton'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import { QuestionReq } from '../../../../types/api/req/QuestionReq'
 import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
 import { async } from '@firebase/util'
 import { LINKS } from '../../../../constants/links'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { QuestionReq } from '../../../../types/api/req'
+import QACategories from '../../../../constants/qa/qaCategories'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]

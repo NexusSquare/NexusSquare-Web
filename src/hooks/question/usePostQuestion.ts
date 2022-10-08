@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { questionService } from '../../services/questionService'
-import { QuestionReq } from '../../types/api/req/QuestionReq'
+import { QuestionReq } from '../../types/api/req'
 import { User } from '../../types/domain/user'
 
 interface Props {

@@ -9,7 +9,7 @@ import { useSession } from '../../../hooks/useSession'
 import { Loading } from '../../common/Loading'
 import { useUpdateUser } from '../../../hooks/user/useUpdateUser'
 import { ERROR_MESSAGE } from '../../../constants/errors'
-import { UserReq } from '../../../types/api/req/userReq'
+import { UserReq } from '../../../types/api/req'
 import { OthersInfo } from '../../profile/OthersInfo'
 
 import { useFile } from '../../../hooks/useFile'

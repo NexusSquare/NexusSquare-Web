@@ -2,7 +2,7 @@ import { Timestamp } from 'firebase/firestore'
 import { STATUS } from '../constants/qa/status'
 import { USER_ID } from '../constants/token'
 import { questionRepository } from '../repositories/questionRepository'
-import { QuestionReq } from '../types/api/req/QuestionReq'
+import { QuestionReq } from '../types/api/req'
 import { Question } from '../types/domain/qa/Question'
 import { User } from '../types/domain/user'
 
