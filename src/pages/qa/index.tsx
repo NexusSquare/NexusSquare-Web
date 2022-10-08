@@ -33,4 +33,4 @@ QAHome.getLayout = (page) => <Layout pageName="Q&Aトップ">{page}</Layout>
 //     }
 //     return { notFound: true }
 // }
-// export default QAHome
+export default QAHome
