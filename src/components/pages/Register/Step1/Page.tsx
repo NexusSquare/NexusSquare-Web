@@ -51,7 +51,7 @@ export const Page = (): JSX.Element => {
     const onSubmitAccount = async (account: UserAccount) => {
         createAccount(account, {
             onSuccess: onSuccessCreateAccount,
-            onError: (error: AuthError) => displayErrorMessage(error.code),
+            onError: (error) => displayErrorMessage(error.code),
         })
     }
 
