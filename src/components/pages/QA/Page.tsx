@@ -1,10 +1,7 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
-import Question from '../../../types/domain/qa/Question'
-
 import QACardWindow from '../../qa/QACardWindow'
 import QACardList from '../../qa/QACardList'
-import QAQueryProps from '../../../constants/qa/queryGroup'
 import { SearchForm } from '../../qa/SearchForm'
 import { useFetchQuestions } from '../../../hooks/question/useFetchQuestion'
 

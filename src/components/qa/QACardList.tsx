@@ -1,16 +1,4 @@
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    HStack,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    Tabs,
-    useRadio,
-    useRadioGroup,
-} from '@chakra-ui/react'
+import { Box, Button, ButtonGroup, HStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import React from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { useCallback, useMemo } from 'react'
@@ -18,10 +6,8 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import QACard from './QACard'
 import queryOptions from '../../constants/qa/queryOptions'
-import QAResponse from '../../types/api/res/qa/qaResponse'
 import QAQueryProps from '../../constants/qa/queryGroup'
-import { useRouter } from 'next/router'
-import { Question } from '../../types/domain/qa/Question'
+import { Question } from '../../types/domain/qa'
 
 interface Props {
     query?: QAQueryProps

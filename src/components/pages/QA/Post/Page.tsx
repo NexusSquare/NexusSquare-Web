@@ -7,8 +7,6 @@ import {
     HStack,
     Input,
     ListItem,
-    ModalBody,
-    ModalFooter,
     Select,
     Spacer,
     Text,
@@ -33,24 +31,6 @@ import QACategories from '../../../../constants/qa/qaCategories'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
-
-interface categorySelectProps {
-    isRequired: boolean
-    categoryText: string
-    onChange: void
-    value: string
-}
-
-interface RequiredLabelProps {
-    isRequired: boolean
-}
-
-interface preQuestion {
-    title: string
-    category1: string
-    category2?: string
-    content: string
-}
 
 export const Page = (): JSX.Element => {
     const { user: postUser } = useUser()
