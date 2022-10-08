@@ -1,4 +1,4 @@
-type UserReq = {
+export type UserReq = {
     department: string
     subject: string
     grade: number
@@ -7,4 +7,3 @@ type UserReq = {
     isDepartmentAnonymous: boolean
     name: string
 }
-export default UserReq

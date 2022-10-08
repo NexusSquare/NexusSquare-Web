@@ -1,4 +1,4 @@
 export * from './AnswerRequest'
 export * from './QuestionReq'
-export * from './userReq'
+export * from './UserReq'
 export * from './userMetaReq'

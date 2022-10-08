@@ -13,7 +13,7 @@ import { OthersInfo } from '../../profile/OthersInfo'
 import { useFile } from '../../../hooks/useFile'
 import { useUploadFile } from '../../../hooks/storege/useUploadFile'
 import { STORAGE_URL } from '../../../constants/storage'
-import UserReq from '../../../types/api/req/UserReq'
+import { UserReq } from '../../../types/api/req/UserReq'
 interface Props {
     userId: string
 }

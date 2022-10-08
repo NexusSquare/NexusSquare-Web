@@ -5,7 +5,7 @@ import { User } from '../../types/domain/user'
 import { PrimaryButton } from '../common/PrimaryButton'
 import { gradeList } from '../../constants/grade'
 import { useCreateUserForm } from '../../hooks/useCreateUserForm'
-import UserReq from '../../types/api/req/userReq'
+import { UserReq } from '../../types/api/req/UserReq'
 
 interface Props {
     user: User
