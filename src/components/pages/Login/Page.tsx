@@ -12,17 +12,13 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/authentication'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
-import { useEffect } from 'react'
-import { AuthError } from '../../../types/error'
-import Account from '../../../types/domain/account/Account'
+import { Account } from '../../../types/domain/account/Account'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
