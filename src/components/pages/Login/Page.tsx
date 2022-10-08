@@ -18,7 +18,7 @@ import { LINKS } from '../../../constants/links'
 import { useLogin } from '../../../hooks/authentication'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
-import { Account } from '../../../types/domain/account'
+import { UserAccount } from '../../../types/domain/user'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -26,12 +26,12 @@ export const Page = (): JSX.Element => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Account>()
+    } = useForm<UserAccount>()
     const { alertLoginError } = useAlertLoginError()
 
     const { mutate: login, isLoading: loading } = useLogin()
 
-    const onSubmitAccount = async (account: Account) => {
+    const onSubmitAccount = async (account: UserAccount) => {
         login(account, {
             onSuccess: () => router.push(LINKS.QUESTION),
             onError: (error) => alertLoginError(error.code),

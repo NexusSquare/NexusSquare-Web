@@ -21,7 +21,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/PrimaryButton'
 import { AuthError } from '../../../../types/error'
-import { Account } from '../../../../types/domain/account'
+import { UserAccount } from '../../../../types/domain/user'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -29,7 +29,7 @@ export const Page = (): JSX.Element => {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<Account>()
+    } = useForm<UserAccount>()
     const errorToast = useErrorToast()
 
     const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
@@ -49,7 +49,7 @@ export const Page = (): JSX.Element => {
     }
 
     // TODO errorハンドリングが隠蔽できていない。
-    const onSubmitAccount = async (account: Account) => {
+    const onSubmitAccount = async (account: UserAccount) => {
         createAccount(account, {
             onSuccess: onSuccessCreateAccount,
             onError: (error: AuthError) => displayErrorMessage(error.code),
