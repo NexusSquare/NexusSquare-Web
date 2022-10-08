@@ -1,3 +1,5 @@
+import { Timestamp } from 'firebase/firestore'
+
 export type Question = {
     questionId: string
     userId: string
@@ -9,8 +11,8 @@ export type Question = {
         isDepartmentAnonymous: boolean
     }
     categories: string[]
-    createAt: timestamp
-    updateAt: timestamp
+    createAt: Timestamp
+    updateAt: Timestamp
     title: string
     content: string
     ansNum: number
