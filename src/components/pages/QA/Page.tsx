@@ -14,7 +14,7 @@ export const Page = () => {
         <>
             <VStack paddingY={4} w="100%" display="flex" alignItems="center">
                 <Box display={{ base: 'block', xl: 'none' }} w="full">
-                    <SearchForm />
+                    <SearchForm questions={questions} />
                 </Box>
                 <Box display={{ base: 'none', xl: 'block' }} w="full">
                     <Text as="h2" fontWeight={'bold'} fontSize={'2xl'} paddingX={4}>
