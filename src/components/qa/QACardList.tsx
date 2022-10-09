@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, HStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import { Box, Button, SkeletonCircle, SkeletonText, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
 import React from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { useCallback, useMemo } from 'react'
@@ -73,7 +73,14 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
             </TabList>
 
             {isLoading ? (
-                0
+                [1, 2, 3].map((index) => {
+                    return (
+                        <Box padding="10px 20px" border="1px" borderColor="gray.300" bg="white" key={index}>
+                            <SkeletonCircle size="10" />
+                            <SkeletonText mt="4" noOfLines={6} spacing="4" />
+                        </Box>
+                    )
+                })
             ) : (
                 <>
                     <TabPanels>
