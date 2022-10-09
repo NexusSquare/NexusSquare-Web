@@ -9,6 +9,7 @@ export const LINKS = {
     LOGIN: '/login',
     QUESTION: '/qa',
     QUESTION_DETAIL: (id: string) => `/qa/${id}`,
+    QUESTION_POST: `/qa/post`,
     RULE: '/rule',
     PRIVACY: 'privacy',
 } as const

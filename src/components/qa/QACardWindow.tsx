@@ -1,28 +1,10 @@
-import { SearchIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    HStack,
-    IconButton,
-    Input,
-    Popover,
-    PopoverAnchor,
-    PopoverArrow,
-    PopoverBody,
-    PopoverCloseButton,
-    PopoverContent,
-    PopoverHeader,
-    PopoverTrigger,
-    Spacer,
-    Text,
-    VStack,
-} from '@chakra-ui/react'
+import { Box, HStack, Spacer, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import ChakraNextImage from '../common/chakraNextImage'
+import { LINKS } from '../../constants/links'
 
 interface Props {
     children?: ReactNode
@@ -38,6 +20,9 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
     const ALL_Q_IMAGE_PATH: string = '/images/all.png'
     const RANKING_IMAGE_PATH: string = '/images/crown.png'
     const router = useRouter()
+    const onClickPostButton = () => {
+        router.push(LINKS.QUESTION_POST)
+    }
     const NavButton: React.VFC<NavButtonProps> = (props) => (
         <Link href={props.url} passHref>
             <Box as="a" href={props.url} bgColor="white" borderRadius="50%" h="42px" w="42px" padding="10px">
@@ -69,64 +54,25 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
                 <Box
                     justifyContent="end"
                     alignItems="center"
-                    marginRight="0px"
                     paddingBottom={4}
                     paddingRight={4}
                     zIndex="1"
                     display={{ base: 'flex', md: 'none' }}
                 >
-                    <Link href="/qa/post" passHref>
-                        <Box as="a" href="/qa/post">
-                            <HStack
-                                spacing="0px"
-                                bgColor="#FF9037"
-                                borderRadius="30px"
-                                boxShadow="md"
-                                color="white"
-                                _hover={{ bgColor: '#FFDA77' }}
-                                _active={{ opacity: '50%', outline: 'none' }}
-                                _focus={{ outline: 'none' }}
-                                padding={2}
-                            >
-                                <AiOutlinePlus size={32} />
-                            </HStack>
-                        </Box>
-                    </Link>
+                    <HStack
+                        spacing="0px"
+                        bgColor="#FF9037"
+                        borderRadius="full"
+                        boxShadow="md"
+                        _hover={{ bgColor: '#FFDA77' }}
+                        _active={{ opacity: '50%', outline: 'none' }}
+                        _focus={{ outline: 'none' }}
+                        padding={2}
+                        onClick={onClickPostButton}
+                    >
+                        <AiOutlinePlus size={32} />
+                    </HStack>
                 </Box>
-                {/* <HStack
-                    w="100%"
-                    h="50px"
-                    paddingX="10%"
-                    spacing="auto"
-                    bgColor="#FFDA77"
-                    alignItems="center"
-                    display={{ base: 'flex', sm: 'none' }}
-                >
-                    <NavButton imageSrc={CATEGORY_IMAGE_PATH} altText="カテゴリ" url="/qa/category" />
-                    <NavButton imageSrc={ALL_Q_IMAGE_PATH} altText="Q&A一覧" url="/qa/all" />
-                    <NavButton imageSrc={RANKING_IMAGE_PATH} altText="ランキング" url="/qa/ranking" />
-                    <Popover>
-                        <PopoverTrigger>
-                            <IconButton
-                                aria-label="検索"
-                                bgColor="white"
-                                h="42px"
-                                w="42px"
-                                borderRadius="50%"
-                                justifySelf="right"
-                                icon={<SearchIcon />}
-                            />
-                        </PopoverTrigger>
-                        <PopoverContent>
-                            <PopoverArrow />
-                            <PopoverCloseButton />
-                            <PopoverHeader>質問を検索</PopoverHeader>
-                            <PopoverBody>
-                                <Input></Input>
-                            </PopoverBody>
-                        </PopoverContent>
-                    </Popover>
-                </HStack> */}
             </Box>
         </VStack>
     )

@@ -259,17 +259,19 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                 paddingY={{ base: '0px', md: '10px' }}
                 w="100%"
                 bgColor="mainColor"
+                justifyContent={'space-between'}
             >
-                <Box
-                    as="h1"
-                    display="flex"
-                    flexDirection="row"
-                    alignItems="center"
-                    marginX={{ base: '0px', xs: '10px' }}
-                >
-                    <Link href="/" passHref>
-                        <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
-                            {/* <ChakraNextImage
+                <HStack>
+                    <Box
+                        as="h1"
+                        display="flex"
+                        flexDirection="row"
+                        alignItems="center"
+                        marginX={{ base: '0px', xs: '10px' }}
+                    >
+                        <Link href="/" passHref>
+                            <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
+                                {/* <ChakraNextImage
                                 src={LOGO_URL}
                                 alt="ロゴ"
                                 minW="120px"
@@ -280,26 +282,25 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                                 height={45}
                                 borderColor="#FF9037"
                             ></ChakraNextImage> */}
-                            <Box as="h2" color={'white'} fontWeight={'bold'} fontSize="2xl" mr={2}>
-                                NexusSquare
+                                <Box as="h2" color={'white'} fontWeight={'bold'} fontSize="2xl" mr={4}>
+                                    NexusSquare
+                                </Box>
                             </Box>
-                        </Box>
-                    </Link>
-                </Box>
-
-                <HStack
-                    as="nav"
-                    spacing="12%"
-                    paddingX="0.5%"
-                    aria-labelledby="jump to other functions"
-                    display={{ base: 'none', md: 'flex' }}
-                    paddingTop={2}
-                >
-                    <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
-                    <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
-                    <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
+                        </Link>
+                    </Box>
+                    <HStack
+                        as="nav"
+                        spacing="12%"
+                        paddingX="0.5%"
+                        aria-labelledby="jump to other functions"
+                        display={{ base: 'none', md: 'flex' }}
+                        paddingTop={2}
+                    >
+                        <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
+                        <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
+                        <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
+                    </HStack>
                 </HStack>
-                <Spacer />
                 <LoginOrProfile />
             </HStack>
             <HStack

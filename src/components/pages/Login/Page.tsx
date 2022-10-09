@@ -42,7 +42,7 @@ export const Page = (): JSX.Element => {
         router.push(LINKS.REGISTER.STEP1)
     }
     return (
-        <Box w="100%" h="full" paddingTop={{ base: 24, md: 48 }} paddingX={{ base: 4, md: 0 }}>
+        <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
             <VStack
                 bg="white"
                 w={{ base: 'full', md: '2xl' }}
@@ -122,6 +122,6 @@ export const Page = (): JSX.Element => {
                     新規登録はこちら
                 </Text>
             </VStack>
-        </Box>
+        </HStack>
     )
 }
