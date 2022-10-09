@@ -16,6 +16,7 @@ export const questionService = {
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const question: Partial<Question> = {
+            userId: userId!,
             postUser: {
                 nickname: postUser.nickname,
                 department: postUser.isDepartmentAnonymous ? null : postUser.department,
@@ -42,8 +43,12 @@ export const questionService = {
             title: questionReq.title,
             content: questionReq.content,
             imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
+            isEdited: true,
         }
         return questionRepository.update(question, questionId)
+    },
+    async delete(questionId: string): Promise<void> {
+        return questionRepository.delete(questionId)
     },
 }
 

@@ -6,8 +6,6 @@ import {
     FormLabel,
     HStack,
     Input,
-    ModalBody,
-    ModalFooter,
     Text,
     Textarea,
     Select,

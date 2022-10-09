@@ -11,8 +11,11 @@ import { Answer } from '../../../../types/domain/qa/Answer'
 import { QASkeleton } from '../../../qa/QASkeleton'
 import { QuestionReq } from '../../../../types/api/req'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
+import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { DeleteFormModal } from '../../../qa/DeleteFormModal'
+import { LINKS } from '../../../../constants/links'
 
 interface Props {
     questionId: string
@@ -23,9 +26,11 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     const errorToast = useErrorToast()
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
+    const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
     const answers: Answer[] = []
     const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
+    const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
 
     const onClickUpdateQuestion = async (questionReq: QuestionReq) => {
         updateQuestion(
@@ -40,19 +45,37 @@ export const Page = ({ questionId }: Props): JSX.Element => {
             }
         )
     }
+
+    const onClickDeleteQuestion = async () => {
+        deleteQuestion(questionId, {
+            onSuccess: () => router.push(LINKS.QUESTION),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            onSettled: () => onOpenPostForm(),
+        })
+    }
     return (
         <VStack paddingTop={8} w="full" spacing={2}>
             {isLoading || !question ? (
                 <QASkeleton />
             ) : (
                 <>
-                    <QAPerfectCard question={question} onOpenEditForm={onOpenEditForm} />
+                    <QAPerfectCard
+                        question={question}
+                        onOpenEditForm={onOpenEditForm}
+                        onOpenDeleteForm={onOpenDeleteForm}
+                    />
                     <EditFormModal
                         onClose={onCloseEditForm}
                         isOpen={isOpenEditForm}
-                        question={question!}
+                        question={question}
                         onClickUpdateQuestion={onClickUpdateQuestion}
                         isUpdateLoading={isUpdateLoading}
+                    />
+                    <DeleteFormModal
+                        onClose={onCloseDeleteForm}
+                        isOpen={isOpenDeleteForm}
+                        onClickDeleteQuestion={onClickDeleteQuestion}
+                        isDeleteLoading={isDeleteLoading}
                     />
                 </>
             )}
