@@ -189,7 +189,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
             </HStack>
         ) : (
             <>
-                <HStack spacing={4} w="200px" justify="end" display={{ base: 'none', md: 'flex' }}>
+                <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
                     {/* <PrimaryButton buttonText="新規登録" type="button" /> */}
                     <Button
                         type="button"
@@ -216,7 +216,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         </Text>
                     </HStack>
                 </HStack>
-                <HStack spacing={2} w="200px" justify="end" display={{ base: 'flex', md: 'none' }}>
+                <HStack spacing={2} display={{ base: 'flex', md: 'none' }}>
                     <VStack
                         as="button"
                         _hover={{ color: 'mainColor' }}
