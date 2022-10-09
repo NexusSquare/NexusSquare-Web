@@ -25,9 +25,10 @@ import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
     question: Question
+    onOpenEditForm: () => void
 }
 
-export const QAPerfectCard = ({ question }: Props) => {
+export const QAPerfectCard = ({ question, onOpenEditForm }: Props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = question.createAt.toString().match(REGEX)
@@ -82,7 +83,9 @@ export const QAPerfectCard = ({ question }: Props) => {
                         border={'none'}
                     />
                     <MenuList>
-                        <MenuItem icon={<EditIcon aria-label="編集する" />}>編集する</MenuItem>
+                        <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
+                            編集する
+                        </MenuItem>
                         <MenuItem icon={<DeleteIcon aria-label="削除する" />}>削除する</MenuItem>
                         <MenuItem icon={<NotAllowedIcon aria-label="通報する" />}>通報する</MenuItem>
                     </MenuList>

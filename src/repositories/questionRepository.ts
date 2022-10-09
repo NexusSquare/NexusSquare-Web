@@ -1,4 +1,4 @@
-import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
 import { db } from '../plugins/firebase'
 import { Question } from '../types/domain/qa/Question'
 
@@ -20,5 +20,9 @@ export const questionRepository = {
     async save(question: Partial<Question>): Promise<void> {
         const questionCol = collection(db, 'questions')
         addDoc(questionCol, question)
+    },
+    async update(question: Partial<Question>, questionId: string): Promise<void> {
+        const questionDoc = doc(db, 'questions', questionId)
+        updateDoc(questionDoc, question)
     },
 }

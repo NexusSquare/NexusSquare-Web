@@ -35,6 +35,16 @@ export const questionService = {
         }
         return questionRepository.save(question)
     },
+    async update(questionReq: QuestionReq, questionId: string): Promise<void> {
+        const question: Partial<Question> = {
+            updateAt: Timestamp.now(),
+            categories: convertCategories(questionReq.category1, questionReq.category2),
+            title: questionReq.title,
+            content: questionReq.content,
+            imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
+        }
+        return questionRepository.update(question, questionId)
+    },
 }
 
 // NOTE firebaseの検索に対応するため、配列に変換する必要がある
