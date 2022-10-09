@@ -50,30 +50,24 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
                 </Box>
                 <Spacer />
             </HStack>
-            <Box w="100%" position="sticky" bottom="0">
-                <Box
-                    justifyContent="end"
-                    alignItems="center"
-                    paddingBottom={4}
-                    paddingRight={4}
-                    zIndex="1"
-                    display={{ base: 'flex', md: 'none' }}
-                >
-                    <HStack
-                        spacing="0px"
-                        bgColor="#FF9037"
-                        borderRadius="full"
-                        boxShadow="md"
-                        _hover={{ bgColor: '#FFDA77' }}
-                        _active={{ opacity: '50%', outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                        padding={2}
-                        onClick={onClickPostButton}
-                    >
-                        <AiOutlinePlus size={32} />
-                    </HStack>
-                </Box>
-            </Box>
+
+            <HStack
+                bottom="4"
+                right={4}
+                position={'fixed'}
+                display={{ base: 'flex', md: 'none' }}
+                bgColor="#FF9037"
+                borderRadius="full"
+                boxShadow="md"
+                color={'white'}
+                _hover={{ bgColor: '#FFDA77' }}
+                _active={{ opacity: '50%', outline: 'none' }}
+                _focus={{ outline: 'none' }}
+                padding={2}
+                onClick={onClickPostButton}
+            >
+                <AiOutlinePlus size={32} />
+            </HStack>
         </VStack>
     )
 }

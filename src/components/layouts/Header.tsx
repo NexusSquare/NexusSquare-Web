@@ -189,27 +189,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
             </HStack>
         ) : (
             <>
-                <HStack spacing={2} w="200px" justify="end" display={{ base: 'flex', md: 'none' }}>
-                    <VStack
-                        as="button"
-                        _hover={{ color: 'mainColor' }}
-                        spacing={1}
-                        justify={'center'}
-                        alignItems={'center'}
-                    >
-                        <FiUserPlus size={20} color={'white'} />
-                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
-                            新規登録
-                        </Text>
-                    </VStack>
-                    <VStack as="button" spacing={1} onClick={onClickLogin}>
-                        <FiLogIn size={20} color={'white'} />
-                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
-                            ログイン
-                        </Text>
-                    </VStack>
-                </HStack>
-                <HStack spacing={4} w="200px" justify="end" display={{ base: 'none', md: 'flex' }}>
+                <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
                     {/* <PrimaryButton buttonText="新規登録" type="button" /> */}
                     <Button
                         type="button"
@@ -235,6 +215,26 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                             ログイン
                         </Text>
                     </HStack>
+                </HStack>
+                <HStack spacing={2} display={{ base: 'flex', md: 'none' }}>
+                    <VStack
+                        as="button"
+                        _hover={{ color: 'mainColor' }}
+                        spacing={1}
+                        justify={'center'}
+                        alignItems={'center'}
+                    >
+                        <FiUserPlus size={20} color={'white'} />
+                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
+                            新規登録
+                        </Text>
+                    </VStack>
+                    <VStack as="button" spacing={1} onClick={onClickLogin}>
+                        <FiLogIn size={20} color={'white'} />
+                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
+                            ログイン
+                        </Text>
+                    </VStack>
                 </HStack>
             </>
         )
