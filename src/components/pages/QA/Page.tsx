@@ -6,7 +6,7 @@ import { SearchForm } from '../../qa/SearchForm'
 import { useFetchQuestions } from '../../../hooks/question/useFetchQuestion'
 
 export const Page = () => {
-    const { data: questions, isLoading } = useFetchQuestions()
+    const { data: questions = [], isLoading } = useFetchQuestions()
     useEffect(() => {
         console.log(questions)
     }, [questions])
@@ -22,7 +22,9 @@ export const Page = () => {
                     </Text>
                 </Box>
             </VStack>
-            <QACardWindow>{questions && <QACardList questions={questions} />}</QACardWindow>
+            <QACardWindow>
+                <QACardList questions={questions} isLoading={isLoading} />
+            </QACardWindow>
         </>
     )
 }
