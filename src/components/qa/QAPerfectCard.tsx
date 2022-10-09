@@ -1,17 +1,40 @@
-import { NotAllowedIcon } from '@chakra-ui/icons'
-import { Avatar, Box, HStack, IconButton, Image, Spacer, Stack, Text, VStack } from '@chakra-ui/react'
+import { EditIcon, NotAllowedIcon, HamburgerIcon, DeleteIcon } from '@chakra-ui/icons'
+import {
+    Avatar,
+    Box,
+    HStack,
+    IconButton,
+    Image,
+    Menu,
+    Spacer,
+    Divider,
+    Button,
+    Stack,
+    Text,
+    VStack,
+    MenuButton,
+    MenuItem,
+    MenuList,
+} from '@chakra-ui/react'
 import React from 'react'
+import { AiOutlineTag } from 'react-icons/ai'
+import { BsChatText } from 'react-icons/bs'
+import { HiDotsHorizontal } from 'react-icons/hi'
 import { Question } from '../../types/domain/qa'
 import ChakraNextImage from '../common/chakraNextImage'
 
 interface Props {
     question: Question
+    onOpenEditForm: () => void
+    onOpenDeleteForm: () => void
 }
 
-export const QAPerfectCard = ({ question }: Props) => {
-    const DEFAULT_AVATAR_URL: string = 'https://bit.ly/broken-link'
-
-    const categoryTxt = question.categories[0]
+export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm }: Props) => {
+    const QA_IMAGE_PATH: string = '/images/ans.png'
+    const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
+    const result = question.createAt.toString().match(REGEX)
+    const date: string = result ? result[1] + '年' + result[2] + '月' + result[3] + '日' : '読み込めませんでした'
+    const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
     const QuestionImage = (): JSX.Element => {
@@ -26,54 +49,81 @@ export const QAPerfectCard = ({ question }: Props) => {
     return (
         <VStack
             as="section"
-            p="4"
+            w="100%"
+            padding="10px 20px"
             border="1px"
-            borderColor="gray.200"
-            boxShadow="md"
-            minH="200px"
+            borderColor="gray.300"
             bgColor={'white'}
-            w="full"
+            spacing={2}
+            alignItems={'start'}
         >
-            <Text color="gray.400" w="full">
-                {categoryTxt}
-            </Text>
-            <HStack w="full">
-                <Box as="figure" width="30px" height="30px">
-                    <Avatar width="full" height="full" src={question.postUser.imageUrl} />
-                </Box>
-
-                <VStack spacing="0px">
-                    <Text fontWeight="400" w="full">
-                        {question.postUser.nickname}
-                    </Text>
-                    <Stack direction={{ base: 'column', md: 'row' }} spacing={{ base: 0, md: '2' }}>
-                        <Text fontWeight="400" fontSize="sm" color="gray.400">
-                            作成日:
-                        </Text>
-                        <Text fontWeight="400" fontSize="sm" color="gray.400">
-                            更新日:
-                        </Text>
-                    </Stack>
-                </VStack>
-                <Spacer />
+            <HStack justify={'space-between'} w="full">
                 <HStack>
-                    <Text as="h2">{question.ansNum}</Text>
-                    <Text>回答</Text>
-                </HStack>
-            </HStack>
+                    <Avatar width={8} height={8} src={question.postUser.imageUrl} />
+                    <VStack spacing={0} alignItems={'start'}>
+                        <HStack>
+                            <Text color="gray.400" isTruncated>
+                                {question.postUser.nickname}
+                            </Text>
+                            {!question.postUser.isDepartmentAnonymous && (
+                                <Text color="gray.400">{question.postUser.subject}</Text>
+                            )}
+                        </HStack>
 
-            <Text fontSize="2xl" fontWeight="semibold" w="full">
+                        <Text color="gray.400" fontSize={'sm'}>
+                            {date}
+                        </Text>
+                    </VStack>
+                </HStack>
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label="Options"
+                        icon={<HiDotsHorizontal />}
+                        variant="outline"
+                        border={'none'}
+                    />
+                    <MenuList>
+                        <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
+                            編集する
+                        </MenuItem>
+                        <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
+                            削除する
+                        </MenuItem>
+                        <MenuItem icon={<NotAllowedIcon aria-label="通報する" />}>通報する</MenuItem>
+                    </MenuList>
+                </Menu>
+            </HStack>
+            <Text as="h3" fontSize="xl" fontWeight="bold" isTruncated>
                 {question.title}
             </Text>
+            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
+                {question.content}
+            </Text>
+            <HStack>
+                <AiOutlineTag color={'#a0acc0'} />
+                <Text color="gray.400" fontSize={'sm'}>
+                    {categoryText}
+                </Text>
+            </HStack>
 
-            <Text w="full">{question.content}</Text>
-            <QuestionImage />
-            <IconButton
-                alignSelf={'end'}
-                aria-label="通報する"
-                icon={<NotAllowedIcon />}
-                variant="outline"
-            ></IconButton>
+            <HStack alignSelf={'end'}>
+                <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
+                <Text>{question.ansNum}</Text>
+            </HStack>
+            {/* <QuestionImage />
+             */}
+            <Divider />
+            <Button
+                bgColor="mainColor"
+                color="white"
+                _hover={{ bgColor: 'subSubColor' }}
+                leftIcon={<BsChatText size={16} />}
+                w={{ base: 'full', md: '96' }}
+                alignSelf={'center'}
+            >
+                回答する
+            </Button>
         </VStack>
     )
 }

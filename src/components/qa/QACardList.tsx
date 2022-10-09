@@ -1,22 +1,35 @@
-import { Box, Button, ButtonGroup, HStack, Tab, TabList, TabPanel, TabPanels, Tabs } from '@chakra-ui/react'
+import {
+    Box,
+    Button,
+    SkeletonCircle,
+    SkeletonText,
+    Tab,
+    TabList,
+    TabPanel,
+    TabPanels,
+    VStack,
+    Tabs,
+    HStack,
+    Text,
+} from '@chakra-ui/react'
 import React from 'react'
-import axios, { AxiosResponse } from 'axios'
-import { useCallback, useMemo } from 'react'
-import { useEffect } from 'react'
 import { useState } from 'react'
 import QACard from './QACard'
 import queryOptions from '../../constants/qa/queryOptions'
 import QAQueryProps from '../../constants/qa/queryGroup'
 import { Question } from '../../types/domain/qa'
+import { BsChatText } from 'react-icons/bs'
+import { QASkeleton } from './QASkeleton'
 
 interface Props {
     query?: QAQueryProps
     questions: Question[]
+    isLoading: boolean
 }
 type queryOptionType = typeof queryOptions
 type queryOptions = typeof queryOptions[keyof queryOptionType]
 
-const QACardListBox = ({ query, questions }: Props): JSX.Element => {
+const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
     const [queryOption, setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
     console.log(questions)
     const onNotSolvedClickHandler = () => {
@@ -70,22 +83,59 @@ const QACardListBox = ({ query, questions }: Props): JSX.Element => {
                     回答募集中
                 </Tab>
             </TabList>
-            <TabPanels>
-                <TabPanel padding="0px">
-                    {questions.map((question: Question) => {
-                        return <QACard question={question} key={question.questionId} />
-                    })}
 
-                    <Box w="100%" textAlign="center">
-                        <Button w="100%">さらに読み込む</Button>
-                    </Box>
-                </TabPanel>
-                <TabPanel padding="0px">
-                    {questions.map((question: Question) => {
-                        return <QACard question={question} key={question.questionId} />
-                    })}
-                </TabPanel>
-            </TabPanels>
+            {isLoading ? (
+                [1, 2, 3].map((index) => {
+                    return <QASkeleton key={index} />
+                })
+            ) : (
+                <>
+                    <TabPanels>
+                        <TabPanel padding="0px">
+                            {questions.length > 0 ? (
+                                <>
+                                    {questions.map((question: Question) => {
+                                        return <QACard question={question} key={question.questionId} />
+                                    })}
+                                    <Box w="100%" textAlign="center">
+                                        <Button w="100%">さらに読み込む</Button>
+                                    </Box>
+                                </>
+                            ) : (
+                                <>
+                                    <HStack justify={'center'} py="4" h="50vh">
+                                        <VStack>
+                                            <BsChatText color={'#a0acc0'} size={100} />
+                                            <Text color="gray.400">質問が見つかりませんでした。</Text>
+                                        </VStack>
+                                    </HStack>
+                                </>
+                            )}
+                        </TabPanel>
+                        <TabPanel padding="0px">
+                            {questions.length > 0 ? (
+                                <>
+                                    {questions.map((question: Question) => {
+                                        return <QACard question={question} key={question.questionId} />
+                                    })}
+                                    <Box w="100%" textAlign="center">
+                                        <Button w="100%">さらに読み込む</Button>
+                                    </Box>
+                                </>
+                            ) : (
+                                <>
+                                    <HStack justify={'center'} py="4" h="50vh">
+                                        <VStack>
+                                            <BsChatText color={'#a0acc0'} size={100} />
+                                            <Text color="gray.400">質問が見つかりませんでした。</Text>
+                                        </VStack>
+                                    </HStack>
+                                </>
+                            )}
+                        </TabPanel>
+                    </TabPanels>
+                </>
+            )}
         </Tabs>
     )
 }

@@ -1,11 +1,21 @@
 import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VStack } from '@chakra-ui/react'
-import { BsChatRightText } from 'react-icons/bs'
+import { BsChatText } from 'react-icons/bs'
 import { Router, useRouter } from 'next/router'
 import { QAPerfectCard } from '../../../../components/qa/QAPerfectCard'
 import AnswerCard from '../../../../components/qa/AnswerCard'
 import { DefaultModal } from '../../../../components/common/DefaultModal'
-import { PostForm } from '../../../../components/qa/PostForm'
+import { PostFormModal } from '../../../qa/PostFormModal'
+import { EditFormModal } from '../../../qa/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
+import { Answer } from '../../../../types/domain/qa/Answer'
+import { QASkeleton } from '../../../qa/QASkeleton'
+import { QuestionReq } from '../../../../types/api/req'
+import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
+import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
+import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { DeleteFormModal } from '../../../qa/DeleteFormModal'
+import { LINKS } from '../../../../constants/links'
 
 interface Props {
     questionId: string
@@ -13,54 +23,65 @@ interface Props {
 
 export const Page = ({ questionId }: Props): JSX.Element => {
     const router = useRouter()
-    // const [answers, setAnswers] = useState<Answer[]>([])
-    const { data: question, isLoading } = useFetchQuestion(questionId)
-    const { isOpen, onOpen, onClose } = useDisclosure()
+    const errorToast = useErrorToast()
+    const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
+    const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
+    const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
+    const answers: Answer[] = []
+    const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
+    const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
+    const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
 
-    // const AnswerList = useCallback(() => {
-    //     if (!Array.isArray(answers)) {
-    //         return <Box>回答の取得に失敗しました</Box>
-    //     } else if (answers.length < 1) {
-    //         return <Box>この質問への回答はまだありません</Box>
-    //     }
-    //     return (
-    //         <VStack w="full" spacing={0}>
-    //             {answers.map((answer: Answer) => {
-    //                 return <AnswerCard answer={answer} key={answer.id} />
-    //             })}
-    //         </VStack>
-    //     )
-    // }, [answers])
+    const onClickUpdateQuestion = async (questionReq: QuestionReq) => {
+        updateQuestion(
+            {
+                questionReq: questionReq,
+                questionId: questionId,
+            },
+            {
+                onSuccess: () => refetchQuestion(),
+                onError: () => errorToast(ERROR_MESSAGE.SERVER),
+                onSettled: () => onCloseEditForm(),
+            }
+        )
+    }
 
-    // if (!router.isFallback && !question) router.push('/404')
-    // if (router.isFallback) {
-    //     return <Box>now loading</Box>
-    // }
+    const onClickDeleteQuestion = async () => {
+        deleteQuestion(questionId, {
+            onSuccess: () => router.push(LINKS.QUESTION),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            onSettled: () => onOpenPostForm(),
+        })
+    }
     return (
-        <VStack paddingTop={8} paddingX={4} w="full">
-            {question && <QAPerfectCard question={question} />}
+        <VStack paddingTop={8} w="full" spacing={2}>
+            {isLoading || !question ? (
+                <QASkeleton />
+            ) : (
+                <>
+                    <QAPerfectCard
+                        question={question}
+                        onOpenEditForm={onOpenEditForm}
+                        onOpenDeleteForm={onOpenDeleteForm}
+                    />
+                    <EditFormModal
+                        onClose={onCloseEditForm}
+                        isOpen={isOpenEditForm}
+                        question={question}
+                        onClickUpdateQuestion={onClickUpdateQuestion}
+                        isUpdateLoading={isUpdateLoading}
+                    />
+                    <DeleteFormModal
+                        onClose={onCloseDeleteForm}
+                        isOpen={isOpenDeleteForm}
+                        onClickDeleteQuestion={onClickDeleteQuestion}
+                        isDeleteLoading={isDeleteLoading}
+                    />
+                </>
+            )}
+            <PostFormModal onClose={onClosePostForm} isOpen={isOpenPostForm} />
 
-            <Button
-                bgColor="mainColor"
-                color="white"
-                _hover={{ bgColor: 'subSubColor' }}
-                leftIcon={<BsChatRightText />}
-                onClick={onOpen}
-                alignSelf={'end'}
-            >
-                回答
-            </Button>
-            <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
-                <PostForm onClose={onClose} />
-            </DefaultModal>
-            <VStack as="section" w="full" spacing={2}>
-                <Text as="h2" fontSize="2xl" fontWeight="semibold" w="full">
-                    解答
-                </Text>
-                <Divider />
-                {/* <AnswerList /> */}
-            </VStack>
-            <HStack h="200px">
+            <HStack py="12">
                 <Box w="180px" h="180px" bgColor="gray.200">
                     広告枠
                 </Box>
@@ -68,6 +89,28 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                     広告枠
                 </Box>
             </HStack>
+            <Text as="h2" fontSize="2xl" fontWeight="semibold" w="full" pl="4">
+                回答：{answers.length}件
+            </Text>
+            <Divider />
+            <VStack as="section" w="full">
+                {answers.length > 0 ? (
+                    <>
+                        {answers.map((answer: Answer, index: number) => {
+                            return <AnswerCard answer={answer} key={index} />
+                        })}
+                    </>
+                ) : (
+                    <>
+                        <HStack justify={'center'} py="4" h="50vh">
+                            <VStack>
+                                <BsChatText color={'#a0acc0'} size={100} />
+                                <Text color="gray.400">回答はまだありません。</Text>
+                            </VStack>
+                        </HStack>
+                    </>
+                )}
+            </VStack>
         </VStack>
     )
 }

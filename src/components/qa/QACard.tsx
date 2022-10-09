@@ -1,6 +1,7 @@
-import { Box, Button, HStack, Spacer, Text, VStack } from '@chakra-ui/react'
+import { Box, Button, HStack, Spacer, Text, VStack, Avatar } from '@chakra-ui/react'
 import Link from 'next/link'
 import { memo } from 'react'
+import { AiOutlineTag } from 'react-icons/ai'
 import { Question } from '../../types/domain/qa/Question'
 import ChakraNextImage from '../common/chakraNextImage'
 
@@ -21,7 +22,7 @@ const QACard = ({ question }: Props) => {
     return (
         <Link href={'/qa/' + question.questionId} passHref>
             <Box as="a">
-                <Box
+                <VStack
                     as="section"
                     w="100%"
                     padding="10px 20px"
@@ -29,30 +30,40 @@ const QACard = ({ question }: Props) => {
                     borderColor="gray.300"
                     _hover={{ opacity: '50%' }}
                     bgColor={'white'}
+                    spacing={2}
+                    alignItems={'start'}
                 >
                     <HStack>
-                        <Text color="gray.400">{categoryText}</Text>
-                        <Spacer />
-                        <Text color="gray.400">{date}</Text>
+                        <Avatar width={8} height={8} src={question.postUser.imageUrl} />
+                        <VStack spacing={0} alignItems={'start'}>
+                            <HStack>
+                                <Text color="gray.400" isTruncated>
+                                    {question.postUser.nickname}
+                                </Text>
+                                {!question.postUser.isDepartmentAnonymous && (
+                                    <Text color="gray.400">{question.postUser.subject}</Text>
+                                )}
+                            </HStack>
+
+                            <Text color="gray.400" fontSize={'sm'}>
+                                {date}
+                            </Text>
+                        </VStack>
                     </HStack>
-                    <Text as="h3" paddingTop="10px" fontSize="xl" fontWeight="bold" isTruncated>
+                    <Text as="h3" fontSize="xl" fontWeight="bold" isTruncated>
                         {question.title}
                     </Text>
-                    <Text paddingBottom="15px" color="gray.400" isTruncated>
-                        {question.postUser.nickname}
-                    </Text>
-                    <Text
-                        marginX="5px"
-                        width="100%"
-                        maxWidth="100%"
-                        minWidth="100%"
-                        overflowWrap="break-word"
-                        noOfLines={3}
-                    >
+                    <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
                         {question.content}
                     </Text>
-                    <HStack paddingTop="10px">
-                        <Spacer />
+                    <HStack>
+                        <AiOutlineTag color={'#a0acc0'} />
+                        <Text color="gray.400" fontSize={'sm'}>
+                            {categoryText}
+                        </Text>
+                    </HStack>
+
+                    <HStack alignSelf={'end'}>
                         <ChakraNextImage
                             src={QA_IMAGE_PATH}
                             alt="回答数"
@@ -63,7 +74,7 @@ const QACard = ({ question }: Props) => {
                         />
                         <Text>{question.ansNum}</Text>
                     </HStack>
-                </Box>
+                </VStack>
             </Box>
         </Link>
     )
