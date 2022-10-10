@@ -27,9 +27,10 @@ interface Props {
     question: Question
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
+    onOpenReportForm: () => void
 }
 
-export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm }: Props) => {
+export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOpenReportForm }: Props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = question.createAt.toString().match(REGEX)
@@ -90,7 +91,9 @@ export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm }: Pr
                         <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
                             削除する
                         </MenuItem>
-                        <MenuItem icon={<NotAllowedIcon aria-label="通報する" />}>通報する</MenuItem>
+                        <MenuItem icon={<NotAllowedIcon aria-label="通報する" />} onClick={onOpenReportForm}>
+                            通報する
+                        </MenuItem>
                     </MenuList>
                 </Menu>
             </HStack>
@@ -115,9 +118,11 @@ export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm }: Pr
              */}
             <Divider />
             <Button
-                bgColor="mainColor"
-                color="white"
-                _hover={{ bgColor: 'subSubColor' }}
+                color="mainColor"
+                bgColor="white"
+                borderWidth={1}
+                borderColor="mainColor"
+                _hover={{ bgColor: 'mainColor', color: 'white' }}
                 leftIcon={<BsChatText size={16} />}
                 w={{ base: 'full', md: '96' }}
                 alignSelf={'center'}
