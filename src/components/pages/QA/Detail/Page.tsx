@@ -171,13 +171,13 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                     <QASkeleton />
                 </VStack>
             ) : (
-                <VStack as="section" w="full" spacing={0}>
+                <VStack as="section" w="full" spacing={0} pb="24">
                     {answers.length > 0 ? (
-                        <Box mb="24">
+                        <>
                             {answers.map((answer: Answer, index: number) => {
                                 return <AnswerCard answer={answer} key={index} />
                             })}
-                        </Box>
+                        </>
                     ) : (
                         <>
                             <HStack justify={'center'} py="4" h="50vh">
