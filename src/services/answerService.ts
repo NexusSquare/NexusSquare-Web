@@ -6,6 +6,9 @@ import { AnswerReq } from '../types/api/req/AnswerReq'
 import { User } from '../types/domain/user'
 
 export const answerService = {
+    async findByQuestionId(questionId: string): Promise<Answer[]> {
+        return answerRepository.findByQuestionId(questionId)
+    },
     async save(answerReq: AnswerReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const answer: Omit<Answer, 'answerId'> = {

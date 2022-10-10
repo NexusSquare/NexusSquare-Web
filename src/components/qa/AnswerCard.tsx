@@ -1,5 +1,20 @@
-import { NotAllowedIcon } from '@chakra-ui/icons'
-import { Avatar, Box, HStack, IconButton, Spacer, Text, VStack } from '@chakra-ui/react'
+import { DeleteIcon, EditIcon, NotAllowedIcon } from '@chakra-ui/icons'
+import {
+    Avatar,
+    Box,
+    HStack,
+    IconButton,
+    Menu,
+    MenuButton,
+    MenuItem,
+    MenuList,
+    Spacer,
+    Text,
+    VStack,
+} from '@chakra-ui/react'
+import { HiDotsHorizontal } from 'react-icons/hi'
+import { USER_ID } from '../../constants/token'
+import { useSession } from '../../hooks/useSession'
 import { Answer } from '../../types/domain/qa/Answer'
 
 interface Props {
@@ -7,32 +22,60 @@ interface Props {
 }
 
 const AnswerCard = ({ answer }: Props): JSX.Element => {
-    const DEFAULT_AVATAR_URL: string = 'https://bit.ly/broken-link'
-    const DEFAULT_ICON_IMAGE_PATH: string = process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH
-        ? `/images/${process.env.NEXT_PUBLIC_DEFAULT_PROFILE_IMAGE_PATH}`
-        : DEFAULT_AVATAR_URL
-    const userImage: string = answer.userIcon ? answer.userIcon : DEFAULT_ICON_IMAGE_PATH
+    const { value: userId } = useSession(USER_ID)
     return (
-        <VStack p="4" border="1px" w="full" borderColor="gray.200" spacing={4}>
-            <HStack w="full">
-                <Box as="figure" width="30px" height="30px">
-                    <Avatar width="full" height="full" src={userImage} />
-                </Box>
-                <VStack spacing="0px">
-                    <Text fontWeight="400" w="full">
-                        {answer.postedby}匿名さん
-                    </Text>
-                    <Text fontWeight="400" fontSize="sm" color="gray.400">
-                        作成日:{answer.createAt}
-                    </Text>
-                </VStack>
+        <VStack
+            as="section"
+            w="100%"
+            padding="10px 20px"
+            border="1px"
+            borderColor="gray.300"
+            bgColor={'white'}
+            spacing={2}
+            alignItems={'start'}
+        >
+            <HStack justify={'space-between'} w="full">
+                <HStack>
+                    <Avatar width={8} height={8} src={answer.postUser.imageUrl} />
+                    <VStack spacing={0} alignItems={'start'}>
+                        <HStack>
+                            <Text color="gray.400" isTruncated>
+                                {answer.postUser.nickname}
+                            </Text>
+                            {!answer.postUser.isDepartmentAnonymous && (
+                                <Text color="gray.400">{answer.postUser.subject}</Text>
+                            )}
+                        </HStack>
+
+                        <Text color="gray.400" fontSize={'sm'}>
+                            2022/05/02
+                        </Text>
+                    </VStack>
+                </HStack>
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label="Options"
+                        icon={<HiDotsHorizontal />}
+                        variant="outline"
+                        border={'none'}
+                    />
+                    <MenuList>
+                        {userId === answer.userId ? (
+                            <>
+                                <MenuItem icon={<EditIcon aria-label="編集する" />}>編集する</MenuItem>
+                                <MenuItem icon={<DeleteIcon aria-label="削除する" />}>削除する</MenuItem>
+                            </>
+                        ) : (
+                            <MenuItem icon={<NotAllowedIcon aria-label="通報する" />}>通報する</MenuItem>
+                        )}
+                    </MenuList>
+                </Menu>
             </HStack>
-            <Text>{answer.content}</Text>
-            <Spacer />
-            <HStack w="100%">
-                <Spacer />
-                <IconButton aria-label="通報する" icon={<NotAllowedIcon />} variant="outline"></IconButton>
-            </HStack>
+
+            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
+                {answer.content}
+            </Text>
         </VStack>
     )
 }

@@ -4,6 +4,6 @@ export const QUERY_KEYS = {
     USER_META: 'userMeta',
     QUESTION: (questionId?: string) => questionId,
     QUESTIONS: 'questions',
-    ANSWERS: 'answers',
+    ANSWERS: (id?: string) => `answers/${id}`,
     HISTORIES: 'histories',
 } as const

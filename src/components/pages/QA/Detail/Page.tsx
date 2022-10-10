@@ -22,6 +22,8 @@ import { useEffect } from 'react'
 import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
 import { usePostQuestion } from '../../../../hooks/question'
 import { useUser } from '../../../../store/atom'
+import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
+import Link from 'next/link'
 
 interface Props {
     questionId: string
@@ -32,11 +34,16 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     const errorToast = useErrorToast()
     const { user: postUser } = useUser()
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
+    const {
+        data: answers = [],
+        isLoading: isFetchAnswersLoading,
+        refetch: refetchAnswers,
+    } = useFetchAnswersByQuestionId(questionId)
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
     const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
     const { mutate: postAnswer, isLoading: isPostLoading } = usePostAnswer()
     const { mutate: report, isLoading: isReportLoading } = useReport()
-    const answers: Answer[] = []
+
     const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
@@ -81,7 +88,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         postAnswer(
             { answerReq, postUser },
             {
-                // onSuccess: () => router.push(LINKS.QUESTION),
+                onSuccess: () => refetchAnswers(),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
                 onSettled: () => onClosePostForm(),
             }
@@ -89,7 +96,17 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     }
 
     return (
-        <VStack paddingTop={8} w="full" spacing={2}>
+        <VStack w="full" spacing={2}>
+            <HStack w={'full'} pt="4" px="4">
+                <Link href="/qa" passHref>
+                    <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
+                        <Box as="span" color="mainColor">
+                            ◀︎
+                        </Box>
+                        ホーム
+                    </Text>
+                </Link>
+            </HStack>
             {isLoading || !question ? (
                 <QASkeleton />
             ) : (
@@ -141,27 +158,38 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 </Box>
             </HStack>
             <Text as="h2" fontSize="2xl" fontWeight="semibold" w="full" pl="4">
-                回答：{answers.length}件
+                回答：
+                <Box as="span" color={'mainColor'} mr="2">
+                    {answers.length}
+                </Box>
+                件
             </Text>
-            <Divider />
-            <VStack as="section" w="full">
-                {answers.length > 0 ? (
-                    <>
-                        {answers.map((answer: Answer, index: number) => {
-                            return <AnswerCard answer={answer} key={index} />
-                        })}
-                    </>
-                ) : (
-                    <>
-                        <HStack justify={'center'} py="4" h="50vh">
-                            <VStack>
-                                <BsChatText color={'#a0acc0'} size={100} />
-                                <Text color="gray.400">回答はまだありません。</Text>
-                            </VStack>
-                        </HStack>
-                    </>
-                )}
-            </VStack>
+            {isFetchAnswersLoading || !answers ? (
+                <VStack as="section" w="full" spacing={0} pb="24">
+                    <QASkeleton />
+                    <QASkeleton />
+                    <QASkeleton />
+                </VStack>
+            ) : (
+                <VStack as="section" w="full" spacing={0}>
+                    {answers.length > 0 ? (
+                        <Box mb="24">
+                            {answers.map((answer: Answer, index: number) => {
+                                return <AnswerCard answer={answer} key={index} />
+                            })}
+                        </Box>
+                    ) : (
+                        <>
+                            <HStack justify={'center'} py="4" h="50vh">
+                                <VStack>
+                                    <BsChatText color={'#a0acc0'} size={100} />
+                                    <Text color="gray.400">回答はまだありません。</Text>
+                                </VStack>
+                            </HStack>
+                        </>
+                    )}
+                </VStack>
+            )}
         </VStack>
     )
 }
