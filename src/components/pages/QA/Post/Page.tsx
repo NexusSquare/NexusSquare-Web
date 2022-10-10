@@ -15,7 +15,7 @@ import {
     useDisclosure,
     VStack,
 } from '@chakra-ui/react'
-import { BsChatRightText } from 'react-icons/bs'
+import { BsChatText } from 'react-icons/bs'
 import _ from 'lodash'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -76,7 +76,6 @@ export const Page = (): JSX.Element => {
     return (
         <VStack w="full" px={4} py={6} spacing={4}>
             <HStack w="full">
-                <Box as="span" boxSize="20px" bgColor="mainColor" rounded="full"></Box>
                 <Text fontSize={{ base: 'xl', md: '2xl' }} fontWeight="bold">
                     質問の投稿
                 </Text>
@@ -165,6 +164,7 @@ export const Page = (): JSX.Element => {
                         borderColor="mainColor"
                         _hover={{ bgColor: 'mainColor', color: 'white' }}
                         w="50%"
+                        borderRadius={'sm'}
                     >
                         キャンセル
                     </Button>
@@ -173,9 +173,10 @@ export const Page = (): JSX.Element => {
                         color="white"
                         bgColor="mainColor"
                         _hover={{ bgColor: 'subSubColor' }}
-                        leftIcon={<BsChatRightText />}
+                        leftIcon={<BsChatText />}
                         w="full"
                         isLoading={isLoading}
+                        borderRadius={'sm'}
                     >
                         質問を投稿する
                     </Button>

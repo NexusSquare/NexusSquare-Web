@@ -19,7 +19,7 @@ export const SecondaryButton = ({
     width,
     disabled,
     size,
-    borderRadius,
+    borderRadius = 'sm',
 }: Props) => {
     return (
         <Button

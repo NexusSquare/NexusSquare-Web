@@ -10,7 +10,16 @@ interface Props {
     size?: 'xs' | 'sm' | 'md' | 'lg'
     borderRadius?: 'none' | 'sm' | 'base' | 'md' | 'lg' | 'xl' | 'full'
 }
-export const PrimaryButton = ({ buttonText, onClick, isLoading, type, width, disabled, size, borderRadius }: Props) => {
+export const PrimaryButton = ({
+    buttonText,
+    onClick,
+    isLoading,
+    type,
+    width,
+    disabled,
+    size,
+    borderRadius = 'sm',
+}: Props) => {
     return (
         <Button
             isLoading={isLoading}
