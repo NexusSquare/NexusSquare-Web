@@ -3,7 +3,6 @@ import { BsChatText } from 'react-icons/bs'
 import { Router, useRouter } from 'next/router'
 import { QAPerfectCard } from '../../../../components/qa/QAPerfectCard'
 import AnswerCard from '../../../../components/qa/AnswerCard'
-import { DefaultModal } from '../../../../components/common/DefaultModal'
 import { PostFormModal } from '../../../qa/PostFormModal'
 import { EditFormModal } from '../../../qa/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
@@ -16,6 +15,10 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { DeleteFormModal } from '../../../qa/DeleteFormModal'
 import { LINKS } from '../../../../constants/links'
+import { ReportFormModal } from '../../../qa/ReportFromModal'
+import { useReport } from '../../../../hooks/report/useReport'
+import { ReportReq } from '../../../../types/api/req/ReportReq'
+import { useEffect } from 'react'
 
 interface Props {
     questionId: string
@@ -27,10 +30,12 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
     const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
+    const { mutate: report, isLoading: isReportLoading } = useReport()
     const answers: Answer[] = []
     const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
+    const { isOpen: isOpenReportForm, onOpen: onOpenReportForm, onClose: onCloseReportForm } = useDisclosure()
 
     const onClickUpdateQuestion = async (questionReq: QuestionReq) => {
         updateQuestion(
@@ -53,6 +58,19 @@ export const Page = ({ questionId }: Props): JSX.Element => {
             onSettled: () => onOpenPostForm(),
         })
     }
+
+    const onClickReportFrom = () => {
+        onOpenReportForm()
+    }
+
+    const onClickReport = async (reportReq: ReportReq) => {
+        report(reportReq, {
+            onSuccess: () => router.push(LINKS.QUESTION),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            onSettled: () => onCloseReportForm(),
+        })
+    }
+
     return (
         <VStack paddingTop={8} w="full" spacing={2}>
             {isLoading || !question ? (
@@ -63,6 +81,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                         question={question}
                         onOpenEditForm={onOpenEditForm}
                         onOpenDeleteForm={onOpenDeleteForm}
+                        onOpenReportForm={onClickReportFrom}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}
@@ -71,14 +90,22 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                         onClickUpdateQuestion={onClickUpdateQuestion}
                         isUpdateLoading={isUpdateLoading}
                     />
-                    <DeleteFormModal
-                        onClose={onCloseDeleteForm}
-                        isOpen={isOpenDeleteForm}
-                        onClickDeleteQuestion={onClickDeleteQuestion}
-                        isDeleteLoading={isDeleteLoading}
-                    />
                 </>
             )}
+            <DeleteFormModal
+                onClose={onCloseDeleteForm}
+                isOpen={isOpenDeleteForm}
+                onClickDeleteQuestion={onClickDeleteQuestion}
+                isDeleteLoading={isDeleteLoading}
+            />
+            <ReportFormModal
+                onClose={onCloseReportForm}
+                isOpen={isOpenReportForm}
+                isReportLoading={isReportLoading}
+                onClickReport={onClickReport}
+                type="question"
+                postId={questionId}
+            />
             <PostFormModal onClose={onClosePostForm} isOpen={isOpenPostForm} />
 
             <HStack py="12">
