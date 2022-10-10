@@ -16,8 +16,8 @@ export const questionRepository = {
         const question = { ...res.data(), questionId: res.id } as Question
         return question
     },
-    // NOTE QuestionにIDが含まれていないため、Partialを使用
-    async save(question: Partial<Question>): Promise<void> {
+    // NOTE QuestionにIDが含まれていないため、Omitを使用
+    async save(question: Omit<Question, 'questionId'>): Promise<void> {
         const questionCol = collection(db, 'questions')
         addDoc(questionCol, question)
     },

@@ -8,7 +8,7 @@ import { EditFormModal } from '../../../qa/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 import { Answer } from '../../../../types/domain/qa/Answer'
 import { QASkeleton } from '../../../qa/QASkeleton'
-import { QuestionReq } from '../../../../types/api/req'
+import { AnswerReq, QuestionReq } from '../../../../types/api/req'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
 import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
@@ -19,6 +19,9 @@ import { ReportFormModal } from '../../../qa/ReportFromModal'
 import { useReport } from '../../../../hooks/report/useReport'
 import { ReportReq } from '../../../../types/api/req/ReportReq'
 import { useEffect } from 'react'
+import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
+import { usePostQuestion } from '../../../../hooks/question'
+import { useUser } from '../../../../store/atom'
 
 interface Props {
     questionId: string
@@ -27,9 +30,11 @@ interface Props {
 export const Page = ({ questionId }: Props): JSX.Element => {
     const router = useRouter()
     const errorToast = useErrorToast()
+    const { user: postUser } = useUser()
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
     const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
+    const { mutate: postAnswer, isLoading: isPostLoading } = usePostAnswer()
     const { mutate: report, isLoading: isReportLoading } = useReport()
     const answers: Answer[] = []
     const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
@@ -55,7 +60,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         deleteQuestion(questionId, {
             onSuccess: () => router.push(LINKS.QUESTION),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
-            onSettled: () => onOpenPostForm(),
+            onSettled: () => onClosePostForm(),
         })
     }
 
@@ -71,6 +76,18 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         })
     }
 
+    const onClickPostAnswer = async (answerReq: AnswerReq) => {
+        if (!postUser) return
+        postAnswer(
+            { answerReq, postUser },
+            {
+                // onSuccess: () => router.push(LINKS.QUESTION),
+                onError: () => errorToast(ERROR_MESSAGE.SERVER),
+                onSettled: () => onClosePostForm(),
+            }
+        )
+    }
+
     return (
         <VStack paddingTop={8} w="full" spacing={2}>
             {isLoading || !question ? (
@@ -82,6 +99,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                         onOpenEditForm={onOpenEditForm}
                         onOpenDeleteForm={onOpenDeleteForm}
                         onOpenReportForm={onClickReportFrom}
+                        onOpenPostForm={onOpenPostForm}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}
@@ -106,7 +124,13 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 type="question"
                 postId={questionId}
             />
-            <PostFormModal onClose={onClosePostForm} isOpen={isOpenPostForm} />
+            <PostFormModal
+                onClose={onClosePostForm}
+                isOpen={isOpenPostForm}
+                questionId={questionId}
+                isPostLoading={isPostLoading}
+                onClickPost={onClickPostAnswer}
+            />
 
             <HStack py="12">
                 <Box w="180px" h="180px" bgColor="gray.200">

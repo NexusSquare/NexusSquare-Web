@@ -12,33 +12,41 @@ import {
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChancelButton } from '../common/ChancelButton'
+import { AnswerReq } from '../../types/api/req'
 import { DefaultModal } from '../common/DefaultModal'
+import { SecondaryButton } from '../common/SecondaryButton'
 
 interface Props {
     isOpen: boolean
     onClose: () => void
+    questionId: string
+    isPostLoading: boolean
+    onClickPost: (value: AnswerReq) => Promise<void>
 }
-export const PostFormModal = ({ isOpen, onClose }: Props) => {
+export const PostFormModal = ({ isOpen, onClose, questionId, isPostLoading, onClickPost }: Props) => {
     const [contentLength, setContentLength] = useState(0)
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm()
+    } = useForm<AnswerReq>({
+        reValidateMode: 'onChange',
+        defaultValues: {
+            content: '',
+            questionId: questionId,
+        },
+    })
 
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
     return (
         <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
-            <Box w="full" as="form" onSubmit={handleSubmit((data) => console.log(data))}>
+            <Box w="full" as="form" onSubmit={handleSubmit((data) => onClickPost(data))}>
                 <ModalBody>
-                    <FormControl isInvalid={errors.content !== undefined}>
-                        <FormLabel fontSize={{ base: 'lg', md: 'xl' }}>
-                            <HStack>
-                                <Text>内容</Text>
-                            </HStack>
+                    <FormControl isInvalid={errors.content !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'} fontSize={{ base: 'lg', md: 'lg' }}>
+                            内容
                         </FormLabel>
                         <Textarea
                             minH="48"
@@ -57,9 +65,16 @@ export const PostFormModal = ({ isOpen, onClose }: Props) => {
                 </ModalBody>
                 <ModalFooter>
                     <HStack>
-                        <ChancelButton buttonText="キャンセル" onClick={onClose} />
+                        <SecondaryButton
+                            buttonText="キャンセル"
+                            onClick={onClose}
+                            isLoading={isPostLoading}
+                            disabled={isPostLoading}
+                            type="button"
+                        />
                         <Button
-                            isLoading={isSubmitting}
+                            isLoading={isPostLoading}
+                            disabled={isPostLoading}
                             color="white"
                             bgColor="mainColor"
                             _hover={{ bgColor: 'subSubColor' }}

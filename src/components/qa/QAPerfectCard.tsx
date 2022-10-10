@@ -28,9 +28,16 @@ interface Props {
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
     onOpenReportForm: () => void
+    onOpenPostForm: () => void
 }
 
-export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOpenReportForm }: Props) => {
+export const QAPerfectCard = ({
+    question,
+    onOpenEditForm,
+    onOpenDeleteForm,
+    onOpenReportForm,
+    onOpenPostForm,
+}: Props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = question.createAt.toString().match(REGEX)
@@ -126,6 +133,7 @@ export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOp
                 leftIcon={<BsChatText size={16} />}
                 w={{ base: 'full', md: '96' }}
                 alignSelf={'center'}
+                onClick={onOpenPostForm}
             >
                 回答する
             </Button>
