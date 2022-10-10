@@ -15,7 +15,7 @@ export const questionService = {
     },
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
-        const question: Partial<Question> = {
+        const question: Omit<Question, 'questionId'> = {
             userId: userId!,
             postUser: {
                 nickname: postUser.nickname,

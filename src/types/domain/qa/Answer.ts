@@ -1,9 +1,19 @@
+import { Timestamp } from 'firebase/firestore'
+
 export type Answer = {
     userId: string
-    id: string
-    postedby: string
+    postUser: {
+        nickname: string
+        department: string | null
+        subject: string | null
+        imageUrl: string
+        isDepartmentAnonymous: boolean
+    }
+    questionId: string
+    answerId: string
     content: string
-    userIcon?: string
-    isBest: boolean
-    createAt: string
+    createAt: Timestamp
+    updateAt: Timestamp
+    imageUrl?: string | null
+    isEdited: boolean
 }

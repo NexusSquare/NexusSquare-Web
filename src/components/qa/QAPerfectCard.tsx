@@ -20,6 +20,8 @@ import React from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
+import { USER_ID } from '../../constants/token'
+import { useSession } from '../../hooks/useSession'
 import { Question } from '../../types/domain/qa'
 import ChakraNextImage from '../common/chakraNextImage'
 
@@ -28,9 +30,17 @@ interface Props {
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
     onOpenReportForm: () => void
+    onOpenPostForm: () => void
 }
 
-export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOpenReportForm }: Props) => {
+export const QAPerfectCard = ({
+    question,
+    onOpenEditForm,
+    onOpenDeleteForm,
+    onOpenReportForm,
+    onOpenPostForm,
+}: Props) => {
+    const { value: userId } = useSession(USER_ID)
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = question.createAt.toString().match(REGEX)
@@ -85,22 +95,27 @@ export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOp
                         border={'none'}
                     />
                     <MenuList>
-                        <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
-                            編集する
-                        </MenuItem>
-                        <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
-                            削除する
-                        </MenuItem>
-                        <MenuItem icon={<NotAllowedIcon aria-label="通報する" />} onClick={onOpenReportForm}>
-                            通報する
-                        </MenuItem>
+                        {userId === question.userId ? (
+                            <>
+                                <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
+                                    編集する
+                                </MenuItem>
+                                <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
+                                    削除する
+                                </MenuItem>
+                            </>
+                        ) : (
+                            <MenuItem icon={<NotAllowedIcon aria-label="通報する" />} onClick={onOpenReportForm}>
+                                通報する
+                            </MenuItem>
+                        )}
                     </MenuList>
                 </Menu>
             </HStack>
             <Text as="h3" fontSize="xl" fontWeight="bold" isTruncated>
                 {question.title}
             </Text>
-            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
+            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
                 {question.content}
             </Text>
             <HStack>
@@ -126,6 +141,7 @@ export const QAPerfectCard = ({ question, onOpenEditForm, onOpenDeleteForm, onOp
                 leftIcon={<BsChatText size={16} />}
                 w={{ base: 'full', md: '96' }}
                 alignSelf={'center'}
+                onClick={onOpenPostForm}
             >
                 回答する
             </Button>
