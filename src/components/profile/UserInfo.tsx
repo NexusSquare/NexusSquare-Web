@@ -108,7 +108,7 @@ export const UserInfo = memo(
                 </HStack>
                 <VStack
                     border="1px"
-                    borderRadius="lg"
+                    borderRadius="sm"
                     borderColor="gray.400"
                     py="2"
                     px={{ base: '16', md: '32' }}

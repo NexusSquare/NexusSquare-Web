@@ -142,6 +142,7 @@ export const QAPerfectCard = ({
                 w={{ base: 'full', md: '96' }}
                 alignSelf={'center'}
                 onClick={onOpenPostForm}
+                borderRadius="sm"
             >
                 回答する
             </Button>

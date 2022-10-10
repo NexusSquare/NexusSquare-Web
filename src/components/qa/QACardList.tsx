@@ -47,8 +47,8 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
                     border="1px"
                     color="gray.400"
                     bgColor="gray.200"
-                    borderRadius="5px"
-                    fontSize={{ base: 'lg', sm: 'xl' }}
+                    borderRadius="sm"
+                    fontSize={{ base: 'md', sm: 'xl' }}
                     onClick={onSolvedClickHandler}
                     _selected={{
                         bgColor: 'white',
@@ -67,8 +67,8 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
                     border="1px"
                     color="gray.400"
                     bgColor="gray.200"
-                    borderRadius="5px"
-                    fontSize={{ base: 'lg', sm: 'xl' }}
+                    borderRadius="sm"
+                    fontSize={{ base: 'md', sm: 'xl' }}
                     onClick={onNotSolvedClickHandler}
                     _selected={{
                         bgColor: 'white',

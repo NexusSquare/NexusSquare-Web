@@ -199,6 +199,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         borderColor="white"
                         _hover={{ bgColor: 'white', color: 'mainColor' }}
                         onClick={onClickRegister}
+                        borderRadius="sm"
                     >
                         新規登録
                     </Button>
