@@ -125,7 +125,7 @@ export const QAPerfectCard = ({
                 </Text>
             </HStack>
 
-            <HStack alignSelf={'end'}>
+            <HStack w="full" justify={'end'}>
                 <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
                 <Text>{question.ansNum}</Text>
             </HStack>
