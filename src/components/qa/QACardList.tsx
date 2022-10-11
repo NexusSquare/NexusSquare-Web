@@ -19,7 +19,8 @@ import queryOptions from '../../constants/qa/queryOptions'
 import QAQueryProps from '../../constants/qa/queryGroup'
 import { Question } from '../../types/domain/qa'
 import { BsChatText } from 'react-icons/bs'
-import { QASkeleton } from './QASkeleton'
+import { QASkeleton } from '../common/QASkeleton'
+import { NoCards } from '../common/NoCards'
 
 interface Props {
     query?: QAQueryProps
@@ -102,14 +103,7 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
                                     </Box>
                                 </>
                             ) : (
-                                <>
-                                    <HStack justify={'center'} py="4" h="50vh">
-                                        <VStack>
-                                            <BsChatText color={'#a0acc0'} size={100} />
-                                            <Text color="gray.400">質問が見つかりませんでした。</Text>
-                                        </VStack>
-                                    </HStack>
-                                </>
+                                <NoCards text="質問が見つかりませんでした。" />
                             )}
                         </TabPanel>
                         <TabPanel padding="0px">

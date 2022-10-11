@@ -14,12 +14,16 @@ import { useFile } from '../../../hooks/useFile'
 import { useUploadFile } from '../../../hooks/storege/useUploadFile'
 import { STORAGE_URL } from '../../../constants/storage'
 import { UserReq } from '../../../types/api/req/UserReq'
+import { UserHistory } from '../../profile/UserHistory'
+import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
+import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
 interface Props {
     userId: string
 }
+// TODO　 コンポーネント分割（責務の分離）
 export const Page = ({ userId }: Props): JSX.Element => {
     const { value: myUserId } = useSession(USER_ID)
-    const { data: user, refetch } = useFetchUser(userId)
+    const { data: user, refetch: refetchUser } = useFetchUser(userId)
     const { data: userMeta } = useFetchUserMeta(userId)
     const { mutate: updateUser, isLoading: updateLoading } = useUpdateUser()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
@@ -29,7 +33,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
 
     const onClickEditUser = useCallback(async (userReq: Partial<UserReq>) => {
         updateUser(userReq, {
-            onSuccess: () => refetch(),
+            onSuccess: () => refetchUser(),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
             onSettled: () => onCloseEditForm(),
         })
@@ -45,7 +49,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
         const imageUrl = await getFileUrl(STORAGE_URL.USERS(myUserId))
         const imageReq: Partial<UserReq> = { imageUrl: imageUrl }
         updateUser(imageReq, {
-            onSuccess: () => refetch(),
+            onSuccess: () => refetchUser(),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
         })
     }
@@ -86,7 +90,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
             ) : (
                 <OthersInfo user={user} />
             )}
-            {/* <UserHistory historyList={histories} /> */}
+            <UserHistory historyList={[]} userId={userId} />
         </VStack>
     )
 }

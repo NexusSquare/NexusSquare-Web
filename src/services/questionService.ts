@@ -13,6 +13,9 @@ export const questionService = {
     async findById(id: string): Promise<Question> {
         return questionRepository.findById(id)
     },
+    async findByUserId(userId: string): Promise<Question[]> {
+        return questionRepository.findByUserId(userId)
+    },
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const question: Omit<Question, 'questionId'> = {
