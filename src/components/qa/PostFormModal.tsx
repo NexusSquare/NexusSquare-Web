@@ -14,6 +14,7 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AnswerReq } from '../../types/api/req'
 import { DefaultModal } from '../common/DefaultModal'
+import { PrimaryButton } from '../common/PrimaryButton'
 import { SecondaryButton } from '../common/SecondaryButton'
 
 interface Props {
@@ -72,16 +73,12 @@ export const PostFormModal = ({ isOpen, onClose, questionId, isPostLoading, onCl
                             disabled={isPostLoading}
                             type="button"
                         />
-                        <Button
+                        <PrimaryButton
+                            buttonText="回答する"
                             isLoading={isPostLoading}
                             disabled={isPostLoading}
-                            color="white"
-                            bgColor="mainColor"
-                            _hover={{ bgColor: 'subSubColor' }}
                             type="submit"
-                        >
-                            回答する
-                        </Button>
+                        ></PrimaryButton>
                     </HStack>
                 </ModalFooter>
             </Box>

@@ -19,6 +19,7 @@ import { Question } from '../../types/domain/qa'
 import QACategories from '../../constants/qa/qaCategories'
 import { QuestionReq } from '../../types/api/req'
 import { SecondaryButton } from '../common/SecondaryButton'
+import { PrimaryButton } from '../common/PrimaryButton'
 
 interface Props {
     isOpen: boolean
@@ -43,17 +44,13 @@ export const DeleteFormModal = ({ isOpen, onClose, onClickDeleteQuestion, isDele
                         disabled={isDeleteLoading}
                         isLoading={isDeleteLoading}
                     />
-                    <Button
-                        color="white"
-                        bgColor="mainColor"
-                        _hover={{ bgColor: 'subSubColor' }}
+                    <PrimaryButton
+                        buttonText="削除する"
                         type="button"
                         disabled={isDeleteLoading}
                         isLoading={isDeleteLoading}
                         onClick={onClickDeleteQuestion}
-                    >
-                        削除する
-                    </Button>
+                    ></PrimaryButton>
                 </HStack>
             </VStack>
         </DefaultModal>

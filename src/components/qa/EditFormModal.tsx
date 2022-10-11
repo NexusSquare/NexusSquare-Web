@@ -19,6 +19,7 @@ import { Question } from '../../types/domain/qa'
 import QACategories from '../../constants/qa/qaCategories'
 import { QuestionReq } from '../../types/api/req'
 import { SecondaryButton } from '../common/SecondaryButton'
+import { PrimaryButton } from '../common/PrimaryButton'
 
 interface Props {
     isOpen: boolean
@@ -141,16 +142,12 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
                         disabled={isUpdateLoading}
                         isLoading={isUpdateLoading}
                     />
-                    <Button
-                        color="white"
-                        bgColor="mainColor"
-                        _hover={{ bgColor: 'subSubColor' }}
+                    <PrimaryButton
+                        buttonText="編集する"
                         type="submit"
                         disabled={isUpdateLoading}
                         isLoading={isUpdateLoading}
-                    >
-                        編集する
-                    </Button>
+                    ></PrimaryButton>
                 </HStack>
             </VStack>
         </DefaultModal>
