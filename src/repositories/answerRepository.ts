@@ -22,6 +22,14 @@ export const answerRepository = {
             return { ...doc.data(), answerId: doc.id } as Answer
         })
     },
+    async findByUserId(userId: string): Promise<Answer[]> {
+        const answerCol = collection(db, 'answers')
+        const answerQuery = query(answerCol, where('userId', '==', userId), orderBy('createAt', 'desc'))
+        const snapShot = await getDocs(answerQuery)
+        return snapShot.docs.map((doc) => {
+            return { ...doc.data(), answerId: doc.id } as Answer
+        })
+    },
     // NOTE answerにIDが含まれていないため、Omitを使用
     async save(answer: Omit<Answer, 'answerId'>): Promise<void> {
         const answerCol = collection(db, 'answers')

@@ -7,7 +7,7 @@ import { PostFormModal } from '../../../qa/PostFormModal'
 import { EditFormModal } from '../../../qa/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 import { Answer } from '../../../../types/domain/qa/Answer'
-import { QASkeleton } from '../../../qa/QASkeleton'
+import { QASkeleton } from '../../../common/QASkeleton'
 import { AnswerReq, QuestionReq } from '../../../../types/api/req'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
 import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
@@ -24,6 +24,7 @@ import { usePostQuestion } from '../../../../hooks/question'
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
 import Link from 'next/link'
+import { NoCards } from '../../../common/NoCards'
 
 interface Props {
     questionId: string
@@ -179,14 +180,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                             })}
                         </>
                     ) : (
-                        <>
-                            <HStack justify={'center'} py="4" h="50vh">
-                                <VStack>
-                                    <BsChatText color={'#a0acc0'} size={100} />
-                                    <Text color="gray.400">回答はまだありません。</Text>
-                                </VStack>
-                            </HStack>
-                        </>
+                        <NoCards text="回答はまだありません。" />
                     )}
                 </VStack>
             )}

@@ -63,7 +63,7 @@ const QACard = ({ question }: Props) => {
                         </Text>
                     </HStack>
 
-                    <HStack w="full" justify={'end'}>
+                    <HStack w="full" justifyContent={'end'}>
                         <ChakraNextImage
                             src={QA_IMAGE_PATH}
                             alt="回答数"

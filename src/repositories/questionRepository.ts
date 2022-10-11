@@ -1,4 +1,15 @@
-import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc } from 'firebase/firestore'
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDoc,
+    getDocs,
+    orderBy,
+    query,
+    updateDoc,
+    where,
+} from 'firebase/firestore'
 import { db } from '../plugins/firebase'
 import { Question } from '../types/domain/qa/Question'
 
@@ -15,6 +26,14 @@ export const questionRepository = {
         const res = await getDoc(questionRef)
         const question = { ...res.data(), questionId: res.id } as Question
         return question
+    },
+    async findByUserId(userId: string): Promise<Question[]> {
+        const questionCol = collection(db, 'questions')
+        const questionQuery = query(questionCol, where('userId', '==', userId), orderBy('createAt', 'desc'))
+        const snapShot = await getDocs(questionQuery)
+        return snapShot.docs.map((doc) => {
+            return { ...doc.data(), questionId: doc.id } as Question
+        })
     },
     // NOTE QuestionにIDが含まれていないため、Omitを使用
     async save(question: Omit<Question, 'questionId'>): Promise<void> {

@@ -9,6 +9,9 @@ export const answerService = {
     async findByQuestionId(questionId: string): Promise<Answer[]> {
         return answerRepository.findByQuestionId(questionId)
     },
+    async findByUserId(userId: string): Promise<Answer[]> {
+        return answerRepository.findByUserId(userId)
+    },
     async save(answerReq: AnswerReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         const answer: Omit<Answer, 'answerId'> = {

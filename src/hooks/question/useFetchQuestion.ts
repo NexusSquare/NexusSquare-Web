@@ -14,3 +14,9 @@ export const useFetchQuestion = (questionId: string, queryOptions?: UseQueryOpti
         ...queryOptions,
     })
 }
+
+export const useFetchQuestionsByUserId = (userId: string, queryOptions?: UseQueryOptions<Question[]>) => {
+    return useQuery<Question[]>([QUERY_KEYS.QUESTION(userId)], () => questionService.findByUserId(userId), {
+        ...queryOptions,
+    })
+}
