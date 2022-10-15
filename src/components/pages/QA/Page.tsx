@@ -7,9 +7,6 @@ import { useFetchQuestions } from '../../../hooks/question/useFetchQuestion'
 
 export const Page = () => {
     const { data: questions = [], isLoading } = useFetchQuestions()
-    useEffect(() => {
-        console.log(questions)
-    }, [questions])
     return (
         <>
             <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">

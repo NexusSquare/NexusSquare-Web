@@ -45,7 +45,7 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
     const category1List = Object.values(QACategories)
     const [category2List, setCategory2List] = useState<string[]>([])
 
-    //　NOTE　カテゴリー1が選択されるとカテゴリー2が生成される。
+    // NOTE カテゴリー1が選択されるとカテゴリー2が生成される。
     useEffect(() => {
         resetField('category2')
         setCategory2List([...category1List.filter((category) => category !== watchCategory1)])

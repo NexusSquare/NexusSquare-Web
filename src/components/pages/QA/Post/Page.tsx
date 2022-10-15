@@ -62,6 +62,7 @@ export const Page = (): JSX.Element => {
         setContentLength(e.target.value.length)
     }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
+        console.log(questionReq)
         if (!postUser) return
         // NOTE FireStoreの仕様上、Userを渡す
         postQuestion(

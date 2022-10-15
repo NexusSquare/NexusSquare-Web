@@ -37,6 +37,7 @@ export const questionRepository = {
     },
     // NOTE QuestionにIDが含まれていないため、Omitを使用
     async save(question: Omit<Question, 'questionId'>): Promise<void> {
+        console.log(question)
         const questionCol = collection(db, 'questions')
         addDoc(questionCol, question)
     },
