@@ -10,7 +10,6 @@ interface Props {
 }
 
 const QACard = ({ question }: Props) => {
-    console.log(question)
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
     const result = question.createAt.toString().match(REGEX)

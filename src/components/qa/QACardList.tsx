@@ -32,7 +32,7 @@ type queryOptions = typeof queryOptions[keyof queryOptionType]
 
 const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
     const [queryOption, setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
-    console.log(questions)
+
     const onNotSolvedClickHandler = () => {
         setQueryOption(queryOptions.notSolved)
     }
