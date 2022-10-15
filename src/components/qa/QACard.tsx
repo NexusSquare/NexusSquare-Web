@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { memo } from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
+import { replaceLineFeed } from '../../lib/replaceLineFeed'
 import { Question } from '../../types/domain/qa/Question'
 import ChakraNextImage from '../common/chakraNextImage'
 
@@ -13,6 +14,7 @@ interface Props {
 const QACard = ({ question }: Props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertTimestampToString(question.createAt)
+    const content = replaceLineFeed(question.content)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
@@ -48,7 +50,7 @@ const QACard = ({ question }: Props) => {
                             </Text>
                         </VStack>
                     </HStack>
-                    <Text as="h3" fontSize="xl" fontWeight="bold" isTruncated>
+                    <Text as="h3" fontSize="xl" fontWeight="bold" noOfLines={1}>
                         {question.title}
                     </Text>
                     <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>

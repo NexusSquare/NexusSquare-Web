@@ -93,7 +93,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                 as="h3"
                 fontSize="xl"
                 fontWeight="bold"
-                isTruncated
+                noOfLines={1}
                 onClick={() => onClickCard(question.questionId)}
                 _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
             >

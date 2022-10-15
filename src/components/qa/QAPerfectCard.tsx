@@ -111,7 +111,7 @@ export const QAPerfectCard = ({
                     </MenuList>
                 </Menu>
             </HStack>
-            <Text as="h3" fontSize="xl" fontWeight="bold" isTruncated>
+            <Text as="h3" fontSize="xl" fontWeight="bold">
                 {question.title}
             </Text>
             <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
