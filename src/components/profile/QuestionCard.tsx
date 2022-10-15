@@ -22,6 +22,7 @@ import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { USER_ID } from '../../constants/token'
 import { useSession } from '../../hooks/useSession'
+import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
 import { Question } from '../../types/domain/qa'
 import ChakraNextImage from '../common/chakraNextImage'
 
@@ -35,9 +36,7 @@ interface Props {
 export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onClickCard }: Props) => {
     const { value: userId } = useSession(USER_ID)
     const QA_IMAGE_PATH: string = '/images/ans.png'
-    const REGEX: RegExp = /^([1-9][0-9]{3})\-0*([1-9]|1[0-2])\-0*([1-9]|[1-2][0-9]|3[01])/
-    const result = question.createAt.toString().match(REGEX)
-    const date: string = result ? result[1] + '年' + result[2] + '月' + result[3] + '日' : '読み込めませんでした'
+    const date = convertTimestampToString(question.createAt)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
@@ -94,7 +93,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                 as="h3"
                 fontSize="xl"
                 fontWeight="bold"
-                isTruncated
+                noOfLines={1}
                 onClick={() => onClickCard(question.questionId)}
                 _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
             >

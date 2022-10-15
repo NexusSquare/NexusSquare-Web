@@ -15,6 +15,7 @@ import {
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { USER_ID } from '../../constants/token'
 import { useSession } from '../../hooks/useSession'
+import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
 import { Answer } from '../../types/domain/qa/Answer'
 
 interface Props {
@@ -23,6 +24,7 @@ interface Props {
 
 const AnswerCard = ({ answer }: Props): JSX.Element => {
     const { value: userId } = useSession(USER_ID)
+    const date = convertTimestampToString(answer.createAt)
     return (
         <VStack
             as="section"
@@ -48,7 +50,7 @@ const AnswerCard = ({ answer }: Props): JSX.Element => {
                         </HStack>
 
                         <Text color="gray.400" fontSize={'sm'}>
-                            2022/05/02
+                            {date}
                         </Text>
                     </VStack>
                 </HStack>

@@ -87,7 +87,7 @@ export const UserInfo = memo(
                         </Box>
                         <Input type="file" ref={inputRef} accept="image/*" hidden onChange={onChangeImage} multiple />
                     </Box>
-                    <VStack>
+                    <VStack alignItems={'start'}>
                         <HStack>
                             <Text fontWeight="bold" fontSize={{ base: 'xl', md: '2xl' }}>
                                 {user.nickname}

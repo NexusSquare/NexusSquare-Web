@@ -17,6 +17,7 @@
     "@react-query-firebase/auth": "^1.0.0-dev.2",
     "@react-query-firebase/firestore": "^1.0.0-dev.7",
     "axios": "^0.26.1",
+    "date-fns": "^2.29.3",
     "firebase": "^9.10.0",
     "framer-motion": "^6.2.8",
     "lodash": "^4.17.21",
