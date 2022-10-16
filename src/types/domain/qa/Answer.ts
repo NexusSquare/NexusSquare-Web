@@ -10,6 +10,7 @@ export type Answer = {
         isDepartmentAnonymous: boolean
     }
     questionId: string
+    questionTitle: string
     answerId: string
     content: string
     createAt: Timestamp

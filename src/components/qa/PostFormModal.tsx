@@ -13,6 +13,7 @@ import {
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AnswerReq } from '../../types/api/req'
+import { Question } from '../../types/domain/qa'
 import { DefaultModal } from '../common/DefaultModal'
 import { PrimaryButton } from '../common/PrimaryButton'
 import { SecondaryButton } from '../common/SecondaryButton'
@@ -20,11 +21,11 @@ import { SecondaryButton } from '../common/SecondaryButton'
 interface Props {
     isOpen: boolean
     onClose: () => void
-    questionId: string
+    question: Question
     isPostLoading: boolean
     onClickPost: (value: AnswerReq) => Promise<void>
 }
-export const PostFormModal = ({ isOpen, onClose, questionId, isPostLoading, onClickPost }: Props) => {
+export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, onClickPost }: Props) => {
     const [contentLength, setContentLength] = useState(0)
     const {
         register,
@@ -34,7 +35,8 @@ export const PostFormModal = ({ isOpen, onClose, questionId, isPostLoading, onCl
         reValidateMode: 'onChange',
         defaultValues: {
             content: '',
-            questionId: questionId,
+            questionId: question.questionId,
+            questionTitle: question.title,
         },
     })
 

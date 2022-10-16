@@ -126,6 +126,13 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                         onClickUpdateQuestion={onClickUpdateQuestion}
                         isUpdateLoading={isUpdateLoading}
                     />
+                    <PostFormModal
+                        onClose={onClosePostForm}
+                        isOpen={isOpenPostForm}
+                        question={question}
+                        isPostLoading={isPostLoading}
+                        onClickPost={onClickPostAnswer}
+                    />
                 </>
             )}
             <DeleteFormModal
@@ -141,13 +148,6 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 onClickReport={onClickReport}
                 type="question"
                 postId={questionId}
-            />
-            <PostFormModal
-                onClose={onClosePostForm}
-                isOpen={isOpenPostForm}
-                questionId={questionId}
-                isPostLoading={isPostLoading}
-                onClickPost={onClickPostAnswer}
             />
 
             <HStack py="12">

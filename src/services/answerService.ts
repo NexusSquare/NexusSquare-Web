@@ -16,6 +16,7 @@ export const answerService = {
         const userId = sessionStorage.getItem(USER_ID)
         const answer: Omit<Answer, 'answerId'> = {
             questionId: answerReq.questionId,
+            questionTitle: answerReq.questionTitle,
             userId: userId!,
             postUser: {
                 nickname: postUser.nickname,
