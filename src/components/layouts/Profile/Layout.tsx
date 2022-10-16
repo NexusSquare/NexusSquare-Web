@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import CommonMeta from '../CommonMeta'
 import { Footer } from '../QA/Footer'
 import { Header } from '../Header'
-import { RightBar } from '../QA/RigthBar'
+import { RightBar } from '../RigthBar'
 import { LeftBar } from './LeftBar'
 
 interface Props {
@@ -23,8 +23,7 @@ export const Layout = ({ children, pageName }: Props): JSX.Element => {
                     w={{
                         base: '100%',
                         sm: '100vw',
-                        md: 'calc(100vw - 210px)',
-                        lg: 'calc(100vw - 210px)',
+                        md: 'calc(100vw - 240px)',
                         xl: 'calc(400px + 50vw)',
                     }}
                     paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}

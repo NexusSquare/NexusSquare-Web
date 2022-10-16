@@ -77,33 +77,39 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
             paddingX={8}
             alignItems={'start'}
         >
-            <Box d={{ base: 'none', xl: 'block' }} w="full">
-                <HStack justify={'space-between'} w="full">
-                    <Text fontSize={'2xl'} fontWeight={'bold'}>
-                        検索条件
-                    </Text>
-                    <SecondaryButton type="button" buttonText="リセット" />
-                </HStack>
-                <Text color="gray.600">現在の検索結果：</Text>
-                <HStack w="full">
-                    <Input placeholder="キーワード検索" w="full" borderRadius={'sm'} bgColor={'white'}></Input>
-                    <Button bgColor={'mainColor'} color="white" borderRadius={'sm'}>
-                        <SearchIcon />
-                    </Button>
-                </HStack>
-                <Text color="gray.600">並び替え</Text>
-                <Select placeholder="新着順（デフォルト）" bgColor={'white'}>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                </Select>
-                <Text color="gray.600">カテゴリー</Text>
-                <Select placeholder="なし" bgColor={'white'}>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                </Select>
-            </Box>
+            <VStack spacing={4} w="full" display={{ base: 'none', xl: 'flex' }}>
+                <Box w="full">
+                    <HStack justify={'space-between'} w="full">
+                        <Text fontSize={'2xl'} fontWeight={'bold'}>
+                            検索条件
+                        </Text>
+                        <SecondaryButton type="button" buttonText="リセット" />
+                    </HStack>
+                    <Text color="gray.600">現在の検索結果：</Text>
+                    <HStack w="full">
+                        <Input placeholder="キーワード検索" w="full" borderRadius={'sm'} bgColor={'white'}></Input>
+                        <Button bgColor={'mainColor'} color="white" borderRadius={'sm'}>
+                            <SearchIcon />
+                        </Button>
+                    </HStack>
+                </Box>
+                <Box w="full">
+                    <Text color="gray.600">並び替え</Text>
+                    <Select placeholder="新着順（デフォルト）" bgColor={'white'}>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </Select>
+                </Box>
+                <Box w="full">
+                    <Text color="gray.600">カテゴリー</Text>
+                    <Select placeholder="なし" bgColor={'white'}>
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </Select>
+                </Box>
+            </VStack>
         </VStack>
     )
 }

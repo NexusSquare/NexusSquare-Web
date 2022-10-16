@@ -5,7 +5,7 @@ import { Header } from '../Header'
 import { Footer } from './Footer'
 import { LeftBar } from './LeftBar'
 import { LeftBar2 } from './LeftBar2'
-import { RightBar } from './RigthBar'
+import { RightBar } from '../RigthBar'
 
 interface Props {
     children?: ReactNode
@@ -24,8 +24,7 @@ export const Layout = ({ children, pageName }: Props): JSX.Element => {
                     w={{
                         base: '100%',
                         sm: '100vw',
-                        md: 'calc(100vw - 210px)',
-                        lg: 'calc(100vw - 210px)',
+                        md: 'calc(100vw - 240px)',
                         xl: 'calc(400px + 50vw)',
                     }}
                     paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
