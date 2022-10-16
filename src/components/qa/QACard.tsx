@@ -1,7 +1,9 @@
 import { Box, Button, HStack, Spacer, Text, VStack, Avatar } from '@chakra-ui/react'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { memo } from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
+import { LINKS } from '../../constants/links'
 import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../lib/replaceLineFeed'
 import { Question } from '../../types/domain/qa/Question'
@@ -12,6 +14,7 @@ interface Props {
 }
 
 const QACard = ({ question }: Props) => {
+    const router = useRouter()
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertTimestampToString(question.createAt)
     const content = replaceLineFeed(question.content)
@@ -19,6 +22,9 @@ const QACard = ({ question }: Props) => {
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
 
+    const onClickUserInfo = () => {
+        router.push(LINKS.PROFILE(question.userId))
+    }
     return (
         <Link href={'/qa/' + question.questionId} passHref>
             <Box as="a">
@@ -34,8 +40,19 @@ const QACard = ({ question }: Props) => {
                     alignItems={'start'}
                 >
                     <HStack>
-                        <Avatar width={8} height={8} src={question.postUser.imageUrl} />
-                        <VStack spacing={0} alignItems={'start'}>
+                        <Avatar
+                            width={8}
+                            height={8}
+                            src={question.postUser.imageUrl}
+                            onClick={onClickUserInfo}
+                            _hover={{ cursor: 'pointer' }}
+                        />
+                        <VStack
+                            spacing={0}
+                            alignItems={'start'}
+                            onClick={onClickUserInfo}
+                            _hover={{ cursor: 'pointer' }}
+                        >
                             <HStack>
                                 <Text color="gray.400" isTruncated>
                                     {question.postUser.nickname}

@@ -16,10 +16,12 @@ import {
     MenuItem,
     MenuList,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import React from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
+import { LINKS } from '../../constants/links'
 import { USER_ID } from '../../constants/token'
 import { useSession } from '../../hooks/useSession'
 import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
@@ -42,11 +44,17 @@ export const QAPerfectCard = ({
     onOpenPostForm,
 }: Props) => {
     const { value: userId } = useSession(USER_ID)
+    const router = useRouter()
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertTimestampToString(question.createAt)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
+
+    const onClickUserInfo = () => {
+        router.push(LINKS.PROFILE(question.userId))
+    }
+
     const QuestionImage = (): JSX.Element => {
         return question.imageUrl ? (
             <Box>
@@ -69,9 +77,15 @@ export const QAPerfectCard = ({
         >
             <HStack justify={'space-between'} w="full">
                 <HStack>
-                    <Avatar width={8} height={8} src={question.postUser.imageUrl} />
+                    <Avatar
+                        width={8}
+                        height={8}
+                        src={question.postUser.imageUrl}
+                        onClick={onClickUserInfo}
+                        _hover={{ cursor: 'pointer' }}
+                    />
                     <VStack spacing={0} alignItems={'start'}>
-                        <HStack>
+                        <HStack onClick={onClickUserInfo} _hover={{ cursor: 'pointer' }}>
                             <Text color="gray.400" isTruncated>
                                 {question.postUser.nickname}
                             </Text>
