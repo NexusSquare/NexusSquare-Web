@@ -20,18 +20,23 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import Link from 'next/link'
-import { memo, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
 import ChakraNextImage from '../common/chakraNextImage'
-import { FaUserFriends, FaUserPlus } from 'react-icons/fa'
+import { Notification } from '../../types/domain/notification/Notification'
 import { LINKS } from '../../constants/links'
 import { useLogOut } from '../../hooks/authentication'
 import { useUser, useUserMeta } from '../../store/atom'
 import { useSession } from '../../hooks/useSession'
 import { USER_ID } from '../../constants/token'
+import { useFetchNotifications } from '../../hooks/notification/useFetchNotification'
+import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
+import { useUpdateNotification } from '../../hooks/notification/useUpdateNotification'
+import { useErrorToast } from '../../hooks/errors/useErrorToast'
+import { ERROR_MESSAGE } from '../../constants/errors'
 
 interface Props {
     children?: ReactNode
@@ -49,8 +54,9 @@ export const Header = memo(({ children }: Props): JSX.Element => {
     const { user } = useUser()
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
-    const [isNotice, setIsNotice] = useState(false)
-
+    const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(uid)
+    const { mutate: updateNotification } = useUpdateNotification()
+    const errorToast = useErrorToast()
     const router = useRouter()
 
     const onClickProfile = () => {
@@ -68,6 +74,18 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onClickLogOut = () => {
         logOut()
+    }
+
+    const onSuccessUpdateNotification = async (questionId: string) => {
+        await refetchNotification()
+        router.push(LINKS.QUESTION_DETAIL(questionId))
+    }
+
+    const onClickNotification = async (notificationId: string, questionId: string) => {
+        updateNotification(notificationId, {
+            onSuccess: () => onSuccessUpdateNotification(questionId),
+            onError: () => errorToast(ERROR_MESSAGE.SERVER),
+        })
     }
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
@@ -99,7 +117,75 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         )
     }
     const NotificationButton = () =>
-        isNotice ? (
+        notifications.length > 0 ? (
+            <Popover>
+                <PopoverTrigger>
+                    <Box position="relative">
+                        <IconButton
+                            aria-label="通知"
+                            icon={<BellIcon viewBox="0 0 24 24" boxSize="30px" color="white" />}
+                            bgColor="#FF9037"
+                            _hover={{ bgColor: '#FF9037' }}
+                            _active={{ bgColor: '#FF9037', outline: 'none' }}
+                            _focus={{ outline: 'none' }}
+                        />
+                        <Box
+                            position="absolute"
+                            bgColor="red"
+                            borderRadius="50%"
+                            boxSize="12px"
+                            top="5px"
+                            left="20px"
+                            _hover={{ cursor: 'pointer' }}
+                        ></Box>
+                    </Box>
+                </PopoverTrigger>
+                <PopoverContent>
+                    <PopoverBody>
+                        {notifications.map((notification: Notification, index: number) => {
+                            return (
+                                <Box key={notification.notificationId}>
+                                    <HStack
+                                        py="2"
+                                        px="2"
+                                        _hover={{ bgColor: 'gray.100', cursor: 'pointer' }}
+                                        w="full"
+                                        onClick={() =>
+                                            onClickNotification(notification.notificationId, notification.questionId)
+                                        }
+                                    >
+                                        <Avatar
+                                            as="button"
+                                            width="32px"
+                                            height="32px"
+                                            src={notification.imageUrl}
+                                            bg="white"
+                                            borderWidth={'1px'}
+                                            borderColor={'gray.200'}
+                                        />
+                                        <VStack spacing={0} alignItems={'start'} w="full">
+                                            <HStack w="full">
+                                                <Text color={'gray.400'} fontSize={'sm'} w="full" textAlign={'start'}>
+                                                    {notification.nickname}
+                                                    さんが回答しました。
+                                                </Text>
+                                                {/* <Text color={'gray.400'} fontSize={'sm'}>
+                                                {convertTimestampToString(notification.createAt)}
+                                            </Text> */}
+                                            </HStack>
+                                            <Text fontWeight={'bold'} fontSize={'sm'} noOfLines={1}>
+                                                {notification.questionTitle}
+                                            </Text>
+                                        </VStack>
+                                    </HStack>
+                                    {index < notifications.length - 1 && <Divider />}
+                                </Box>
+                            )
+                        })}
+                    </PopoverBody>
+                </PopoverContent>
+            </Popover>
+        ) : (
             <Box>
                 <IconButton
                     aria-label="通知"
@@ -109,26 +195,6 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                     _active={{ bgColor: '#FF9037', outline: 'none' }}
                     _focus={{ outline: 'none' }}
                 />
-            </Box>
-        ) : (
-            <Box position="relative">
-                <IconButton
-                    aria-label="通知"
-                    icon={<BellIcon viewBox="0 0 24 24" boxSize="30px" color="white" />}
-                    bgColor="#FF9037"
-                    _hover={{ bgColor: '#FF9037' }}
-                    _active={{ bgColor: '#FF9037', outline: 'none' }}
-                    _focus={{ outline: 'none' }}
-                />
-                <Box
-                    position="absolute"
-                    bgColor="red"
-                    borderRadius="50%"
-                    boxSize="12px"
-                    top="5px"
-                    left="20px"
-                    _hover={{ cursor: 'pointer' }}
-                ></Box>
             </Box>
         )
     const LoginOrProfile = () =>
@@ -144,8 +210,8 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                             <HStack py="4" px="2" spacing="4">
                                 <Avatar
                                     as="button"
-                                    width="40px"
-                                    height="40px"
+                                    width="32px"
+                                    height="32px"
                                     src={user.imageUrl}
                                     bg="white"
                                     borderWidth={'1px'}
