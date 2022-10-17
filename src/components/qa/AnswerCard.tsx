@@ -12,7 +12,9 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { HiDotsHorizontal } from 'react-icons/hi'
+import { LINKS } from '../../constants/links'
 import { USER_ID } from '../../constants/token'
 import { useSession } from '../../hooks/useSession'
 import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
@@ -24,7 +26,11 @@ interface Props {
 
 const AnswerCard = ({ answer }: Props): JSX.Element => {
     const { value: userId } = useSession(USER_ID)
+    const router = useRouter()
     const date = convertTimestampToString(answer.createAt)
+    const onClickUserInfo = () => {
+        router.push(LINKS.PROFILE(answer.userId))
+    }
     return (
         <VStack
             as="section"
@@ -38,8 +44,14 @@ const AnswerCard = ({ answer }: Props): JSX.Element => {
         >
             <HStack justify={'space-between'} w="full">
                 <HStack>
-                    <Avatar width={8} height={8} src={answer.postUser.imageUrl} />
-                    <VStack spacing={0} alignItems={'start'}>
+                    <Avatar
+                        width={8}
+                        height={8}
+                        src={answer.postUser.imageUrl}
+                        onClick={onClickUserInfo}
+                        _hover={{ cursor: 'pointer' }}
+                    />
+                    <VStack spacing={0} alignItems={'start'} onClick={onClickUserInfo} _hover={{ cursor: 'pointer' }}>
                         <HStack>
                             <Text color="gray.400" isTruncated>
                                 {answer.postUser.nickname}
