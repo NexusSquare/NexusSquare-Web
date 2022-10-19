@@ -6,5 +6,5 @@ export const QUERY_KEYS = {
     QUESTIONS: 'questions',
     NOTIFICATIONS: 'notifications',
     ANSWER: (id?: string) => `answers/${id}`,
-    HISTORIES: 'histories',
+    HISTORIES: (uid?: string) => `histories/${uid}`,
 } as const

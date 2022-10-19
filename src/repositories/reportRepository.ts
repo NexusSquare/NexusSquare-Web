@@ -7,4 +7,4 @@ export const reportRepository = {
         const reportCol = collection(db, 'reports')
         addDoc(reportCol, report)
     },
-}
+} as const

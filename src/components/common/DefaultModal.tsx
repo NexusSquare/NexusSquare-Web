@@ -7,6 +7,7 @@ import {
     ModalBody,
     ModalCloseButton,
     Button,
+    useBreakpointValue,
 } from '@chakra-ui/react'
 import React, { Children, ReactNode } from 'react'
 
@@ -18,8 +19,10 @@ interface Props {
 }
 
 export const DefaultModal = ({ title, children, isOpen, onClose }: Props): JSX.Element => {
+    const modalSize = useBreakpointValue({ base: 'sm', md: 'lg' })
+
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>{title}</ModalHeader>

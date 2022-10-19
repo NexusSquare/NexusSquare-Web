@@ -16,4 +16,4 @@ export const notificationRepository = {
         const notificationDoc = doc(db, `users/${userId}/notifications`, notificationId)
         updateDoc(notificationDoc, { isRead: true })
     },
-}
+} as const

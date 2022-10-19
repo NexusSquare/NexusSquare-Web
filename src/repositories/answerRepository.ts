@@ -43,4 +43,4 @@ export const answerRepository = {
         const answerDoc = doc(db, 'answers', answerId)
         deleteDoc(answerDoc)
     },
-}
+} as const

@@ -18,4 +18,4 @@ export const userRepository = {
         const userRef = doc(db, 'users', uid)
         return await updateDoc(userRef, user)
     },
-}
+} as const

@@ -33,4 +33,4 @@ export const answerService = {
         }
         return answerRepository.save(answer)
     },
-}
+} as const

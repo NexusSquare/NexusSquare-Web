@@ -169,15 +169,16 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                                                     {notification.nickname}
                                                     さんが回答しました。
                                                 </Text>
-                                                {/* <Text color={'gray.400'} fontSize={'sm'}>
-                                                {convertTimestampToString(notification.createAt)}
-                                            </Text> */}
                                             </HStack>
                                             <Text fontWeight={'bold'} fontSize={'sm'} noOfLines={1}>
                                                 {notification.questionTitle}
                                             </Text>
                                         </VStack>
+                                        {/* <Text color={'gray.400'} fontSize={'sm'}>
+                                            {convertTimestampToString(notification.createAt)}
+                                        </Text> */}
                                     </HStack>
+
                                     {index < notifications.length - 1 && <Divider />}
                                 </Box>
                             )

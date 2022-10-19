@@ -13,4 +13,4 @@ export const userMetaRepository = {
         const userRef = doc(db, 'user_meta', uid)
         return await setDoc(userRef, user)
     },
-}
+} as const
