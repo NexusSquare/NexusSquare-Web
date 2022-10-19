@@ -90,7 +90,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
             ) : (
                 <OthersInfo user={user} />
             )}
-            <UserHistory historyList={[]} userId={userId} />
+            <UserHistory userId={userId} />
         </VStack>
     )
 }
