@@ -12,9 +12,10 @@ import {
     useDisclosure,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { LINKS } from '../../constants/links'
 import { useFetchAnswersByUserId } from '../../hooks/answer/useFethcAnswer'
+import { useFetchHistories } from '../../hooks/history/useFetchHistory'
 import { useFetchQuestionsByUserId } from '../../hooks/question/useFetchQuestion'
 import { History } from '../../types/domain/history'
 import { Question } from '../../types/domain/qa'
@@ -25,11 +26,10 @@ import { HistoryList } from './HistoryList'
 import { QuestionList } from './QuestionList'
 
 interface Props {
-    historyList: History[]
     userId: string
 }
 // NOTE　責務を分離させるためにhooksの使用を許可
-export const UserHistory = ({ historyList, userId }: Props) => {
+export const UserHistory = ({ userId }: Props) => {
     const {
         data: questions = [],
         refetch: refetchQuestions,
@@ -40,6 +40,7 @@ export const UserHistory = ({ historyList, userId }: Props) => {
         refetch: refetchAnswers,
         isLoading: isFetchAnswersLoading,
     } = useFetchAnswersByUserId(userId)
+    const { data: histories = [] } = useFetchHistories(userId)
     const {
         isOpen: isOpenEditQuestionForm,
         onOpen: onOpenEditQuestionForm,
@@ -66,6 +67,9 @@ export const UserHistory = ({ historyList, userId }: Props) => {
     const onClickCard = (questionId: string) => {
         router.push(LINKS.QUESTION_DETAIL(questionId))
     }
+    useEffect(() => {
+        console.log(histories)
+    }, [histories])
     return (
         <>
             <Tabs w="100%" isLazy defaultIndex={1}>
@@ -131,8 +135,7 @@ export const UserHistory = ({ historyList, userId }: Props) => {
 
                 <TabPanels>
                     <TabPanel padding="0px">
-                        <HistoryList historyList={[]} />
-                        <NoCards text="履歴がありません" />
+                        <HistoryList historyList={histories} />
                     </TabPanel>
                     <TabPanel padding="0px">
                         <QuestionList

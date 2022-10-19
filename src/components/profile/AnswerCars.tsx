@@ -75,7 +75,16 @@ export const AnswerCard = ({ answer, onOpenEditForm, onOpenDeleteForm, onClickCa
                     )}
                 </Menu>
             </HStack>
-
+            <Text
+                as="h3"
+                fontSize="xl"
+                fontWeight="bold"
+                noOfLines={1}
+                onClick={() => onClickCard(answer.questionId)}
+                _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
+            >
+                {answer.questionTitle}
+            </Text>
             <Text
                 width="100%"
                 maxWidth="100%"

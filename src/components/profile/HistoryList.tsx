@@ -1,6 +1,7 @@
 import { VStack, Text } from '@chakra-ui/react'
 import React from 'react'
 import { History } from '../../types/domain/history'
+import { NoCards } from '../common/NoCards'
 import { HistoryCard } from './HistoryCard'
 
 interface Props {
@@ -8,12 +9,8 @@ interface Props {
 }
 
 export const HistoryList = ({ historyList }: Props) => {
-    if (!historyList) {
-        return (
-            <VStack p="4">
-                <Text fontSize={'md'}>質問履歴が存在しません</Text>
-            </VStack>
-        )
+    if (historyList.length === 0) {
+        return <NoCards text="履歴はまだありません。" />
     }
     return (
         <VStack m="0" w="full" pt="4">

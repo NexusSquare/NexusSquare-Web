@@ -49,4 +49,4 @@ export const questionRepository = {
         const questionDoc = doc(db, 'questions', questionId)
         deleteDoc(questionDoc)
     },
-}
+} as const
