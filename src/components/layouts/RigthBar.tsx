@@ -1,7 +1,7 @@
 import { Box, Button, HStack, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import QAButton from '../qa/QAButton'
+import QAButton from '../atoms/QAButton'
 
 interface Props {
     children?: ReactNode
