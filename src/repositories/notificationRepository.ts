@@ -4,6 +4,7 @@ import { Notification } from '../types/domain/notification/Notification'
 
 export const notificationRepository = {
     async find(userId: string): Promise<Notification[]> {
+        console.log('notification fetch')
         const notificationCol = collection(db, `users/${userId}/notifications`)
         const notificationQuery = query(notificationCol, where('isRead', '==', false), orderBy('createAt', 'desc'))
         const snapShot = await getDocs(notificationQuery)

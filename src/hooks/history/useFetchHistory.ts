@@ -2,6 +2,7 @@ import { UseQueryOptions, useQuery } from 'react-query'
 import { QUERY_KEYS } from '../../constants/query'
 import { historyService } from '../../services/historyService'
 import { History } from '../../types/domain/history'
+import { DEFAULT_QUERY_OPTIONS } from '../react-query-config/config'
 
 // NOTE sessionストレージがnullを撮るため、nullを許す
 // uidが存在するときのみfetchされる
@@ -11,6 +12,7 @@ export const useFetchHistories = (uid?: string | null, queryOptions?: UseQueryOp
         () => historyService.find(uid!),
         {
             ...queryOptions,
+            ...DEFAULT_QUERY_OPTIONS,
         }
     )
 }

@@ -4,6 +4,7 @@ import { User } from '../types/domain/user'
 
 export const userRepository = {
     async findOne(uid: string): Promise<User> {
+        console.log('user fetch')
         const userRef = doc(db, `users/${uid}`)
         const res = await getDoc(userRef)
         const oneUser = res.data() as User
