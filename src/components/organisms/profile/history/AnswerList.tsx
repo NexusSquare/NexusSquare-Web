@@ -1,4 +1,4 @@
-import { VStack } from '@chakra-ui/react'
+import { useDisclosure, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Answer } from '../../../../types/domain/qa/Answer'
 import { NoCards } from '../../../common/NoCards'
@@ -8,11 +8,19 @@ import { AnswerCard } from '../../../molecules/profile/AnswerCars'
 interface Props {
     answers: Answer[]
     isLoading: boolean
-    onOpenEditForm: () => void
-    onOpenDeleteForm: () => void
     onClickCard: (value: string) => void
 }
-export const AnswerList = ({ answers, isLoading, onOpenEditForm, onOpenDeleteForm, onClickCard }: Props) => {
+export const AnswerList = ({ answers, isLoading, onClickCard }: Props) => {
+    const {
+        isOpen: isOpenEditAnswerForm,
+        onOpen: onOpenEditAnswerForm,
+        onClose: onCloseEditAnswerForm,
+    } = useDisclosure()
+    const {
+        isOpen: isOpenDeleteAnswerForm,
+        onOpen: onOpenDeleteAnswerForm,
+        onClose: onCloseDeleteAnswerForm,
+    } = useDisclosure()
     return (
         <>
             {isLoading || !answers ? (
@@ -30,8 +38,8 @@ export const AnswerList = ({ answers, isLoading, onOpenEditForm, onOpenDeleteFor
                                     <AnswerCard
                                         answer={answer}
                                         key={answer.answerId}
-                                        onOpenEditForm={onOpenEditForm}
-                                        onOpenDeleteForm={onOpenDeleteForm}
+                                        onOpenEditForm={onOpenEditAnswerForm}
+                                        onOpenDeleteForm={onOpenDeleteAnswerForm}
                                         onClickCard={onClickCard}
                                     />
                                 )

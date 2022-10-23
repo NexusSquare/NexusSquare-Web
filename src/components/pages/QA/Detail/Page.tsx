@@ -68,7 +68,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         deleteQuestion(questionId, {
             onSuccess: () => router.push(LINKS.QUESTION),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
-            onSettled: () => onClosePostForm(),
+            onSettled: () => onCloseDeleteForm(),
         })
     }
 
