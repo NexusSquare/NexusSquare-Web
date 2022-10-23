@@ -1,8 +1,8 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect } from 'react'
-import QACardWindow from '../../qa/QACardWindow'
-import QACardList from '../../qa/QACardList'
-import { SearchForm } from '../../qa/SearchForm'
+import QACardWindow from '../../organisms/qa/QACardWindow'
+import QACardList from '../../organisms/qa/QACardList'
+import { SearchForm } from '../../molecules/qa/SearchForm'
 import { useFetchQuestions } from '../../../hooks/question/useFetchQuestion'
 
 export const Page = () => {

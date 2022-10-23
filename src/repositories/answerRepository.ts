@@ -15,6 +15,7 @@ import { Answer } from '../types/domain/qa/Answer'
 
 export const answerRepository = {
     async findByQuestionId(questionId: string): Promise<Answer[]> {
+        console.log('answer by questionId fetch')
         const answerCol = collection(db, 'answers')
         const answerQuery = query(answerCol, where('questionId', '==', questionId), orderBy('createAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
@@ -23,6 +24,7 @@ export const answerRepository = {
         })
     },
     async findByUserId(userId: string): Promise<Answer[]> {
+        console.log('answer by userId fetch')
         const answerCol = collection(db, 'answers')
         const answerQuery = query(answerCol, where('userId', '==', userId), orderBy('createAt', 'desc'))
         const snapShot = await getDocs(answerQuery)

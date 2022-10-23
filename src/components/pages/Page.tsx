@@ -1,9 +1,9 @@
 import React from 'react'
-import { TopAbout } from '../top/TopAbout'
-import { TopButtonArea } from '../top/TopButtonArea'
-import { TopFeature } from '../top/TopFeature'
-import { TopInfo } from '../top/TopInfo'
-import { TopSupporters } from '../top/TopSupporters'
+import { TopAbout } from '../organisms/top/TopAbout'
+import { TopButtonArea } from '../organisms/top/TopButtonArea'
+import { TopFeature } from '../organisms/top/TopFeature'
+import { TopInfo } from '../organisms/top/TopInfo'
+import { TopSupporters } from '../organisms/top/TopSupporters'
 
 export const Page = (): JSX.Element => {
     return (

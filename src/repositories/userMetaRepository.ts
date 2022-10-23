@@ -4,6 +4,7 @@ import { UserMeta } from '../types/domain/user'
 
 export const userMetaRepository = {
     async findOne(uid: string): Promise<UserMeta> {
+        console.log('userMeta fetch')
         const userRef = doc(db, `user_meta/${uid}`)
         const res = await getDoc(userRef)
         const oneUser = res.data() as UserMeta

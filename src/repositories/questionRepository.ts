@@ -15,6 +15,7 @@ import { Question } from '../types/domain/qa/Question'
 
 export const questionRepository = {
     async find(): Promise<Question[]> {
+        console.log('question fetch')
         const questionCol = collection(db, 'questions')
         const snapShot = await getDocs(questionCol)
         return snapShot.docs.map((doc) => {
@@ -22,12 +23,14 @@ export const questionRepository = {
         })
     },
     async findById(questionId: string): Promise<Question> {
+        console.log('question by id fetch')
         const questionRef = doc(db, `questions/${questionId}`)
         const res = await getDoc(questionRef)
         const question = { ...res.data(), questionId: res.id } as Question
         return question
     },
     async findByUserId(userId: string): Promise<Question[]> {
+        console.log('question by userId fetch')
         const questionCol = collection(db, 'questions')
         const questionQuery = query(questionCol, where('userId', '==', userId), orderBy('createAt', 'desc'))
         const snapShot = await getDocs(questionQuery)
