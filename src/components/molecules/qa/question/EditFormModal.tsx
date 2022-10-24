@@ -33,6 +33,7 @@ type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
 
 export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion, isUpdateLoading }: Props) => {
+    console.log(question)
     const [contentLength, setContentLength] = useState(question.content.length)
     const {
         register,
@@ -81,15 +82,14 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
                 </FormControl>
 
                 <FormControl isInvalid={errors.category2 !== undefined}>
-                    <FormLabel
-                        fontWeight={'bold'}
-                        htmlFor="category2"
-                        fontSize={{ base: 'lg', md: 'lg' }}
-                        defaultValue={question.categories[1]}
-                    >
+                    <FormLabel fontWeight={'bold'} htmlFor="category2" fontSize={{ base: 'lg', md: 'lg' }}>
                         カテゴリ2
                     </FormLabel>
-                    <Select placeholder="カテゴリを選択" {...register('category2')}>
+                    <Select
+                        placeholder="カテゴリを選択"
+                        {...register('category2')}
+                        defaultValue={question.categories[1]}
+                    >
                         {category2List.map((category) => {
                             return (
                                 <Box as="option" value={category} key={category}>

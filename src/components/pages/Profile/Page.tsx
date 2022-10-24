@@ -9,6 +9,7 @@ import { OthersInfo } from '../../organisms/profile/user/OthersInfo'
 import { UserHistory } from '../../organisms/profile/history/UserHistory'
 import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
+import { BackButton } from '../../common/BackButton'
 interface Props {
     userId: string
 }
@@ -36,16 +37,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
     if (!user) return <Loading />
     return (
         <VStack w="full" pb="4" spacing={8}>
-            <HStack w={'full'} p="4" mb="8">
-                <Link href="/qa" passHref>
-                    <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
-                        <Box as="span" color="mainColor">
-                            ◀︎
-                        </Box>
-                        ホーム
-                    </Text>
-                </Link>
-            </HStack>
+            <BackButton />
             {userId === myUserId ? (
                 <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />
             ) : (

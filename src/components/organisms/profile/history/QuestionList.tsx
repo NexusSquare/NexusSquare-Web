@@ -24,8 +24,7 @@ interface Props {
 }
 export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions }: Props): JSX.Element => {
     const errorToast = useErrorToast()
-    const initSelectedQuestion = questions[0]
-    const [selectedQuestion, setSelectedQuestion] = useState<Question>(initSelectedQuestion)
+    const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[1])
     const router = useRouter()
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
     const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
@@ -63,9 +62,6 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
         })
     }
 
-    useEffect(() => {
-        setSelectedQuestion(questions[0])
-    }, [questions])
     return (
         <>
             {isLoading || !questions ? (
@@ -90,13 +86,15 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                                     />
                                 )
                             })}
-                            {/* <EditFormModal
-                                onClose={onCloseEditForm}
-                                isOpen={isOpenEditForm}
-                                question={selectedQuestion}
-                                onClickUpdateQuestion={onClickUpdateQuestion}
-                                isUpdateLoading={isUpdateLoading}
-                            /> */}
+                            {selectedQuestion && (
+                                <EditFormModal
+                                    onClose={onCloseEditForm}
+                                    isOpen={isOpenEditForm}
+                                    question={selectedQuestion}
+                                    onClickUpdateQuestion={onClickUpdateQuestion}
+                                    isUpdateLoading={isUpdateLoading}
+                                />
+                            )}
                             <DeleteFormModal
                                 onClose={onCloseDeleteForm}
                                 isOpen={isOpenDeleteForm}
