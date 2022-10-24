@@ -1,5 +1,4 @@
 import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VStack } from '@chakra-ui/react'
-import { BsChatText } from 'react-icons/bs'
 import { Router, useRouter } from 'next/router'
 import { QAPerfectCard } from '../../../molecules/qa/question/QAPerfectCard'
 import AnswerCard from '../../../molecules/qa/answer/AnswerCard'
@@ -18,13 +17,11 @@ import { LINKS } from '../../../../constants/links'
 import { ReportFormModal } from '../../../molecules/qa/question/ReportFromModal'
 import { useReport } from '../../../../hooks/report/useReport'
 import { ReportReq } from '../../../../types/api/req/ReportReq'
-import { useEffect } from 'react'
 import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
-import { usePostQuestion } from '../../../../hooks/question'
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import Link from 'next/link'
 import { NoCards } from '../../../common/NoCards'
+import { BackButton } from '../../../common/BackButton'
 
 interface Props {
     questionId: string
@@ -68,7 +65,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         deleteQuestion(questionId, {
             onSuccess: () => router.push(LINKS.QUESTION),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
-            onSettled: () => onClosePostForm(),
+            onSettled: () => onCloseDeleteForm(),
         })
     }
 
@@ -98,16 +95,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
 
     return (
         <VStack w="full" spacing={2}>
-            <HStack w={'full'} pt="4" px="4">
-                <Link href="/qa" passHref>
-                    <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
-                        <Box as="span" color="mainColor">
-                            ◀︎
-                        </Box>
-                        ホーム
-                    </Text>
-                </Link>
-            </HStack>
+            <BackButton />
             {isLoading || !question ? (
                 <QASkeleton />
             ) : (

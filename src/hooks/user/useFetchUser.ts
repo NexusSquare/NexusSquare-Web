@@ -3,7 +3,7 @@ import { QUERY_KEYS } from '../../constants/query'
 import { userMetaService } from '../../services/userMetaService'
 import { userService } from '../../services/userService'
 import { User, UserMeta } from '../../types/domain/user'
-import { DEFAULT_QUERY_OPTIONS } from '../react-query-config/config'
+import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'
 
 // NOTE sessionストレージがnullを撮るため、nullを許す
 // uidが存在するときのみfetchされる

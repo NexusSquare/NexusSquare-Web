@@ -27,49 +27,21 @@ import { QuestionList } from './QuestionList'
 
 interface Props {
     userId: string
+    answers: Answer[]
+    questions: Question[]
+    isFetchLoading: boolean
+    refetchQuestions: () => Promise<void>
 }
 // NOTE　責務を分離させるためにhooksの使用を許可
-export const UserHistory = ({ userId }: Props) => {
-    const {
-        data: questions = [],
-        refetch: refetchQuestions,
-        isLoading: isFetchQuestionsLoading,
-    } = useFetchQuestionsByUserId(userId)
-    const {
-        data: answers = [],
-        refetch: refetchAnswers,
-        isLoading: isFetchAnswersLoading,
-    } = useFetchAnswersByUserId(userId)
+export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetchQuestions }: Props) => {
     const { data: histories = [] } = useFetchHistories(userId)
-    const {
-        isOpen: isOpenEditQuestionForm,
-        onOpen: onOpenEditQuestionForm,
-        onClose: onCloseEditQuestionForm,
-    } = useDisclosure()
-    const {
-        isOpen: isOpenDeleteQuestionForm,
-        onOpen: onOpenDeleteQuestionForm,
-        onClose: onCloseDeleteQuestionForm,
-    } = useDisclosure()
-    const {
-        isOpen: isOpenEditAnswerForm,
-        onOpen: onOpenEditAnswerForm,
-        onClose: onCloseEditAnswerForm,
-    } = useDisclosure()
-    const {
-        isOpen: isOpenDeleteAnswerForm,
-        onOpen: onOpenDeleteAnswerForm,
-        onClose: onCloseDeleteAnswerForm,
-    } = useDisclosure()
 
     const router = useRouter()
 
     const onClickCard = (questionId: string) => {
         router.push(LINKS.QUESTION_DETAIL(questionId))
     }
-    useEffect(() => {
-        console.log(histories)
-    }, [histories])
+
     return (
         <>
             <Tabs w="100%" isLazy defaultIndex={1}>
@@ -140,20 +112,13 @@ export const UserHistory = ({ userId }: Props) => {
                     <TabPanel padding="0px">
                         <QuestionList
                             questions={questions}
-                            onOpenEditForm={onOpenEditQuestionForm}
-                            onOpenDeleteForm={onOpenDeleteQuestionForm}
-                            isLoading={isFetchQuestionsLoading}
+                            isLoading={isFetchLoading}
                             onClickCard={onClickCard}
+                            refetchQuestions={refetchQuestions}
                         />
                     </TabPanel>
                     <TabPanel padding="0px">
-                        <AnswerList
-                            answers={answers}
-                            onOpenEditForm={onOpenEditAnswerForm}
-                            onOpenDeleteForm={onOpenDeleteAnswerForm}
-                            isLoading={isFetchAnswersLoading}
-                            onClickCard={onClickCard}
-                        />
+                        <AnswerList answers={answers} isLoading={isFetchLoading} onClickCard={onClickCard} />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

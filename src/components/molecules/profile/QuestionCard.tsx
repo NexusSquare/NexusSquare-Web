@@ -31,9 +31,10 @@ interface Props {
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
     onClickCard: (value: string) => void
+    onClickDetail: (value: Question) => void
 }
 
-export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onClickCard }: Props) => {
+export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onClickCard, onClickDetail }: Props) => {
     const { value: userId } = useSession(USER_ID)
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertTimestampToString(question.createAt)
@@ -77,6 +78,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                             icon={<HiDotsHorizontal />}
                             variant="outline"
                             border={'none'}
+                            onClick={() => onClickDetail(question)}
                         />
                         <MenuList>
                             <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>

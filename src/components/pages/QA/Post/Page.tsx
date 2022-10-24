@@ -62,7 +62,6 @@ export const Page = (): JSX.Element => {
         setContentLength(e.target.value.length)
     }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
-        console.log(questionReq)
         if (!postUser) return
         // NOTE FireStoreの仕様上、Userを渡す
         postQuestion(
@@ -165,6 +164,7 @@ export const Page = (): JSX.Element => {
                         borderColor="mainColor"
                         _hover={{ bgColor: 'mainColor', color: 'white' }}
                         w="50%"
+                        disabled={isLoading}
                         borderRadius={'sm'}
                     >
                         キャンセル
@@ -177,6 +177,7 @@ export const Page = (): JSX.Element => {
                         leftIcon={<BsChatText />}
                         w="full"
                         isLoading={isLoading}
+                        disabled={isLoading}
                         borderRadius={'sm'}
                     >
                         質問を投稿する
