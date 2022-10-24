@@ -10,7 +10,7 @@ export const userRepository = {
         const oneUser = { ...(res.data() as User), userId: res.id }
         return oneUser
     },
-    async save(user: User, uid: string): Promise<void> {
+    async save(user: Omit<User, 'userId'>, uid: string): Promise<void> {
         const userRef = doc(db, 'users', uid)
         return await setDoc(userRef, user)
     },

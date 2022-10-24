@@ -11,7 +11,7 @@ export const userService = {
     },
     async save(userReq: UserReq): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
-        const user: User = {
+        const user: Omit<User, 'userId'> = {
             department: userReq.department,
             subject: userReq.subject,
             grade: userReq.grade,
