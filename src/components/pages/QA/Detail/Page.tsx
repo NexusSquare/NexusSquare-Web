@@ -2,7 +2,7 @@ import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VSt
 import { Router, useRouter } from 'next/router'
 import { QAPerfectCard } from '../../../molecules/qa/question/QAPerfectCard'
 import AnswerCard from '../../../molecules/qa/answer/AnswerCard'
-import { PostFormModal } from '../../../molecules/qa/question/PostFormModal'
+import { PostFormModal } from '../../../molecules/qa/answer/PostFormModal'
 import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 import { Answer } from '../../../../types/domain/qa/Answer'
@@ -39,7 +39,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     } = useFetchAnswersByQuestionId(questionId)
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
     const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
-    const { mutate: postAnswer, isLoading: isPostLoading } = usePostAnswer()
+    const { mutate: postAnswer, isLoading: isPostLoading, cacheClearAnswer } = usePostAnswer()
     const { mutate: report, isLoading: isReportLoading } = useReport()
 
     const { isOpen: isOpenPostForm, onOpen: onOpenPostForm, onClose: onClosePostForm } = useDisclosure()
@@ -81,12 +81,18 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         })
     }
 
+    const onSuccessPostAnswer = () => {
+        if (!postUser) return
+        cacheClearAnswer(postUser.userId)
+        refetchAnswers()
+    }
+
     const onClickPostAnswer = async (answerReq: AnswerReq) => {
         if (!postUser) return
         postAnswer(
             { answerReq, postUser },
             {
-                onSuccess: () => refetchAnswers(),
+                onSuccess: () => onSuccessPostAnswer(),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
                 onSettled: () => onClosePostForm(),
             }
@@ -126,7 +132,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
             <DeleteFormModal
                 onClose={onCloseDeleteForm}
                 isOpen={isOpenDeleteForm}
-                onClickDeleteQuestion={onClickDeleteQuestion}
+                onClickDelete={onClickDeleteQuestion}
                 isDeleteLoading={isDeleteLoading}
             />
             <ReportFormModal

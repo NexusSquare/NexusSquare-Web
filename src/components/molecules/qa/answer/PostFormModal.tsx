@@ -55,8 +55,8 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, onClic
                             minH="48"
                             {...register('content', {
                                 required: 'This is required',
-                                minLength: { value: 1, message: '質問は最小1文字必要です' },
-                                maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
+                                minLength: { value: 1, message: '回答は最小1文字必要です' },
+                                maxLength: { value: 5000, message: '回答本文は5000文字までです。' },
                             })}
                             onChange={countContent}
                         ></Textarea>
