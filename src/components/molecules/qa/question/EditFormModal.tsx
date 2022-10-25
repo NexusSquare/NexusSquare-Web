@@ -13,7 +13,6 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChancelButton } from '../../../common/ChancelButton'
 import { DefaultModal } from '../../../common/DefaultModal'
 import { Question } from '../../../../types/domain/qa'
 import QACategories from '../../../../constants/qa/qaCategories'
@@ -33,7 +32,6 @@ type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
 
 export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion, isUpdateLoading }: Props) => {
-    console.log(question)
     const [contentLength, setContentLength] = useState(question.content.length)
     const {
         register,
@@ -58,8 +56,21 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
+
+    // NOTE: モダールを閉じた時に、デフォルト値がリセットされないため使用
+    const resetFiledAll = () => {
+        resetField('category1')
+        resetField('category2')
+        resetField('content')
+        resetField('title')
+    }
+
+    const onCloseModal = () => {
+        onClose()
+        resetFiledAll()
+    }
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="質問を編集しますか？">
+        <DefaultModal isOpen={isOpen} onClose={onCloseModal} title="質問を編集しますか？">
             <VStack w="full" as="form" onSubmit={handleSubmit((data) => onClickUpdateQuestion(data))} spacing={4} p="4">
                 <FormControl isInvalid={errors.category1 !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'} htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
@@ -138,7 +149,7 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
                     <SecondaryButton
                         type="button"
                         buttonText="キャンセル"
-                        onClick={onClose}
+                        onClick={onCloseModal}
                         disabled={isUpdateLoading}
                         isLoading={isUpdateLoading}
                     />

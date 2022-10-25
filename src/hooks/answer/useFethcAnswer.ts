@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query'
-import { QUERY_KEYS } from '../../constants/query'
+import { QUERY_KEYS } from '../react-query/query'
 import { answerService } from '../../services/answerService'
 import { Answer } from '../../types/domain/qa/Answer'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'

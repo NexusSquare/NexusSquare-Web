@@ -1,5 +1,5 @@
 import { useQuery, UseQueryOptions } from 'react-query'
-import { QUERY_KEYS } from '../../constants/query'
+import { QUERY_KEYS } from '../react-query/query'
 import { userMetaService } from '../../services/userMetaService'
 import { userService } from '../../services/userService'
 import { User, UserMeta } from '../../types/domain/user'
