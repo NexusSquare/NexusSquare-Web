@@ -38,8 +38,8 @@ export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetc
 
     const router = useRouter()
 
-    const onClickCard = (questionId: string) => {
-        router.push(LINKS.QUESTION_DETAIL(questionId))
+    const onClickCard = (postId: string) => {
+        router.push(LINKS.QUESTION_DETAIL(postId))
     }
 
     return (
@@ -119,7 +119,12 @@ export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetc
                         />
                     </TabPanel>
                     <TabPanel padding="0px">
-                        <AnswerList answers={answers} isLoading={isFetchLoading} onClickCard={onClickCard} />
+                        <AnswerList
+                            answers={answers}
+                            isLoading={isFetchLoading}
+                            onClickCard={onClickCard}
+                            userId={userId}
+                        />
                     </TabPanel>
                 </TabPanels>
             </Tabs>

@@ -33,4 +33,15 @@ export const answerService = {
         }
         return answerRepository.save(answer)
     },
+    async update(answerReq: AnswerReq, answerId: string): Promise<void> {
+        const answer: Partial<Answer> = {
+            updateAt: Timestamp.now(),
+            isEdited: true,
+            ...answerReq,
+        }
+        return answerRepository.update(answer, answerId)
+    },
+    async delete(answerId: string): Promise<void> {
+        return answerRepository.delete(answerId)
+    },
 } as const

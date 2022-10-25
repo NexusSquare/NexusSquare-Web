@@ -26,8 +26,7 @@ interface Props {
 }
 export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions, userId }: Props): JSX.Element => {
     const errorToast = useErrorToast()
-    const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[1])
-    const router = useRouter()
+    const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[0])
     const {
         mutate: updateQuestion,
         isLoading: isUpdateLoading,
@@ -113,7 +112,7 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                             <DeleteFormModal
                                 onClose={onCloseDeleteForm}
                                 isOpen={isOpenDeleteForm}
-                                onClickDeleteQuestion={onClickDeleteQuestion}
+                                onClickDelete={onClickDeleteQuestion}
                                 isDeleteLoading={isDeleteLoading}
                             />
                         </>
