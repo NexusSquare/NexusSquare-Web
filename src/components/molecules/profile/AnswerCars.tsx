@@ -24,9 +24,16 @@ interface Props {
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
     onClickCard: (value: string) => void
+    onClickDetail: (value: Answer) => void
 }
 
-export const AnswerCard = ({ answer, onOpenEditForm, onOpenDeleteForm, onClickCard }: Props): JSX.Element => {
+export const AnswerCard = ({
+    answer,
+    onOpenEditForm,
+    onOpenDeleteForm,
+    onClickCard,
+    onClickDetail,
+}: Props): JSX.Element => {
     const { value: userId } = useSession(USER_ID)
     const date = convertTimestampToString(answer.createAt)
     // const content = replaceLineFeed(answer.content)
@@ -66,11 +73,16 @@ export const AnswerCard = ({ answer, onOpenEditForm, onOpenDeleteForm, onClickCa
                         icon={<HiDotsHorizontal />}
                         variant="outline"
                         border={'none'}
+                        onClick={() => onClickDetail(answer)}
                     />
                     {userId === answer.userId && (
                         <MenuList>
-                            <MenuItem icon={<EditIcon aria-label="編集する" />}>編集する</MenuItem>
-                            <MenuItem icon={<DeleteIcon aria-label="削除する" />}>削除する</MenuItem>
+                            <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
+                                編集する
+                            </MenuItem>
+                            <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
+                                削除する
+                            </MenuItem>
                         </MenuList>
                     )}
                 </Menu>

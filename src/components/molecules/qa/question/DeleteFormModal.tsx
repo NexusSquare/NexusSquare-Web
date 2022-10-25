@@ -24,18 +24,20 @@ import { PrimaryButton } from '../../../common/PrimaryButton'
 interface Props {
     isOpen: boolean
     onClose: () => void
-    onClickDeleteQuestion: () => void
+    onClickDelete: () => void
     isDeleteLoading: boolean
 }
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
 
-export const DeleteFormModal = ({ isOpen, onClose, onClickDeleteQuestion, isDeleteLoading }: Props) => {
+export const DeleteFormModal = ({ isOpen, onClose, onClickDelete, isDeleteLoading }: Props) => {
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="質問を削除しますか？">
+        <DefaultModal isOpen={isOpen} onClose={onClose} title="投稿を削除しますか？">
             <VStack w="full" spacing={4} p="4">
-                <Text w="full">一度削除した質問は元に戻すことはできません</Text>
+                <Text w="full">
+                    一度削除した投稿は元に戻すことはできません。また、投稿されたポイントは削除されます。
+                </Text>
                 <HStack w="full" justify={'end'}>
                     <SecondaryButton
                         type="button"
@@ -49,7 +51,7 @@ export const DeleteFormModal = ({ isOpen, onClose, onClickDeleteQuestion, isDele
                         type="button"
                         disabled={isDeleteLoading}
                         isLoading={isDeleteLoading}
-                        onClick={onClickDeleteQuestion}
+                        onClick={onClickDelete}
                     ></PrimaryButton>
                 </HStack>
             </VStack>
