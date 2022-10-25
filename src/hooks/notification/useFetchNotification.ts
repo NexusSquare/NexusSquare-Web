@@ -1,5 +1,5 @@
 import { UseQueryOptions, useQuery } from 'react-query'
-import { QUERY_KEYS } from '../../constants/query'
+import { QUERY_KEYS } from '../react-query/query'
 import { notificationService } from '../../services/notificationService'
 import { Notification } from '../../types/domain/notification/Notification'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'

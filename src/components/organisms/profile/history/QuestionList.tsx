@@ -8,6 +8,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
 import { Refetch } from '../../../../hooks/react-query/type'
+import { useSession } from '../../../../hooks/useSession'
 import { QuestionReq } from '../../../../types/api/req'
 import { Question } from '../../../../types/domain/qa'
 import { NoCards } from '../../../common/NoCards'
@@ -17,27 +18,42 @@ import { DeleteFormModal } from '../../../molecules/qa/question/DeleteFormModal'
 import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
 
 interface Props {
+    userId: string
     questions: Question[]
     isLoading: boolean
     onClickCard: (value: string) => void
     refetchQuestions: () => Promise<void>
 }
-export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions }: Props): JSX.Element => {
+export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions, userId }: Props): JSX.Element => {
     const errorToast = useErrorToast()
     const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[1])
     const router = useRouter()
-    const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
-    const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
+    const {
+        mutate: updateQuestion,
+        isLoading: isUpdateLoading,
+        cacheClearQuestion: cacheClearForUpdate,
+    } = useUpdateQuestion()
+    const {
+        mutate: deleteQuestion,
+        isLoading: isDeleteLoading,
+        cacheClearQuestion: cacheClearForDelete,
+    } = useDeleteQuestion()
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
 
     const onClickDetail = (question: Question) => {
         setSelectedQuestion(question)
-        console.log(question)
+    }
+
+    const onSuccessUpdateQuestion = async () => {
+        await refetchQuestions()
+        cacheClearForUpdate(userId)
+        onCloseEditForm()
     }
 
     const onSuccessDeleteQuestion = async () => {
         await refetchQuestions()
+        cacheClearForDelete(userId)
         onCloseDeleteForm()
     }
 
@@ -48,16 +64,15 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                 questionId: selectedQuestion.questionId,
             },
             {
-                onSuccess: () => refetchQuestions(),
+                onSuccess: () => onSuccessUpdateQuestion(),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
-                onSettled: () => onCloseEditForm(),
             }
         )
     }
 
     const onClickDeleteQuestion = async () => {
         deleteQuestion(selectedQuestion.questionId, {
-            onSuccess: () => onSuccessDeleteQuestion(),
+            onSuccess: async () => onSuccessDeleteQuestion(),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
         })
     }

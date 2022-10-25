@@ -23,7 +23,6 @@ import { useForm } from 'react-hook-form'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
-import { async } from '@firebase/util'
 import { LINKS } from '../../../../constants/links'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { QuestionReq } from '../../../../types/api/req'
@@ -34,7 +33,7 @@ type QACategories = typeof QACategories[keyof QACategoriesType]
 
 export const Page = (): JSX.Element => {
     const { user: postUser } = useUser()
-    const { mutate: postQuestion, isLoading } = usePostQuestion()
+    const { mutate: postQuestion, isLoading, cacheClearQuestion } = usePostQuestion()
     const {
         register,
         handleSubmit,
@@ -61,13 +60,18 @@ export const Page = (): JSX.Element => {
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
+    const onSuccessPostQuestion = () => {
+        if (!postUser) return
+        cacheClearQuestion(postUser.userId)
+        router.push(LINKS.QUESTION)
+    }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
         if (!postUser) return
         // NOTE FireStoreの仕様上、Userを渡す
         postQuestion(
             { questionReq, postUser },
             {
-                onSuccess: () => router.push(LINKS.QUESTION),
+                onSuccess: () => onSuccessPostQuestion(),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
             }
         )

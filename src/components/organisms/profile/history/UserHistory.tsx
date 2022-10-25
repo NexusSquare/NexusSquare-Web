@@ -115,6 +115,7 @@ export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetc
                             isLoading={isFetchLoading}
                             onClickCard={onClickCard}
                             refetchQuestions={refetchQuestions}
+                            userId={userId}
                         />
                     </TabPanel>
                     <TabPanel padding="0px">
