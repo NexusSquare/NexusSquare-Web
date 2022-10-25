@@ -21,11 +21,22 @@ import { convertTimestampToString } from '../../../../lib/convert/convertTimesta
 import { Answer } from '../../../../types/domain/qa/Answer'
 
 interface Props {
+    userId: string
     answer: Answer
+    onOpenEditForm: () => void
+    onOpenDeleteForm: () => void
+    onOpenReportForm: () => void
+    onClickDetail: (value: Answer) => void
 }
 
-const AnswerCard = ({ answer }: Props): JSX.Element => {
-    const { value: userId } = useSession(USER_ID)
+const AnswerCard = ({
+    answer,
+    userId,
+    onOpenEditForm,
+    onOpenDeleteForm,
+    onClickDetail,
+    onOpenReportForm,
+}: Props): JSX.Element => {
     const router = useRouter()
     const date = convertTimestampToString(answer.createAt)
     const onClickUserInfo = () => {
@@ -73,15 +84,22 @@ const AnswerCard = ({ answer }: Props): JSX.Element => {
                         icon={<HiDotsHorizontal />}
                         variant="outline"
                         border={'none'}
+                        onClick={() => onClickDetail(answer)}
                     />
                     <MenuList>
                         {userId === answer.userId ? (
                             <>
-                                <MenuItem icon={<EditIcon aria-label="編集する" />}>編集する</MenuItem>
-                                <MenuItem icon={<DeleteIcon aria-label="削除する" />}>削除する</MenuItem>
+                                <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
+                                    編集する
+                                </MenuItem>
+                                <MenuItem icon={<DeleteIcon aria-label="削除する" />} onClick={onOpenDeleteForm}>
+                                    削除する
+                                </MenuItem>
                             </>
                         ) : (
-                            <MenuItem icon={<NotAllowedIcon aria-label="通報する" />}>通報する</MenuItem>
+                            <MenuItem icon={<NotAllowedIcon aria-label="通報する" />} onClick={onOpenReportForm}>
+                                通報する
+                            </MenuItem>
                         )}
                     </MenuList>
                 </Menu>
