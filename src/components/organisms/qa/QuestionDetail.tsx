@@ -115,7 +115,7 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
                         isOpen={isOpenPostForm}
                         question={question}
                         isPostLoading={isPostLoading}
-                        onClickPost={onClickPostAnswer}
+                        postAnswer={onClickPostAnswer}
                     />
                 </>
             )}

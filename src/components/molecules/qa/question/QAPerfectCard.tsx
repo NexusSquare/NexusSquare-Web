@@ -145,20 +145,39 @@ export const QAPerfectCard = ({
             {/* <QuestionImage />
              */}
             <Divider />
-            <Button
-                color="mainColor"
-                bgColor="white"
-                borderWidth={1}
-                borderColor="mainColor"
-                _hover={{ bgColor: 'mainColor', color: 'white' }}
-                leftIcon={<BsChatText size={16} />}
-                w={{ base: 'full', md: '96' }}
-                alignSelf={'center'}
-                onClick={onOpenPostForm}
-                borderRadius="sm"
-            >
-                回答する
-            </Button>
+            {userId === question.userId ? (
+                <>
+                    <Button
+                        color="mainColor"
+                        bgColor="white"
+                        borderWidth={1}
+                        borderColor="mainColor"
+                        _hover={{ bgColor: 'mainColor', color: 'white' }}
+                        leftIcon={<BsChatText size={16} />}
+                        w={{ base: 'full', md: '96' }}
+                        alignSelf={'center'}
+                        onClick={onOpenPostForm}
+                        borderRadius="sm"
+                    >
+                        ベストアンサーを選ぶ
+                    </Button>
+                </>
+            ) : (
+                <Button
+                    color="mainColor"
+                    bgColor="white"
+                    borderWidth={1}
+                    borderColor="mainColor"
+                    _hover={{ bgColor: 'mainColor', color: 'white' }}
+                    leftIcon={<BsChatText size={16} />}
+                    w={{ base: 'full', md: '96' }}
+                    alignSelf={'center'}
+                    onClick={onOpenPostForm}
+                    borderRadius="sm"
+                >
+                    回答する
+                </Button>
+            )}
         </VStack>
     )
 }
