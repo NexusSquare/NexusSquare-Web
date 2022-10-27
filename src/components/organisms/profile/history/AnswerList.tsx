@@ -10,7 +10,7 @@ import { NoCards } from '../../../common/NoCards'
 import { QASkeleton } from '../../../common/QASkeleton'
 import { AnswerCard } from '../../../molecules/profile/AnswerCars'
 import { EditFormModal } from '../../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../../molecules/qa/question/DeleteFormModal'
+import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
 
 interface Props {
     userId: string

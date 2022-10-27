@@ -34,6 +34,8 @@ interface Props {
     onOpenDeleteForm: () => void
     onOpenReportForm: () => void
     onOpenPostForm: () => void
+    isPosted: boolean
+    isMine: boolean
 }
 
 export const QAPerfectCard = ({
@@ -42,6 +44,8 @@ export const QAPerfectCard = ({
     onOpenDeleteForm,
     onOpenReportForm,
     onOpenPostForm,
+    isPosted,
+    isMine,
 }: Props) => {
     const { value: userId } = useSession(USER_ID)
     const router = useRouter()
@@ -108,7 +112,7 @@ export const QAPerfectCard = ({
                         border={'none'}
                     />
                     <MenuList>
-                        {userId === question.userId ? (
+                        {isMine ? (
                             <>
                                 <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
                                     編集する
@@ -144,9 +148,10 @@ export const QAPerfectCard = ({
             </HStack>
             {/* <QuestionImage />
              */}
-            <Divider />
-            {userId === question.userId ? (
+
+            {isMine || (
                 <>
+                    <Divider />
                     <Button
                         color="mainColor"
                         bgColor="white"
@@ -158,25 +163,11 @@ export const QAPerfectCard = ({
                         alignSelf={'center'}
                         onClick={onOpenPostForm}
                         borderRadius="sm"
+                        disabled={isPosted}
                     >
-                        ベストアンサーを選ぶ
+                        回答する
                     </Button>
                 </>
-            ) : (
-                <Button
-                    color="mainColor"
-                    bgColor="white"
-                    borderWidth={1}
-                    borderColor="mainColor"
-                    _hover={{ bgColor: 'mainColor', color: 'white' }}
-                    leftIcon={<BsChatText size={16} />}
-                    w={{ base: 'full', md: '96' }}
-                    alignSelf={'center'}
-                    onClick={onOpenPostForm}
-                    borderRadius="sm"
-                >
-                    回答する
-                </Button>
             )}
         </VStack>
     )

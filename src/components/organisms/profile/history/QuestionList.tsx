@@ -14,7 +14,7 @@ import { Question } from '../../../../types/domain/qa'
 import { NoCards } from '../../../common/NoCards'
 import { QASkeleton } from '../../../common/QASkeleton'
 import { QuestionCard } from '../../../molecules/profile/QuestionCard'
-import { DeleteFormModal } from '../../../molecules/qa/question/DeleteFormModal'
+import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
 import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
 
 interface Props {

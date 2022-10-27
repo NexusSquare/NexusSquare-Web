@@ -12,23 +12,30 @@ import { Answer } from '../../../types/domain/qa/Answer'
 import { NoCards } from '../../common/NoCards'
 import { QASkeleton } from '../../common/QASkeleton'
 import AnswerCard from '../../molecules/qa/answer/AnswerCard'
+import { BestAnswerModal } from '../../molecules/qa/answer/BestAnswerModal'
 import { EditFormModal } from '../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../molecules/qa/question/DeleteFormModal'
-import { ReportFormModal } from '../../molecules/qa/question/ReportFromModal'
+import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
+import { ReportFormModal } from '../../molecules/qa/ReportFromModal'
 
 interface Props {
     questionId: string
     answers: Answer[]
     isFetchLoading: boolean
+    isMine: boolean
 }
 
-export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
+export const AnswerList = ({ questionId, answers, isFetchLoading, isMine }: Props) => {
     const { value: userId } = useSession(USER_ID)
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
     const { isOpen: isOpenReportForm, onOpen: onOpenReportForm, onClose: onCloseReportForm } = useDisclosure()
+    const {
+        isOpen: isOpenBestAnswerForm,
+        onOpen: onOpenBestAnswerForm,
+        onClose: onCloseBestAnswerForm,
+    } = useDisclosure()
     const { mutate: report, isLoading: isReportLoading } = useReport()
 
     const {
@@ -76,6 +83,13 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
         })
     }
+
+    const onOpenBestAnswerModal = (answer: Answer) => {
+        setSelectedAnswer(answer)
+        onOpenBestAnswerForm()
+    }
+
+    const onClickBestAnswer = async () => {}
     if (!userId) return null
     return (
         <>
@@ -106,6 +120,8 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
                                         onOpenDeleteForm={onOpenDeleteForm}
                                         onOpenReportForm={onOpenReportForm}
                                         onClickDetail={onClickDetail}
+                                        onOpenBestAnswerModal={onOpenBestAnswerModal}
+                                        isMyQuestion={isMine}
                                     />
                                 )
                             })}
@@ -131,6 +147,12 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
                                 onClickReport={onClickReport}
                                 type="answer"
                                 postId={questionId}
+                            />
+                            <BestAnswerModal
+                                isOpen={isOpenBestAnswerForm}
+                                onClose={onCloseBestAnswerForm}
+                                isLoading={true}
+                                onClick={onClickBestAnswer}
                             />
                         </>
                     ) : (

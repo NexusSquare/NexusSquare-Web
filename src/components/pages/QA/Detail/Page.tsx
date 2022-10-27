@@ -6,43 +6,36 @@ import { PostFormModal } from '../../../molecules/qa/answer/PostFormModal'
 import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 import { Answer } from '../../../../types/domain/qa/Answer'
-import { QASkeleton } from '../../../common/QASkeleton'
-import { AnswerReq, QuestionReq } from '../../../../types/api/req'
-import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
-import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
-import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import { DeleteFormModal } from '../../../molecules/qa/question/DeleteFormModal'
-import { LINKS } from '../../../../constants/links'
-import { ReportFormModal } from '../../../molecules/qa/question/ReportFromModal'
-import { useReport } from '../../../../hooks/report/useReport'
-import { ReportReq } from '../../../../types/api/req/ReportReq'
-import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
+
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
 import { NoCards } from '../../../common/NoCards'
 import { BackButton } from '../../../common/BackButton'
 import { AnswerList } from '../../../organisms/qa/AnswerList'
 import { QuestionDetail } from '../../../organisms/qa/QuestionDetail'
+import { useState } from 'react'
 
 interface Props {
     questionId: string
 }
 
 export const Page = ({ questionId }: Props): JSX.Element => {
-    const { user: postUser } = useUser()
+    const { user } = useUser()
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
-
+    const isPosted: boolean = answers.some((answer) => answer.userId === user?.userId)
+    const isMine = user?.userId === question?.userId
     return (
         <VStack w="full" spacing={2}>
             <BackButton />
             <QuestionDetail
                 questionId={questionId}
                 isLoading={isLoading}
-                postUser={postUser}
+                postUser={user}
                 refetch={refetchQuestion}
                 question={question}
+                isPosted={isPosted}
+                isMine={isMine}
             />
             <HStack py="12">
                 <Box w="180px" h="180px" bgColor="gray.200">
@@ -52,7 +45,12 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                     広告枠
                 </Box>
             </HStack>
-            <AnswerList answers={answers} isFetchLoading={isFetchAnswersLoading} questionId={questionId} />
+            <AnswerList
+                answers={answers}
+                isFetchLoading={isFetchAnswersLoading}
+                questionId={questionId}
+                isMine={isMine}
+            />
         </VStack>
     )
 }
