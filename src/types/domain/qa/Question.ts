@@ -19,4 +19,5 @@ export type Question = {
     imageUrl?: string | null
     isEdited: boolean
     status: string
+    bestAnswerId: string | null
 }

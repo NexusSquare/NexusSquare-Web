@@ -5,6 +5,7 @@ import { USER_ID } from '../../../constants/token'
 import { useDeleteAnswer } from '../../../hooks/answer/useDeleteAnswer'
 import { useUpdateAnswer } from '../../../hooks/answer/useUpdateAnswer'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useBestAnswer } from '../../../hooks/question/useUpdateQuestion'
 import { useReport } from '../../../hooks/report/useReport'
 import { useSession } from '../../../hooks/useSession'
 import { AnswerReq, ReportReq } from '../../../types/api/req'
@@ -22,20 +23,31 @@ interface Props {
     answers: Answer[]
     isFetchLoading: boolean
     isMine: boolean
+    isOpenBestAnswerForm: boolean
+    onOpenBestAnswerForm: () => void
+    onCloseBestAnswerForm: () => void
+    onClickBestAnswer: (value: string) => void
+    isDeclareLoading: boolean
 }
 
-export const AnswerList = ({ questionId, answers, isFetchLoading, isMine }: Props) => {
+export const AnswerList = ({
+    questionId,
+    answers,
+    isFetchLoading,
+    isMine,
+    isOpenBestAnswerForm,
+    onOpenBestAnswerForm,
+    onCloseBestAnswerForm,
+    onClickBestAnswer,
+    isDeclareLoading,
+}: Props) => {
     const { value: userId } = useSession(USER_ID)
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
     const { isOpen: isOpenReportForm, onOpen: onOpenReportForm, onClose: onCloseReportForm } = useDisclosure()
-    const {
-        isOpen: isOpenBestAnswerForm,
-        onOpen: onOpenBestAnswerForm,
-        onClose: onCloseBestAnswerForm,
-    } = useDisclosure()
+
     const { mutate: report, isLoading: isReportLoading } = useReport()
 
     const {
@@ -48,6 +60,7 @@ export const AnswerList = ({ questionId, answers, isFetchLoading, isMine }: Prop
         isLoading: isDeleteLoading,
         cacheClearAnswer: cacheClearForDelete,
     } = useDeleteAnswer()
+
     const onClickDetail = (answer: Answer) => {
         setSelectedAnswer(answer)
     }
@@ -89,7 +102,6 @@ export const AnswerList = ({ questionId, answers, isFetchLoading, isMine }: Prop
         onOpenBestAnswerForm()
     }
 
-    const onClickBestAnswer = async () => {}
     if (!userId) return null
     return (
         <>
@@ -151,8 +163,8 @@ export const AnswerList = ({ questionId, answers, isFetchLoading, isMine }: Prop
                             <BestAnswerModal
                                 isOpen={isOpenBestAnswerForm}
                                 onClose={onCloseBestAnswerForm}
-                                isLoading={true}
-                                onClick={onClickBestAnswer}
+                                isLoading={isDeclareLoading}
+                                onClick={() => onClickBestAnswer(selectedAnswer.answerId)}
                             />
                         </>
                     ) : (

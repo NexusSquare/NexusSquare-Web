@@ -14,6 +14,9 @@ import { BackButton } from '../../../common/BackButton'
 import { AnswerList } from '../../../organisms/qa/AnswerList'
 import { QuestionDetail } from '../../../organisms/qa/QuestionDetail'
 import { useState } from 'react'
+import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { ERROR_MESSAGE } from '../../../../constants/errors'
 
 interface Props {
     questionId: string
@@ -21,10 +24,35 @@ interface Props {
 
 export const Page = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
+    const errorToast = useErrorToast()
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
+    const { mutate: declareBestAnswer, isLoading: isDeclareLoading, cacheClearQuestion } = useBestAnswer()
+    const {
+        isOpen: isOpenBestAnswerForm,
+        onOpen: onOpenBestAnswerForm,
+        onClose: onCloseBestAnswerForm,
+    } = useDisclosure()
+
     const isPosted: boolean = answers.some((answer) => answer.userId === user?.userId)
     const isMine = user?.userId === question?.userId
+
+    const onSuccessBestAnswer = async (userId: string) => {
+        cacheClearQuestion(userId)
+        await refetchQuestion()
+        onCloseBestAnswerForm()
+    }
+
+    const onClickBestAnswer = async (answerId: string) => {
+        declareBestAnswer(
+            { answerId, questionId },
+            {
+                onSuccess: () => onSuccessBestAnswer(user?.userId!),
+                onError: () => errorToast(ERROR_MESSAGE.SERVER),
+            }
+        )
+    }
+
     return (
         <VStack w="full" spacing={2}>
             <BackButton />
@@ -50,6 +78,11 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 isFetchLoading={isFetchAnswersLoading}
                 questionId={questionId}
                 isMine={isMine}
+                isOpenBestAnswerForm={isOpenBestAnswerForm}
+                onOpenBestAnswerForm={onOpenBestAnswerForm}
+                onCloseBestAnswerForm={onCloseBestAnswerForm}
+                onClickBestAnswer={onClickBestAnswer}
+                isDeclareLoading={isDeclareLoading}
             />
         </VStack>
     )

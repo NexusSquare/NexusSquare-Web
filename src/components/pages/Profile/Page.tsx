@@ -29,8 +29,12 @@ export const Page = ({ userId }: Props): JSX.Element => {
         isLoading: isFetchAnswersLoading,
     } = useFetchAnswersByUserId(userId)
     const refetchUserAndQuestions = async () => {
-        refetchUser()
         refetchQuestions()
+        await refetchUser()
+    }
+    const refetchUserAndAnswers = async () => {
+        await refetchAnswers()
+        refetchUser()
     }
     const isFetchLoading: boolean = isFetchQuestionsLoading || isFetchAnswersLoading
 
@@ -49,6 +53,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
                 questions={questions}
                 isFetchLoading={isFetchLoading}
                 refetchQuestions={refetchUserAndQuestions}
+                refetchAnswers={refetchUserAndAnswers}
             />
         </VStack>
     )

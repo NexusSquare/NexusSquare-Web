@@ -36,6 +36,7 @@ export const questionService = {
             imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
             isEdited: false,
             status: STATUS.NOT_SOLVED,
+            bestAnswerId: null,
         }
         return questionRepository.save(question)
     },
@@ -47,6 +48,13 @@ export const questionService = {
             content: questionReq.content,
             imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
             isEdited: true,
+        }
+        return questionRepository.update(question, questionId)
+    },
+    async declareBestAnswer(answerId: string, questionId: string): Promise<void> {
+        const question: Partial<Question> = {
+            bestAnswerId: answerId,
+            status: STATUS.SOLVED,
         }
         return questionRepository.update(question, questionId)
     },

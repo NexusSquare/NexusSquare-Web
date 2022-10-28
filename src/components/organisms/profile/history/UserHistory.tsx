@@ -31,9 +31,17 @@ interface Props {
     questions: Question[]
     isFetchLoading: boolean
     refetchQuestions: () => Promise<void>
+    refetchAnswers: () => Promise<void>
 }
 // NOTE　責務を分離させるためにhooksの使用を許可
-export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetchQuestions }: Props) => {
+export const UserHistory = ({
+    userId,
+    answers,
+    questions,
+    isFetchLoading,
+    refetchQuestions,
+    refetchAnswers,
+}: Props) => {
     const { data: histories = [] } = useFetchHistories(userId)
 
     const router = useRouter()
@@ -124,6 +132,7 @@ export const UserHistory = ({ userId, answers, questions, isFetchLoading, refetc
                             isLoading={isFetchLoading}
                             onClickCard={onClickCard}
                             userId={userId}
+                            refetchAnswers={refetchAnswers}
                         />
                     </TabPanel>
                 </TabPanels>
