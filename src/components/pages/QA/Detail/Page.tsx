@@ -13,7 +13,7 @@ import { NoCards } from '../../../common/NoCards'
 import { BackButton } from '../../../common/BackButton'
 import { AnswerList } from '../../../organisms/qa/AnswerList'
 import { QuestionDetail } from '../../../organisms/qa/QuestionDetail'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
@@ -25,6 +25,7 @@ interface Props {
 export const Page = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
     const errorToast = useErrorToast()
+    const [displayAnswers, setDisplayAnswers] = useState<Answer[]>([])
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
     const { mutate: declareBestAnswer, isLoading: isDeclareLoading, cacheClearQuestion } = useBestAnswer()
@@ -34,8 +35,14 @@ export const Page = ({ questionId }: Props): JSX.Element => {
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
 
+    // NOTE:既に投稿したか
     const isPosted: boolean = answers.some((answer) => answer.userId === user?.userId)
+    // NOTE:自分の投稿かどうか
     const isMine = user?.userId === question?.userId
+    const bestAnswer = answers.find((ans: Answer) => {
+        ans.answerId === question?.bestAnswerId
+    })
+    const hasBestAnswer = bestAnswer !== undefined
 
     const onSuccessBestAnswer = async (userId: string) => {
         cacheClearQuestion(userId)
@@ -52,6 +59,28 @@ export const Page = ({ questionId }: Props): JSX.Element => {
             }
         )
     }
+
+    const sortAnswersByBestAnswer = (bestAnswer: Answer, answers: Answer[]): Answer[] => {
+        // NOTE:ベストアンサーが存在しているので、undefinedにはならない
+        // TODO：関数が親の実装をしているので、、よくない設計
+        const filletedAnswer = answers.filter((ans: Answer) => {
+            ans.answerId !== bestAnswer?.answerId
+        })
+        return [bestAnswer, ...filletedAnswer]
+    }
+
+    // NOTE:ベストアンサーが先頭に来るようにソート
+    useEffect(() => {
+        console.log(bestAnswer)
+        if (!bestAnswer) {
+            // NOTE:ベストアンサーが存在しない時そのまま表示
+            setDisplayAnswers(answers)
+        } else {
+            const sortedAnswers: Answer[] = sortAnswersByBestAnswer(bestAnswer, answers)
+            console.log(sortedAnswers)
+            setDisplayAnswers(answers)
+        }
+    }, [answers, bestAnswer])
 
     return (
         <VStack w="full" spacing={2}>
@@ -74,7 +103,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 </Box>
             </HStack>
             <AnswerList
-                answers={answers}
+                answers={displayAnswers}
                 isFetchLoading={isFetchAnswersLoading}
                 questionId={questionId}
                 isMine={isMine}
@@ -83,6 +112,7 @@ export const Page = ({ questionId }: Props): JSX.Element => {
                 onCloseBestAnswerForm={onCloseBestAnswerForm}
                 onClickBestAnswer={onClickBestAnswer}
                 isDeclareLoading={isDeclareLoading}
+                hasBestAnswer={hasBestAnswer}
             />
         </VStack>
     )

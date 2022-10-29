@@ -14,6 +14,9 @@ export const UserGuards = ({ children }: Props) => {
     const router = useRouter()
     const isReady = router.isReady
 
+    useEffect(() => {
+        console.log(user)
+    }, [user])
     if (!isReady || isLoading) return <Loading />
 
     if (!user && router.pathname !== LINKS.LOGIN) {

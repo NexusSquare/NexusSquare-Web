@@ -30,6 +30,7 @@ interface Props {
     onClickDetail: (value: Answer) => void
     onOpenBestAnswerModal: (value: Answer) => void
     isMyQuestion: boolean
+    hasBestAnswer: boolean
 }
 
 const AnswerCard = ({
@@ -41,6 +42,7 @@ const AnswerCard = ({
     onOpenBestAnswerModal,
     onOpenReportForm,
     isMyQuestion,
+    hasBestAnswer,
 }: Props): JSX.Element => {
     const router = useRouter()
     const date = convertTimestampToString(answer.createAt)
@@ -113,7 +115,7 @@ const AnswerCard = ({
             <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
                 {answer.content}
             </Text>
-            {isMyQuestion && (
+            {isMyQuestion && !hasBestAnswer && (
                 <>
                     <Divider />
                     <Button

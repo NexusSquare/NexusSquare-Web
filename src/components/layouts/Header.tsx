@@ -88,6 +88,10 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         })
     }
 
+    useEffect(() => {
+        console.log(user)
+    }, [user])
+
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return props.isComp ? (
             <Link href={props.url} passHref>

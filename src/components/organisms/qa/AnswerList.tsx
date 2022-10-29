@@ -1,5 +1,5 @@
 import { Box, VStack, Text, useDisclosure } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { USER_ID } from '../../../constants/token'
 import { useDeleteAnswer } from '../../../hooks/answer/useDeleteAnswer'
@@ -28,6 +28,7 @@ interface Props {
     onCloseBestAnswerForm: () => void
     onClickBestAnswer: (value: string) => void
     isDeclareLoading: boolean
+    hasBestAnswer: boolean
 }
 
 export const AnswerList = ({
@@ -40,6 +41,7 @@ export const AnswerList = ({
     onCloseBestAnswerForm,
     onClickBestAnswer,
     isDeclareLoading,
+    hasBestAnswer,
 }: Props) => {
     const { value: userId } = useSession(USER_ID)
     const errorToast = useErrorToast()
@@ -134,6 +136,7 @@ export const AnswerList = ({
                                         onClickDetail={onClickDetail}
                                         onOpenBestAnswerModal={onOpenBestAnswerModal}
                                         isMyQuestion={isMine}
+                                        hasBestAnswer={hasBestAnswer}
                                     />
                                 )
                             })}
