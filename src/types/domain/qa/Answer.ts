@@ -17,4 +17,5 @@ export type Answer = {
     updateAt: Timestamp
     imageUrl?: string | null
     isEdited: boolean
+    isBest: boolean
 }

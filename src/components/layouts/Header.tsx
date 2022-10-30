@@ -14,7 +14,6 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverTrigger,
-    Spacer,
     StackDivider,
     Text,
     VStack,
@@ -87,10 +86,6 @@ export const Header = memo(({ children }: Props): JSX.Element => {
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
         })
     }
-
-    useEffect(() => {
-        console.log(user)
-    }, [user])
 
     const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
         return props.isComp ? (

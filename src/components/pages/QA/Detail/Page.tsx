@@ -1,15 +1,9 @@
 import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VStack } from '@chakra-ui/react'
-import { Router, useRouter } from 'next/router'
-import { QAPerfectCard } from '../../../molecules/qa/question/QAPerfectCard'
-import AnswerCard from '../../../molecules/qa/answer/AnswerCard'
-import { PostFormModal } from '../../../molecules/qa/answer/PostFormModal'
-import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
 import { Answer } from '../../../../types/domain/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import { NoCards } from '../../../common/NoCards'
 import { BackButton } from '../../../common/BackButton'
 import { AnswerList } from '../../../organisms/qa/AnswerList'
 import { QuestionDetail } from '../../../organisms/qa/QuestionDetail'
@@ -39,8 +33,9 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     const isPosted: boolean = answers.some((answer) => answer.userId === user?.userId)
     // NOTE:自分の投稿かどうか
     const isMine = user?.userId === question?.userId
+
     const bestAnswer = answers.find((ans: Answer) => {
-        ans.answerId === question?.bestAnswerId
+        return ans.answerId === question?.bestAnswerId
     })
     const hasBestAnswer = bestAnswer !== undefined
 
@@ -61,8 +56,6 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     }
 
     const sortAnswersByBestAnswer = (bestAnswer: Answer, answers: Answer[]): Answer[] => {
-        // NOTE:ベストアンサーが存在しているので、undefinedにはならない
-        // TODO：関数が親の実装をしているので、、よくない設計
         const filletedAnswer = answers.filter((ans: Answer) => {
             ans.answerId !== bestAnswer?.answerId
         })
@@ -71,13 +64,12 @@ export const Page = ({ questionId }: Props): JSX.Element => {
 
     // NOTE:ベストアンサーが先頭に来るようにソート
     useEffect(() => {
-        console.log(bestAnswer)
+        console.log(bestAnswer, hasBestAnswer)
         if (!bestAnswer) {
             // NOTE:ベストアンサーが存在しない時そのまま表示
             setDisplayAnswers(answers)
         } else {
             const sortedAnswers: Answer[] = sortAnswersByBestAnswer(bestAnswer, answers)
-            console.log(sortedAnswers)
             setDisplayAnswers(answers)
         }
     }, [answers, bestAnswer])
