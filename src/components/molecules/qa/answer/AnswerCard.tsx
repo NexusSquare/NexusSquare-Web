@@ -20,6 +20,7 @@ import { LINKS } from '../../../../constants/links'
 import { convertTimestampToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../types/domain/qa/Answer'
 import { BiMedal } from 'react-icons/bi'
+import { BsChatText } from 'react-icons/bs'
 
 interface Props {
     userId: string
@@ -131,6 +132,14 @@ const AnswerCard = ({
                         ベストアンサーにする　
                     </Button>
                 </>
+            )}
+            {answer.isBest && (
+                <HStack alignItems={'center'} alignSelf={'end'} color={'subSubColor'}>
+                    <Text fontSize={'sm'} fontWeight={'bold'}>
+                        ベストアンサー
+                    </Text>
+                    <BiMedal size={30} />
+                </HStack>
             )}
         </VStack>
     )
