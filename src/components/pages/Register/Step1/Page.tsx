@@ -32,10 +32,8 @@ export const Page = (): JSX.Element => {
     const errorToast = useErrorToast()
 
     const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
-    const { mutate: sendEmail } = useSendEmail()
 
     const onSuccessCreateAccount = async () => {
-        await sendEmail()
         router.push(LINKS.REGISTER.STEP2)
     }
 
@@ -93,7 +91,8 @@ export const Page = (): JSX.Element => {
                                     message: '愛知県立大学のメールアドレスを入力してください',
                                 },
                             })}
-                            placeholder="xx000000.xxx.aichi-pu.ac.jp"
+                            defaultValue={'aichi-pu.ac.jp'}
+                            placeholder="xx000000@xxx.aichi-pu.ac.jp"
                             type="email"
                         />
                         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
