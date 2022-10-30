@@ -36,6 +36,7 @@ import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
 import { useUpdateNotification } from '../../hooks/notification/useUpdateNotification'
 import { useErrorToast } from '../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../constants/errors'
+import { createNotificationMessage } from '../../constants/notification'
 
 interface Props {
     children?: ReactNode
@@ -165,8 +166,10 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                                         <VStack spacing={0} alignItems={'start'} w="full">
                                             <HStack w="full">
                                                 <Text color={'gray.400'} fontSize={'sm'} w="full" textAlign={'start'}>
-                                                    {notification.nickname}
-                                                    さんが回答しました。
+                                                    {createNotificationMessage(
+                                                        notification.type,
+                                                        notification.nickname
+                                                    )}
                                                 </Text>
                                             </HStack>
                                             <Text fontWeight={'bold'} fontSize={'sm'} noOfLines={1}>
