@@ -9,4 +9,5 @@ export type Notification = {
     postUserId: string
     nickname: string
     imageUrl: string
+    type: string
 }

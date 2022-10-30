@@ -1,4 +1,4 @@
 export const STATUS = {
-    SOLVED: 'solved',
-    NOT_SOLVED: 'not-solved',
+    SOLVED: 'SOLVED',
+    NOT_SOLVED: 'NOT_SOLVED',
 } as const

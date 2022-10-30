@@ -10,15 +10,16 @@ import { NoCards } from '../../../common/NoCards'
 import { QASkeleton } from '../../../common/QASkeleton'
 import { AnswerCard } from '../../../molecules/profile/AnswerCars'
 import { EditFormModal } from '../../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../../molecules/qa/question/DeleteFormModal'
+import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
 
 interface Props {
     userId: string
     answers: Answer[]
     isLoading: boolean
     onClickCard: (value: string) => void
+    refetchAnswers: () => Promise<void>
 }
-export const AnswerList = ({ answers, isLoading, onClickCard, userId }: Props) => {
+export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAnswers }: Props) => {
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
@@ -37,7 +38,7 @@ export const AnswerList = ({ answers, isLoading, onClickCard, userId }: Props) =
         setSelectedAnswer(answer)
     }
     const onSuccessUpdateAnswer = async () => {
-        cacheClearForUpdate(userId)
+        await refetchAnswers()
         onCloseEditForm()
     }
     const onClickUpdateAnswer = async (answerReq: AnswerReq) => {
@@ -53,7 +54,7 @@ export const AnswerList = ({ answers, isLoading, onClickCard, userId }: Props) =
         )
     }
     const onSuccessDeleteAnswer = async () => {
-        cacheClearForDelete(userId)
+        await refetchAnswers()
         onCloseDeleteForm()
     }
     const onClickDeleteAnswer = async () => {

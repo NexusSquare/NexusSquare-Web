@@ -2,6 +2,8 @@ import { DeleteIcon, EditIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import {
     Avatar,
     Box,
+    Button,
+    Divider,
     HStack,
     IconButton,
     Menu,
@@ -15,10 +17,10 @@ import {
 import { useRouter } from 'next/router'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { LINKS } from '../../../../constants/links'
-import { USER_ID } from '../../../../constants/token'
-import { useSession } from '../../../../hooks/useSession'
 import { convertTimestampToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../types/domain/qa/Answer'
+import { BiMedal } from 'react-icons/bi'
+import { BsChatText } from 'react-icons/bs'
 
 interface Props {
     userId: string
@@ -27,6 +29,9 @@ interface Props {
     onOpenDeleteForm: () => void
     onOpenReportForm: () => void
     onClickDetail: (value: Answer) => void
+    onOpenBestAnswerModal: (value: Answer) => void
+    isMyQuestion: boolean
+    hasBestAnswer: boolean
 }
 
 const AnswerCard = ({
@@ -35,7 +40,10 @@ const AnswerCard = ({
     onOpenEditForm,
     onOpenDeleteForm,
     onClickDetail,
+    onOpenBestAnswerModal,
     onOpenReportForm,
+    isMyQuestion,
+    hasBestAnswer,
 }: Props): JSX.Element => {
     const router = useRouter()
     const date = convertTimestampToString(answer.createAt)
@@ -108,6 +116,31 @@ const AnswerCard = ({
             <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
                 {answer.content}
             </Text>
+            {isMyQuestion && !hasBestAnswer && (
+                <>
+                    <Divider />
+                    <Button
+                        leftIcon={<BiMedal size={20} />}
+                        rounded="sm"
+                        size="xs"
+                        alignSelf={'end'}
+                        bg="white"
+                        color="gray.400"
+                        borderWidth={1}
+                        onClick={() => onOpenBestAnswerModal(answer)}
+                    >
+                        ベストアンサーにする　
+                    </Button>
+                </>
+            )}
+            {answer.isBest && (
+                <HStack alignItems={'center'} alignSelf={'end'} color={'subSubColor'}>
+                    <Text fontSize={'sm'} fontWeight={'bold'}>
+                        ベストアンサー
+                    </Text>
+                    <BiMedal size={30} />
+                </HStack>
+            )}
         </VStack>
     )
 }

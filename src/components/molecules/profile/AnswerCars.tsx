@@ -12,6 +12,7 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
+import { BiMedal } from 'react-icons/bi'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { USER_ID } from '../../../constants/token'
 import { useSession } from '../../../hooks/useSession'
@@ -108,6 +109,14 @@ export const AnswerCard = ({
             >
                 {answer.content}
             </Text>
+            {answer.isBest && (
+                <HStack alignItems={'center'} alignSelf={'end'} color={'subSubColor'}>
+                    <Text fontSize={'sm'} fontWeight={'bold'}>
+                        ベストアンサー
+                    </Text>
+                    <BiMedal size={30} />
+                </HStack>
+            )}
         </VStack>
     )
 }

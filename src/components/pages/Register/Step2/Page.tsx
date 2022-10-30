@@ -12,7 +12,7 @@ import {
     Text,
     VStack,
 } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
@@ -20,6 +20,7 @@ import { PrimaryButton } from '../../../common/PrimaryButton'
 
 export const Page = (): JSX.Element => {
     const { mutate: sendEmail, isLoading: sending, error } = useSendEmail()
+
     const [hasSentEmail, setHasSentEmail] = useState(false)
     const errorToast = useErrorToast()
     const onClickSendEmail = async () => {
@@ -51,7 +52,7 @@ export const Page = (): JSX.Element => {
                     </Box>
                     {hasSentEmail && <Text color={'red.500'}>メールを送信しました。</Text>}
                     <PrimaryButton
-                        buttonText="もう一度認証メールを送る"
+                        buttonText="認証メールを送る"
                         type="button"
                         isLoading={sending}
                         disabled={sending}

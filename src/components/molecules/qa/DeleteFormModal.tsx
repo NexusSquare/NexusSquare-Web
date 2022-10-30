@@ -13,13 +13,13 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChancelButton } from '../../../common/ChancelButton'
-import { DefaultModal } from '../../../common/DefaultModal'
-import { Question } from '../../../../types/domain/qa'
-import QACategories from '../../../../constants/qa/qaCategories'
-import { QuestionReq } from '../../../../types/api/req'
-import { SecondaryButton } from '../../../common/SecondaryButton'
-import { PrimaryButton } from '../../../common/PrimaryButton'
+import { ChancelButton } from '../../common/ChancelButton'
+import { DefaultModal } from '../../common/DefaultModal'
+import { Question } from '../../../types/domain/qa'
+import QACategories from '../../../constants/qa/qaCategories'
+import { QuestionReq } from '../../../types/api/req'
+import { SecondaryButton } from '../../common/SecondaryButton'
+import { PrimaryButton } from '../../common/PrimaryButton'
 
 interface Props {
     isOpen: boolean
@@ -27,9 +27,6 @@ interface Props {
     onClickDelete: () => void
     isDeleteLoading: boolean
 }
-
-type QACategoriesType = typeof QACategories
-type QACategories = typeof QACategories[keyof QACategoriesType]
 
 export const DeleteFormModal = ({ isOpen, onClose, onClickDelete, isDeleteLoading }: Props) => {
     return (

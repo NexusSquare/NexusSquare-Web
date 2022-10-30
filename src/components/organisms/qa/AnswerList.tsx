@@ -1,10 +1,11 @@
 import { Box, VStack, Text, useDisclosure } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { USER_ID } from '../../../constants/token'
 import { useDeleteAnswer } from '../../../hooks/answer/useDeleteAnswer'
 import { useUpdateAnswer } from '../../../hooks/answer/useUpdateAnswer'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useBestAnswer } from '../../../hooks/question/useUpdateQuestion'
 import { useReport } from '../../../hooks/report/useReport'
 import { useSession } from '../../../hooks/useSession'
 import { AnswerReq, ReportReq } from '../../../types/api/req'
@@ -12,23 +13,43 @@ import { Answer } from '../../../types/domain/qa/Answer'
 import { NoCards } from '../../common/NoCards'
 import { QASkeleton } from '../../common/QASkeleton'
 import AnswerCard from '../../molecules/qa/answer/AnswerCard'
+import { BestAnswerModal } from '../../molecules/qa/answer/BestAnswerModal'
 import { EditFormModal } from '../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../molecules/qa/question/DeleteFormModal'
-import { ReportFormModal } from '../../molecules/qa/question/ReportFromModal'
+import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
+import { ReportFormModal } from '../../molecules/qa/ReportFromModal'
 
 interface Props {
     questionId: string
     answers: Answer[]
     isFetchLoading: boolean
+    isMine: boolean
+    isOpenBestAnswerForm: boolean
+    onOpenBestAnswerForm: () => void
+    onCloseBestAnswerForm: () => void
+    onClickBestAnswer: (value: string) => void
+    isDeclareLoading: boolean
+    hasBestAnswer: boolean
 }
 
-export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
+export const AnswerList = ({
+    questionId,
+    answers,
+    isFetchLoading,
+    isMine,
+    isOpenBestAnswerForm,
+    onOpenBestAnswerForm,
+    onCloseBestAnswerForm,
+    onClickBestAnswer,
+    isDeclareLoading,
+    hasBestAnswer,
+}: Props) => {
     const { value: userId } = useSession(USER_ID)
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
     const { isOpen: isOpenDeleteForm, onOpen: onOpenDeleteForm, onClose: onCloseDeleteForm } = useDisclosure()
     const { isOpen: isOpenReportForm, onOpen: onOpenReportForm, onClose: onCloseReportForm } = useDisclosure()
+
     const { mutate: report, isLoading: isReportLoading } = useReport()
 
     const {
@@ -41,6 +62,7 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
         isLoading: isDeleteLoading,
         cacheClearAnswer: cacheClearForDelete,
     } = useDeleteAnswer()
+
     const onClickDetail = (answer: Answer) => {
         setSelectedAnswer(answer)
     }
@@ -76,6 +98,12 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
         })
     }
+
+    const onOpenBestAnswerModal = (answer: Answer) => {
+        setSelectedAnswer(answer)
+        onOpenBestAnswerForm()
+    }
+
     if (!userId) return null
     return (
         <>
@@ -106,6 +134,9 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
                                         onOpenDeleteForm={onOpenDeleteForm}
                                         onOpenReportForm={onOpenReportForm}
                                         onClickDetail={onClickDetail}
+                                        onOpenBestAnswerModal={onOpenBestAnswerModal}
+                                        isMyQuestion={isMine}
+                                        hasBestAnswer={hasBestAnswer}
                                     />
                                 )
                             })}
@@ -131,6 +162,12 @@ export const AnswerList = ({ questionId, answers, isFetchLoading }: Props) => {
                                 onClickReport={onClickReport}
                                 type="answer"
                                 postId={questionId}
+                            />
+                            <BestAnswerModal
+                                isOpen={isOpenBestAnswerForm}
+                                onClose={onCloseBestAnswerForm}
+                                isLoading={isDeclareLoading}
+                                onClick={() => onClickBestAnswer(selectedAnswer.answerId)}
                             />
                         </>
                     ) : (

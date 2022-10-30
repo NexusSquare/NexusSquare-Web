@@ -30,6 +30,7 @@ export const answerService = {
             content: answerReq.content,
             imageUrl: answerReq.imageUrl ? answerReq.imageUrl : null,
             isEdited: false,
+            isBest: false,
         }
         return answerRepository.save(answer)
     },

@@ -71,12 +71,13 @@ export const Page = (): JSX.Element => {
                                 required: '必須項目です',
                                 minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
                                 maxLength: { value: 50, message: 'タイトルは50文字までです' },
-                                pattern: {
-                                    value: /^[a-z]{2}[0-9]{6}@[a-z]+\.aichi\-pu\.ac\.jp$/,
-                                    message: '愛知県立大学のメールアドレスを入力してください',
-                                },
+                                // pattern: {
+                                //     value: /^[a-z]{2}[0-9]{6}@[a-z]+\.aichi\-pu\.ac\.jp$/,
+                                //     message: '愛知県立大学のメールアドレスを入力してください',
+                                // },
                             })}
-                            placeholder="xx000000.xxx.aichi-pu.ac.jp"
+                            defaultValue={'aichi-pu.ac.jp'}
+                            placeholder="xx000000@xxx.aichi-pu.ac.jp"
                             type="email"
                         />
                         <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>

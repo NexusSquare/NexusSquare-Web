@@ -14,10 +14,10 @@ import { Question } from '../../../types/domain/qa'
 import { User } from '../../../types/domain/user'
 import { QASkeleton } from '../../common/QASkeleton'
 import { PostFormModal } from '../../molecules/qa/answer/PostFormModal'
-import { DeleteFormModal } from '../../molecules/qa/question/DeleteFormModal'
+import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
 import { EditFormModal } from '../../molecules/qa/question/EditFormModal'
 import { QAPerfectCard } from '../../molecules/qa/question/QAPerfectCard'
-import { ReportFormModal } from '../../molecules/qa/question/ReportFromModal'
+import { ReportFormModal } from '../../molecules/qa/ReportFromModal'
 
 interface Props {
     questionId: string
@@ -25,9 +25,11 @@ interface Props {
     question?: Question
     refetch: Refetch<Question>
     postUser?: User
+    isPosted: boolean
+    isMine: boolean
 }
 
-export const QuestionDetail = ({ questionId, isLoading, question, refetch, postUser }: Props) => {
+export const QuestionDetail = ({ questionId, isLoading, question, refetch, postUser, isPosted, isMine }: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
@@ -102,6 +104,8 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
                         onOpenDeleteForm={onOpenDeleteForm}
                         onOpenReportForm={onClickReportFrom}
                         onOpenPostForm={onOpenPostForm}
+                        isPosted={isPosted}
+                        isMine={isMine}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}
@@ -115,7 +119,7 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
                         isOpen={isOpenPostForm}
                         question={question}
                         isPostLoading={isPostLoading}
-                        onClickPost={onClickPostAnswer}
+                        postAnswer={onClickPostAnswer}
                     />
                 </>
             )}
