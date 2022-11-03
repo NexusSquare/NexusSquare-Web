@@ -1,5 +1,6 @@
 import { Timestamp } from 'firebase/firestore'
 import { STATUS } from '../constants/qa/status'
+import { QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
 import { questionRepository } from '../repositories/questionRepository'
 import { QuestionReq } from '../types/api/req'
@@ -7,8 +8,8 @@ import { Question } from '../types/domain/qa/Question'
 import { User } from '../types/domain/user'
 
 export const questionService = {
-    async find(): Promise<Question[]> {
-        return questionRepository.find()
+    async find(queryQuestion: QuestionQuery): Promise<Question[]> {
+        return questionRepository.find(queryQuestion)
     },
     async findById(id: string): Promise<Question> {
         return questionRepository.findById(id)

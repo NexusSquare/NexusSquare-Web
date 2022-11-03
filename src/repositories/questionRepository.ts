@@ -10,14 +10,21 @@ import {
     updateDoc,
     where,
 } from 'firebase/firestore'
+import { STATUS } from '../constants/qa/status'
+import { QuestionQuery } from '../constants/query'
 import { db } from '../plugins/firebase'
 import { Question } from '../types/domain/qa/Question'
 
 export const questionRepository = {
-    async find(): Promise<Question[]> {
+    async find(queryQuestion: QuestionQuery): Promise<Question[]> {
         console.log('question fetch')
         const questionCol = collection(db, 'questions')
-        const snapShot = await getDocs(questionCol)
+        const questionQuery = query(
+            questionCol,
+            where('status', '==', queryQuestion?.status),
+            orderBy(queryQuestion?.orderBy, 'desc')
+        )
+        const snapShot = await getDocs(questionQuery)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), questionId: doc.id } as Question
         })
