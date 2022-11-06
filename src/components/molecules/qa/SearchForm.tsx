@@ -7,8 +7,9 @@ import { SecondaryButton } from '../../common/SecondaryButton'
 interface Props {
     questions: Question[]
     clickSearch: (value: string) => void
+    openSortDrawer: () => void
 }
-export const SearchForm = ({ questions, clickSearch }: Props) => {
+export const SearchForm = ({ questions, clickSearch, openSortDrawer }: Props) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const onClickSearch = () => {
         if (!inputRef.current) return
@@ -25,7 +26,14 @@ export const SearchForm = ({ questions, clickSearch }: Props) => {
             </HStack>
             <HStack w="full">
                 <SecondaryButton width="full" buttonText="カテゴリー" type="button" size="sm" borderRadius="sm" />
-                <SecondaryButton width="full" buttonText="並び替え" type="button" size="sm" borderRadius="sm" />
+                <SecondaryButton
+                    width="full"
+                    buttonText="並び替え"
+                    type="button"
+                    size="sm"
+                    borderRadius="sm"
+                    onClick={openSortDrawer}
+                />
             </HStack>
             <Text color="textPrimary" alignSelf={'start'}>
                 検索結果：{questions.length}件

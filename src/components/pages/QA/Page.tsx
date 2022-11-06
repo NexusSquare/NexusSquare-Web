@@ -1,4 +1,4 @@
-import { Box, Text, VStack } from '@chakra-ui/react'
+import { Box, Radio, RadioGroup, Stack, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import React, { useEffect, useRef, useState } from 'react'
 import QACardWindow from '../../organisms/qa/QACardWindow'
 import QACardList from '../../organisms/qa/QACardList'
@@ -9,6 +9,10 @@ import { STATUS } from '../../../constants/qa/status'
 import { useRouter } from 'next/router'
 import { LINKS } from '../../../constants/links'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { Drawer } from '../../common/Drawer'
+import { PrimaryButton } from '../../common/PrimaryButton'
+import { SORT, SortItem } from '../../../constants/sort'
+import { SortDrawer } from '../../organisms/qa/SortDrawer'
 
 type QuestionStatus = keyof typeof STATUS
 
@@ -19,11 +23,12 @@ export const Page = () => {
         direction: 'asc',
         categories: ['英米'],
     }
-
+    const { isOpen, onOpen, onClose } = useDisclosure()
     const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
     const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
     const router = useRouter()
     const errorToast = useErrorToast()
+    const [value, setValue] = React.useState('1')
 
     const changeQuestionStatus = (status: QuestionStatus) => {
         setQuestionQuery((query) => {
@@ -39,6 +44,19 @@ export const Page = () => {
         router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
     }
 
+    const openSortDrawer = () => {
+        onOpen()
+    }
+
+    const clickSort = (sortItem: SortItem) => {
+        const { orderBy, direction } = sortItem
+        setQuestionQuery((query) => {
+            return { ...query, orderBy, direction }
+        })
+        onClose()
+        console.log('sort')
+    }
+
     return (
         <>
             <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">
@@ -48,12 +66,15 @@ export const Page = () => {
                     </Text>
                 </Box>
                 <Box display={{ base: 'block', xl: 'none' }} w="full">
-                    <SearchForm questions={questions} clickSearch={clickSearch} />
+                    <SearchForm questions={questions} clickSearch={clickSearch} openSortDrawer={openSortDrawer} />
                 </Box>
             </VStack>
             <QACardWindow>
                 <QACardList questions={questions} isLoading={isLoading} changeStatus={changeQuestionStatus} />
             </QACardWindow>
+            <Box d={{ base: 'block', md: 'none' }}>
+                <SortDrawer onClose={onClose} isOpen={isOpen} clickSort={clickSort} />
+            </Box>
         </>
     )
 }

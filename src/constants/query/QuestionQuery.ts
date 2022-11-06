@@ -6,10 +6,13 @@ type Status = keyof typeof STATUS
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
 
+export type OrderBy = 'createAt' | 'updateAt' | 'ansNum'
+export type Direction = 'desc' | 'asc'
+
 export type QuestionQuery = {
     status: Status
-    orderBy: 'createAt' | 'updateAt' | 'ansNum'
+    orderBy: OrderBy
     lastQuestion?: Question
-    direction: 'desc' | 'asc'
+    direction: Direction
     categories?: QACategories[]
 }
