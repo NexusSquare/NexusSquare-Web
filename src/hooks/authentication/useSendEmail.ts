@@ -1,5 +1,5 @@
 import { useAuthSendEmailVerification } from '@react-query-firebase/auth'
-import { actionCodeSettings, auth } from '../../plugins/firebase'
+import { actionCodeSettings, auth } from '../../plugins/firebase/client'
 
 interface AfterFunction {
     onSuccess?: Function

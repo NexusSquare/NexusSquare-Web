@@ -1,14 +1,14 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
-import QACardWindow from '../../organisms/qa/QACardWindow'
-import QACardList from '../../organisms/qa/QACardList'
-import { SearchForm } from '../../molecules/qa/SearchForm'
-import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../hooks/question/useFetchQuestion'
-import { QuestionQuery } from '../../../constants/query'
-import { STATUS } from '../../../constants/qa/status'
+import React, { useEffect, useState } from 'react'
+import QACardWindow from '../../../organisms/qa/QACardWindow'
+import QACardList from '../../../organisms/qa/QACardList'
+import { SearchForm } from '../../../molecules/qa/SearchForm'
+import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/question/useFetchQuestion'
+import { QuestionQuery } from '../../../../constants/query'
+import { STATUS } from '../../../../constants/qa/status'
 import { useRouter } from 'next/router'
-import { LINKS } from '../../../constants/links'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { LINKS } from '../../../../constants/links'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 type QuestionStatus = keyof typeof STATUS
 
@@ -16,17 +16,16 @@ export const Page = () => {
     const initQuestionQuery: QuestionQuery = {
         status: STATUS.NOT_SOLVED,
         orderBy: 'createAt',
-        direction: 'asc',
-        categories: ['英米'],
     }
-
     const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
-    const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
     const router = useRouter()
     const errorToast = useErrorToast()
+    const { title } = router.query
+
+    const { data: questions = [], isLoading } = useFetchQuestionsByTitle(String(title))
 
     const changeQuestionStatus = (status: QuestionStatus) => {
-        setQuestionQuery((query) => {
+        setQuestionQuery((query: QuestionQuery) => {
             return { ...query, status }
         })
     }
@@ -38,7 +37,6 @@ export const Page = () => {
         }
         router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
     }
-
     return (
         <>
             <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">

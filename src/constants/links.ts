@@ -10,6 +10,7 @@ export const LINKS = {
     QUESTION: '/qa',
     QUESTION_DETAIL: (id: string) => `/qa/${id}`,
     QUESTION_POST: `/qa/post`,
+    QUESTION_RESULT: `/qa/result`,
     RULE: '/rule',
     PRIVACY: 'privacy',
 } as const

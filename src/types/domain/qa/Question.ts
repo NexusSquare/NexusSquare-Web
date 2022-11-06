@@ -20,4 +20,7 @@ export type Question = {
     isEdited: boolean
     status: string
     bestAnswerId: string | null
+    biGram: {
+        [key: string]: boolean
+    }
 }
