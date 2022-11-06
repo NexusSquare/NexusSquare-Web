@@ -8,8 +8,9 @@ interface Props {
     questions: Question[]
     clickSearch: (value: string) => void
     openSortDrawer: () => void
+    openCategoryDrawer: () => void
 }
-export const SearchForm = ({ questions, clickSearch, openSortDrawer }: Props) => {
+export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategoryDrawer }: Props) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const onClickSearch = () => {
         if (!inputRef.current) return
@@ -25,7 +26,14 @@ export const SearchForm = ({ questions, clickSearch, openSortDrawer }: Props) =>
                 </Button>
             </HStack>
             <HStack w="full">
-                <SecondaryButton width="full" buttonText="カテゴリー" type="button" size="sm" borderRadius="sm" />
+                <SecondaryButton
+                    width="full"
+                    buttonText="カテゴリー"
+                    type="button"
+                    size="sm"
+                    borderRadius="sm"
+                    onClick={openCategoryDrawer}
+                />
                 <SecondaryButton
                     width="full"
                     buttonText="並び替え"

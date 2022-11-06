@@ -24,7 +24,7 @@ export const questionRepository = {
         console.log('question fetch')
         const questionCol = collection(db, 'questions')
         const queryArgs = createQueryArgs(queryQuestion)
-        const questionRef = query(questionCol, ...queryArgs, limit(5))
+        const questionRef = query(questionCol, ...queryArgs, limit(15))
         const snapShot = await getDocs(questionRef)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), questionId: doc.id } as Question
@@ -35,7 +35,7 @@ export const questionRepository = {
         const grams: string[] = bigram(title)
         const questionCol = collection(db, 'questions')
         const queryArgs = createTitleIndex(grams)
-        const questionQuery = query(questionCol, ...queryArgs, where('status', '==', 'NOT_SOLVED'), limit(5))
+        const questionQuery = query(questionCol, ...queryArgs, where('status', '==', 'NOT_SOLVED'))
         const snapShot = await getDocs(questionQuery)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), questionId: doc.id } as Question

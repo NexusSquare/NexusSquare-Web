@@ -4,7 +4,8 @@ import { Question } from '../../types/domain/qa'
 
 type Status = keyof typeof STATUS
 type QACategoriesType = typeof QACategories
-type QACategories = typeof QACategories[keyof QACategoriesType]
+
+export type QACategory = typeof QACategories[keyof QACategoriesType]
 
 export type OrderBy = 'createAt' | 'updateAt' | 'ansNum'
 export type Direction = 'desc' | 'asc'
@@ -14,5 +15,5 @@ export type QuestionQuery = {
     orderBy: OrderBy
     lastQuestion?: Question
     direction: Direction
-    categories?: QACategories[]
+    categories?: QACategory[]
 }
