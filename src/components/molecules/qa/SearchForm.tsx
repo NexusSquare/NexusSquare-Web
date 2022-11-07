@@ -9,14 +9,16 @@ interface Props {
     clickSearch: (value: string) => void
     openSortDrawer: () => void
     openCategoryDrawer: () => void
+    categoryCount: number
 }
-export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategoryDrawer }: Props) => {
+export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategoryDrawer, categoryCount }: Props) => {
     const inputRef = useRef<HTMLInputElement>(null)
     const onClickSearch = () => {
         if (!inputRef.current) return
         clickSearch(inputRef.current.value)
         inputRef.current.value = ''
     }
+    const categoryButtonText = categoryCount ? `カテゴリー（${categoryCount}）` : 'カテゴリー'
     return (
         <VStack w="full" paddingX={4}>
             <HStack w="full">
@@ -28,7 +30,7 @@ export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategor
             <HStack w="full">
                 <SecondaryButton
                     width="full"
-                    buttonText="カテゴリー"
+                    buttonText={categoryButtonText}
                     type="button"
                     size="sm"
                     borderRadius="sm"

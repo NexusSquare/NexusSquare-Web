@@ -1,7 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
 import { bigram } from 'n-gram'
 import { STATUS } from '../constants/qa/status'
-import { QuestionQuery } from '../constants/query'
+import { Direction, OrderBy, QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
 import { questionRepository } from '../repositories/questionRepository'
 import { QuestionReq } from '../types/api/req'
@@ -15,8 +15,10 @@ export const questionService = {
     async findById(id: string): Promise<Question> {
         return questionRepository.findById(id)
     },
-    async findByTitle(title: string): Promise<Question[]> {
-        return questionRepository.findByTitle(title)
+    async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
+        const question = await questionRepository.findByTitle(queryQuestion)
+        console.log(question)
+        return question.sort((a, b) => questionSort(a, b, queryQuestion.orderBy, queryQuestion.direction))
     },
     async findByUserId(userId: string): Promise<Question[]> {
         return questionRepository.findByUserId(userId)
@@ -84,4 +86,12 @@ const toBiGramObject = (grams: string[]) => {
         obj = { ...obj, [gram]: true }
     })
     return obj
+}
+// HACK:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
+const questionSort = (q1: Question, q2: Question, orderBy: OrderBy, direction: Direction) => {
+    console.log(q1, q2)
+    const toNumDirection = direction === 'desc' ? 1 : -1
+    if (q1[orderBy] < q2[orderBy]) return 1 * toNumDirection
+    if (q1[orderBy] > q2[orderBy]) return -1 * toNumDirection
+    return 0
 }

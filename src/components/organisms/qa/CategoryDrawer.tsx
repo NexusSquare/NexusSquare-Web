@@ -12,11 +12,12 @@ interface Props {
     onClose: () => void
     isOpen: boolean
     clickFilter: (value: QACategory[]) => void
+    clickReset: () => void
 }
-export const CategoryDrawer = ({ onClose, isOpen, clickFilter }: Props) => {
+export const CategoryDrawer = ({ onClose, isOpen, clickFilter, clickReset }: Props) => {
     const CATEGORIES = Object.values(QACategories)
     const [categories, setCategories] = useState<QACategory[]>([])
-    console.log(categories)
+
     const errorToast = useErrorToast()
 
     const onClickFilter = () => {
@@ -29,6 +30,7 @@ export const CategoryDrawer = ({ onClose, isOpen, clickFilter }: Props) => {
 
     const onClickReset = () => {
         setCategories([])
+        clickReset()
     }
 
     const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {

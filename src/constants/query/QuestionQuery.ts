@@ -15,5 +15,6 @@ export type QuestionQuery = {
     orderBy: OrderBy
     lastQuestion?: Question
     direction: Direction
-    categories?: QACategory[]
+    categories: QACategory[]
+    title?: string
 }

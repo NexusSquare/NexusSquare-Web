@@ -27,9 +27,13 @@ export const useFetchQuestionsByUserId = (userId: string, queryOptions?: UseQuer
     })
 }
 
-export const useFetchQuestionsByTitle = (title: string, queryOptions?: UseQueryOptions<Question[]>) => {
-    return useQuery<Question[]>([QUERY_KEYS.QUESTION(title)], () => questionService.findByTitle(title), {
-        ...queryOptions,
-        ...DEFAULT_QUERY_OPTIONS,
-    })
+export const useFetchQuestionsByTitle = (queryQuestion: QuestionQuery, queryOptions?: UseQueryOptions<Question[]>) => {
+    return useQuery<Question[]>(
+        [QUERY_KEYS.QUESTION(queryQuestion.title), { enabled: Boolean(queryQuestion.title) }, { queryQuestion }],
+        () => questionService.findByTitle(queryQuestion),
+        {
+            ...queryOptions,
+            ...DEFAULT_QUERY_OPTIONS,
+        }
+    )
 }

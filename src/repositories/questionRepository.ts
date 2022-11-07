@@ -31,11 +31,17 @@ export const questionRepository = {
         })
     },
     // NOTE:Firebaseの設計上タイトル検索を分ける必要がある
-    async findByTitle(title: string): Promise<Question[]> {
-        const grams: string[] = bigram(title)
+    // NOTE:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
+    async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
+        const grams: string[] = bigram(queryQuestion.title)
         const questionCol = collection(db, 'questions')
+        // NOTE:queryに渡す引数を生成
         const queryArgs = createTitleIndex(grams)
-        const questionQuery = query(questionCol, ...queryArgs, where('status', '==', 'NOT_SOLVED'))
+        if (queryQuestion.categories.length !== 0)
+            queryArgs.push(where('categories', 'array-contains-any', queryQuestion.categories))
+        queryArgs.push(where('status', '==', queryQuestion.status))
+
+        const questionQuery = query(questionCol, ...queryArgs)
         const snapShot = await getDocs(questionQuery)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), questionId: doc.id } as Question
@@ -77,7 +83,8 @@ const createQueryArgs = (query: QuestionQuery): QueryConstraint[] => {
     let args: QueryConstraint[] = []
     args.push(orderBy(query.orderBy, query.direction))
     args.push(where('status', '==', query.status))
-    if (query.categories) args.push(where('categories', 'array-contains-any', query.categories))
+    if (query.categories.length === 0) return args
+    args.push(where('categories', 'array-contains-any', query.categories))
     return args
 }
 

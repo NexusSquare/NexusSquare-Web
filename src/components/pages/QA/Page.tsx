@@ -22,6 +22,7 @@ export const Page = () => {
         status: STATUS.NOT_SOLVED,
         orderBy: 'createAt',
         direction: 'asc',
+        categories: [],
     }
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
@@ -33,6 +34,7 @@ export const Page = () => {
     const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
     const router = useRouter()
     const errorToast = useErrorToast()
+    const [categoryCount, setCategoryCount] = useState(0)
 
     const changeQuestionStatus = (status: QuestionStatus) => {
         setQuestionQuery((query) => {
@@ -60,7 +62,15 @@ export const Page = () => {
         setQuestionQuery((query) => {
             return { ...query, categories }
         })
+        setCategoryCount(categories.length)
         onCloseCategoryDrawer()
+    }
+
+    const clickReset = () => {
+        setQuestionQuery((query) => {
+            return { ...query, categories: [] }
+        })
+        setCategoryCount(0)
     }
 
     return (
@@ -77,6 +87,7 @@ export const Page = () => {
                         clickSearch={clickSearch}
                         openSortDrawer={onOpenSortDrawer}
                         openCategoryDrawer={onOpenCategoryDrawer}
+                        categoryCount={categoryCount}
                     />
                 </Box>
             </VStack>
@@ -91,6 +102,7 @@ export const Page = () => {
                     onClose={onCloseCategoryDrawer}
                     isOpen={isOpenCategoryDrawer}
                     clickFilter={clickFilter}
+                    clickReset={clickReset}
                 />
             </Box>
         </>
