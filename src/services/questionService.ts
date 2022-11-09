@@ -1,5 +1,7 @@
 import { Timestamp } from 'firebase/firestore'
+import { bigram } from 'n-gram'
 import { STATUS } from '../constants/qa/status'
+import { Direction, OrderBy, QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
 import { questionRepository } from '../repositories/questionRepository'
 import { QuestionReq } from '../types/api/req'
@@ -7,17 +9,23 @@ import { Question } from '../types/domain/qa/Question'
 import { User } from '../types/domain/user'
 
 export const questionService = {
-    async find(): Promise<Question[]> {
-        return questionRepository.find()
+    async find(queryQuestion: QuestionQuery): Promise<Question[]> {
+        return questionRepository.find(queryQuestion)
     },
     async findById(id: string): Promise<Question> {
         return questionRepository.findById(id)
+    },
+    async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
+        const question = await questionRepository.findByTitle(queryQuestion)
+        console.log(question)
+        return question.sort((a, b) => questionSort(a, b, queryQuestion.orderBy, queryQuestion.direction))
     },
     async findByUserId(userId: string): Promise<Question[]> {
         return questionRepository.findByUserId(userId)
     },
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
+        const gram: string[] = bigram(questionReq.title)
         const question: Omit<Question, 'questionId'> = {
             userId: userId!,
             postUser: {
@@ -37,10 +45,12 @@ export const questionService = {
             isEdited: false,
             status: STATUS.NOT_SOLVED,
             bestAnswerId: null,
+            biGram: toBiGramObject(gram),
         }
         return questionRepository.save(question)
     },
     async update(questionReq: QuestionReq, questionId: string): Promise<void> {
+        const gram: string[] = bigram(questionReq.title)
         const question: Partial<Question> = {
             updateAt: Timestamp.now(),
             categories: convertCategories(questionReq.category1, questionReq.category2),
@@ -48,6 +58,7 @@ export const questionService = {
             content: questionReq.content,
             imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
             isEdited: true,
+            biGram: toBiGramObject(gram),
         }
         return questionRepository.update(question, questionId)
     },
@@ -67,4 +78,20 @@ export const questionService = {
 const convertCategories = (cat1: string, cat2?: string): string[] => {
     if (!cat2) return [cat1]
     return [cat1, cat2]
+}
+
+const toBiGramObject = (grams: string[]) => {
+    let obj = {}
+    grams.forEach((gram: string) => {
+        obj = { ...obj, [gram]: true }
+    })
+    return obj
+}
+// HACK:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
+const questionSort = (q1: Question, q2: Question, orderBy: OrderBy, direction: Direction) => {
+    console.log(q1, q2)
+    const toNumDirection = direction === 'desc' ? 1 : -1
+    if (q1[orderBy] < q2[orderBy]) return 1 * toNumDirection
+    if (q1[orderBy] > q2[orderBy]) return -1 * toNumDirection
+    return 0
 }

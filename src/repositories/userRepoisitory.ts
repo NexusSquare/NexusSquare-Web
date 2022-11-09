@@ -1,5 +1,5 @@
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
-import { db } from '../plugins/firebase'
+import { db } from '../plugins/firebase/client'
 import { User } from '../types/domain/user'
 
 export const userRepository = {

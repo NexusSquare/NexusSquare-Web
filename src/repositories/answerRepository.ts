@@ -10,7 +10,7 @@ import {
     updateDoc,
     where,
 } from 'firebase/firestore'
-import { db } from '../plugins/firebase'
+import { db } from '../plugins/firebase/client'
 import { Answer } from '../types/domain/qa/Answer'
 
 export const answerRepository = {

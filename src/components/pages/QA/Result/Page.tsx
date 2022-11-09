@@ -1,43 +1,56 @@
-import { Box, Radio, RadioGroup, Stack, Text, useDisclosure, VStack } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
-import QACardWindow from '../../organisms/qa/QACardWindow'
-import QACardList from '../../organisms/qa/QACardList'
-import { SearchForm } from '../../molecules/qa/SearchForm'
-import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../hooks/question/useFetchQuestion'
-import { QACategory, QuestionQuery } from '../../../constants/query'
-import { STATUS } from '../../../constants/qa/status'
+import { Box, Text, useDisclosure, VStack } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react'
+import QACardWindow from '../../../organisms/qa/QACardWindow'
+import QACardList from '../../../organisms/qa/QACardList'
+import { SearchForm } from '../../../molecules/qa/SearchForm'
+import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/question/useFetchQuestion'
+import { QACategory, QuestionQuery } from '../../../../constants/query'
+import { STATUS } from '../../../../constants/qa/status'
 import { useRouter } from 'next/router'
-import { LINKS } from '../../../constants/links'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import { Drawer } from '../../common/Drawer'
-import { PrimaryButton } from '../../common/PrimaryButton'
-import { SORT, SortItem } from '../../../constants/sort'
-import { SortDrawer } from '../../organisms/qa/SortDrawer'
-import { CategoryDrawer } from '../../organisms/qa/CategoryDrawer'
+import { LINKS } from '../../../../constants/links'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { SortDrawer } from '../../../organisms/qa/SortDrawer'
+import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
+import { SortItem } from '../../../../constants/sort'
 
 type QuestionStatus = keyof typeof STATUS
 
 export const Page = () => {
-    const initQuestionQuery: QuestionQuery = {
-        status: STATUS.NOT_SOLVED,
-        orderBy: 'createAt',
-        direction: 'asc',
-        categories: [],
-    }
+    const router = useRouter()
+    const isReady = router.isReady
+    const { title } = router.query
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
         isOpen: isOpenCategoryDrawer,
         onOpen: onOpenCategoryDrawer,
         onClose: onCloseCategoryDrawer,
     } = useDisclosure()
-    const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
-    const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
-    const router = useRouter()
-    const errorToast = useErrorToast()
     const [categoryCount, setCategoryCount] = useState(0)
 
+    const initQuestionQuery: QuestionQuery = {
+        status: STATUS.NOT_SOLVED,
+        orderBy: 'createAt',
+        direction: 'desc',
+        categories: [],
+        title: title ? String(title) : undefined,
+    }
+
+    const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
+
+    // NOTE routerが準備されるまでに時間がかかるため、タイトル更新を非同期にする
+    useEffect(() => {
+        if (!title) return
+        setQuestionQuery((query: QuestionQuery) => {
+            return { ...query, title: String(title) }
+        })
+    }, [isReady, title])
+
+    const errorToast = useErrorToast()
+
+    const { data: questions = [], isLoading } = useFetchQuestionsByTitle(questionQuery)
+
     const changeQuestionStatus = (status: QuestionStatus) => {
-        setQuestionQuery((query) => {
+        setQuestionQuery((query: QuestionQuery) => {
             return { ...query, status }
         })
     }
@@ -72,13 +85,12 @@ export const Page = () => {
         })
         setCategoryCount(0)
     }
-
     return (
         <>
             <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">
                 <Box w="full">
                     <Text as="h2" fontWeight={'bold'} fontSize={{ base: 'xl', md: '2xl' }} paddingX={4}>
-                        学生生活Q&A
+                        {title ? `${title}の検索結果` : '学生生活Q&A'}
                     </Text>
                 </Box>
                 <Box display={{ base: 'block', xl: 'none' }} w="full">

@@ -1,6 +1,6 @@
 import { getDownloadURL, ref } from 'firebase/storage'
 import { useUploadFile as useUploadFileToStorage } from 'react-firebase-hooks/storage'
-import { storage } from '../../plugins/firebase'
+import { storage } from '../../plugins/firebase/client'
 
 export const useUploadFile = () => {
     const [uploadFile, uploading, snapshot, error] = useUploadFileToStorage()

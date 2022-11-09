@@ -1,5 +1,5 @@
 import { collection, doc, getDocs, limit, orderBy, query } from 'firebase/firestore'
-import { db } from '../plugins/firebase'
+import { db } from '../plugins/firebase/client'
 import { History } from '../types/domain/history'
 
 export const historyRepository = {

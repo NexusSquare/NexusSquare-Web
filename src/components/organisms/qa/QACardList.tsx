@@ -13,33 +13,21 @@ import {
     Text,
 } from '@chakra-ui/react'
 import React from 'react'
-import { useState } from 'react'
 import QACard from '../../molecules/qa/QACard'
-import queryOptions from '../../../constants/qa/queryOptions'
-import QAQueryProps from '../../../constants/qa/queryGroup'
 import { Question } from '../../../types/domain/qa'
 import { BsChatText } from 'react-icons/bs'
 import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'
+import { STATUS } from '../../../constants/qa/status'
 
 interface Props {
-    query?: QAQueryProps
     questions: Question[]
     isLoading: boolean
+    changeStatus: (value: QuestionStatus) => void
 }
-type queryOptionType = typeof queryOptions
-type queryOptions = typeof queryOptions[keyof queryOptionType]
+type QuestionStatus = keyof typeof STATUS
 
-const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
-    const [queryOption, setQueryOption] = useState<queryOptions>(queryOptions.notSolved)
-
-    const onNotSolvedClickHandler = () => {
-        setQueryOption(queryOptions.notSolved)
-    }
-    const onSolvedClickHandler = () => {
-        setQueryOption(queryOptions.solved)
-    }
-
+const QACardListBox = ({ questions, isLoading, changeStatus }: Props): JSX.Element => {
     return (
         <Tabs w="100%" isLazy defaultIndex={1}>
             <TabList>
@@ -50,7 +38,7 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
                     bgColor="gray.200"
                     borderRadius="sm"
                     fontSize={{ base: 'md', sm: 'xl' }}
-                    onClick={onSolvedClickHandler}
+                    onClick={() => changeStatus(STATUS.SOLVED)}
                     _selected={{
                         bgColor: 'white',
                         borderColor: 'gray.400',
@@ -70,7 +58,7 @@ const QACardListBox = ({ query, questions, isLoading }: Props): JSX.Element => {
                     bgColor="gray.200"
                     borderRadius="sm"
                     fontSize={{ base: 'md', sm: 'xl' }}
-                    onClick={onNotSolvedClickHandler}
+                    onClick={() => changeStatus(STATUS.NOT_SOLVED)}
                     _selected={{
                         bgColor: 'white',
                         borderColor: 'gray.400',
