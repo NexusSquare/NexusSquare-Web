@@ -13,10 +13,7 @@ import {
     Text,
 } from '@chakra-ui/react'
 import React from 'react'
-import { useState } from 'react'
 import QACard from '../../molecules/qa/QACard'
-import queryOptions from '../../../constants/qa/queryOptions'
-import QAQueryProps from '../../../constants/qa/queryGroup'
 import { Question } from '../../../types/domain/qa'
 import { BsChatText } from 'react-icons/bs'
 import { QASkeleton } from '../../common/QASkeleton'
