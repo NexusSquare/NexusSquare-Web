@@ -4,7 +4,7 @@ import CommonMeta from '../CommonMeta'
 import { Footer } from '../QA/Footer'
 import { Header } from '../Header'
 import { RightBar } from '../RigthBar'
-import { LeftBar } from './LeftBar'
+import { LeftBar } from '../LeftBar'
 
 interface Props {
     children?: ReactNode

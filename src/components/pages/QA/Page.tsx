@@ -14,33 +14,50 @@ import { PrimaryButton } from '../../common/PrimaryButton'
 import { SORT, SortItem } from '../../../constants/sort'
 import { SortDrawer } from '../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../organisms/qa/CategoryDrawer'
+import { Question } from '../../../types/domain/qa'
 
 type QuestionStatus = keyof typeof STATUS
 
-export const Page = () => {
-    const initQuestionQuery: QuestionQuery = {
-        status: STATUS.NOT_SOLVED,
-        orderBy: 'createAt',
-        direction: 'asc',
-        categories: [],
-    }
+interface Props {
+    questions: Question[]
+    isLoading: boolean
+    sortQuestions: (value: SortItem) => void
+    filterQuestions: (value: QACategory[]) => void
+    changeStatus: (value: QuestionStatus) => void
+    resetCategories: () => void
+}
+
+export const Page = ({
+    questions,
+    isLoading,
+    sortQuestions,
+    filterQuestions,
+    changeStatus,
+    resetCategories,
+}: Props) => {
+    // const initQuestionQuery: QuestionQuery = {
+    //     status: STATUS.NOT_SOLVED,
+    //     orderBy: 'createAt',
+    //     direction: 'desc',
+    //     categories: [],
+    // }
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
         isOpen: isOpenCategoryDrawer,
         onOpen: onOpenCategoryDrawer,
         onClose: onCloseCategoryDrawer,
     } = useDisclosure()
-    const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
-    const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
+    // const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
+    // const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
     const router = useRouter()
     const errorToast = useErrorToast()
     const [categoryCount, setCategoryCount] = useState(0)
 
-    const changeQuestionStatus = (status: QuestionStatus) => {
-        setQuestionQuery((query) => {
-            return { ...query, status }
-        })
-    }
+    // const changeQuestionStatus = (status: QuestionStatus) => {
+    //     setQuestionQuery((query) => {
+    //         return { ...query, status }
+    //     })
+    // }
 
     const clickSearch = (text: string) => {
         if (text.length <= 1) {
@@ -51,25 +68,18 @@ export const Page = () => {
     }
 
     const clickSort = (sortItem: SortItem) => {
-        const { orderBy, direction } = sortItem
-        setQuestionQuery((query) => {
-            return { ...query, orderBy, direction }
-        })
+        sortQuestions(sortItem)
         onCloseSortDrawer()
     }
 
     const clickFilter = (categories: QACategory[]) => {
-        setQuestionQuery((query) => {
-            return { ...query, categories }
-        })
+        filterQuestions(categories)
         setCategoryCount(categories.length)
         onCloseCategoryDrawer()
     }
 
     const clickReset = () => {
-        setQuestionQuery((query) => {
-            return { ...query, categories: [] }
-        })
+        resetCategories()
         setCategoryCount(0)
     }
 
@@ -92,7 +102,7 @@ export const Page = () => {
                 </Box>
             </VStack>
             <QACardWindow>
-                <QACardList questions={questions} isLoading={isLoading} changeStatus={changeQuestionStatus} />
+                <QACardList questions={questions} isLoading={isLoading} changeStatus={changeStatus} />
             </QACardWindow>
             <Box display={{ base: 'block', md: 'none' }}>
                 <SortDrawer onClose={onCloseSortDrawer} isOpen={isOpenSortDrawer} clickSort={clickSort} />
