@@ -3,7 +3,6 @@ import React, { ReactNode } from 'react'
 import CommonMeta from '../CommonMeta'
 import { Header } from '../Header'
 import { Footer } from './Footer'
-import { LeftBar } from './LeftBar'
 import { LeftBar2 } from './LeftBar2'
 import { RightBar } from '../RigthBar'
 

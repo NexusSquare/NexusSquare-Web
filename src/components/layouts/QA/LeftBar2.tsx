@@ -3,63 +3,60 @@ import {
     Box,
     Button,
     ButtonGroup,
+    Checkbox,
     HStack,
     Icon,
     IconButton,
     Input,
-    InputGroup,
-    InputLeftElement,
-    Popover,
-    PopoverArrow,
-    PopoverBody,
-    PopoverCloseButton,
-    PopoverContent,
-    PopoverHeader,
-    PopoverTrigger,
     Select,
-    Spacer,
     Text,
     VStack,
+    Wrap,
+    WrapItem,
 } from '@chakra-ui/react'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { FormEventHandler, ReactNode } from 'react'
-import { useState } from 'react'
-import { useRef } from 'react'
-import ChakraNextImage from '../../common/chakraNextImage'
+import React, { ChangeEvent, FormEventHandler, ReactNode, useRef, useState } from 'react'
+import { LINKS } from '../../../constants/links'
+import QACategories from '../../../constants/qa/qaCategories'
+import { QACategory } from '../../../constants/query'
+import { SORT, SortItem } from '../../../constants/sort'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { SecondaryButton } from '../../common/SecondaryButton'
 
 interface Props {
     children?: ReactNode
     windowH: number
 }
-interface NavButtonProps {
-    imageSrc: string
-    altText: string
-    name: string
-    url: string
-}
 
 export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
-    const CATEGORY_IMAGE_PATH: string = '/images/category.png'
-    const ALL_Q_IMAGE_PATH: string = '/images/all.png'
-    const RANKING_IMAGE_PATH: string = '/images/crown.png'
+    const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
-    const [title, setTitle] = useState<string>('')
-    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value
-        setTitle(value)
+    const errorToast = useErrorToast()
+    const CATEGORIES = Object.values(QACategories)
+    const [categories, setCategories] = useState<QACategory[]>([])
+    const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {
+        if (e.target.checked) {
+            setCategories((cats) => [...cats, category])
+        } else {
+            setCategories((cats) => cats.filter((c) => c !== category))
+        }
     }
-    const onClickHandler = (e: React.FormEvent) => {
-        e.preventDefault()
-        if (title === '') {
+    const onClickSearch = (text?: string) => {
+        if (!text) return
+        if (text.length <= 1) {
+            errorToast('2文字以上入力してください')
             return
         }
-        console.log('router.push!')
-        router.push({
-            pathname: '/qa/result',
-            query: { title: title },
-        })
+        router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
+        resetSearchField()
+    }
+    const resetSearchField = () => {
+        if (!inputRef.current) return
+        inputRef.current.value = ''
+    }
+
+    const onClickRest = () => {
+        router.push(LINKS.QUESTION)
     }
     return (
         <VStack
@@ -79,35 +76,68 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
         >
             <VStack spacing={4} w="full" display={{ base: 'none', xl: 'flex' }}>
                 <Box w="full">
-                    <HStack justify={'space-between'} w="full">
+                    <HStack justify={'space-between'} w="full" mb={2}>
                         <Text fontSize={'2xl'} fontWeight={'bold'}>
                             検索条件
                         </Text>
-                        <SecondaryButton type="button" buttonText="リセット" />
+                        <SecondaryButton type="button" buttonText="リセット" onClick={onClickRest} />
                     </HStack>
-                    <Text color="gray.600">現在の検索結果：</Text>
+                    <Text color="gray.600" fontWeight={'bold'}>
+                        現在の検索結果：
+                    </Text>
                     <HStack w="full">
-                        <Input placeholder="キーワード検索" w="full" borderRadius={'sm'} bgColor={'white'}></Input>
-                        <Button bgColor={'mainColor'} color="white" borderRadius={'sm'}>
+                        <Input
+                            placeholder="キーワード検索"
+                            w="full"
+                            borderRadius={'sm'}
+                            bgColor={'white'}
+                            ref={inputRef}
+                        ></Input>
+                        <Button
+                            bgColor={'mainColor'}
+                            color="white"
+                            borderRadius={'sm'}
+                            onClick={() => onClickSearch(inputRef.current?.value)}
+                        >
                             <SearchIcon />
                         </Button>
                     </HStack>
                 </Box>
+
                 <Box w="full">
-                    <Text color="gray.600">並び替え</Text>
-                    <Select placeholder="新着順（デフォルト）" bgColor={'white'}>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
+                    <Text color="gray.600" mb={2} fontWeight={'bold'}>
+                        並び替え
+                    </Text>
+                    <Select bgColor={'white'}>
+                        {SORT.map((s, index) => {
+                            return (
+                                <option value={s.value} key={index}>
+                                    {s.value}
+                                </option>
+                            )
+                        })}
                     </Select>
                 </Box>
+
                 <Box w="full">
-                    <Text color="gray.600">カテゴリー</Text>
-                    <Select placeholder="なし" bgColor={'white'}>
-                        <option value="option1">Option 1</option>
-                        <option value="option2">Option 2</option>
-                        <option value="option3">Option 3</option>
-                    </Select>
+                    <Text color="gray.600 " mb={2} fontWeight={'bold'}>
+                        カテゴリー
+                    </Text>
+                    <Wrap spacing="4" bg={'white'} p="4">
+                        {CATEGORIES.map((c, index) => {
+                            return (
+                                <WrapItem key={index}>
+                                    <Checkbox
+                                        colorScheme="orange"
+                                        onChange={(e) => onChangeCategories(e, c)}
+                                        isChecked={categories.includes(c)}
+                                    >
+                                        {c}
+                                    </Checkbox>
+                                </WrapItem>
+                            )
+                        })}
+                    </Wrap>
                 </Box>
             </VStack>
         </VStack>
