@@ -15,25 +15,32 @@ import {
     WrapItem,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React, { ChangeEvent, FormEventHandler, ReactNode, useRef, useState } from 'react'
-import { LINKS } from '../../../constants/links'
-import QACategories from '../../../constants/qa/qaCategories'
-import { QACategory } from '../../../constants/query'
-import { SORT, SortItem } from '../../../constants/sort'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import { SecondaryButton } from '../../common/SecondaryButton'
+import React, { ChangeEvent, FormEventHandler, ReactNode, useEffect, useRef, useState } from 'react'
+import { LINKS } from '../../../../constants/links'
+import QACategories from '../../../../constants/qa/qaCategories'
+import { QuestionStatus } from '../../../../constants/qa/status'
+import { QACategory } from '../../../../constants/query'
+import { SORT, SortItem } from '../../../../constants/sort'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useDidUpdateEffect } from '../../../../hooks/useDidUpdateEffect'
+import { SecondaryButton } from '../../../common/SecondaryButton'
 
 interface Props {
     children?: ReactNode
-    windowH: number
+    sortQuestions: (value: SortItem) => void
+    filterQuestions: (value: QACategory[]) => void
+    questionNum: number
 }
 
-export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
+export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, questionNum }: Props): JSX.Element => {
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
     const errorToast = useErrorToast()
     const CATEGORIES = Object.values(QACategories)
     const [categories, setCategories] = useState<QACategory[]>([])
+    const initSortValue = SORT[0]
+    const [sortItem, setSortItem] = useState<SortItem>(initSortValue)
+
     const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {
         if (e.target.checked) {
             setCategories((cats) => [...cats, category])
@@ -41,6 +48,13 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
             setCategories((cats) => cats.filter((c) => c !== category))
         }
     }
+
+    const onChangeSortItem = (e: ChangeEvent<HTMLSelectElement>) => {
+        const sortItem = SORT.find((s) => s.value === e.target.value)
+        if (!sortItem) return
+        setSortItem(sortItem)
+    }
+
     const onClickSearch = (text?: string) => {
         if (!text) return
         if (text.length <= 1) {
@@ -58,6 +72,19 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
     const onClickRest = () => {
         router.push(LINKS.QUESTION)
     }
+
+    // NOTE:カテゴリーを更新する
+    useDidUpdateEffect(() => {
+        if (categories.length > 10) {
+            errorToast('選択できるカテゴリーは10個までです。')
+            return
+        }
+        filterQuestions(categories)
+    }, [categories])
+
+    useDidUpdateEffect(() => {
+        sortQuestions(sortItem)
+    }, [sortItem])
     return (
         <VStack
             as="nav"
@@ -82,8 +109,8 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
                         </Text>
                         <SecondaryButton type="button" buttonText="リセット" onClick={onClickRest} />
                     </HStack>
-                    <Text color="gray.600" fontWeight={'bold'}>
-                        現在の検索結果：
+                    <Text color="gray.600" fontWeight={'bold'} mb={2}>
+                        現在の検索結果：{questionNum}件
                     </Text>
                     <HStack w="full">
                         <Input
@@ -108,7 +135,7 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
                     <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         並び替え
                     </Text>
-                    <Select bgColor={'white'}>
+                    <Select bgColor={'white'} onChange={onChangeSortItem}>
                         {SORT.map((s, index) => {
                             return (
                                 <option value={s.value} key={index}>
@@ -120,7 +147,7 @@ export const LeftBar2: Function = ({ children }: Props): JSX.Element => {
                 </Box>
 
                 <Box w="full">
-                    <Text color="gray.600 " mb={2} fontWeight={'bold'}>
+                    <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         カテゴリー
                     </Text>
                     <Wrap spacing="4" bg={'white'} p="4">

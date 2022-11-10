@@ -5,20 +5,33 @@ import QACardList from '../../../organisms/qa/QACardList'
 import { SearchForm } from '../../../molecules/qa/SearchForm'
 import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/question/useFetchQuestion'
 import { QACategory, QuestionQuery } from '../../../../constants/query'
-import { STATUS } from '../../../../constants/qa/status'
+import { QuestionStatus, STATUS } from '../../../../constants/qa/status'
 import { useRouter } from 'next/router'
 import { LINKS } from '../../../../constants/links'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { SortDrawer } from '../../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
 import { SortItem } from '../../../../constants/sort'
+import { Question } from '../../../../types/domain/qa'
 
-type QuestionStatus = keyof typeof STATUS
-
-export const Page = () => {
-    const router = useRouter()
-    const isReady = router.isReady
-    const { title } = router.query
+interface Props {
+    questions: Question[]
+    isLoading: boolean
+    sortQuestions: (value: SortItem) => void
+    filterQuestions: (value: QACategory[]) => void
+    changeStatus: (value: QuestionStatus) => void
+    resetCategories: () => void
+    title?: string
+}
+export const Page = ({
+    questions,
+    isLoading,
+    sortQuestions,
+    filterQuestions,
+    changeStatus,
+    resetCategories,
+    title,
+}: Props) => {
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
         isOpen: isOpenCategoryDrawer,
@@ -26,33 +39,11 @@ export const Page = () => {
         onClose: onCloseCategoryDrawer,
     } = useDisclosure()
     const [categoryCount, setCategoryCount] = useState(0)
-
-    const initQuestionQuery: QuestionQuery = {
-        status: STATUS.NOT_SOLVED,
-        orderBy: 'createAt',
-        direction: 'desc',
-        categories: [],
-        title: title ? String(title) : undefined,
-    }
-
-    const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
-
-    // NOTE routerが準備されるまでに時間がかかるため、タイトル更新を非同期にする
-    useEffect(() => {
-        if (!title) return
-        setQuestionQuery((query: QuestionQuery) => {
-            return { ...query, title: String(title) }
-        })
-    }, [isReady, title])
-
+    const router = useRouter()
     const errorToast = useErrorToast()
 
-    const { data: questions = [], isLoading } = useFetchQuestionsByTitle(questionQuery)
-
     const changeQuestionStatus = (status: QuestionStatus) => {
-        setQuestionQuery((query: QuestionQuery) => {
-            return { ...query, status }
-        })
+        changeStatus(status)
     }
 
     const clickSearch = (text: string) => {
@@ -64,25 +55,18 @@ export const Page = () => {
     }
 
     const clickSort = (sortItem: SortItem) => {
-        const { orderBy, direction } = sortItem
-        setQuestionQuery((query) => {
-            return { ...query, orderBy, direction }
-        })
+        sortQuestions(sortItem)
         onCloseSortDrawer()
     }
 
     const clickFilter = (categories: QACategory[]) => {
-        setQuestionQuery((query) => {
-            return { ...query, categories }
-        })
+        filterQuestions(categories)
         setCategoryCount(categories.length)
         onCloseCategoryDrawer()
     }
 
     const clickReset = () => {
-        setQuestionQuery((query) => {
-            return { ...query, categories: [] }
-        })
+        resetCategories()
         setCategoryCount(0)
     }
     return (

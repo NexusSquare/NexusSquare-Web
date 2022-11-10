@@ -96,7 +96,7 @@ export const Page = (): JSX.Element => {
                     </ListItem>
                 </UnorderedList>
             </Box>
-            <VStack as="form" onSubmit={handleSubmit(onSubmitQuestion)} w="full" spacing={4}>
+            <VStack as="form" onSubmit={handleSubmit(onSubmitQuestion)} w="full" spacing={8}>
                 <FormControl isInvalid={errors.category1 !== undefined} isRequired>
                     <FormLabel htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
                         カテゴリ1

@@ -2,7 +2,7 @@ import { useDisclosure } from '@chakra-ui/react'
 import { NextPageWithLayout } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import { Layout } from '../../components/layouts/QA/Layout'
+import { Layout } from '../../components/layouts/QA/Search/Layout'
 import { Page } from '../../components/pages/QA/Page'
 import { LINKS } from '../../constants/links'
 import { STATUS } from '../../constants/qa/status'
@@ -14,14 +14,6 @@ import { Question } from '../../types/domain/qa'
 
 type QuestionStatus = keyof typeof STATUS
 
-interface Props {
-    questions: Question[]
-    isLoading: boolean
-    sortQuestions: (value: SortItem) => void
-    filterQuestions: (value: QACategory[]) => void
-    changeStatus: (value: QuestionStatus) => void
-    resetCategories: () => void
-}
 const QAHome: NextPageWithLayout = () => {
     const initQuestionQuery: QuestionQuery = {
         status: STATUS.NOT_SOLVED,
@@ -53,19 +45,26 @@ const QAHome: NextPageWithLayout = () => {
         })
     }
     return (
-        <Page
-            questions={questions}
-            isLoading={isLoading}
+        <Layout
+            pageName="Q&Aトップ"
             sortQuestions={sortQuestions}
             filterQuestions={filterQuestions}
-            changeStatus={changeQuestionStatus}
-            resetCategories={resetCategories}
-        />
+            questionNum={questions.length}
+        >
+            <Page
+                questions={questions}
+                isLoading={isLoading}
+                sortQuestions={sortQuestions}
+                filterQuestions={filterQuestions}
+                changeStatus={changeQuestionStatus}
+                resetCategories={resetCategories}
+            />
+        </Layout>
     )
 }
 
-QAHome.getLayout = (page) => {
-    return <Layout pageName="Q&Aトップ">{page}</Layout>
-}
+// QAHome.getLayout = (page) => {
+//     return <Layout pageName="Q&Aトップ">{page}</Layout>
+// }
 
 export default QAHome

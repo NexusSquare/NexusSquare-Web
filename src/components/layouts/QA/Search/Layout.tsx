@@ -1,24 +1,30 @@
 import { Box, HStack, VStack } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
-import CommonMeta from '../CommonMeta'
-import { Header } from '../Header'
-import { Footer } from './Footer'
-import { LeftBar } from '../LeftBar'
-import { RightBar } from '../RigthBar'
+import CommonMeta from '../../CommonMeta'
+import { Header } from '../../Header'
+import { Footer } from '../../Footer'
+import { LeftBar } from './LeftBar'
+import { RightBar } from '../../RigthBar'
+import { SortItem } from '../../../../constants/sort'
+import { QACategory } from '../../../../constants/query'
+import { QuestionStatus } from '../../../../constants/qa/status'
 
 interface Props {
     children?: ReactNode
     pageName: string
+    sortQuestions: (value: SortItem) => void
+    filterQuestions: (value: QACategory[]) => void
+    questionNum: number
 }
 
-export const Layout = ({ children, pageName }: Props): JSX.Element => {
+export const Layout = ({ children, pageName, sortQuestions, filterQuestions, questionNum }: Props): JSX.Element => {
     const siteTitle: string = `nexussquare - ${pageName}`
     return (
         <>
             <CommonMeta siteTitle={siteTitle} />
             <Header />
             <HStack spacing="0px" paddingTop={{ base: '100px', md: '60px' }}>
-                <LeftBar />
+                <LeftBar sortQuestions={sortQuestions} filterQuestions={filterQuestions} questionNum={questionNum} />
                 <VStack
                     w={{
                         base: '100%',
