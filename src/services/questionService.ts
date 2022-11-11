@@ -1,5 +1,6 @@
 import { Timestamp } from 'firebase/firestore'
 import { bigram } from 'n-gram'
+import { ERROR } from '../constants/errors'
 import { STATUS } from '../constants/qa/status'
 import { Direction, OrderBy, QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
@@ -25,9 +26,12 @@ export const questionService = {
     },
     async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
+        if (!userId) {
+            throw new Error(ERROR.INVALID_USER_TOKEN)
+        }
         const gram: string[] = bigram(questionReq.title)
         const question: Omit<Question, 'questionId'> = {
-            userId: userId!,
+            userId: userId,
             postUser: {
                 nickname: postUser.nickname,
                 department: postUser.isDepartmentAnonymous ? null : postUser.department,

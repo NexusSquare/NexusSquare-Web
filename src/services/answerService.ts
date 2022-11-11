@@ -4,6 +4,7 @@ import { answerRepository } from '../repositories/answerRepository'
 import { Answer } from '../types/domain/qa/Answer'
 import { AnswerReq } from '../types/api/req/AnswerReq'
 import { User } from '../types/domain/user'
+import { ERROR } from '../constants/errors'
 
 export const answerService = {
     async findByQuestionId(questionId: string): Promise<Answer[]> {
@@ -14,10 +15,13 @@ export const answerService = {
     },
     async save(answerReq: AnswerReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
+        if (!userId) {
+            throw new Error(ERROR.INVALID_USER_TOKEN)
+        }
         const answer: Omit<Answer, 'answerId'> = {
             questionId: answerReq.questionId,
             questionTitle: answerReq.questionTitle,
-            userId: userId!,
+            userId: userId,
             postUser: {
                 nickname: postUser.nickname,
                 department: postUser.isDepartmentAnonymous ? null : postUser.department,

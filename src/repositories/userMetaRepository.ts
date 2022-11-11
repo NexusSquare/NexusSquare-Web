@@ -3,10 +3,11 @@ import { db } from '../plugins/firebase/client'
 import { UserMeta } from '../types/domain/user'
 
 export const userMetaRepository = {
-    async findOne(uid: string): Promise<UserMeta> {
+    async findOne(uid: string): Promise<UserMeta | undefined> {
         console.log('userMeta fetch')
         const userRef = doc(db, `user_meta/${uid}`)
         const res = await getDoc(userRef)
+        if (!res.exists()) return undefined
         const oneUser = res.data() as UserMeta
         return oneUser
     },
