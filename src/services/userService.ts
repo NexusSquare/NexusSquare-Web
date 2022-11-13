@@ -17,6 +17,9 @@ export const userService = {
         if (!userId) {
             throw new Error(ERROR.INVALID_USER_TOKEN)
         }
+        if (await isExist(userId)) {
+            throw new Error(ERROR.EXISTS_DOCUMENT_ALREADY)
+        }
         const user: Omit<User, 'userId'> = {
             department: userReq.department,
             subject: userReq.subject,
@@ -42,4 +45,9 @@ export const userService = {
         }
         return userRepository.update(user, userId)
     },
+}
+
+const isExist = async (userId: string): Promise<boolean> => {
+    const user = await userRepository.findOne(userId)
+    return Boolean(user)
 }
