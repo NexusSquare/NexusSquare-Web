@@ -4,14 +4,14 @@ import { BsTwitter } from 'react-icons/bs'
 import ChakraNextImage from '../common/chakraNextImage'
 
 export const Footer = (): JSX.Element => {
-    const LOGO_URL: string = '/images/nexus-square.png'
+    const LOGO_URL: string = '/images/logo.jpg'
     const TWITTER_URL: string = 'https://twitter.com/NexusSquare_apu'
     return (
         <VStack as="footer" bgColor="#FF9037" spacing="0px" w="100%" minH="200px" paddingTop="50px">
             <Stack w={{ base: '100%', md: '80%' }} direction={{ base: 'column', md: 'row' }}>
-                {/* <Box d="flex" justifyContent="center">
-                    <ChakraNextImage src={LOGO_URL} alt="ロゴ" width={270} height={54}></ChakraNextImage>
-                </Box> */}
+                <Box d="flex" justifyContent="center">
+                    <ChakraNextImage src={LOGO_URL} alt="NexusSquare" width={200} height={50}></ChakraNextImage>
+                </Box>
                 <Spacer />
                 <Stack as="nav" direction={{ base: 'column', md: 'row' }} align="center" spacing="30px">
                     <Link href="/" passHref>
