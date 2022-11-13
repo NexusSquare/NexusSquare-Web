@@ -15,7 +15,7 @@ export const Layout = ({ children, pageName }: Props): JSX.Element => {
         <>
             <CommonMeta siteTitle={siteTitle} />
             <Header />
-            <Box paddingTop={{ base: '100px', md: '60px' }} as="main">
+            <Box paddingTop={{ base: '96px', md: '56px' }} as="main">
                 {children}
             </Box>
             <Footer />

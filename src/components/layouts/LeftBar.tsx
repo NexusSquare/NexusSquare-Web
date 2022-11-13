@@ -45,12 +45,12 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
             aria-labelledby="QA navigation"
             bgColor="subColor"
             paddingTop={6}
-            h="calc(100vh - 60px)"
+            h="calc(100vh - 56px)"
             w={{ base: 'calc((100vw - 800px) / 2)', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
-            minW="60px"
+            minW="56px"
             display={{ base: 'none', sm: 'flex' }}
             position="fixed"
-            top={{ base: '98px', md: '60px' }}
+            top={{ base: '94px', md: '56px' }}
             left="0"
             paddingX={8}
             alignItems={'start'}

@@ -46,7 +46,7 @@ interface headerFuncProps {
 }
 
 export const Header = memo(({ children }: Props): JSX.Element => {
-    const LOGO_URL: string = '/images/logo2.jpg'
+    const LOGO_URL: string = '/images/logo.jpg'
     const { user } = useUser()
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
@@ -320,7 +320,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
             boxShadow="sm"
         >
             <HStack
-                h="60px"
+                h="56px"
                 paddingX={{ base: '10px', sm: '50px' }}
                 paddingY={{ base: '0px', md: '10px' }}
                 w="100%"
@@ -337,20 +337,12 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                     >
                         <Link href="/" passHref>
                             <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
-                                {/* <ChakraNextImage
-                                src={LOGO_URL}
-                                alt="ロゴ"
-                                minW="120px"
-                                minH="30px"
-                                maxW="180px"
-                                maxH="45px"
-                                width={180}
-                                height={45}
-                                borderColor="#FF9037"
-                            ></ChakraNextImage> */}
-                                <Box as="h2" color={'white'} fontWeight={'bold'} fontSize="2xl" mr={4}>
-                                    NexusSquare
-                                </Box>
+                                <ChakraNextImage
+                                    src={LOGO_URL}
+                                    alt="NexusSquare"
+                                    width={180}
+                                    height={45}
+                                ></ChakraNextImage>
                             </Box>
                         </Link>
                     </Box>
@@ -360,7 +352,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         paddingX="0.5%"
                         aria-labelledby="jump to other functions"
                         display={{ base: 'none', md: 'flex' }}
-                        paddingTop={2}
+                        paddingTop={1}
                     >
                         <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
                         <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />

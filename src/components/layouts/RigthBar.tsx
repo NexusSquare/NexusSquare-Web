@@ -12,12 +12,12 @@ export const RightBar = ({ children }: Props): JSX.Element => {
         <VStack
             as="aside"
             bgColor="#FBF6F0"
-            h="calc(100vh - 60px)"
+            h="calc(100vh - 56px)"
             w="calc((100vw - 800px) / 2)"
             minW="240px"
             display={{ base: 'none', md: 'flex' }}
             position="fixed"
-            top="60px"
+            top="56px"
             right="0"
         >
             <VStack spacing="15px" margin="30px 10px">

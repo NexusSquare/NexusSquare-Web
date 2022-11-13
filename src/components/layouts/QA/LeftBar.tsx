@@ -65,8 +65,8 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
                 as="a"
                 href={props.url}
                 bgColor="#FFDA77"
-                h="60px"
-                w={{ base: '60px', xl: '210px' }}
+                h="56px"
+                w={{ base: '56px', xl: '210px' }}
                 borderRadius="30px"
                 boxShadow="md"
                 paddingLeft="5px"
@@ -88,7 +88,7 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
                 </Box>
                 <Text
                     justifySelf="center"
-                    w="calc(100% - 60px)"
+                    w="calc(100% - 56px)"
                     fontSize="2xl"
                     fontWeight="normal"
                     display={{ base: 'none', xl: 'flex' }}
@@ -104,15 +104,15 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
             aria-labelledby="QA navigation"
             bgColor="#FBF6F0"
             paddingTop="20px"
-            h="calc(100vh - 60px)"
+            h="calc(100vh - 56px)"
             w={{ base: 'calc((100vw - 800px) / 2)', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
-            minW="60px"
+            minW="56px"
             display={{ base: 'none', sm: 'flex' }}
             position="fixed"
-            top={{ base: '98px', md: '60px' }}
+            top={{ base: '98px', md: '56px' }}
             left="0"
         >
-            <VStack spacing="60px" margin="30px 10px">
+            <VStack spacing="56px" margin="30px 10px">
                 <NavButton imageSrc={CATEGORY_IMAGE_PATH} altText="カテゴリ一覧" name="カテゴリ" url="/qa/category" />
                 <NavButton imageSrc={ALL_Q_IMAGE_PATH} altText="Q&A一覧" name="Q&A一覧" url="/qa/all" />
                 <NavButton imageSrc={RANKING_IMAGE_PATH} altText="ランキング" name="ランキング" url="/qa/ranking" />
@@ -121,8 +121,8 @@ export const LeftBar: Function = ({ children }: Props): JSX.Element => {
                         <Button
                             variant="solid"
                             bgColor="#FFDA77"
-                            h="60px"
-                            w="60px"
+                            h="56px"
+                            w="56px"
                             borderRadius="30px"
                             boxShadow="md"
                             paddingLeft="5px"
