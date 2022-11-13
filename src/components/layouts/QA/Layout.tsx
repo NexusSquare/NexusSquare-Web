@@ -3,7 +3,7 @@ import React, { ReactNode } from 'react'
 import CommonMeta from '../CommonMeta'
 import { Header } from '../Header'
 import { Footer } from './Footer'
-import { LeftBar } from '../LeftBar'
+import { LeftBar } from './LeftBar'
 import { RightBar } from '../RigthBar'
 
 interface Props {

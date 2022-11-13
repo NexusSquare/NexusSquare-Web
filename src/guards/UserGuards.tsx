@@ -10,11 +10,11 @@ type Props = {
 }
 
 export const UserGuards = ({ children }: Props) => {
-    const { data: user, isLoading } = useAuth()
+    const { user } = useUser()
     const router = useRouter()
     const isReady = router.isReady
 
-    if (!isReady || isLoading) return <Loading />
+    if (!isReady) return <Loading />
 
     if (!user && router.pathname !== LINKS.LOGIN) {
         router.push(LINKS.LOGIN)

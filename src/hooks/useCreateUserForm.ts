@@ -12,7 +12,7 @@ export const useCreateUserForm = (options?: any) => {
         watch,
         formState: { errors, isSubmitting },
     } = useForm<UserReq>(options)
-    const [formValue, setFormValue] = useState(undefined)
+
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const watchDepartment = watch('department')
 
@@ -51,7 +51,6 @@ export const useCreateUserForm = (options?: any) => {
                 break
         }
         return () => {
-            setFormValue(undefined)
             setSelectSubjects([])
         }
     }, [watchDepartment])

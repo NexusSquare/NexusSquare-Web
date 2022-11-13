@@ -2,20 +2,21 @@ import { Box, HStack, VStack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
 import { UserInfo } from '../../organisms/profile/user/UserInfo'
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
-import { USER_ID } from '../../../constants/token'
-import { useSession } from '../../../hooks/useSession'
 import { Loading } from '../../common/Loading'
 import { OthersInfo } from '../../organisms/profile/user/OthersInfo'
 import { UserHistory } from '../../organisms/profile/history/UserHistory'
 import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../common/BackButton'
+import { useUser } from '../../../store/atom'
 interface Props {
     userId: string
 }
 // TODO　 コンポーネント分割（責務の分離）
 export const Page = ({ userId }: Props): JSX.Element => {
-    const { value: myUserId } = useSession(USER_ID)
+    const { user: currentUser } = useUser()
+    const myUserId = currentUser?.userId
+
     const { data: user, refetch: refetchUser } = useFetchUser(userId)
     const { data: userMeta } = useFetchUserMeta(userId)
     const {

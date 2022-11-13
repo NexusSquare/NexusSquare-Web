@@ -3,18 +3,15 @@ import React, { useEffect, useRef, useState } from 'react'
 import QACardWindow from '../../organisms/qa/QACardWindow'
 import QACardList from '../../organisms/qa/QACardList'
 import { SearchForm } from '../../molecules/qa/SearchForm'
-import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../hooks/question/useFetchQuestion'
-import { QACategory, QuestionQuery } from '../../../constants/query'
 import { STATUS } from '../../../constants/qa/status'
 import { useRouter } from 'next/router'
 import { LINKS } from '../../../constants/links'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import { Drawer } from '../../common/Drawer'
-import { PrimaryButton } from '../../common/PrimaryButton'
-import { SORT, SortItem } from '../../../constants/sort'
+import { SortItem } from '../../../constants/sort'
 import { SortDrawer } from '../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../organisms/qa/CategoryDrawer'
 import { Question } from '../../../types/domain/qa'
+import { QACategory } from '../../../constants/query'
 
 type QuestionStatus = keyof typeof STATUS
 
@@ -35,29 +32,15 @@ export const Page = ({
     changeStatus,
     resetCategories,
 }: Props) => {
-    // const initQuestionQuery: QuestionQuery = {
-    //     status: STATUS.NOT_SOLVED,
-    //     orderBy: 'createAt',
-    //     direction: 'desc',
-    //     categories: [],
-    // }
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
         isOpen: isOpenCategoryDrawer,
         onOpen: onOpenCategoryDrawer,
         onClose: onCloseCategoryDrawer,
     } = useDisclosure()
-    // const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
-    // const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
     const router = useRouter()
     const errorToast = useErrorToast()
     const [categoryCount, setCategoryCount] = useState(0)
-
-    // const changeQuestionStatus = (status: QuestionStatus) => {
-    //     setQuestionQuery((query) => {
-    //         return { ...query, status }
-    //     })
-    // }
 
     const clickSearch = (text: string) => {
         if (text.length <= 1) {

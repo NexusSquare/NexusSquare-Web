@@ -29,8 +29,6 @@ import { Notification } from '../../types/domain/notification/Notification'
 import { LINKS } from '../../constants/links'
 import { useLogOut } from '../../hooks/authentication'
 import { useUser, useUserMeta } from '../../store/atom'
-import { useSession } from '../../hooks/useSession'
-import { USER_ID } from '../../constants/token'
 import { useFetchNotifications } from '../../hooks/notification/useFetchNotification'
 import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
 import { useUpdateNotification } from '../../hooks/notification/useUpdateNotification'
@@ -48,20 +46,18 @@ interface headerFuncProps {
 }
 
 export const Header = memo(({ children }: Props): JSX.Element => {
-    console.log('render')
     const LOGO_URL: string = '/images/logo2.jpg'
-    const { value: uid } = useSession(USER_ID)
     const { user } = useUser()
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
-    const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(uid)
+    const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(user?.userId)
     const { mutate: updateNotification } = useUpdateNotification()
     const errorToast = useErrorToast()
     const router = useRouter()
 
     const onClickProfile = () => {
-        if (!uid) return
-        router.push(LINKS.PROFILE(uid))
+        if (!user?.userId) return
+        router.push(LINKS.PROFILE(user.userId))
     }
 
     const onClickRegister = () => {

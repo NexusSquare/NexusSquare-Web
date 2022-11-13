@@ -1,26 +1,4 @@
-import { SearchIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    HStack,
-    Icon,
-    IconButton,
-    Input,
-    InputGroup,
-    InputLeftElement,
-    Popover,
-    PopoverArrow,
-    PopoverBody,
-    PopoverCloseButton,
-    PopoverContent,
-    PopoverHeader,
-    PopoverTrigger,
-    Select,
-    Spacer,
-    Text,
-    VStack,
-} from '@chakra-ui/react'
+import { VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React, { FormEventHandler, ReactNode } from 'react'

@@ -9,6 +9,7 @@ import {
     HStack,
     Input,
     Select,
+    useDisclosure,
     VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
@@ -21,15 +22,25 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LINKS } from '../../../../constants/links'
 import { usePostUser } from '../../../../hooks/user'
 import { UserReq } from '../../../../types/api/req/UserReq'
+import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { RuleModal } from '../../../molecules/sign/RuleModal'
+import { useState } from 'react'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
-    const { register, handleSubmit, errors, isSubmitting, selectSubjects } = useCreateUserForm()
+    const { register, handleSubmit, errors, selectSubjects } = useCreateUserForm()
+    const [formValue, setFormValue] = useState<UserReq>()
     const [userMutate, userMetaMutate] = usePostUser()
     const { mutate: postUser, isLoading: postUserLoading } = userMutate
     const { mutate: postUserMeta, isLoading: postUserMetaLoading } = userMetaMutate
     const loading: boolean = postUserLoading || postUserMetaLoading
     const errorToast = useErrorToast()
+    const { isOpen: isOpenRuleModal, onOpen: onOpenRuleModal, onClose: onCloseRuleModal } = useDisclosure()
+
+    const onSubmit = handleSubmit((value: UserReq) => {
+        setFormValue(value)
+        onOpenRuleModal()
+    })
 
     const onSuccessPostUser = async (formValue: UserReq) => {
         postUserMeta(formValue, {
@@ -42,7 +53,8 @@ export const Page = (): JSX.Element => {
         })
     }
 
-    const onSubmitUserProfile = async (formValue: UserReq) => {
+    const onClickAgreeRule = async (formValue?: UserReq) => {
+        if (!formValue) return
         postUser(formValue, {
             onSuccess: () => {
                 onSuccessPostUser(formValue)
@@ -52,29 +64,10 @@ export const Page = (): JSX.Element => {
             },
         })
     }
-
     return (
-        <HStack w="100%" h="full" paddingX={{ base: 4, md: 0 }}>
-            <VStack
-                bg="white"
-                w={{ base: 'full', md: '2xl' }}
-                marginX={'auto'}
-                paddingY={12}
-                paddingX={{ base: 8, md: 24 }}
-            >
-                <Box as="h2" fontWeight={'bold'} fontSize={'xl'}>
-                    アカウント登録
-                </Box>
-                <Divider />
-
-                <VStack
-                    as="form"
-                    onSubmit={handleSubmit((formValue) => onSubmitUserProfile(formValue))}
-                    w={'full'}
-                    paddingTop="20px"
-                    alignItems="center"
-                    spacing={4}
-                >
+        <>
+            <FormLayout title="アカウント登録">
+                <VStack as="form" onSubmit={onSubmit} w={'full'} paddingTop="20px" alignItems="center" spacing={4}>
                     <FormControl isInvalid={errors.name !== undefined} isRequired>
                         <FormLabel fontWeight={'bold'}>名前</FormLabel>
                         <Input
@@ -164,7 +157,11 @@ export const Page = (): JSX.Element => {
                         <FormErrorMessage>{errors.grade && errors.grade.message}</FormErrorMessage>
                     </FormControl>
                     <FormControl isInvalid={errors.isDepartmentAnonymous !== undefined}>
-                        <Checkbox id="isDepartmentAnonymous" {...register('isDepartmentAnonymous')}>
+                        <Checkbox
+                            id="isDepartmentAnonymous"
+                            {...register('isDepartmentAnonymous')}
+                            colorScheme="orange"
+                        >
                             投稿したときの学部を非表示にする
                         </Checkbox>
                         <FormHelperText>あとから編集することができます</FormHelperText>
@@ -180,7 +177,15 @@ export const Page = (): JSX.Element => {
                         disabled={loading}
                     />
                 </VStack>
-            </VStack>
-        </HStack>
+            </FormLayout>
+            <RuleModal
+                isOpen={isOpenRuleModal}
+                onClose={onCloseRuleModal}
+                isLoading={loading}
+                onClick={() => {
+                    onClickAgreeRule(formValue)
+                }}
+            />
+        </>
     )
 }

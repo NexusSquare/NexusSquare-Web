@@ -12,7 +12,6 @@ import { useUpdateUser } from '../../../../hooks/user/useUpdateUser'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { STORAGE_URL } from '../../../../constants/storage'
-import { useSession } from '../../../../hooks/useSession'
 import { useUploadFile } from '../../../../hooks/storege/useUploadFile'
 import { useFile } from '../../../../hooks/useFile'
 import { Refetch } from '../../../../hooks/react-query/type'
@@ -20,7 +19,7 @@ import { Refetch } from '../../../../hooks/react-query/type'
 interface Props {
     user: User
     userMeta?: UserMeta
-    refetchUser: Refetch<User>
+    refetchUser: Refetch<User | undefined>
 }
 
 export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {

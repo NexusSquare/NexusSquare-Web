@@ -3,10 +3,11 @@ import { db } from '../plugins/firebase/client'
 import { User } from '../types/domain/user'
 
 export const userRepository = {
-    async findOne(uid: string): Promise<User> {
+    async findOne(uid: string): Promise<User | undefined> {
         console.log('user fetch')
         const userRef = doc(db, `users/${uid}`)
         const res = await getDoc(userRef)
+        if (!res.exists()) return undefined
         const oneUser = { ...(res.data() as User), userId: res.id }
         return oneUser
     },

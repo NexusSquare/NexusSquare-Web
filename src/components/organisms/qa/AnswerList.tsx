@@ -7,7 +7,7 @@ import { useUpdateAnswer } from '../../../hooks/answer/useUpdateAnswer'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { useBestAnswer } from '../../../hooks/question/useUpdateQuestion'
 import { useReport } from '../../../hooks/report/useReport'
-import { useSession } from '../../../hooks/useSession'
+import { useUser } from '../../../store/atom'
 import { AnswerReq, ReportReq } from '../../../types/api/req'
 import { Answer } from '../../../types/domain/qa/Answer'
 import { NoCards } from '../../common/NoCards'
@@ -43,7 +43,7 @@ export const AnswerList = ({
     isDeclareLoading,
     hasBestAnswer,
 }: Props) => {
-    const { value: userId } = useSession(USER_ID)
+    const userId = useUser().user?.userId
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
