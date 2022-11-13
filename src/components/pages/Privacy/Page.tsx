@@ -10,7 +10,7 @@ export const Page = (): JSX.Element => {
                 </Text>
                 <Divider />
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         第1条(個人情報取得)
                     </Heading>
                     <VStack spacing={2} align="left" w="full">
@@ -32,7 +32,7 @@ export const Page = (): JSX.Element => {
                 </VStack>
 
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         第2条(ユーザ情報の利用目的)
                     </Heading>
                     <Text fontSize="lg">本サービスのユーザ情報の利用目的といたしましては、以下のとおりです。</Text>
@@ -44,7 +44,7 @@ export const Page = (): JSX.Element => {
                 </VStack>
 
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         第3条(個人情報の開示)
                     </Heading>
                     <Text fontSize="lg">
@@ -56,7 +56,7 @@ export const Page = (): JSX.Element => {
                 </VStack>
 
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         第4条(第三者提供の制限)
                     </Heading>
                     <Text fontSize="lg">
@@ -89,7 +89,7 @@ export const Page = (): JSX.Element => {
                 </VStack>
 
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         第5条(プライバシーポリシーの変更)
                     </Heading>
                     <Text fontSize="lg">
@@ -98,7 +98,7 @@ export const Page = (): JSX.Element => {
                 </VStack>
 
                 <VStack align="left" w="full">
-                    <Heading as="h1" fontSize="24">
+                    <Heading as="h1" fontSize="20">
                         お問い合わせ
                     </Heading>
                     <Text fontSize="lg">
