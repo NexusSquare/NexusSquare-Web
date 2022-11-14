@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { HiDotsHorizontal } from 'react-icons/hi'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { convertTimestampToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../types/domain/qa/Answer'
 import { BiMedal } from 'react-icons/bi'
@@ -48,7 +48,7 @@ const AnswerCard = ({
     const router = useRouter()
     const date = convertTimestampToString(answer.createAt)
     const onClickUserInfo = () => {
-        router.push(LINKS.PROFILE(answer.userId))
+        router.push(PAGE_LINKS.PROFILE._USER_ID(answer.userId).URL)
     }
     return (
         <VStack

@@ -7,7 +7,7 @@ import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/q
 import { QACategory, QuestionQuery } from '../../../../constants/query'
 import { QuestionStatus, STATUS } from '../../../../constants/qa/status'
 import { useRouter } from 'next/router'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { SortDrawer } from '../../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
@@ -51,7 +51,7 @@ export const Page = ({
             errorToast('2文字以上入力してください')
             return
         }
-        router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
+        router.push({ pathname: PAGE_LINKS.QA.RESULT.URL, query: { title: text } })
     }
 
     const clickSort = (sortItem: SortItem) => {

@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import ChakraNextImage from '../../common/chakraNextImage'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 
 interface Props {
     children?: ReactNode
@@ -21,7 +21,7 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
     const RANKING_IMAGE_PATH: string = '/images/crown.png'
     const router = useRouter()
     const onClickPostButton = () => {
-        router.push(LINKS.QUESTION_POST)
+        router.push(PAGE_LINKS.QA.POST.URL)
     }
     const NavButton: React.VFC<NavButtonProps> = (props) => (
         <Link href={props.url} passHref>

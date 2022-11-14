@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useFetchAnswersByUserId } from '../../../../hooks/answer/useFethcAnswer'
 import { useFetchHistories } from '../../../../hooks/history/useFetchHistory'
 import { useFetchQuestionsByUserId } from '../../../../hooks/question/useFetchQuestion'
@@ -47,7 +47,7 @@ export const UserHistory = ({
     const router = useRouter()
 
     const onClickCard = (postId: string) => {
-        router.push(LINKS.QUESTION_DETAIL(postId))
+        router.push(PAGE_LINKS.QA._QUESTIONS_ID(postId).URL)
     }
 
     return (

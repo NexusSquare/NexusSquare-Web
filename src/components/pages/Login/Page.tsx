@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogin } from '../../../hooks/authentication'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
@@ -34,12 +34,12 @@ export const Page = (): JSX.Element => {
 
     const onSubmitAccount = async (account: UserAccount) => {
         login(account, {
-            onSuccess: () => router.push(LINKS.QUESTION),
+            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
         })
     }
 
     const onClickRegister = () => {
-        router.push(LINKS.REGISTER.STEP1)
+        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
     }
     return (
         <FormLayout title="ログイン">

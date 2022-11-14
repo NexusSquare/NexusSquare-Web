@@ -5,7 +5,7 @@ import QACardList from '../../organisms/qa/QACardList'
 import { SearchForm } from '../../molecules/qa/SearchForm'
 import { STATUS } from '../../../constants/qa/status'
 import { useRouter } from 'next/router'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { SortItem } from '../../../constants/sort'
 import { SortDrawer } from '../../organisms/qa/SortDrawer'
@@ -47,7 +47,7 @@ export const Page = ({
             errorToast('2文字以上入力してください')
             return
         }
-        router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
+        router.push({ pathname: PAGE_LINKS.QA.RESULT.URL, query: { title: text } })
     }
 
     const clickSort = (sortItem: SortItem) => {

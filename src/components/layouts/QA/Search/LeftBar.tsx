@@ -1,22 +1,8 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import {
-    Box,
-    Button,
-    ButtonGroup,
-    Checkbox,
-    HStack,
-    Icon,
-    IconButton,
-    Input,
-    Select,
-    Text,
-    VStack,
-    Wrap,
-    WrapItem,
-} from '@chakra-ui/react'
+import { Box, Button, Checkbox, HStack, Input, Select, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, FormEventHandler, ReactNode, useEffect, useRef, useState } from 'react'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import QACategories from '../../../../constants/qa/qaCategories'
 import { QuestionStatus } from '../../../../constants/qa/status'
 import { QACategory } from '../../../../constants/query'
@@ -61,7 +47,7 @@ export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, qu
             errorToast('2文字以上入力してください')
             return
         }
-        router.push({ pathname: LINKS.QUESTION_RESULT, query: { title: text } })
+        router.push({ pathname: PAGE_LINKS.QA.RESULT.URL, query: { title: text } })
         resetSearchField()
     }
     const resetSearchField = () => {
@@ -70,7 +56,7 @@ export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, qu
     }
 
     const onClickRest = () => {
-        router.push(LINKS.QUESTION)
+        router.push(PAGE_LINKS.QA.URL)
     }
 
     // NOTE:カテゴリーを更新する

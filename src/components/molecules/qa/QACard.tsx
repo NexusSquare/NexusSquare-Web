@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { memo } from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../../lib/replaceLineFeed'
 import { Question } from '../../../types/domain/qa/Question'
@@ -23,7 +23,7 @@ const QACard = ({ question }: Props) => {
         : question.categories[0]
 
     const onClickUserInfo = () => {
-        router.push(LINKS.PROFILE(question.userId))
+        router.push(PAGE_LINKS.PROFILE._USER_ID(question.userId).URL)
     }
     return (
         <Link href={'/qa/' + question.questionId} passHref>
