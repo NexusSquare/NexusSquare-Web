@@ -1,14 +1,14 @@
 import { Box, Button, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 import ChakraNextImage from '../../common/chakraNextImage'
 
 export const TopInfo = () => {
     const TOP_INFO_URL: string = '/images/ui_img.png'
     const router = useRouter()
     const onClickLogin = () => {
-        router.push(LINKS.LOGIN)
+        router.push(PAGE_LINKS.LOGIN.URL)
     }
 
     return (

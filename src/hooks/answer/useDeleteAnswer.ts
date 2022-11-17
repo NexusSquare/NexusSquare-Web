@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { answerService } from '../../services/answerService'
-import { AnswerReq } from '../../types/api/req/AnswerReq'
+import { AnswerReq } from '../../../api/req/AnswerReq'
 import { QUERY_KEYS } from '../react-query/query'
 import { useCacheClear } from '../react-query/useCacheClear'
 

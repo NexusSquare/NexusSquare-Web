@@ -15,12 +15,12 @@ import {
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/PrimaryButton'
-import { UserAccount } from '../../../../types/domain/user'
+import { UserAccount } from '../../../../../entities/user'
 import { FormLayout } from '../../../molecules/sign/FormLayout'
 
 export const Page = (): JSX.Element => {
@@ -35,7 +35,7 @@ export const Page = (): JSX.Element => {
     const { mutate: createAccount, isLoading: createUserLoading } = useCreateAccount()
 
     const onSuccessCreateAccount = async () => {
-        router.push(LINKS.REGISTER.STEP2)
+        router.push(PAGE_LINKS.REGISTER.STEP2.URL)
     }
 
     const displayErrorMessage = (errorMessage: string) => {
@@ -55,7 +55,7 @@ export const Page = (): JSX.Element => {
     }
 
     const onClickLogin = () => {
-        router.push(LINKS.LOGIN)
+        router.push(PAGE_LINKS.LOGIN.URL)
     }
     return (
         <FormLayout title="新規登録">

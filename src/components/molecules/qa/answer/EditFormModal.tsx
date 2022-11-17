@@ -14,10 +14,10 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { DefaultModal } from '../../../common/DefaultModal'
-import { AnswerReq, QuestionReq } from '../../../../types/api/req'
+import { AnswerReq, QuestionReq } from '../../../../../api/req'
 import { SecondaryButton } from '../../../common/SecondaryButton'
 import { PrimaryButton } from '../../../common/PrimaryButton'
-import { Answer } from '../../../../types/domain/qa/Answer'
+import { Answer } from '../../../../../entities/qa/Answer'
 
 interface Props {
     isOpen: boolean

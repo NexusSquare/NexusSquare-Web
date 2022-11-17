@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React, { ReactNode, useEffect } from 'react'
 import { Loading } from '../components/common/Loading'
-import { LINKS } from '../constants/links'
+import { PAGE_LINKS } from '../constants/pageLinks'
 import { useAuth } from '../hooks/authentication'
 import { useUser } from '../store/atom'
 
@@ -16,8 +16,8 @@ export const UserGuards = ({ children }: Props) => {
 
     if (!isReady) return <Loading />
 
-    if (!user && router.pathname !== LINKS.LOGIN) {
-        router.push(LINKS.LOGIN)
+    if (!user && router.pathname !== PAGE_LINKS.LOGIN.URL) {
+        router.push(PAGE_LINKS.LOGIN.URL)
     }
 
     return <>{children}</>

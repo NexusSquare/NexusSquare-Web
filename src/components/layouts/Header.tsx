@@ -25,8 +25,8 @@ import { useRouter } from 'next/router'
 import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
 import ChakraNextImage from '../common/chakraNextImage'
-import { Notification } from '../../types/domain/notification/Notification'
-import { LINKS } from '../../constants/links'
+import { Notification } from '../../../entities/notification/Notification'
+import { PAGE_LINKS } from '../../constants/pageLinks'
 import { useLogOut } from '../../hooks/authentication'
 import { useUser, useUserMeta } from '../../store/atom'
 import { useFetchNotifications } from '../../hooks/notification/useFetchNotification'
@@ -57,15 +57,15 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onClickProfile = () => {
         if (!user?.userId) return
-        router.push(LINKS.PROFILE(user.userId))
+        router.push(PAGE_LINKS.PROFILE._USER_ID(user.userId).URL)
     }
 
     const onClickRegister = () => {
-        router.push(LINKS.REGISTER.STEP1)
+        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
     }
 
     const onClickLogin = () => {
-        router.push(LINKS.LOGIN)
+        router.push(PAGE_LINKS.LOGIN.URL)
     }
 
     const onClickLogOut = () => {
@@ -74,7 +74,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onSuccessUpdateNotification = async (questionId: string) => {
         await refetchNotification()
-        router.push(LINKS.QUESTION_DETAIL(questionId))
+        router.push(PAGE_LINKS.QA._QUESTIONS_ID(questionId).URL)
     }
 
     const onClickNotification = async (notificationId: string, questionId: string) => {

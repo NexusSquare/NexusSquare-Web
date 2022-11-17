@@ -13,13 +13,13 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useFetchAnswersByUserId } from '../../../../hooks/answer/useFethcAnswer'
 import { useFetchHistories } from '../../../../hooks/history/useFetchHistory'
 import { useFetchQuestionsByUserId } from '../../../../hooks/question/useFetchQuestion'
-import { History } from '../../../../types/domain/history'
-import { Question } from '../../../../types/domain/qa'
-import { Answer } from '../../../../types/domain/qa/Answer'
+import { History } from '../../../../../entities/history'
+import { Question } from '../../../../../entities/qa'
+import { Answer } from '../../../../../entities/qa/Answer'
 import { NoCards } from '../../../common/NoCards'
 import { AnswerList } from './AnswerList'
 import { HistoryList } from './HistoryList'
@@ -47,7 +47,7 @@ export const UserHistory = ({
     const router = useRouter()
 
     const onClickCard = (postId: string) => {
-        router.push(LINKS.QUESTION_DETAIL(postId))
+        router.push(PAGE_LINKS.QA._QUESTIONS_ID(postId).URL)
     }
 
     return (

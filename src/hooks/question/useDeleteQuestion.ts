@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { questionService } from '../../services/questionService'
-import { QuestionReq } from '../../types/api/req/QuestionReq'
+import { QuestionReq } from '../../../api/req/QuestionReq'
 import { QUERY_KEYS } from '../react-query/query'
 import { useCacheClear } from '../react-query/useCacheClear'
 

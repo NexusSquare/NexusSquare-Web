@@ -4,13 +4,12 @@ import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Layout } from '../../components/layouts/QA/Search/Layout'
 import { Page } from '../../components/pages/QA/Page'
-import { LINKS } from '../../constants/links'
 import { STATUS } from '../../constants/qa/status'
 import { QACategory, QuestionQuery } from '../../constants/query'
 import { SortItem } from '../../constants/sort'
 import { useErrorToast } from '../../hooks/errors/useErrorToast'
 import { useFetchQuestions } from '../../hooks/question/useFetchQuestion'
-import { Question } from '../../types/domain/qa'
+import { Question } from '../../../entities/qa'
 
 type QuestionStatus = keyof typeof STATUS
 

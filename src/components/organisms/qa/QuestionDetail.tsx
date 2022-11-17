@@ -2,16 +2,16 @@ import { useDisclosure } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
 import { ERROR_MESSAGE } from '../../../constants/errors'
-import { LINKS } from '../../../constants/links'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { usePostAnswer } from '../../../hooks/answer/usePostAnswer'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { useDeleteQuestion } from '../../../hooks/question/useDeleteQuestion'
 import { useUpdateQuestion } from '../../../hooks/question/useUpdateQuestion'
 import { Refetch } from '../../../hooks/react-query/type'
 import { useReport } from '../../../hooks/report/useReport'
-import { AnswerReq, QuestionReq, ReportReq } from '../../../types/api/req'
-import { Question } from '../../../types/domain/qa'
-import { User } from '../../../types/domain/user'
+import { AnswerReq, QuestionReq, ReportReq } from '../../../../api/req'
+import { Question } from '../../../../entities/qa'
+import { User } from '../../../../entities/user'
 import { QASkeleton } from '../../common/QASkeleton'
 import { PostFormModal } from '../../molecules/qa/answer/PostFormModal'
 import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
@@ -58,7 +58,7 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
 
     const onClickDeleteQuestion = async () => {
         deleteQuestion(questionId, {
-            onSuccess: () => router.push(LINKS.QUESTION),
+            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
             onSettled: () => onCloseDeleteForm(),
         })
@@ -70,7 +70,7 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
 
     const onClickReport = async (reportReq: ReportReq) => {
         report(reportReq, {
-            onSuccess: () => router.push(LINKS.QUESTION),
+            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
             onSettled: () => onCloseReportForm(),
         })

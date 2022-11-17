@@ -3,13 +3,13 @@ import { UserCredential } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
 import { MutateOptions } from 'react-query'
-import { LINKS } from '../../constants/links'
+import { PAGE_LINKS } from '../../constants/pageLinks'
 import { EMAIL, USER_ID } from '../../constants/token'
 import { auth } from '../../plugins/firebase/client'
 import { userMetaService } from '../../services/userMetaService'
 import { userService } from '../../services/userService'
 import { useUser, useUserMeta } from '../../store/atom'
-import { User, UserMeta } from '../../types/domain/user'
+import { User, UserMeta } from '../../../entities/user'
 import { useAlertLoginError } from '../errors/useAlertLoginError'
 import { useSessionToken } from '../useSessionToken'
 
@@ -39,14 +39,14 @@ export const useLogin = () => {
         // NOTE メール認証がされている場合、アカウント登録されている確認
         const { emailVerified, uid } = data.user
         if (!emailVerified) {
-            router.push(LINKS.REGISTER.STEP2)
+            router.push(PAGE_LINKS.REGISTER.STEP2.URL)
             return
         }
         // NOTE idが存在するときのみfetchされる
         const user = await userService.findOne(uid)
         const userMeta = await userMetaService.findOne(uid)
         if (!user || !userMeta) {
-            router.push(LINKS.REGISTER.STEP3)
+            router.push(PAGE_LINKS.REGISTER.STEP3.URL)
             return
         }
         initUser(user, userMeta)

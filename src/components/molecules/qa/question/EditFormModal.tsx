@@ -14,9 +14,9 @@ import {
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { DefaultModal } from '../../../common/DefaultModal'
-import { Question } from '../../../../types/domain/qa'
+import { Question } from '../../../../../entities/qa'
 import QACategories from '../../../../constants/qa/qaCategories'
-import { QuestionReq } from '../../../../types/api/req'
+import { QuestionReq } from '../../../../../api/req'
 import { SecondaryButton } from '../../../common/SecondaryButton'
 import { PrimaryButton } from '../../../common/PrimaryButton'
 

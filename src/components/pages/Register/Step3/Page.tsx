@@ -19,9 +19,9 @@ import Department from '../../../../constants/department'
 import { gradeList } from '../../../../constants/grade'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { usePostUser } from '../../../../hooks/user'
-import { UserReq } from '../../../../types/api/req/UserReq'
+import { UserReq } from '../../../../../api/req/UserReq'
 import { FormLayout } from '../../../molecules/sign/FormLayout'
 import { RuleModal } from '../../../molecules/sign/RuleModal'
 import { useState } from 'react'
@@ -45,7 +45,7 @@ export const Page = (): JSX.Element => {
     const onSuccessPostUser = async (formValue: UserReq) => {
         postUserMeta(formValue, {
             onSuccess: () => {
-                router.push(LINKS.QUESTION)
+                router.push(PAGE_LINKS.QA.URL)
             },
             onError: () => {
                 errorToast(ERROR_MESSAGE.SERVER)

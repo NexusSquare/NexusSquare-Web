@@ -23,9 +23,9 @@ import { useForm } from 'react-hook-form'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
-import { LINKS } from '../../../../constants/links'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { QuestionReq } from '../../../../types/api/req'
+import { QuestionReq } from '../../../../../api/req'
 import QACategories from '../../../../constants/qa/qaCategories'
 
 type QACategoriesType = typeof QACategories
@@ -63,7 +63,7 @@ export const Page = (): JSX.Element => {
     const onSuccessPostQuestion = () => {
         if (!postUser) return
         cacheClearQuestion(postUser.userId)
-        router.push(LINKS.QUESTION)
+        router.push(PAGE_LINKS.QA.URL)
     }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
         if (!postUser) return

@@ -8,7 +8,7 @@ import { AiFillCamera } from 'react-icons/ai'
 import { EditForm } from '../../../molecules/profile/EditForm'
 import { DefaultModal } from '../../../common/DefaultModal'
 import { FaCoins } from 'react-icons/fa'
-import { User, UserMeta } from '../../../../types/domain/user'
+import { User, UserMeta } from '../../../../../entities/user'
 
 interface Props {
     user: User

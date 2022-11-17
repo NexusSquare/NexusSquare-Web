@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
-import { LINKS } from '../constants/links'
+import { PAGE_LINKS } from '../constants/pageLinks'
 import { EMAIL, USER_ID } from '../constants/token'
 import { useAuth } from '../hooks/authentication'
 import { useFetchUser, useFetchUserMeta } from '../hooks/user/useFetchUser'
 import { useSessionToken } from '../hooks/useSessionToken'
 import { useUser, useUserMeta } from '../store/atom'
-import { User, UserMeta } from '../types/domain/user'
+import { User, UserMeta } from '../../entities/user'
 
 export const AuthProvider: React.FC = ({ children }) => {
     const router = useRouter()
@@ -39,7 +39,7 @@ export const AuthProvider: React.FC = ({ children }) => {
 
         // NOTE メール認証・ユーザー登録を確認
         if (!currentUser?.emailVerified) {
-            router.push(LINKS.REGISTER.STEP2)
+            router.push(PAGE_LINKS.REGISTER.STEP2.URL)
         }
     }, [currentUser])
 
