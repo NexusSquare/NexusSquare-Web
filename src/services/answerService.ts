@@ -1,19 +1,20 @@
 import { Timestamp } from 'firebase/firestore'
 import { USER_ID } from '../constants/token'
-import { answerRepository } from '../repositories/answerRepository'
-import { Answer } from '../types/domain/qa/Answer'
-import { AnswerReq } from '../types/api/req/AnswerReq'
-import { User } from '../types/domain/user'
+import { Answer } from '../../entities/qa/Answer'
+import { AnswerReq } from '../../api/req/AnswerReq'
+import { User } from '../../entities/user'
 import { ERROR } from '../constants/errors'
+import { answerRepository } from '../repositories/answerRepository'
+import { AnswerRes } from '../../api/res/AnswerRes'
 
-export const answerService = {
-    async findByQuestionId(questionId: string): Promise<Answer[]> {
-        return answerRepository.findByQuestionId(questionId)
-    },
-    async findByUserId(userId: string): Promise<Answer[]> {
-        return answerRepository.findByUserId(userId)
-    },
-    async save(answerReq: AnswerReq, postUser: User): Promise<void> {
+export class AnswerService {
+    public findByQuestionId = async (questionId: string): Promise<Answer[]> => {
+        return (await answerRepository.findByQuestionId(questionId)).map((res) => this.convert(res))
+    }
+    public findByUserId = async (userId: string): Promise<Answer[]> => {
+        return (await answerRepository.findByUserId(userId)).map((res) => this.convert(res))
+    }
+    public save = async (answerReq: AnswerReq, postUser: User): Promise<void> => {
         const userId = sessionStorage.getItem(USER_ID)
         if (!userId) {
             throw new Error(ERROR.INVALID_USER_TOKEN)
@@ -37,16 +38,35 @@ export const answerService = {
             isBest: false,
         }
         return answerRepository.save(answer)
-    },
-    async update(answerReq: AnswerReq, answerId: string): Promise<void> {
+    }
+    public update = async (answerReq: AnswerReq, answerId: string): Promise<void> => {
         const answer: Partial<Answer> = {
             updateAt: Timestamp.now(),
             isEdited: true,
             ...answerReq,
         }
         return answerRepository.update(answer, answerId)
-    },
-    async delete(answerId: string): Promise<void> {
+    }
+    public delete = async (answerId: string): Promise<void> => {
         return answerRepository.delete(answerId)
-    },
-} as const
+    }
+    private convert = (answerRes: AnswerRes): Answer => {
+        const { document: d, documentId } = answerRes
+        const answer: Answer = {
+            answerId: documentId,
+            questionId: d.questionId,
+            questionTitle: d.questionTitle,
+            userId: d.userId,
+            postUser: d.postUser,
+            createAt: d.createAt,
+            updateAt: d.updateAt,
+            content: d.content,
+            imageUrl: d.imageUrl ?? undefined,
+            isEdited: d.isEdited,
+            isBest: d.isBest,
+        }
+        return answer
+    }
+}
+
+export const answerService = new AnswerService()

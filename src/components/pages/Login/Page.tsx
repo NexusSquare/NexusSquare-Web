@@ -18,7 +18,7 @@ import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogin } from '../../../hooks/authentication'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
-import { UserAccount } from '../../../types/domain/user'
+import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../molecules/sign/FormLayout'
 
 export const Page = (): JSX.Element => {

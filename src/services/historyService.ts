@@ -1,5 +1,5 @@
 import { historyRepository } from '../repositories/historyRepository'
-import { History } from '../types/domain/history'
+import { History } from '../../entities/history'
 
 export const historyService = {
     async find(userId: string): Promise<History[]> {

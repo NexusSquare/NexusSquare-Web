@@ -6,7 +6,7 @@ import { useAuth } from '../hooks/authentication'
 import { useFetchUser, useFetchUserMeta } from '../hooks/user/useFetchUser'
 import { useSessionToken } from '../hooks/useSessionToken'
 import { useUser, useUserMeta } from '../store/atom'
-import { User, UserMeta } from '../types/domain/user'
+import { User, UserMeta } from '../../entities/user'
 
 export const AuthProvider: React.FC = ({ children }) => {
     const router = useRouter()

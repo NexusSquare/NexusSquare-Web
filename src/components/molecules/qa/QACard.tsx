@@ -6,7 +6,7 @@ import { AiOutlineTag } from 'react-icons/ai'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../../lib/replaceLineFeed'
-import { Question } from '../../../types/domain/qa/Question'
+import { Question } from '../../../../entities/qa/Question'
 import ChakraNextImage from '../../common/chakraNextImage'
 
 interface Props {

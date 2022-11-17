@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { QUERY_KEYS } from '../react-query/query'
 import { questionService } from '../../services/questionService'
-import { Question } from '../../types/domain/qa/Question'
+import { Question } from '../../../entities/qa/Question'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'
 import { QuestionQuery } from '../../constants/query'
 import { STATUS } from '../../constants/qa/status'

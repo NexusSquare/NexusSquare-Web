@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import React from 'react'
 import QACard from '../../molecules/qa/QACard'
-import { Question } from '../../../types/domain/qa'
+import { Question } from '../../../../entities/qa'
 import { BsChatText } from 'react-icons/bs'
 import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'

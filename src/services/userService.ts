@@ -3,8 +3,8 @@ import { ERROR } from '../constants/errors'
 import { DEFAULT_AVATAR_IMAGE_URL } from '../constants/image'
 import { USER_ID } from '../constants/token'
 import { userRepository } from '../repositories/userRepoisitory'
-import { UserReq } from '../types/api/req/UserReq'
-import { User } from '../types/domain/user'
+import { UserReq } from '../../api/req/UserReq'
+import { User } from '../../entities/user'
 
 export const userService = {
     async findOne(uid: string): Promise<User | undefined> {

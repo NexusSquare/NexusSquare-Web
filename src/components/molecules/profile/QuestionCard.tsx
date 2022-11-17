@@ -22,7 +22,7 @@ import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
 import { useUser } from '../../../store/atom'
-import { Question } from '../../../types/domain/qa'
+import { Question } from '../../../../entities/qa'
 import ChakraNextImage from '../../common/chakraNextImage'
 
 interface Props {

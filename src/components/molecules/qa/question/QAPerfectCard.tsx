@@ -24,7 +24,7 @@ import { HiDotsHorizontal } from 'react-icons/hi'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { convertTimestampToString } from '../../../../lib/convert/convertTimestamp'
 import { useUser } from '../../../../store/atom'
-import { Question } from '../../../../types/domain/qa'
+import { Question } from '../../../../../entities/qa'
 import ChakraNextImage from '../../../common/chakraNextImage'
 
 interface Props {

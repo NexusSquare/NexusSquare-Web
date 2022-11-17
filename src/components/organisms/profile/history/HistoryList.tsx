@@ -1,6 +1,6 @@
 import { VStack, Text } from '@chakra-ui/react'
 import React from 'react'
-import { History } from '../../../../types/domain/history'
+import { History } from '../../../../../entities/history'
 import { NoCards } from '../../../common/NoCards'
 import { HistoryCard } from '../../../molecules/profile/HistoryCard'
 

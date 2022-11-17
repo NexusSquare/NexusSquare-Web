@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../plugins/firebase/client'
-import { User } from '../types/domain/user'
+import { User } from '../../entities/user'
 
 export const userRepository = {
     async findOne(uid: string): Promise<User | undefined> {

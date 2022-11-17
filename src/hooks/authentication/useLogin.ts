@@ -9,7 +9,7 @@ import { auth } from '../../plugins/firebase/client'
 import { userMetaService } from '../../services/userMetaService'
 import { userService } from '../../services/userService'
 import { useUser, useUserMeta } from '../../store/atom'
-import { User, UserMeta } from '../../types/domain/user'
+import { User, UserMeta } from '../../../entities/user'
 import { useAlertLoginError } from '../errors/useAlertLoginError'
 import { useSessionToken } from '../useSessionToken'
 

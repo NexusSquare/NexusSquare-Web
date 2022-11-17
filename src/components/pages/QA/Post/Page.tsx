@@ -25,7 +25,7 @@ import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { QuestionReq } from '../../../../types/api/req'
+import { QuestionReq } from '../../../../../api/req'
 import QACategories from '../../../../constants/qa/qaCategories'
 
 type QACategoriesType = typeof QACategories

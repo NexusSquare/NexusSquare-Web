@@ -1,6 +1,6 @@
 import { Box, Button, Divider, HStack, Image, Text, Textarea, useDisclosure, VStack } from '@chakra-ui/react'
 import { useFetchQuestion } from '../../../../hooks/question/useFetchQuestion'
-import { Answer } from '../../../../types/domain/qa/Answer'
+import { Answer } from '../../../../../entities/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
