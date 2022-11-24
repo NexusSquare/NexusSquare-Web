@@ -1,6 +1,6 @@
 import { STATUS } from '../qa/status'
 import QACategories from '../qa/qaCategories'
-import { Question } from '../../../entities/qa'
+import { Question } from '../../entities/qa'
 
 type Status = keyof typeof STATUS
 type QACategoriesType = typeof QACategories

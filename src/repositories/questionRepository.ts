@@ -17,7 +17,7 @@ import { bigram } from 'n-gram'
 import { STATUS } from '../constants/qa/status'
 import { QuestionQuery } from '../constants/query'
 import { db } from '../plugins/firebase/client'
-import { Question } from '../../entities/qa/Question'
+import { Question } from '../entities/qa/Question'
 
 export const questionRepository = {
     async find(queryQuestion: QuestionQuery): Promise<Question[]> {

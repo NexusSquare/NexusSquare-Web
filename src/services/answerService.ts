@@ -1,11 +1,11 @@
 import { Timestamp } from 'firebase/firestore'
 import { USER_ID } from '../constants/token'
-import { Answer } from '../../entities/qa/Answer'
-import { AnswerReq } from '../../api/req/AnswerReq'
-import { User } from '../../entities/user'
+import { Answer } from '../entities/qa/Answer'
+import { AnswerReq } from '../api/req/AnswerReq'
+import { User } from '../entities/user'
 import { ERROR } from '../constants/errors'
 import { answerRepository } from '../repositories/answerRepository'
-import { AnswerRes } from '../../api/res/AnswerRes'
+import { AnswerRes } from '../api/res/AnswerRes'
 
 export class AnswerService {
     public findByQuestionId = async (questionId: string): Promise<Answer[]> => {

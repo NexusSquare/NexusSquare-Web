@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { QuestionReq } from '../../api/req'
+import { QuestionReq } from '../api/req'
 
 // NOTE optionsの型推論が効かない。UseFormProps
 export const useCreateUserForm = (options?: any) => {

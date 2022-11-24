@@ -1,11 +1,11 @@
 import { FormControl, FormErrorMessage, Input, Select, Checkbox, VStack, FormLabel } from '@chakra-ui/react'
 import Department from '../../../constants/department'
 import React from 'react'
-import { User } from '../../../../entities/user'
+import { User } from '../../../entities/user'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { gradeList } from '../../../constants/grade'
 import { useCreateUserForm } from '../../../hooks/useCreateUserForm'
-import { UserReq } from '../../../../api/req/UserReq'
+import { UserReq } from '../../../api/req/UserReq'
 
 interface Props {
     user: User

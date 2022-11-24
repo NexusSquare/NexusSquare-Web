@@ -1,6 +1,6 @@
 import { USER_ID } from '../constants/token'
 import { notificationRepository } from '../repositories/notificationRepository'
-import { Notification } from '../../entities/notification/Notification'
+import { Notification } from '../entities/notification/Notification'
 
 export const notificationService = {
     async find(userId: string): Promise<Notification[]> {

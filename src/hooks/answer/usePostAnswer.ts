@@ -1,7 +1,7 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { answerService } from '../../services/answerService'
-import { AnswerReq } from '../../../api/req'
-import { User } from '../../../entities/user'
+import { AnswerReq } from '../../api/req'
+import { User } from '../../entities/user'
 import { QUERY_KEYS } from '../react-query/query'
 import { useCacheClear } from '../react-query/useCacheClear'
 

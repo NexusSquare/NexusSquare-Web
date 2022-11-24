@@ -2,7 +2,7 @@ import { Box, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
-import { History } from '../../../../entities/history'
+import { History } from '../../../entities/history'
 
 interface Props {
     history: History

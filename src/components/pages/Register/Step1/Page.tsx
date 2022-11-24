@@ -20,7 +20,7 @@ import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/PrimaryButton'
-import { UserAccount } from '../../../../../entities/user'
+import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../../molecules/sign/FormLayout'
 
 export const Page = (): JSX.Element => {

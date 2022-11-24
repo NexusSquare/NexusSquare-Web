@@ -1,6 +1,6 @@
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
 import { db } from '../plugins/firebase/client'
-import { UserMeta } from '../../entities/user'
+import { UserMeta } from '../entities/user'
 
 export const userMetaRepository = {
     async findOne(uid: string): Promise<UserMeta | undefined> {

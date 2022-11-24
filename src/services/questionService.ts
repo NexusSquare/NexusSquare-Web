@@ -5,9 +5,9 @@ import { STATUS } from '../constants/qa/status'
 import { Direction, OrderBy, QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
 import { questionRepository } from '../repositories/questionRepository'
-import { QuestionReq } from '../../api/req'
-import { Question } from '../../entities/qa/Question'
-import { User } from '../../entities/user'
+import { QuestionReq } from '../api/req'
+import { Question } from '../entities/qa/Question'
+import { User } from '../entities/user'
 
 export const questionService = {
     async find(queryQuestion: QuestionQuery): Promise<Question[]> {
