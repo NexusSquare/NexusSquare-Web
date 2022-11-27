@@ -1,15 +1,16 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Box, Button, Checkbox, HStack, Input, Select, Text, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Box, HStack, VStack, Text, Select, Wrap, WrapItem, Checkbox, Input, Button } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React, { ChangeEvent, FormEventHandler, ReactNode, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import QACategories from '../../../../constants/qa/qaCategories'
-import { QuestionStatus } from '../../../../constants/qa/status'
 import { QACategory } from '../../../../constants/query'
 import { SORT, SortItem } from '../../../../constants/sort'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useDidUpdateEffect } from '../../../../hooks/useDidUpdateEffect'
 import { SecondaryButton } from '../../../common/SecondaryButton'
+
+import { BaseLeftBar } from '../../LeftBar/_Base'
 
 interface Props {
     children?: ReactNode
@@ -18,7 +19,7 @@ interface Props {
     questionNum: number
 }
 
-export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, questionNum }: Props): JSX.Element => {
+export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: Props): JSX.Element => {
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
     const errorToast = useErrorToast()
@@ -72,21 +73,7 @@ export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, qu
         sortQuestions(sortItem)
     }, [sortItem])
     return (
-        <VStack
-            as="nav"
-            aria-labelledby="QA navigation"
-            bgColor="#FBF6F0"
-            paddingTop={6}
-            h="calc(100vh - 56px)"
-            w={{ base: 'calc((100vw - 800px) / 2)', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
-            minW="56px"
-            display={{ base: 'none', sm: 'flex' }}
-            position="fixed"
-            top={{ base: '98px', md: '56px' }}
-            left="0"
-            paddingX={8}
-            alignItems={'start'}
-        >
+        <BaseLeftBar>
             <VStack spacing={4} w="full" display={{ base: 'none', xl: 'flex' }}>
                 <Box w="full">
                     <HStack justify={'space-between'} w="full" mb={2}>
@@ -153,6 +140,6 @@ export const LeftBar: Function = ({ children, sortQuestions, filterQuestions, qu
                     </Wrap>
                 </Box>
             </VStack>
-        </VStack>
+        </BaseLeftBar>
     )
 }

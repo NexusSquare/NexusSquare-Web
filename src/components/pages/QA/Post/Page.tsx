@@ -60,9 +60,9 @@ export const Page = (): JSX.Element => {
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
-    const onSuccessPostQuestion = () => {
+    const onSuccessPostQuestion = async () => {
         if (!postUser) return
-        cacheClearQuestion(postUser.userId)
+        await cacheClearQuestion(postUser.userId)
         router.push(PAGE_LINKS.QA.URL)
     }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
@@ -71,7 +71,7 @@ export const Page = (): JSX.Element => {
         postQuestion(
             { questionReq, postUser },
             {
-                onSuccess: () => onSuccessPostQuestion(),
+                onSuccess: onSuccessPostQuestion,
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
             }
         )

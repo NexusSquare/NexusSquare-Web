@@ -4,6 +4,8 @@ import CommonMeta from '../CommonMeta'
 import { Footer } from '../Footer'
 import { Header } from '../Header'
 import { RightBar } from '../RigthBar'
+
+import { MAIN_CONTENT_PADDING_LEFT, MAIN_CONTENT_WIDTH } from '../constants'
 import { LeftBar } from '../LeftBar'
 
 interface Props {
@@ -19,16 +21,7 @@ export const Layout = ({ children, pageName }: Props): JSX.Element => {
             <Header />
             <HStack spacing="0px" paddingTop={{ base: '96px', md: '56px' }}>
                 <LeftBar />
-                <VStack
-                    w={{
-                        base: '100%',
-                        sm: '100vw',
-                        md: 'calc(100vw - 240px)',
-                        xl: 'calc(400px + 50vw)',
-                    }}
-                    paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
-                    spacing={0}
-                >
+                <VStack w={MAIN_CONTENT_WIDTH} spacing={0} pl={MAIN_CONTENT_PADDING_LEFT}>
                     {children}
                     <Footer />
                 </VStack>

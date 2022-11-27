@@ -1,4 +1,4 @@
-import { VStack, Text } from '@chakra-ui/react'
+import { VStack, Text, Box } from '@chakra-ui/react'
 import React from 'react'
 import { History } from '../../../../entities/history'
 import { NoCards } from '../../../common/NoCards'
@@ -13,10 +13,10 @@ export const HistoryList = ({ historyList }: Props) => {
         return <NoCards text="履歴はまだありません。" />
     }
     return (
-        <VStack m="0" w="full" pt="4">
+        <Box m="0" w="full">
             {historyList.map((history) => {
                 return <HistoryCard history={history} key={history.historyId} />
             })}
-        </VStack>
+        </Box>
     )
 }

@@ -10,10 +10,10 @@ interface Props {
     postUser: User
 }
 export const usePostQuestion = (queryOptions?: UseMutationOptions) => {
-    const { cacheClear } = useCacheClear()
-    const cacheClearQuestion = (userId: string) => {
-        cacheClear(QUERY_KEYS.QUESTIONS)
-        cacheClear(QUERY_KEYS.QUESTION(userId))
+    const { cacheClearForKey } = useCacheClear()
+    const cacheClearQuestion = async (userId: string) => {
+        cacheClearForKey(QUERY_KEYS.QUESTIONS)
+        cacheClearForKey(QUERY_KEYS.QUESTION(userId))
     }
     return {
         cacheClearQuestion,

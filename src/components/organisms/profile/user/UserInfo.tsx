@@ -63,7 +63,7 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
             <HStack
                 w="full"
                 border="1px"
-                borderColor="gray.400"
+                borderColor="gray.300"
                 borderRadius="sm"
                 boxShadow="md"
                 justifyContent="space-evenly"
@@ -83,8 +83,8 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     border={'none'}
                 ></IconButton>
                 <Box
-                    w={{ base: '100px', md: '150px' }}
-                    h={{ base: '100px', md: '150px' }}
+                    w={{ base: '80px', md: '120px' }}
+                    h={{ base: '80px', md: '120px' }}
                     top={{ base: '-5', md: '-10' }}
                     position="relative"
                 >
@@ -118,14 +118,14 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     {user.isDepartmentAnonymous ? (
                         <Text>学部学科：非表示</Text>
                     ) : (
-                        <HStack>
+                        <HStack fontSize={{ base: 'sm', md: 'xl' }}>
                             <Text>{user.department}</Text>
                             <Text>{user.subject}</Text>
                         </HStack>
                     )}
                 </VStack>
                 <VStack height={'full'}>
-                    <Text fontSize={{ base: 'lg', md: 'xl' }}>{user.grade}</Text>
+                    <Text fontSize={{ base: 'sm', md: 'xl' }}>{user.grade}</Text>
                 </VStack>
             </HStack>
             <VStack
@@ -139,11 +139,11 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
             >
                 <HStack>
                     <FaCoins color={'#FF9037'} size={24} />
-                    <Text fontWeight="bold" fontSize={{ base: 'xl', md: '2xl' }} pr="2" color={'mainColor'}>
+                    <Text fontWeight="bold" fontSize={{ base: 'md', md: 'xl' }} pr="2" color={'mainColor'}>
                         ポイント
                     </Text>
                 </HStack>
-                <HStack fontSize={{ base: '2xl', md: '4xl' }}>
+                <HStack fontSize={{ base: 'xl', md: '3xl' }}>
                     <Text>{user.point}</Text>
                     <Text>pt</Text>
                 </HStack>

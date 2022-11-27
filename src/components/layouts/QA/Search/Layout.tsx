@@ -3,11 +3,12 @@ import React, { ReactNode } from 'react'
 import CommonMeta from '../../CommonMeta'
 import { Header } from '../../Header'
 import { Footer } from '../../Footer'
-import { LeftBar } from './LeftBar'
 import { RightBar } from '../../RigthBar'
 import { SortItem } from '../../../../constants/sort'
 import { QACategory } from '../../../../constants/query'
 import { QuestionStatus } from '../../../../constants/qa/status'
+import { MAIN_CONTENT_PADDING_LEFT, MAIN_CONTENT_WIDTH } from '../../constants'
+import { SearchLeftBar } from './_SearchLeftBar'
 
 interface Props {
     children?: ReactNode
@@ -24,17 +25,12 @@ export const Layout = ({ children, pageName, sortQuestions, filterQuestions, que
             <CommonMeta siteTitle={siteTitle} />
             <Header />
             <HStack spacing="0px" paddingTop={{ base: '96px', md: '56px' }}>
-                <LeftBar sortQuestions={sortQuestions} filterQuestions={filterQuestions} questionNum={questionNum} />
-                <VStack
-                    w={{
-                        base: '100%',
-                        sm: '100vw',
-                        md: 'calc(100vw - 240px)',
-                        xl: 'calc(400px + 50vw)',
-                    }}
-                    paddingLeft={{ base: '0', sm: '100px', lg: 'calc((100vw - 800px) / 2)' }}
-                    spacing={0}
-                >
+                <SearchLeftBar
+                    sortQuestions={sortQuestions}
+                    filterQuestions={filterQuestions}
+                    questionNum={questionNum}
+                />
+                <VStack w={MAIN_CONTENT_WIDTH} spacing={0} pl={MAIN_CONTENT_PADDING_LEFT}>
                     {children}
                     <Footer />
                 </VStack>

@@ -2,8 +2,8 @@ import { useQueryClient } from 'react-query'
 
 export const useCacheClear = () => {
     const queryClient = useQueryClient()
-    const cacheClear = (key: string) => {
-        queryClient.invalidateQueries(key)
+    const cacheClearForKey = async (key: string) => {
+        await queryClient.invalidateQueries(key)
     }
-    return { cacheClear }
+    return { cacheClearForKey }
 }

@@ -9,10 +9,10 @@ interface Props {
     answerId: string
 }
 export const useDeleteAnswer = (queryOptions?: UseMutationOptions) => {
-    const { cacheClear } = useCacheClear()
-    const cacheClearAnswer = (userId?: string, questionId?: string) => {
-        cacheClear(QUERY_KEYS.ANSWER(userId))
-        cacheClear(QUERY_KEYS.ANSWER(questionId))
+    const { cacheClearForKey } = useCacheClear()
+    const cacheClearAnswer = async (userId: string, questionId: string) => {
+        cacheClearForKey(QUERY_KEYS.ANSWER(userId))
+        cacheClearForKey(QUERY_KEYS.ANSWER(questionId))
     }
     return { cacheClearAnswer, ...useMutation((answerId: string) => answerService.delete(answerId)) }
 }
