@@ -1,8 +1,8 @@
 import { ERROR } from '../constants/errors'
 import { EMAIL, USER_ID } from '../constants/token'
 import { userMetaRepository } from '../repositories/userMetaRepository'
-import { UserReq } from '../../api/req/UserReq'
-import { UserMeta } from '../../entities/user'
+import { UserReq } from '../api/req/UserReq'
+import { UserMeta } from '../entities/user'
 
 export const userMetaService = {
     async findOne(uid: string): Promise<UserMeta | undefined> {

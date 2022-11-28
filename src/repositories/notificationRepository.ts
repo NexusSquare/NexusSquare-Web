@@ -1,6 +1,6 @@
 import { collection, doc, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import { db } from '../plugins/firebase/client'
-import { Notification } from '../../entities/notification/Notification'
+import { Notification } from '../entities/notification/Notification'
 
 export const notificationRepository = {
     async find(userId: string): Promise<Notification[]> {

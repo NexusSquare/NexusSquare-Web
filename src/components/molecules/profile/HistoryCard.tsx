@@ -2,21 +2,34 @@ import { Box, HStack, Text } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
-import { History } from '../../../../entities/history'
+import { History, HistoryType } from '../../../entities/history'
 
 interface Props {
     history: History
 }
 
 export const HistoryCard = ({ history }: Props) => {
+    const convertType = (type: HistoryType): string => {
+        let displayType = ''
+        switch (type) {
+            case 'ANSWER':
+                displayType = '質問に答えた'
+                break
+            case 'QUESTION':
+                displayType = '質問を投稿した'
+                break
+            case 'BEST_ANSWER':
+                displayType = 'ベストアンサーに選ばれた'
+                break
+        }
+        return displayType
+    }
     return (
-        <Box bgColor="mainColor" boxShadow="xl" w="full" p="2px" cursor="pointer" key={history.historyId} rounded="md">
+        <Box w="full" border="1px" borderColor="gray.300" cursor="pointer" key={history.historyId} rounded="md">
             <HStack bgColor="white" p="4" justify="space-evenly" spacing={{ base: '2', md: '12' }}>
                 <Text fontSize={{ base: 'sm', md: 'lg' }}>{convertTimestampToString(history.createAt)}</Text>
                 <HStack>
-                    <Text fontSize={{ base: 'md', md: 'xl' }}>
-                        {history.type === 'ANSWER' ? '質問に答えた' : '質問を投稿した'}
-                    </Text>
+                    <Text fontSize={{ base: 'md', md: 'xl' }}>{convertType(history.type)}</Text>
                     <HiOutlineLightBulb size="30" />
                 </HStack>
                 <Text fontSize={{ base: 'md', md: 'xl' }} color="red.400">

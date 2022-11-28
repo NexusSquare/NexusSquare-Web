@@ -17,7 +17,7 @@ import { HiDotsHorizontal } from 'react-icons/hi'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../../lib/replaceLineFeed'
 import { useUser } from '../../../store/atom'
-import { Answer } from '../../../../entities/qa/Answer'
+import { Answer } from '../../../entities/qa/Answer'
 
 interface Props {
     answer: Answer

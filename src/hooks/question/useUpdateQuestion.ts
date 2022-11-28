@@ -1,6 +1,6 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { questionService } from '../../services/questionService'
-import { QuestionReq } from '../../../api/req/QuestionReq'
+import { QuestionReq } from '../../api/req/QuestionReq'
 import { QUERY_KEYS } from '../react-query/query'
 import { useCacheClear } from '../react-query/useCacheClear'
 
@@ -14,10 +14,10 @@ interface BestAnswerProps {
     questionId: string
 }
 export const useUpdateQuestion = (queryOptions?: UseMutationOptions) => {
-    const { cacheClear } = useCacheClear()
+    const { cacheClearForKey } = useCacheClear()
     const cacheClearQuestion = (userId: string) => {
-        cacheClear(QUERY_KEYS.QUESTIONS)
-        cacheClear(QUERY_KEYS.QUESTION(userId))
+        cacheClearForKey(QUERY_KEYS.QUESTIONS)
+        cacheClearForKey(QUERY_KEYS.QUESTION(userId))
     }
     return {
         cacheClearQuestion,
@@ -26,10 +26,10 @@ export const useUpdateQuestion = (queryOptions?: UseMutationOptions) => {
 }
 
 export const useBestAnswer = (queryOptions?: UseMutationOptions) => {
-    const { cacheClear } = useCacheClear()
+    const { cacheClearForKey } = useCacheClear()
     const cacheClearQuestion = (userId: string) => {
-        cacheClear(QUERY_KEYS.QUESTIONS)
-        cacheClear(QUERY_KEYS.QUESTION(userId))
+        cacheClearForKey(QUERY_KEYS.QUESTIONS)
+        cacheClearForKey(QUERY_KEYS.QUESTION(userId))
     }
     return {
         cacheClearQuestion,

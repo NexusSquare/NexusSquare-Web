@@ -12,7 +12,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { SortDrawer } from '../../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
 import { SortItem } from '../../../../constants/sort'
-import { Question } from '../../../../../entities/qa'
+import { Question } from '../../../../entities/qa'
 
 interface Props {
     questions: Question[]

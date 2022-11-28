@@ -1,10 +1,9 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { QUERY_KEYS } from '../react-query/query'
 import { questionService } from '../../services/questionService'
-import { Question } from '../../../entities/qa/Question'
+import { Question } from '../../entities/qa/Question'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'
 import { QuestionQuery } from '../../constants/query'
-import { STATUS } from '../../constants/qa/status'
 
 export const useFetchQuestions = (queryQuestion: QuestionQuery, queryOptions?: UseQueryOptions<Question[]>) => {
     return useQuery<Question[]>([QUERY_KEYS.QUESTIONS, { queryQuestion }], () => questionService.find(queryQuestion), {
@@ -29,7 +28,7 @@ export const useFetchQuestionsByUserId = (userId: string, queryOptions?: UseQuer
 
 export const useFetchQuestionsByTitle = (queryQuestion: QuestionQuery, queryOptions?: UseQueryOptions<Question[]>) => {
     return useQuery<Question[]>(
-        [QUERY_KEYS.QUESTION(queryQuestion.title), { enabled: Boolean(queryQuestion.title) }, { queryQuestion }],
+        [QUERY_KEYS.QUESTION(queryQuestion.title!), { enabled: Boolean(queryQuestion.title) }, { queryQuestion }],
         () => questionService.findByTitle(queryQuestion),
         {
             ...queryOptions,

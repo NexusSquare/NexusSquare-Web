@@ -24,17 +24,18 @@ import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
-import ChakraNextImage from '../common/chakraNextImage'
+import ChakraNextImage from '../../common/chakraNextImage'
 import { Notification } from '../../../entities/notification/Notification'
-import { PAGE_LINKS } from '../../constants/pageLinks'
-import { useLogOut } from '../../hooks/authentication'
-import { useUser, useUserMeta } from '../../store/atom'
-import { useFetchNotifications } from '../../hooks/notification/useFetchNotification'
-import { convertTimestampToString } from '../../lib/convert/convertTimestamp'
-import { useUpdateNotification } from '../../hooks/notification/useUpdateNotification'
-import { useErrorToast } from '../../hooks/errors/useErrorToast'
-import { ERROR_MESSAGE } from '../../constants/errors'
-import { createNotificationMessage } from '../../constants/notification'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
+import { useLogOut } from '../../../hooks/authentication'
+import { useUser, useUserMeta } from '../../../store/atom'
+import { useFetchNotifications } from '../../../hooks/notification/useFetchNotification'
+import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
+import { useUpdateNotification } from '../../../hooks/notification/useUpdateNotification'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { ERROR_MESSAGE } from '../../../constants/errors'
+import { createNotificationMessage } from '../../../constants/notification'
+import { HEADER_HEIGHT } from '../constants'
 
 interface Props {
     children?: ReactNode
@@ -255,7 +256,6 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         ) : (
             <>
                 <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
-                    {/* <PrimaryButton buttonText="新規登録" type="button" /> */}
                     <Button
                         type="button"
                         color="white"
@@ -320,7 +320,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
             boxShadow="sm"
         >
             <HStack
-                h="56px"
+                h={HEADER_HEIGHT}
                 paddingX={{ base: '10px', sm: '50px' }}
                 paddingY={{ base: '0px', md: '10px' }}
                 w="100%"

@@ -9,15 +9,16 @@ import { useDeleteQuestion } from '../../../hooks/question/useDeleteQuestion'
 import { useUpdateQuestion } from '../../../hooks/question/useUpdateQuestion'
 import { Refetch } from '../../../hooks/react-query/type'
 import { useReport } from '../../../hooks/report/useReport'
-import { AnswerReq, QuestionReq, ReportReq } from '../../../../api/req'
-import { Question } from '../../../../entities/qa'
-import { User } from '../../../../entities/user'
+import { AnswerReq, QuestionReq, ReportReq } from '../../../api/req'
+import { Question } from '../../../entities/qa'
+import { User } from '../../../entities/user'
 import { QASkeleton } from '../../common/QASkeleton'
 import { PostFormModal } from '../../molecules/qa/answer/PostFormModal'
 import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
 import { EditFormModal } from '../../molecules/qa/question/EditFormModal'
 import { QAPerfectCard } from '../../molecules/qa/question/QAPerfectCard'
 import { ReportFormModal } from '../../molecules/qa/ReportFromModal'
+import { useUser } from '../../../store/atom'
 
 interface Props {
     questionId: string
@@ -32,8 +33,9 @@ interface Props {
 export const QuestionDetail = ({ questionId, isLoading, question, refetch, postUser, isPosted, isMine }: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
+    const { user } = useUser()
     const { mutate: updateQuestion, isLoading: isUpdateLoading } = useUpdateQuestion()
-    const { mutate: deleteQuestion, isLoading: isDeleteLoading } = useDeleteQuestion()
+    const { mutate: deleteQuestion, isLoading: isDeleteLoading, cacheClearQuestion } = useDeleteQuestion()
     const { mutate: postAnswer, isLoading: isPostLoading, cacheClearAnswer } = usePostAnswer()
     const { mutate: report, isLoading: isReportLoading } = useReport()
 
@@ -58,10 +60,16 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
 
     const onClickDeleteQuestion = async () => {
         deleteQuestion(questionId, {
-            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
+            onSuccess: onSuccessDeleteQuestion,
             onError: () => errorToast(ERROR_MESSAGE.SERVER),
             onSettled: () => onCloseDeleteForm(),
         })
+    }
+
+    const onSuccessDeleteQuestion = async () => {
+        if (!user?.userId) return
+        await cacheClearQuestion(user.userId)
+        router.push(PAGE_LINKS.QA.URL)
     }
 
     const onClickReportFrom = () => {

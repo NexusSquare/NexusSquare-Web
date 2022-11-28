@@ -11,8 +11,8 @@ import {
     where,
 } from 'firebase/firestore'
 import { db } from '../plugins/firebase/client'
-import { Answer } from '../../entities/qa/Answer'
-import { AnswerRes } from '../../api/res/AnswerRes'
+import { Answer } from '../entities/qa/Answer'
+import { AnswerRes } from '../api/res/AnswerRes'
 
 export class AnswerRepository {
     public findByQuestionId = async (questionId: string): Promise<AnswerRes[]> => {

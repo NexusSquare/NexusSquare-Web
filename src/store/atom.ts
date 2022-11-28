@@ -1,5 +1,5 @@
 import { atom, useRecoilState } from 'recoil'
-import { User, UserMeta } from '../../entities/user'
+import { User, UserMeta } from '../entities/user'
 
 export const userState = atom<User | undefined>({
     key: 'userState',

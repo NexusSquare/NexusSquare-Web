@@ -10,7 +10,7 @@ import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { SortItem } from '../../../constants/sort'
 import { SortDrawer } from '../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../organisms/qa/CategoryDrawer'
-import { Question } from '../../../../entities/qa'
+import { Question } from '../../../entities/qa'
 import { QACategory } from '../../../constants/query'
 
 type QuestionStatus = keyof typeof STATUS

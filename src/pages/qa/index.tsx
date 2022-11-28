@@ -9,7 +9,7 @@ import { QACategory, QuestionQuery } from '../../constants/query'
 import { SortItem } from '../../constants/sort'
 import { useErrorToast } from '../../hooks/errors/useErrorToast'
 import { useFetchQuestions } from '../../hooks/question/useFetchQuestion'
-import { Question } from '../../../entities/qa'
+import { Question } from '../../entities/qa'
 
 type QuestionStatus = keyof typeof STATUS
 

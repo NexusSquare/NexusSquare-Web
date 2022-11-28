@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { QUERY_KEYS } from '../react-query/query'
 import { answerService } from '../../services/answerService'
-import { Answer } from '../../../entities/qa/Answer'
+import { Answer } from '../../entities/qa/Answer'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'
 
 export const useFetchAnswersByQuestionId = (questionId: string, queryOptions?: UseQueryOptions<Answer[]>) => {

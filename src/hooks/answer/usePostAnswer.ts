@@ -1,7 +1,7 @@
 import { useMutation, UseMutationOptions } from 'react-query'
 import { answerService } from '../../services/answerService'
-import { AnswerReq } from '../../../api/req'
-import { User } from '../../../entities/user'
+import { AnswerReq } from '../../api/req'
+import { User } from '../../entities/user'
 import { QUERY_KEYS } from '../react-query/query'
 import { useCacheClear } from '../react-query/useCacheClear'
 
@@ -10,10 +10,10 @@ interface Props {
     postUser: User
 }
 export const usePostAnswer = (queryOptions?: UseMutationOptions) => {
-    const { cacheClear } = useCacheClear()
-    const cacheClearAnswer = (userId?: string, questionId?: string) => {
-        cacheClear(QUERY_KEYS.ANSWER(userId))
-        cacheClear(QUERY_KEYS.ANSWER(questionId))
+    const { cacheClearForKey } = useCacheClear()
+    const cacheClearAnswer = async (userId: string, questionId: string) => {
+        cacheClearForKey(QUERY_KEYS.ANSWER(userId))
+        cacheClearForKey(QUERY_KEYS.ANSWER(questionId))
     }
     return {
         cacheClearAnswer,
