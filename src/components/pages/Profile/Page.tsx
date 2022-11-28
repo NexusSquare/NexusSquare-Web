@@ -41,7 +41,7 @@ export const Page = ({ userId }: Props): JSX.Element => {
 
     if (!user) return <Loading />
     return (
-        <VStack w="full" pb="4" spacing={8}>
+        <VStack w="full" pb="4">
             <BackButton />
             {userId === myUserId ? (
                 <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />

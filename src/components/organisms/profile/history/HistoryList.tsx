@@ -13,7 +13,7 @@ export const HistoryList = ({ historyList }: Props) => {
         return <NoCards text="履歴はまだありません。" />
     }
     return (
-        <Box m="0" w="full">
+        <Box m="0" w="full" minH={'50vh'}>
             {historyList.map((history) => {
                 return <HistoryCard history={history} key={history.historyId} />
             })}

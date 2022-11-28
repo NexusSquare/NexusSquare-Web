@@ -86,9 +86,6 @@ const QACardListBox = ({ questions, isLoading, changeStatus }: Props): JSX.Eleme
                                     {questions.map((question: Question) => {
                                         return <QACard question={question} key={question.questionId} />
                                     })}
-                                    <Box w="100%" textAlign="center">
-                                        <Button w="100%">さらに読み込む</Button>
-                                    </Box>
                                 </>
                             ) : (
                                 <NoCards text="質問が見つかりませんでした。" />
@@ -100,9 +97,6 @@ const QACardListBox = ({ questions, isLoading, changeStatus }: Props): JSX.Eleme
                                     {questions.map((question: Question) => {
                                         return <QACard question={question} key={question.questionId} />
                                     })}
-                                    <Box w="100%" textAlign="center">
-                                        <Button w="100%">さらに読み込む</Button>
-                                    </Box>
                                 </>
                             ) : (
                                 <>

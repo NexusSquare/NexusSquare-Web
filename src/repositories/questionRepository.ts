@@ -24,7 +24,7 @@ export const questionRepository = {
         console.log('question fetch')
         const questionCol = collection(db, 'questions')
         const queryArgs = createQueryArgs(queryQuestion)
-        const questionRef = query(questionCol, ...queryArgs, limit(15))
+        const questionRef = query(questionCol, ...queryArgs)
         const snapShot = await getDocs(questionRef)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), questionId: doc.id } as Question

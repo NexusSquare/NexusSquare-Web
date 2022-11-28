@@ -65,11 +65,11 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                 border="1px"
                 borderColor="gray.300"
                 borderRadius="sm"
-                boxShadow="md"
-                justifyContent="space-evenly"
-                py="0"
-                position="relative"
                 mx="4"
+                spacing={{ base: 4, md: 8 }}
+                py={2}
+                px={{ base: 2, md: 8 }}
+                position="relative"
             >
                 <IconButton
                     position="absolute"
@@ -82,12 +82,7 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     size="sm"
                     border={'none'}
                 ></IconButton>
-                <Box
-                    w={{ base: '80px', md: '120px' }}
-                    h={{ base: '80px', md: '120px' }}
-                    top={{ base: '-5', md: '-10' }}
-                    position="relative"
-                >
+                <Box w={{ base: '80px', md: '100px' }} h={{ base: '80px', md: '100px' }} position="relative">
                     <Avatar
                         width="full"
                         height="full"
@@ -97,7 +92,7 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                         borderWidth="1px"
                     />
                     <Box
-                        boxSize={{ base: '8', md: '10' }}
+                        boxSize={{ base: '8', md: '8' }}
                         position="absolute"
                         bottom="0"
                         right="0"
@@ -121,14 +116,23 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                         <HStack fontSize={{ base: 'sm', md: 'xl' }}>
                             <Text>{user.department}</Text>
                             <Text>{user.subject}</Text>
+                            <Text>{user.grade}</Text>
                         </HStack>
                     )}
+
+                    <HStack>
+                        <FaCoins color={'#FF9037'} size={20} />
+                        <HStack fontSize={{ base: 'sm', md: 'xl' }}>
+                            <Text>{user.point}</Text>
+                            <Text>pt</Text>
+                        </HStack>
+                    </HStack>
                 </VStack>
-                <VStack height={'full'}>
+                {/* <VStack height={'full'}>
                     <Text fontSize={{ base: 'sm', md: 'xl' }}>{user.grade}</Text>
-                </VStack>
+                </VStack> */}
             </HStack>
-            <VStack
+            {/* <VStack
                 border="1px"
                 borderRadius="sm"
                 borderColor="gray.400"
@@ -147,10 +151,10 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     <Text>{user.point}</Text>
                     <Text>pt</Text>
                 </HStack>
-                <DefaultModal isOpen={isOpenEditForm} onClose={onCloseEditForm} title={'プロフィール編集'}>
-                    <EditForm updateProfile={onClickEditUser} user={user} isLoading={updateLoading} />
-                </DefaultModal>
-            </VStack>
+            </VStack> */}
+            <DefaultModal isOpen={isOpenEditForm} onClose={onCloseEditForm} title={'プロフィール編集'}>
+                <EditForm updateProfile={onClickEditUser} user={user} isLoading={updateLoading} />
+            </DefaultModal>
         </>
     )
 })
