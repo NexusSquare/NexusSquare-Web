@@ -86,7 +86,7 @@ export const Page = (): JSX.Element => {
             </HStack>
             <Box w="full" borderBottom="1px" borderTop="1px" py="2" borderColor="gray.300">
                 <UnorderedList>
-                    <ListItem>誹謗中はお控え下さい</ListItem>
+                    <ListItem>誹謗中傷はお控え下さい</ListItem>
                     <ListItem>
                         学生間での情報共有サービスですので、医療や法律などの
                         <Box fontWeight={'bold'} as="span">
