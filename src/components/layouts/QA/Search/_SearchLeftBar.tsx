@@ -29,11 +29,15 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
     const [sortItem, setSortItem] = useState<SortItem>(initSortValue)
 
     const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {
-        if (e.target.checked) {
-            setCategories((cats) => [...cats, category])
-        } else {
+        if (!e.target.checked) {
             setCategories((cats) => cats.filter((c) => c !== category))
+            return
         }
+        if (e.target.checked && categories.length < 10) {
+            setCategories((cats) => [...cats, category])
+            return
+        }
+        errorToast('選択できるカテゴリーは10個までです。')
     }
 
     const onChangeSortItem = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -62,10 +66,6 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
 
     // NOTE:カテゴリーを更新する
     useDidUpdateEffect(() => {
-        if (categories.length > 10) {
-            errorToast('選択できるカテゴリーは10個までです。')
-            return
-        }
         filterQuestions(categories)
     }, [categories])
 
