@@ -14,6 +14,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AnswerReq } from '../../../../api/req'
 import { Question } from '../../../../entities/qa'
+import { validators } from '../../../../lib/validator/Validators'
 import { DefaultModal } from '../../../common/DefaultModal'
 import { PrimaryButton } from '../../../common/PrimaryButton'
 import { SecondaryButton } from '../../../common/SecondaryButton'
@@ -62,9 +63,11 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
                         <Textarea
                             minH="48"
                             {...register('content', {
-                                required: 'This is required',
-                                minLength: { value: 1, message: '回答は最小1文字必要です' },
-                                maxLength: { value: 5000, message: '回答本文は5000文字までです。' },
+                                validate: {
+                                    text: validators.requiredForText('解答'),
+                                    maxLength: validators.requiredMaxLength('解答', 5000),
+                                    minLength: validators.requiredMaxLength('解答', 1),
+                                },
                             })}
                             onChange={countContent}
                         ></Textarea>

@@ -22,6 +22,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { PrimaryButton } from '../../../common/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { validators } from '../../../../lib/validator/Validators'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -72,13 +73,7 @@ export const Page = (): JSX.Element => {
                     <Input
                         id="mail"
                         {...register('email', {
-                            required: '必須項目です',
-                            minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
-                            maxLength: { value: 50, message: 'タイトルは50文字までです' },
-                            pattern: {
-                                value: /^[a-z]{2}[0-9]{6}@[a-z]+\.aichi\-pu\.ac\.jp$/,
-                                message: '愛知県立大学のメールアドレスを入力してください',
-                            },
+                            validate: validators.requiredForEmailPatter(),
                         })}
                         defaultValue={'aichi-pu.ac.jp'}
                         placeholder="xx000000@xxx.aichi-pu.ac.jp"
@@ -95,12 +90,10 @@ export const Page = (): JSX.Element => {
                     <Input
                         id="password"
                         {...register('password', {
-                            required: '必須項目です',
-                            minLength: { value: 8, message: 'パスワードは最小8文字必要です' },
-                            maxLength: { value: 16, message: 'パスワードは16文字までです' },
-                            pattern: {
-                                value: /^(?=.*?[a-zA-z])(?=.*?\d)[a-zA-z\d]{8,16}$/i,
-                                message: '半角英数を含めて下さい',
+                            validate: {
+                                maxLength: validators.requiredMaxLength('パスワード', 16),
+                                minLength: validators.requiredMinLength('パスワード', 8),
+                                pattern: validators.requiredForPassword(),
                             },
                         })}
                         placeholder="********"

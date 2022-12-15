@@ -27,6 +27,7 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { QuestionReq } from '../../../../api/req'
 import QACategories from '../../../../constants/qa/qaCategories'
+import { validators } from '../../../../lib/validator/Validators'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -133,12 +134,14 @@ export const Page = (): JSX.Element => {
                     </FormLabel>
                     <Input
                         {...register('title', {
-                            required: 'This is required',
-                            minLength: { value: 1, message: 'タイトルは最小1文字必要です' },
-                            maxLength: { value: 50, message: 'タイトルは50文字までです' },
+                            validate: {
+                                text: validators.requiredForText('タイトル'),
+                                maxLength: validators.requiredMaxLength('タイトル', 50),
+                                minLength: validators.requiredMaxLength('タイトル', 1),
+                            },
                         })}
                     ></Input>
-                    <FormErrorMessage>{errors.title && 'タイトルを入力してください'}</FormErrorMessage>
+                    <FormErrorMessage>{errors.title && errors.title.message}</FormErrorMessage>
                 </FormControl>
 
                 <FormControl isInvalid={errors.content !== undefined} isRequired>
@@ -146,14 +149,16 @@ export const Page = (): JSX.Element => {
                     <Textarea
                         minH="48"
                         {...register('content', {
-                            required: 'This is required',
-                            minLength: { value: 1, message: '質問は最小1文字必要です' },
-                            maxLength: { value: 5000, message: '質問本文は5000文字までです。' },
+                            validate: {
+                                text: validators.requiredForText('質問'),
+                                maxLength: validators.requiredMaxLength('質問', 5000),
+                                minLength: validators.requiredMaxLength('質問', 1),
+                            },
                         })}
                         onChange={countContent}
                     ></Textarea>
+                    <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
                 </FormControl>
-                <FormErrorMessage>{errors.content && errors.content.message}</FormErrorMessage>
 
                 <HStack w="full">
                     <Text>{contentLength} / 5000</Text>
