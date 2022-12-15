@@ -16,13 +16,15 @@ interface Props {
 export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
     const { register, handleSubmit, errors, isSubmitting, selectSubjects } = useCreateUserForm({
         reValidateMode: 'onChange',
-        defaultValues: user,
     })
 
     return (
         <VStack
             as="form"
-            onSubmit={handleSubmit((formValue) => updateProfile(formValue))}
+            onSubmit={handleSubmit((formValue) => {
+                console.log(formValue)
+                updateProfile(formValue)
+            })}
             w={'full'}
             alignItems="center"
             spacing={4}
@@ -38,6 +40,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                         maxLength: { value: 20, message: 'ニックネームは20文字までです' },
                     })}
                     placeholder="ニックネーム"
+                    defaultValue={user.nickname}
                 />
                 <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
             </FormControl>
@@ -50,6 +53,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                     {...register('department', {
                         required: '必須項目です',
                     })}
+                    defaultValue={user.department}
                 >
                     {Object.values(Department).map((department) => {
                         return (
@@ -70,6 +74,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                     {...register('subject', {
                         required: '必須項目です',
                     })}
+                    defaultValue={user.subject}
                 >
                     {selectSubjects.map((selectItem: string) => {
                         return (
@@ -90,6 +95,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                     {...register('grade', {
                         required: '必須項目です',
                     })}
+                    defaultValue={user.grade}
                 >
                     {gradeList.map((grade: string) => {
                         return (
