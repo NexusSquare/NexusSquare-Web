@@ -9,6 +9,7 @@ import { SORT, SortItem } from '../../../../constants/sort'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useDidUpdateEffect } from '../../../../hooks/useDidUpdateEffect'
 import { SecondaryButton } from '../../../common/SecondaryButton'
+import { Categories } from '../../../molecules/qa/question/Categories'
 
 import { BaseLeftBar } from '../../LeftBar/_Base'
 
@@ -28,13 +29,14 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
     const initSortValue = SORT[0]
     const [sortItem, setSortItem] = useState<SortItem>(initSortValue)
 
-    const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {
+    const onChangeCategories = (e: ChangeEvent<HTMLInputElement>) => {
+        const selectedCategory = e.target.value as QACategory
         if (!e.target.checked) {
-            setCategories((cats) => cats.filter((c) => c !== category))
+            setCategories((cats) => cats.filter((c) => c !== selectedCategory))
             return
         }
         if (e.target.checked && categories.length < 10) {
-            setCategories((cats) => [...cats, category])
+            setCategories((cats) => [...cats, selectedCategory])
             return
         }
         errorToast('選択できるカテゴリーは10個までです。')
@@ -123,21 +125,7 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
                     <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         カテゴリー
                     </Text>
-                    <Wrap spacing="4" bg={'white'} p="4">
-                        {CATEGORIES.map((c, index) => {
-                            return (
-                                <WrapItem key={index}>
-                                    <Checkbox
-                                        colorScheme="orange"
-                                        onChange={(e) => onChangeCategories(e, c)}
-                                        isChecked={categories.includes(c)}
-                                    >
-                                        {c}
-                                    </Checkbox>
-                                </WrapItem>
-                            )
-                        })}
-                    </Wrap>
+                    <Categories selectedCategories={categories} onChange={onChangeCategories} />
                 </Box>
             </VStack>
         </BaseLeftBar>

@@ -7,6 +7,7 @@ import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { Drawer } from '../../common/Drawer'
 import { PrimaryButton } from '../../common/PrimaryButton'
 import { SecondaryButton } from '../../common/SecondaryButton'
+import { Categories } from '../../molecules/qa/question/Categories'
 
 interface Props {
     onClose: () => void
@@ -33,30 +34,17 @@ export const CategoryDrawer = ({ onClose, isOpen, clickFilter, clickReset }: Pro
         clickReset()
     }
 
-    const onChangeCategories = (e: ChangeEvent<HTMLInputElement>, category: QACategory) => {
+    const onChangeCategories = (e: ChangeEvent<HTMLInputElement>) => {
+        const selectedCategory = e.target.value as QACategory
         if (e.target.checked) {
-            setCategories((cats) => [...cats, category])
+            setCategories((cats) => [...cats, selectedCategory])
         } else {
-            setCategories((cats) => cats.filter((c) => c !== category))
+            setCategories((cats) => cats.filter((c) => c !== selectedCategory))
         }
     }
     return (
         <Drawer onClose={onClose} isOpen={isOpen} headerText={'並び替え'}>
-            <Wrap spacing="4" mb="4">
-                {CATEGORIES.map((c, index) => {
-                    return (
-                        <WrapItem key={index}>
-                            <Checkbox
-                                colorScheme="orange"
-                                onChange={(e) => onChangeCategories(e, c)}
-                                isChecked={categories.includes(c)}
-                            >
-                                {c}
-                            </Checkbox>
-                        </WrapItem>
-                    )
-                })}
-            </Wrap>
+            <Categories selectedCategories={categories} onChange={onChangeCategories} />
             <VStack spacing={4}>
                 <PrimaryButton buttonText="設定する" type="button" width={'full'} onClick={onClickFilter} />
                 <SecondaryButton buttonText="リセット" type="button" width={'full'} onClick={onClickReset} />
