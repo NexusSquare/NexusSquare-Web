@@ -26,7 +26,7 @@ export const HistoryCard = ({ history }: Props) => {
     }
     return (
         <Box w="full" border="1px" borderColor="gray.300" cursor="pointer" key={history.historyId} rounded="md">
-            <HStack bgColor="white" p="4" justify="space-evenly" spacing={{ base: '2', md: '12' }}>
+            <HStack bgColor="white" p="4" justify="space-between" spacing={{ base: '2', md: '12' }}>
                 <Text fontSize={{ base: 'sm', md: 'lg' }}>{convertTimestampToString(history.createAt)}</Text>
                 <HStack>
                     <Text fontSize={{ base: 'md', md: 'xl' }}>{convertType(history.type)}</Text>
