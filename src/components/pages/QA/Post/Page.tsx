@@ -28,6 +28,7 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { QuestionReq } from '../../../../api/req'
 import QACategories from '../../../../constants/qa/qaCategories'
 import { validators } from '../../../../lib/validator/Validators'
+import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -48,6 +49,7 @@ export const Page = (): JSX.Element => {
     const [contentLength, setContentLength] = useState(0)
     const router = useRouter()
     const errorToast = useErrorToast()
+    const infoToast = useInfoToast()
 
     //　NOTE　カテゴリー1が選択されるとカテゴリー2が生成される。
     useEffect(() => {
@@ -64,6 +66,7 @@ export const Page = (): JSX.Element => {
     const onSuccessPostQuestion = async () => {
         if (!postUser) return
         await cacheClearQuestion(postUser.userId)
+        infoToast('質問を投稿しました。')
         router.push(PAGE_LINKS.QA.URL)
     }
     const onSubmitQuestion = async (questionReq: QuestionReq) => {
@@ -137,7 +140,7 @@ export const Page = (): JSX.Element => {
                             validate: {
                                 text: validators.requiredForText('タイトル'),
                                 maxLength: validators.requiredMaxLength('タイトル', 50),
-                                minLength: validators.requiredMaxLength('タイトル', 1),
+                                // minLength: validators.requiredMaxLength('タイトル', 1),
                             },
                         })}
                     ></Input>
@@ -152,7 +155,7 @@ export const Page = (): JSX.Element => {
                             validate: {
                                 text: validators.requiredForText('質問'),
                                 maxLength: validators.requiredMaxLength('質問', 5000),
-                                minLength: validators.requiredMaxLength('質問', 1),
+                                // minLength: validators.requiredMaxLength('質問', 1),
                             },
                         })}
                         onChange={countContent}
