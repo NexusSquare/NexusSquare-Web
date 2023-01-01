@@ -58,7 +58,7 @@
         }
     },
     "lint-staged": {
-        "src/**/*.{js,jsx,ts,tsx}": [
+        "src/**/*.{js,jsx,ts,tsx} --ignore-path src/plugins/$path.ts": [
             "npm run lint-fix"
         ]
     }
