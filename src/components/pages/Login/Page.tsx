@@ -21,6 +21,7 @@ import { useAlertLoginError } from '../../../hooks/errors/useAlertLoginError'
 import { UserAccount } from '../../../entities/user'
 import { FormLayout } from '../../molecules/sign/FormLayout'
 import { validators } from '../../../lib/validator/Validators'
+import { pagesPath } from '../../../plugins/$path'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -35,7 +36,7 @@ export const Page = (): JSX.Element => {
 
     const onSubmitAccount = async (account: UserAccount) => {
         login(account, {
-            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
+            onSuccess: () => router.push(pagesPath.qa.$url()),
         })
     }
 
