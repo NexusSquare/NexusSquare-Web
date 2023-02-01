@@ -1,21 +1,7 @@
-import {
-    Box,
-    Button,
-    SkeletonCircle,
-    SkeletonText,
-    Tab,
-    TabList,
-    TabPanel,
-    TabPanels,
-    VStack,
-    Tabs,
-    HStack,
-    Text,
-} from '@chakra-ui/react'
-import React from 'react'
+import { Box, Button, Tab, TabList, TabPanel, TabPanels, VStack, Tabs, HStack, Text } from '@chakra-ui/react'
+import React, { FC } from 'react'
 import QACard from '../../molecules/qa/QACard'
 import { Question } from '../../../entities/qa'
-import { BsChatText } from 'react-icons/bs'
 import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'
 import { STATUS } from '../../../constants/qa/status'
@@ -26,6 +12,45 @@ interface Props {
     changeStatus: (value: QuestionStatus) => void
 }
 type QuestionStatus = keyof typeof STATUS
+
+interface QASkeletonsProps {
+    sheltonCount: number
+}
+interface QuestionTabItemProps {
+    questions: Question[]
+}
+
+const QASkeletons: FC<QASkeletonsProps> = ({ sheltonCount }) => {
+    const _sequential = new Array(sheltonCount).fill(null).map((_, i) => i)
+    return (
+        <>
+            {_sequential.map((index) => {
+                return <QASkeleton key={index} />
+            })}
+        </>
+    )
+}
+
+const QuestionTabItem: FC<QuestionTabItemProps> = ({ questions }) => {
+    return (
+        <>
+            {questions.length > 0 ? (
+                <>
+                    {questions.map((question: Question) => {
+                        return <QACard question={question} key={question.questionId} />
+                    })}
+                    <Box w="100%" textAlign="center">
+                        <Button w="100%">さらに読み込む</Button>
+                    </Box>
+                </>
+            ) : (
+                <>
+                    <NoCards text="質問が見つかりませんでした。" />
+                </>
+            )}
+        </>
+    )
+}
 
 const QACardListBox = ({ questions, isLoading, changeStatus }: Props): JSX.Element => {
     return (
@@ -74,46 +99,15 @@ const QACardListBox = ({ questions, isLoading, changeStatus }: Props): JSX.Eleme
             </TabList>
 
             {isLoading ? (
-                [1, 2, 3].map((index) => {
-                    return <QASkeleton key={index} />
-                })
+                <QASkeletons sheltonCount={3} />
             ) : (
                 <>
                     <TabPanels>
                         <TabPanel padding="0px">
-                            {questions.length > 0 ? (
-                                <>
-                                    {questions.map((question: Question) => {
-                                        return <QACard question={question} key={question.questionId} />
-                                    })}
-                                    <Box w="100%" textAlign="center">
-                                        <Button w="100%">さらに読み込む</Button>
-                                    </Box>
-                                </>
-                            ) : (
-                                <NoCards text="質問が見つかりませんでした。" />
-                            )}
+                            <QuestionTabItem questions={questions}></QuestionTabItem>
                         </TabPanel>
                         <TabPanel padding="0px">
-                            {questions.length > 0 ? (
-                                <>
-                                    {questions.map((question: Question) => {
-                                        return <QACard question={question} key={question.questionId} />
-                                    })}
-                                    <Box w="100%" textAlign="center">
-                                        <Button w="100%">さらに読み込む</Button>
-                                    </Box>
-                                </>
-                            ) : (
-                                <>
-                                    <HStack justify={'center'} py="4" h="50vh">
-                                        <VStack>
-                                            <BsChatText color={'#a0acc0'} size={100} />
-                                            <Text color="gray.400">質問が見つかりませんでした。</Text>
-                                        </VStack>
-                                    </HStack>
-                                </>
-                            )}
+                            <QuestionTabItem questions={questions}></QuestionTabItem>
                         </TabPanel>
                     </TabPanels>
                 </>
