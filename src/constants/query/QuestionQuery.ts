@@ -17,4 +17,5 @@ export type QuestionQuery = {
     direction: Direction
     categories: QACategory[]
     title?: string
+    page: number
 }

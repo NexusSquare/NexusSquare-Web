@@ -1,5 +1,5 @@
-import { Box, Radio, RadioGroup, Stack, Text, useDisclosure, VStack } from '@chakra-ui/react'
-import React, { useEffect, useRef, useState } from 'react'
+import { Box, Text, useDisclosure, VStack } from '@chakra-ui/react'
+import React, { useRef, useState } from 'react'
 import QACardWindow from '../../organisms/qa/QACardWindow'
 import QACardList from '../../organisms/qa/QACardList'
 import { SearchForm } from '../../molecules/qa/SearchForm'
@@ -12,6 +12,8 @@ import { SortDrawer } from '../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../organisms/qa/CategoryDrawer'
 import { Question } from '../../../entities/qa'
 import { QACategory } from '../../../constants/query'
+import { INIT_PAGE, PAGE_SIZE } from '../../../constants/qa/page'
+import { SpProvider } from '../../../providers/SpProvider'
 
 type QuestionStatus = keyof typeof STATUS
 
@@ -22,6 +24,7 @@ interface Props {
     filterQuestions: (value: QACategory[]) => void
     changeStatus: (value: QuestionStatus) => void
     resetCategories: () => void
+    updatePageNumber: (value: number) => void
 }
 
 export const Page = ({
@@ -31,6 +34,7 @@ export const Page = ({
     filterQuestions,
     changeStatus,
     resetCategories,
+    updatePageNumber,
 }: Props) => {
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
@@ -41,6 +45,10 @@ export const Page = ({
     const router = useRouter()
     const errorToast = useErrorToast()
     const [categoryCount, setCategoryCount] = useState(0)
+    const [page, setPage] = useState(INIT_PAGE)
+    const resetPage = () => {
+        setPage(INIT_PAGE)
+    }
 
     const clickSearch = (text: string) => {
         if (text.length <= 1) {
@@ -58,12 +66,19 @@ export const Page = ({
     const clickFilter = (categories: QACategory[]) => {
         filterQuestions(categories)
         setCategoryCount(categories.length)
+        resetPage()
         onCloseCategoryDrawer()
     }
 
     const clickReset = () => {
         resetCategories()
+        resetPage()
         setCategoryCount(0)
+    }
+
+    const scrollPage = () => {
+        updatePageNumber(page + PAGE_SIZE)
+        setPage((page) => page + PAGE_SIZE)
     }
 
     return (
@@ -85,19 +100,22 @@ export const Page = ({
                 </Box>
             </VStack>
             <QACardWindow>
-                <QACardList questions={questions} isLoading={isLoading} changeStatus={changeStatus} />
+                <QACardList
+                    questions={questions}
+                    isLoading={isLoading}
+                    changeStatus={changeStatus}
+                    scrollPage={scrollPage}
+                />
             </QACardWindow>
-            <Box display={{ base: 'block', md: 'none' }}>
+            <SpProvider>
                 <SortDrawer onClose={onCloseSortDrawer} isOpen={isOpenSortDrawer} clickSort={clickSort} />
-            </Box>
-            <Box display={{ base: 'block', md: 'none' }}>
                 <CategoryDrawer
                     onClose={onCloseCategoryDrawer}
                     isOpen={isOpenCategoryDrawer}
                     clickFilter={clickFilter}
                     clickReset={clickReset}
                 />
-            </Box>
+            </SpProvider>
         </>
     )
 }

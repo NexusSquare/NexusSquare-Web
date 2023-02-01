@@ -1,16 +1,12 @@
-import { useDisclosure } from '@chakra-ui/react'
 import { NextPageWithLayout } from 'next'
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { Layout } from '../../components/layouts/QA/Search/Layout'
 import { Page } from '../../components/pages/QA/Page'
 import { STATUS } from '../../constants/qa/status'
 import { QACategory, QuestionQuery } from '../../constants/query'
 import { SortItem } from '../../constants/sort'
-import { useErrorToast } from '../../hooks/errors/useErrorToast'
 import { useFetchQuestions } from '../../hooks/question/useFetchQuestion'
-import { Question } from '../../entities/qa'
-
+import { INIT_PAGE } from '../../constants/qa/page'
 type QuestionStatus = keyof typeof STATUS
 
 const QAHome: NextPageWithLayout = () => {
@@ -19,6 +15,7 @@ const QAHome: NextPageWithLayout = () => {
         orderBy: 'createAt',
         direction: 'desc',
         categories: [],
+        page: INIT_PAGE,
     }
     const [questionQuery, setQuestionQuery] = useState<QuestionQuery>(initQuestionQuery)
     const { data: questions = [], isLoading } = useFetchQuestions(questionQuery)
@@ -43,6 +40,11 @@ const QAHome: NextPageWithLayout = () => {
             return { ...query, categories: [] }
         })
     }
+    const updatePageNumber = (page: number) => {
+        setQuestionQuery((query) => {
+            return { ...query, page }
+        })
+    }
     return (
         <Layout
             pageName="Q&Aトップ"
@@ -57,6 +59,7 @@ const QAHome: NextPageWithLayout = () => {
                 filterQuestions={filterQuestions}
                 changeStatus={changeQuestionStatus}
                 resetCategories={resetCategories}
+                updatePageNumber={updatePageNumber}
             />
         </Layout>
     )
