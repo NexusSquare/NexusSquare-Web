@@ -66,7 +66,6 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
 
     // NOTE:ベストアンサーが先頭に来るようにソート
     useEffect(() => {
-        console.log(bestAnswer)
         if (!bestAnswer) {
             // NOTE:ベストアンサーが存在しない時そのまま表示
             setDisplayAnswers(answers)

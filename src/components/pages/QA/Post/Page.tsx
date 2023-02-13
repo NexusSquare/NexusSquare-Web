@@ -31,6 +31,7 @@ import { validators } from '../../../../lib/validator/Validators'
 import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { LeftBar } from '../../../layouts/LeftBar'
+import { User } from '../../../../entities/user'
 
 type QACategoriesType = typeof QACategories
 type QACategories = typeof QACategories[keyof QACategoriesType]
@@ -65,7 +66,7 @@ export const PostPage = (): JSX.Element => {
     const countContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContentLength(e.target.value.length)
     }
-    const onSuccessPostQuestion = async () => {
+    const onSuccessPostQuestion = async (postUser: User) => {
         if (!postUser) return
         await cacheClearQuestion(postUser.userId)
         infoToast('質問を投稿しました。')
@@ -77,7 +78,7 @@ export const PostPage = (): JSX.Element => {
         postQuestion(
             { questionReq, postUser },
             {
-                onSuccess: onSuccessPostQuestion,
+                onSuccess: () => onSuccessPostQuestion(postUser),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
             }
         )

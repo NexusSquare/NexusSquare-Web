@@ -54,7 +54,7 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
 
     return (
         <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
-            <Box w="full" as="form" onSubmit={handleSubmit((data) => onSubmitAnswer(data))}>
+            <Box w="full" as="form" onSubmit={handleSubmit((data) => console.log(data))}>
                 <ModalBody>
                     <FormControl isInvalid={errors.content !== undefined} isRequired>
                         <FormLabel fontWeight={'bold'} fontSize={{ base: 'lg', md: 'lg' }}>
