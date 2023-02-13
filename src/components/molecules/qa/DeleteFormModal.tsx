@@ -3,9 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ChancelButton } from '../../common/ChancelButton'
 import { DefaultModal } from '../../common/DefaultModal'
-import { Question } from '../../../entities/qa'
-import QACategories from '../../../constants/qa/qaCategories'
-import { QuestionReq } from '../../../api/req'
+
 import { SecondaryButton } from '../../common/SecondaryButton'
 import { PrimaryButton } from '../../common/PrimaryButton'
 
