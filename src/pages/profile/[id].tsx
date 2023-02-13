@@ -1,7 +1,7 @@
 import { NextPageWithLayout } from 'next'
 import { useRouter } from 'next/router'
-import { Layout } from '../../components/layouts/Profile/Layout'
-import { Page } from '../../components/pages/Profile/Page'
+import { DefaultLayout } from '../../components/layouts//DefaultLayout'
+import { ProfilePage } from '../../components/pages/Profile/Page'
 import { UserGuards } from '../../guards/UserGuards'
 
 const Profile: NextPageWithLayout = () => {
@@ -9,11 +9,11 @@ const Profile: NextPageWithLayout = () => {
     const { id } = router.query
     return (
         <UserGuards>
-            <Page userId={String(id)} />
+            <ProfilePage userId={String(id)} />
         </UserGuards>
     )
 }
 
-Profile.getLayout = (page) => <Layout pageName="ユーザー登録">{page}</Layout>
+Profile.getLayout = (page) => <DefaultLayout pageName="ユーザー登録">{page}</DefaultLayout>
 
 export default Profile

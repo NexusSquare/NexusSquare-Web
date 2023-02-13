@@ -1,14 +1,14 @@
 import { NextPage, NextPageWithLayout } from 'next'
-import { Layout } from '../../components/layouts/QA/Layout'
-import { Page } from '../../components/pages/QA/Post/Page'
+import { DefaultLayout } from '../../components/layouts/DefaultLayout'
+import { PostPage } from '../../components/pages/QA/Post/Page'
 import { UserGuards } from '../../guards/UserGuards'
 
 const Post: NextPageWithLayout = () => (
     <UserGuards>
-        <Page />
+        <PostPage />
     </UserGuards>
 )
 
-Post.getLayout = (page) => <Layout pageName="質問の投稿">{page}</Layout>
+Post.getLayout = (page) => <DefaultLayout pageName="質問の投稿">{page}</DefaultLayout>
 
 export default Post
