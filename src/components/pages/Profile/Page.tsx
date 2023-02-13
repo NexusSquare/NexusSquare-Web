@@ -9,11 +9,13 @@ import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuest
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../common/BackButton'
 import { useUser } from '../../../store/atom'
+import { ContentsLayout } from '../../layouts/ContentsLayout'
+import { LeftBar } from '../../layouts/LeftBar'
 interface Props {
     userId: string
 }
 // TODO　 コンポーネント分割（責務の分離）
-export const Page = ({ userId }: Props): JSX.Element => {
+export const ProfilePage = ({ userId }: Props): JSX.Element => {
     const { user: currentUser } = useUser()
     const myUserId = currentUser?.userId
 
@@ -41,21 +43,23 @@ export const Page = ({ userId }: Props): JSX.Element => {
 
     if (!user) return <Loading />
     return (
-        <VStack w="full" pb="4" spacing={8}>
-            <BackButton />
-            {userId === myUserId ? (
-                <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />
-            ) : (
-                <OthersInfo user={user} />
-            )}
-            <UserHistory
-                userId={userId}
-                answers={answers}
-                questions={questions}
-                isFetchLoading={isFetchLoading}
-                refetchQuestions={refetchUserAndQuestions}
-                refetchAnswers={refetchUserAndAnswers}
-            />
-        </VStack>
+        <ContentsLayout Left={<LeftBar />}>
+            <VStack w="full" pb="4" spacing={8}>
+                <BackButton />
+                {userId === myUserId ? (
+                    <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />
+                ) : (
+                    <OthersInfo user={user} />
+                )}
+                <UserHistory
+                    userId={userId}
+                    answers={answers}
+                    questions={questions}
+                    isFetchLoading={isFetchLoading}
+                    refetchQuestions={refetchUserAndQuestions}
+                    refetchAnswers={refetchUserAndAnswers}
+                />
+            </VStack>
+        </ContentsLayout>
     )
 }

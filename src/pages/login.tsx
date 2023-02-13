@@ -1,9 +1,9 @@
 import { NextPageWithLayout } from 'next'
-import { Layout } from '../components/layouts/Form/Layout'
+import { FormLayout } from '../components/layouts/Form/Layout'
 import { Page } from '../components/pages/Login/Page'
 
 const Login: NextPageWithLayout = () => <Page />
 
-Login.getLayout = (page) => <Layout pageName="ログイン">{page}</Layout>
+Login.getLayout = (page) => <FormLayout pageName="ログイン">{page}</FormLayout>
 
 export default Login
