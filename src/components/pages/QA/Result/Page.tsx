@@ -38,7 +38,7 @@ export const Page = ({
         onOpen: onOpenCategoryDrawer,
         onClose: onCloseCategoryDrawer,
     } = useDisclosure()
-    const [categoryCount, setCategoryCount] = useState(0)
+
     const router = useRouter()
     const errorToast = useErrorToast()
 
