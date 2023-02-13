@@ -19,5 +19,5 @@ export const useAlertLoginError = () => {
                 errorToast(ERROR_MESSAGE.SERVER)
         }
     }, [])
-    return { alertLoginError: alertLoginError }
+    return { alertLoginError }
 }
