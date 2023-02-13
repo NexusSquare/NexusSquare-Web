@@ -16,10 +16,6 @@ export const BaseLeftBar: Function = ({ children }: Props): JSX.Element => {
             paddingTop={6}
             h={LEFT_BAR_HEIGHT}
             w={LEFT_BAR_WIDTH}
-            display={{ base: 'none', xl: 'flex' }}
-            position="fixed"
-            top={{ base: '98px', md: '56px' }}
-            left="0"
             paddingX={8}
             alignItems={'start'}
             overflow={'scroll'}

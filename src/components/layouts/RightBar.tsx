@@ -10,17 +10,7 @@ interface Props {
 
 export const RightBar = ({ children }: Props): JSX.Element => {
     return (
-        <VStack
-            as="aside"
-            bgColor="#FBF6F0"
-            h={RIGHT_BAR_HEIGHT}
-            w={RIGHT_BAR_WIDTH}
-            minW={RIGHT_BAR_MINI_WIDTH}
-            display={{ base: 'none', md: 'flex' }}
-            position="fixed"
-            top="56px"
-            right="0"
-        >
+        <VStack as="aside" bgColor="#FBF6F0" h={RIGHT_BAR_HEIGHT} w={RIGHT_BAR_WIDTH} minW={RIGHT_BAR_MINI_WIDTH}>
             <VStack spacing="15px" margin="30px 10px">
                 <Box bgColor="gray.200" h="210px" w="210px">
                     広告枠1
