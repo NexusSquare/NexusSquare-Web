@@ -12,26 +12,15 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { SortDrawer } from '../../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
 import { SortItem } from '../../../../constants/sort'
-import { Question } from '../../../../entities/qa'
+import { useSearchQuestionQuery } from '../hooks'
+import { SearchLeftBar } from '../_SearchLeftBar'
+import { SpProvider } from '../../../../providers/SpProvider'
+import { ContentsLayout } from '../../../layouts/ContentsLayout'
 
 interface Props {
-    questions: Question[]
-    isLoading: boolean
-    sortQuestions: (value: SortItem) => void
-    filterQuestions: (value: QACategory[]) => void
-    changeStatus: (value: QuestionStatus) => void
-    resetCategories: () => void
     title?: string
 }
-export const Page = ({
-    questions,
-    isLoading,
-    sortQuestions,
-    filterQuestions,
-    changeStatus,
-    resetCategories,
-    title,
-}: Props) => {
+export const QAResultPage = ({ title }: Props) => {
     const { isOpen: isOpenSortDrawer, onOpen: onOpenSortDrawer, onClose: onCloseSortDrawer } = useDisclosure()
     const {
         isOpen: isOpenCategoryDrawer,
@@ -42,12 +31,20 @@ export const Page = ({
     const router = useRouter()
     const errorToast = useErrorToast()
 
-    const changeQuestionStatus = (status: QuestionStatus) => {
-        changeStatus(status)
-    }
+    const { questionQuery, sortQuestions, filterQuestions, changeQuestionStatus, resetCategories, searchByTitle } =
+        useSearchQuestionQuery()
+    const { data: questions = [], isLoading } = useFetchQuestionsByTitle(questionQuery)
+
+    useEffect(() => {
+        if (!title) return
+        searchByTitle(title)
+    }, [title])
 
     const clickSearch = (text: string) => {
-        if (text.length <= 1) {
+        if (text.length == 0) {
+            router.push(PAGE_LINKS.QA.URL)
+            return
+        } else if (text.length <= 1) {
             errorToast('2文字以上入力してください')
             return
         }
@@ -61,46 +58,67 @@ export const Page = ({
 
     const clickFilter = (categories: QACategory[]) => {
         filterQuestions(categories)
-        setCategoryCount(categories.length)
         onCloseCategoryDrawer()
     }
 
     const clickReset = () => {
         resetCategories()
-        setCategoryCount(0)
     }
     return (
-        <>
-            <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">
-                <Box w="full">
-                    <Text as="h2" fontWeight={'bold'} fontSize={{ base: 'xl', md: '2xl' }} paddingX={4}>
-                        {title ? `${title}の検索結果` : '学生生活Q&A'}
-                    </Text>
-                </Box>
-                <Box display={{ base: 'block', xl: 'none' }} w="full">
-                    <SearchForm
-                        questions={questions}
-                        clickSearch={clickSearch}
-                        openSortDrawer={onOpenSortDrawer}
-                        openCategoryDrawer={onOpenCategoryDrawer}
-                        categoryCount={categoryCount}
-                    />
-                </Box>
-            </VStack>
-            <QACardWindow>
-                <QACardList questions={questions} isLoading={isLoading} changeStatus={changeQuestionStatus} />
-            </QACardWindow>
-            <Box display={{ base: 'block', md: 'none' }}>
-                <SortDrawer onClose={onCloseSortDrawer} isOpen={isOpenSortDrawer} clickSort={clickSort} />
-            </Box>
-            <Box display={{ base: 'block', md: 'none' }}>
-                <CategoryDrawer
-                    onClose={onCloseCategoryDrawer}
-                    isOpen={isOpenCategoryDrawer}
-                    clickFilter={clickFilter}
-                    clickReset={clickReset}
+        <ContentsLayout
+            Left={
+                <SearchLeftBar
+                    sortQuestions={sortQuestions}
+                    filterQuestions={filterQuestions}
+                    questionNum={questions.length}
+                    initCategories={questionQuery.categories}
+                    initDirection={questionQuery.direction}
+                    initOrderBy={questionQuery.orderBy}
                 />
-            </Box>
-        </>
+            }
+        >
+            <VStack spacing={0}>
+                <VStack pb={4} pt={6} w="100%" display="flex" alignItems="center">
+                    <Box w="full">
+                        <Text as="h2" fontWeight={'bold'} fontSize={{ base: 'xl', md: '2xl' }} paddingX={4}>
+                            {title ? `${title}の検索結果` : '学生生活Q&A'}
+                        </Text>
+                    </Box>
+                    <Box display={{ base: 'block', xl: 'none' }} w="full">
+                        <SearchForm
+                            questions={questions}
+                            clickSearch={clickSearch}
+                            openSortDrawer={onOpenSortDrawer}
+                            openCategoryDrawer={onOpenCategoryDrawer}
+                            categoryCount={questionQuery.categories.length}
+                        />
+                    </Box>
+                </VStack>
+                <QACardWindow>
+                    <QACardList
+                        questions={questions}
+                        isLoading={isLoading}
+                        changeStatus={changeQuestionStatus}
+                        initStatus={questionQuery.status}
+                    />
+                </QACardWindow>
+                <SpProvider>
+                    <SortDrawer
+                        onClose={onCloseSortDrawer}
+                        isOpen={isOpenSortDrawer}
+                        clickSort={clickSort}
+                        initDirection={questionQuery.direction}
+                        initOrderBy={questionQuery.orderBy}
+                    />
+                    <CategoryDrawer
+                        onClose={onCloseCategoryDrawer}
+                        isOpen={isOpenCategoryDrawer}
+                        clickFilter={clickFilter}
+                        clickReset={clickReset}
+                        initCategories={questionQuery.categories}
+                    />
+                </SpProvider>
+            </VStack>
+        </ContentsLayout>
     )
 }

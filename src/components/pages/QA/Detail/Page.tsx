@@ -11,12 +11,14 @@ import { useEffect, useState } from 'react'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { LeftBar } from '../../../layouts/LeftBar'
+import { ContentsLayout } from '../../../layouts/ContentsLayout'
 
 interface Props {
     questionId: string
 }
 
-export const Page = ({ questionId }: Props): JSX.Element => {
+export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
     const errorToast = useErrorToast()
     const [displayAnswers, setDisplayAnswers] = useState<Answer[]>([])
@@ -75,37 +77,39 @@ export const Page = ({ questionId }: Props): JSX.Element => {
     }, [answers, bestAnswer])
 
     return (
-        <VStack w="full" spacing={2}>
-            <BackButton />
-            <QuestionDetail
-                questionId={questionId}
-                isLoading={isLoading}
-                postUser={user}
-                refetch={refetchQuestion}
-                question={question}
-                isPosted={isPosted}
-                isMine={isMine}
-            />
-            <HStack py="12">
-                <Box w="180px" h="180px" bgColor="gray.200">
-                    広告枠
-                </Box>
-                <Box w="180px" h="180px" bgColor="gray.200">
-                    広告枠
-                </Box>
-            </HStack>
-            <AnswerList
-                answers={displayAnswers}
-                isFetchLoading={isFetchAnswersLoading}
-                questionId={questionId}
-                isMine={isMine}
-                isOpenBestAnswerForm={isOpenBestAnswerForm}
-                onOpenBestAnswerForm={onOpenBestAnswerForm}
-                onCloseBestAnswerForm={onCloseBestAnswerForm}
-                onClickBestAnswer={onClickBestAnswer}
-                isDeclareLoading={isDeclareLoading}
-                hasBestAnswer={hasBestAnswer}
-            />
-        </VStack>
+        <ContentsLayout Left={<LeftBar />}>
+            <VStack w="full" spacing={2}>
+                <BackButton />
+                <QuestionDetail
+                    questionId={questionId}
+                    isLoading={isLoading}
+                    postUser={user}
+                    refetch={refetchQuestion}
+                    question={question}
+                    isPosted={isPosted}
+                    isMine={isMine}
+                />
+                <HStack py="12">
+                    <Box w="180px" h="180px" bgColor="gray.200">
+                        広告枠
+                    </Box>
+                    <Box w="180px" h="180px" bgColor="gray.200">
+                        広告枠
+                    </Box>
+                </HStack>
+                <AnswerList
+                    answers={displayAnswers}
+                    isFetchLoading={isFetchAnswersLoading}
+                    questionId={questionId}
+                    isMine={isMine}
+                    isOpenBestAnswerForm={isOpenBestAnswerForm}
+                    onOpenBestAnswerForm={onOpenBestAnswerForm}
+                    onCloseBestAnswerForm={onCloseBestAnswerForm}
+                    onClickBestAnswer={onClickBestAnswer}
+                    isDeclareLoading={isDeclareLoading}
+                    hasBestAnswer={hasBestAnswer}
+                />
+            </VStack>
+        </ContentsLayout>
     )
 }
