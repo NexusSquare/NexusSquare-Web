@@ -3,7 +3,6 @@ import { Box, HStack, VStack, Text, Select, Wrap, WrapItem, Checkbox, Input, But
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
-import QACategories from '../../../constants/qa/qaCategories'
 import { Direction, OrderBy, QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
