@@ -144,7 +144,6 @@ export const PostPage = (): JSX.Element => {
                                 validate: {
                                     text: validators.requiredForText('タイトル'),
                                     maxLength: validators.requiredMaxLength('タイトル', 50),
-                                    // minLength: validators.requiredMaxLength('タイトル', 1),
                                 },
                             })}
                         ></Input>
@@ -159,7 +158,6 @@ export const PostPage = (): JSX.Element => {
                                 validate: {
                                     text: validators.requiredForText('質問'),
                                     maxLength: validators.requiredMaxLength('質問', 5000),
-                                    // minLength: validators.requiredMaxLength('質問', 1),
                                 },
                             })}
                             onChange={countContent}
