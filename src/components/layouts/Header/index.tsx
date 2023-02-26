@@ -1,25 +1,8 @@
 /* eslint-disable react/display-name */
 import { BellIcon } from '@chakra-ui/icons'
-import {
-    Avatar,
-    Box,
-    Button,
-    Divider,
-    HStack,
-    IconButton,
-    Popover,
-    PopoverArrow,
-    PopoverBody,
-    PopoverCloseButton,
-    PopoverContent,
-    PopoverHeader,
-    PopoverTrigger,
-    StackDivider,
-    Text,
-    VStack,
-} from '@chakra-ui/react'
+import { Avatar, Box, HStack, StackDivider, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
-import { memo, useEffect, useState } from 'react'
+import { FC, memo, useEffect, useState } from 'react'
 import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
 import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
@@ -36,14 +19,13 @@ import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { createNotificationMessage } from '../../../constants/notification'
 import { HEADER_HEIGHT } from '../constants'
+import { NotificationButton } from './notifications/_NotificationButton'
+import { AvatarPopover } from './_AvatarPopover'
+import { RegisterAndLogin } from './_RegisterAndLogin'
+import { NavigationLink } from './_NavigationLink'
 
 interface Props {
     children?: ReactNode
-}
-interface headerFuncProps {
-    url: string
-    isComp: boolean
-    funcName: string
 }
 
 export const Header = memo(({ children }: Props): JSX.Element => {
@@ -85,224 +67,14 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         })
     }
 
-    const HeaderFunction: React.VFC<headerFuncProps> = (props) => {
-        return props.isComp ? (
-            <Link href={props.url} passHref>
-                <Box
-                    as="a"
-                    href={props.url}
-                    whiteSpace="nowrap"
-                    fontWeight="bold"
-                    color="#FEEBC8"
-                    fontSize="sm"
-                    _hover={{ textDecoration: 'underline' }}
-                >
-                    {props.funcName}
-                </Box>
-            </Link>
-        ) : (
-            <Box
-                whiteSpace="nowrap"
-                onClick={() => alert('今後実装予定！お楽しみに！')}
-                _hover={{ cursor: 'pointer', textDecoration: 'underline' }}
-                fontWeight="bold"
-                color="#FEEBC8"
-                fontSize="sm"
-            >
-                {props.funcName}
-            </Box>
-        )
-    }
-    const NotificationButton = () =>
-        notifications.length > 0 ? (
-            <Popover>
-                <PopoverTrigger>
-                    <Box position="relative">
-                        <IconButton
-                            aria-label="通知"
-                            icon={<BellIcon viewBox="0 0 24 24" boxSize="30px" color="white" />}
-                            bgColor="#FF9037"
-                            _hover={{ bgColor: '#FF9037' }}
-                            _active={{ bgColor: '#FF9037', outline: 'none' }}
-                            _focus={{ outline: 'none' }}
-                        />
-                        <Box
-                            position="absolute"
-                            bgColor="red"
-                            borderRadius="50%"
-                            boxSize="12px"
-                            top="5px"
-                            left="20px"
-                            _hover={{ cursor: 'pointer' }}
-                        ></Box>
-                    </Box>
-                </PopoverTrigger>
-                <PopoverContent>
-                    <PopoverBody>
-                        {notifications.map((notification: Notification, index: number) => {
-                            return (
-                                <Box key={notification.notificationId}>
-                                    <HStack
-                                        py="2"
-                                        px="2"
-                                        _hover={{ bgColor: 'gray.100', cursor: 'pointer' }}
-                                        w="full"
-                                        onClick={() =>
-                                            onClickNotification(notification.notificationId, notification.questionId)
-                                        }
-                                    >
-                                        <Avatar
-                                            as="button"
-                                            width="32px"
-                                            height="32px"
-                                            src={notification.imageUrl}
-                                            bg="white"
-                                            borderWidth={'1px'}
-                                            borderColor={'gray.200'}
-                                        />
-                                        <VStack spacing={0} alignItems={'start'} w="full">
-                                            <HStack w="full">
-                                                <Text color={'gray.400'} fontSize={'sm'} w="full" textAlign={'start'}>
-                                                    {createNotificationMessage(
-                                                        notification.type,
-                                                        notification.nickname
-                                                    )}
-                                                </Text>
-                                            </HStack>
-                                            <Text fontWeight={'bold'} fontSize={'sm'} noOfLines={1}>
-                                                {notification.questionTitle}
-                                            </Text>
-                                        </VStack>
-                                        {/* <Text color={'gray.400'} fontSize={'sm'}>
-                                            {convertTimestampToString(notification.createAt)}
-                                        </Text> */}
-                                    </HStack>
-
-                                    {index < notifications.length - 1 && <Divider />}
-                                </Box>
-                            )
-                        })}
-                    </PopoverBody>
-                </PopoverContent>
-            </Popover>
-        ) : (
-            <Box>
-                <IconButton
-                    aria-label="通知"
-                    icon={<BellIcon viewBox="0 0 25 25" boxSize="30px" color="white" />}
-                    bgColor="#FF9037"
-                    _hover={{ bgColor: '#FF9037' }}
-                    _active={{ bgColor: '#FF9037', outline: 'none' }}
-                    _focus={{ outline: 'none' }}
-                />
-            </Box>
-        )
     const LoginOrProfile = () =>
-        user ? (
-            <HStack spacing="10%" w="105px">
-                <NotificationButton />
-                <Popover>
-                    <PopoverTrigger>
-                        <Avatar as="button" width="40px" height="40px" src={user.imageUrl} bg="mainColor" />
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        <PopoverHeader fontWeight="semibold">
-                            <HStack py="4" px="2" spacing="4">
-                                <Avatar
-                                    as="button"
-                                    width="32px"
-                                    height="32px"
-                                    src={user.imageUrl}
-                                    bg="white"
-                                    borderWidth={'1px'}
-                                    borderColor={'gray.200'}
-                                />
-                                <VStack w="full" alignItems={'left'} spacing="0">
-                                    <Text>{userMeta?.name}</Text>
-                                    <Text fontSize={'xs'}>{userMeta?.email}</Text>
-                                </VStack>
-                            </HStack>
-                        </PopoverHeader>
-                        <PopoverArrow />
-                        <PopoverCloseButton />
-                        <PopoverBody>
-                            <HStack
-                                as="button"
-                                py="4"
-                                px="2"
-                                w="full"
-                                _hover={{ bgColor: 'gray.100' }}
-                                onClick={onClickProfile}
-                            >
-                                <FiEdit />
-                                <Text>プロフィール</Text>
-                            </HStack>
-                            <Divider />
-                            <HStack
-                                as="button"
-                                py="4"
-                                px="2"
-                                w="full"
-                                _hover={{ bgColor: 'gray.100' }}
-                                onClick={onClickLogOut}
-                            >
-                                <VscSignOut />
-                                <Text>サインアウト</Text>
-                            </HStack>
-                        </PopoverBody>
-                    </PopoverContent>
-                </Popover>
+        user && userMeta ? (
+            <HStack spacing={{ base: 2, md: 4 }}>
+                <NotificationButton notifications={notifications} seeNotification={onClickNotification} />
+                <AvatarPopover user={user} userMeta={userMeta} seeProfile={onClickProfile} signOut={onClickLogOut} />
             </HStack>
         ) : (
-            <>
-                <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
-                    <Button
-                        type="button"
-                        color="white"
-                        bgColor="mainColor"
-                        borderWidth={2}
-                        borderColor="white"
-                        _hover={{ bgColor: 'white', color: 'mainColor' }}
-                        onClick={onClickRegister}
-                        borderRadius="sm"
-                    >
-                        新規登録
-                    </Button>
-                    <HStack as="button" spacing={1} _hover={{ color: 'mainColor' }}>
-                        <FiLogIn size={30} color={'white'} />
-                        <Text
-                            fontSize={'md'}
-                            color={'white'}
-                            w="full"
-                            fontWeight={'bold'}
-                            _hover={{ textDecoration: 'underline' }}
-                            onClick={onClickLogin}
-                        >
-                            ログイン
-                        </Text>
-                    </HStack>
-                </HStack>
-                <HStack spacing={2} display={{ base: 'flex', md: 'none' }}>
-                    <VStack
-                        as="button"
-                        _hover={{ color: 'mainColor' }}
-                        spacing={1}
-                        justify={'center'}
-                        alignItems={'center'}
-                    >
-                        <FiUserPlus size={20} color={'white'} />
-                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
-                            新規登録
-                        </Text>
-                    </VStack>
-                    <VStack as="button" spacing={1} onClick={onClickLogin}>
-                        <FiLogIn size={20} color={'white'} />
-                        <Text fontSize={'10px'} color={'white'} fontWeight={'bold'}>
-                            ログイン
-                        </Text>
-                    </VStack>
-                </HStack>
-            </>
+            <RegisterAndLogin onClickRegister={onClickRegister} onClickLogin={onClickLogin} />
         )
 
     return (
@@ -354,9 +126,9 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         display={{ base: 'none', md: 'flex' }}
                         paddingTop={1}
                     >
-                        <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
-                        <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
-                        <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
+                        <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
+                        <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
+                        <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
                     </HStack>
                 </HStack>
                 <LoginOrProfile />
@@ -370,9 +142,9 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                 aria-labelledby="jump to other functions - mini version"
                 display={{ base: 'flex', md: 'none' }}
             >
-                <HeaderFunction url="/qa" funcName="学生生活Q&A" isComp={true} />
-                <HeaderFunction url="/qa/post" funcName="質問投稿" isComp={true} />
-                <HeaderFunction url="#" funcName="授業口コミ" isComp={false} />
+                <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
+                <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
+                <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
             </HStack>
         </VStack>
     )
