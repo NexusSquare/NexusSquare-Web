@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogin } from '../../../hooks/authentication'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { PrimaryButton } from '../../common/buttons/PrimaryButton'
 
 import { UserAccount } from '../../../entities/user'
 import { FormLayout } from '../../molecules/sign/FormLayout'
@@ -27,7 +27,7 @@ export const Page = (): JSX.Element => {
     }
 
     const onClickRegister = () => {
-        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
+        router.back()
     }
     return (
         <FormLayout title="ログイン">

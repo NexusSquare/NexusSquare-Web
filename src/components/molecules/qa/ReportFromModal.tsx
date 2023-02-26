@@ -13,14 +13,13 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { ChancelButton } from '../../common/ChancelButton'
 import { DefaultModal } from '../../common/DefaultModal'
 import { Question } from '../../../entities/qa'
 import QACategories from '../../../constants/qa/qaCategories'
 import { QuestionReq } from '../../../api/req'
-import { SecondaryButton } from '../../common/SecondaryButton'
+import { SecondaryButton } from '../../common/buttons/SecondaryButton'
 import { ReportReq } from '../../../api/req/ReportReq'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { PrimaryButton } from '../../common/buttons/PrimaryButton'
 
 interface Props {
     isOpen: boolean

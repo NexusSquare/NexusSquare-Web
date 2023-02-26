@@ -4,7 +4,7 @@ import { Answer } from '../../../../entities/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import { BackButton } from '../../../common/BackButton'
+import { BackButton } from '../../../common/buttons/BackButton'
 import { AnswerList } from '../../../organisms/qa/AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useEffect, useState } from 'react'

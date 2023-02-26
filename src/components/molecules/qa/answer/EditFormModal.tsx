@@ -15,8 +15,8 @@ import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { DefaultModal } from '../../../common/DefaultModal'
 import { AnswerReq, QuestionReq } from '../../../../api/req'
-import { SecondaryButton } from '../../../common/SecondaryButton'
-import { PrimaryButton } from '../../../common/PrimaryButton'
+import { SecondaryButton } from '../../../common/buttons/SecondaryButton'
+import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
 import { Answer } from '../../../../entities/qa/Answer'
 
 interface Props {

@@ -7,7 +7,7 @@ import { Direction, OrderBy, QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import { SecondaryButton } from '../../common/SecondaryButton'
+import { SecondaryButton } from '../../common/buttons/SecondaryButton'
 import { Categories } from '../../molecules/qa/question/Categories'
 
 import { BaseLeftBar } from '../../layouts/LeftBar/_Base'
