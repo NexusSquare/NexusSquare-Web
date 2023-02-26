@@ -5,8 +5,8 @@ import { QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { Drawer } from '../../common/Drawer'
-import { PrimaryButton } from '../../common/PrimaryButton'
-import { SecondaryButton } from '../../common/SecondaryButton'
+import { PrimaryButton } from '../../common/buttons/PrimaryButton'
+import { SecondaryButton } from '../../common/buttons/SecondaryButton'
 import { Categories } from '../../molecules/qa/question/Categories'
 
 interface Props {

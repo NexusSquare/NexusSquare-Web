@@ -16,7 +16,7 @@ import { useEffect, useState } from 'react'
 import { useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
-import { PrimaryButton } from '../../../common/PrimaryButton'
+import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
 import { FormLayout } from '../../../molecules/sign/FormLayout'
 
 export const Page = (): JSX.Element => {

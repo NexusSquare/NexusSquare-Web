@@ -3,7 +3,7 @@ import React from 'react'
 import { Direction, OrderBy } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { Drawer } from '../../common/Drawer'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { PrimaryButton } from '../../common/buttons/PrimaryButton'
 
 interface Props {
     onClose: () => void
