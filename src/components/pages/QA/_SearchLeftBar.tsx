@@ -137,7 +137,7 @@ export const SearchLeftBar = ({
                     <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         カテゴリー
                     </Text>
-                    <Box maxH={64} overflow={'scroll'} border={'1px'} borderColor={'gray.200'}>
+                    <Box maxH={96} overflow={'scroll'} border={'1px'} borderColor={'gray.200'} rounded={'sm'}>
                         <Categories selectedCategories={categories} onChange={onChangeCategories} />
                     </Box>
                 </Box>

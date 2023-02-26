@@ -1,16 +1,14 @@
 import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
-import { PAGE_LINKS } from '../../../constants/pageLinks'
-import { useLogin } from '../../../hooks/authentication'
-import { PrimaryButton } from '../../common/PrimaryButton'
+import { PAGE_LINKS } from '../../../../constants/pageLinks'
+import { UserAccount } from '../../../../entities/user'
+import { useLogin } from '../../../../hooks/authentication'
+import { validators } from '../../../../lib/validator/Validators'
+import { PrimaryButton } from '../../../common/PrimaryButton'
+import { FormLayout } from '../../../molecules/sign/FormLayout'
 
-import { UserAccount } from '../../../entities/user'
-import { FormLayout } from '../../molecules/sign/FormLayout'
-import { validators } from '../../../lib/validator/Validators'
-import { pagesPath } from '../../../plugins/$path'
-
-export const Page = (): JSX.Element => {
+export const AdminLoginPage = (): JSX.Element => {
     const router = useRouter()
     const {
         register,
@@ -21,16 +19,17 @@ export const Page = (): JSX.Element => {
     const { mutate: login, isLoading: loading } = useLogin()
 
     const onSubmitAccount = async (account: UserAccount) => {
+        console.log(account)
         login(account, {
-            onSuccess: () => router.push(pagesPath.qa.$url()),
+            onSuccess: () => router.push(PAGE_LINKS.QA.URL),
         })
     }
 
-    const onClickRegister = () => {
-        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
+    const onClickTop = () => {
+        router.push(PAGE_LINKS.HOME.URL)
     }
     return (
-        <FormLayout title="ログイン">
+        <FormLayout title="管理者用ログイン">
             <VStack
                 as="form"
                 onSubmit={handleSubmit((account) => onSubmitAccount(account))}
@@ -41,17 +40,8 @@ export const Page = (): JSX.Element => {
             >
                 <FormControl isInvalid={errors.email !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'}>メールアドレス</FormLabel>
-                    <Input
-                        id="mail"
-                        {...register('email', {
-                            validate: validators.requiredForEmailPatter(),
-                        })}
-                        defaultValue={'aichi-pu.ac.jp'}
-                        placeholder="xx000000@xxx.aichi-pu.ac.jp"
-                        type="email"
-                    />
+                    <Input id="mail" type="email" {...register('email')} />
                     <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-                    <FormHelperText>愛知県立県大学のメールアドレスを入力</FormHelperText>
                 </FormControl>
 
                 <FormControl isInvalid={errors.password !== undefined} isRequired>
@@ -80,9 +70,9 @@ export const Page = (): JSX.Element => {
                 fontSize={'sm'}
                 as="button"
                 _hover={{ textDecoration: 'underline' }}
-                onClick={onClickRegister}
+                onClick={onClickTop}
             >
-                新規登録はこちら
+                トップページはこちら
             </Text>
         </FormLayout>
     )
