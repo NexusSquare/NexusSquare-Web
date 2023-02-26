@@ -10,7 +10,7 @@ import {
     Text,
     Textarea,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { AnswerReq } from '../../../../api/req'
 import { Question } from '../../../../entities/qa'
@@ -32,7 +32,7 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
         register,
         handleSubmit,
         resetField,
-        formState: { errors, isSubmitting },
+        formState: { errors },
     } = useForm<AnswerReq>({
         reValidateMode: 'onChange',
         defaultValues: {
@@ -46,15 +46,18 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
         setContentLength(e.target.value.length)
     }
 
-    const onSubmitAnswer = async (answer: AnswerReq) => {
-        await postAnswer(answer)
-        resetField('content')
+    const resetCountContent = () => {
         setContentLength(0)
     }
 
+    const onSubmit = handleSubmit(async (answer: AnswerReq) => {
+        await postAnswer(answer)
+        resetField('content')
+        resetCountContent()
+    })
     return (
         <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
-            <Box w="full" as="form" onSubmit={handleSubmit((data) => onSubmitAnswer(data))}>
+            <Box w="full" as="form" onSubmit={onSubmit}>
                 <ModalBody>
                     <FormControl isInvalid={errors.content !== undefined} isRequired>
                         <FormLabel fontWeight={'bold'} fontSize={{ base: 'lg', md: 'lg' }}>
@@ -66,7 +69,6 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
                                 validate: {
                                     text: validators.requiredForText('解答'),
                                     maxLength: validators.requiredMaxLength('解答', 5000),
-                                    minLength: validators.requiredMaxLength('解答', 1),
                                 },
                             })}
                             onChange={countContent}

@@ -17,7 +17,7 @@ import {
     MenuList,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import React from 'react'
+import React, { FC } from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
@@ -46,9 +46,7 @@ export const QAPerfectCard = ({
     isPosted,
     isMine,
 }: Props) => {
-    const userId = useUser().user?.userId
     const router = useRouter()
-    const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertTimestampToString(question.createAt)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
@@ -140,34 +138,49 @@ export const QAPerfectCard = ({
                     {categoryText}
                 </Text>
             </HStack>
-
-            <HStack w="full" justify={'end'}>
-                <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
-                <Text>{question.ansNum}</Text>
-            </HStack>
-            {/* <QuestionImage />
-             */}
-
+            <CardFooter ansNum={question.ansNum} />
             {isMine || (
                 <>
                     <Divider />
-                    <Button
-                        color="mainColor"
-                        bgColor="white"
-                        borderWidth={1}
-                        borderColor="mainColor"
-                        _hover={{ bgColor: 'mainColor', color: 'white' }}
-                        leftIcon={<BsChatText size={16} />}
-                        w={{ base: 'full', md: '96' }}
-                        alignSelf={'center'}
-                        onClick={onOpenPostForm}
-                        borderRadius="sm"
-                        disabled={isPosted}
-                    >
-                        回答する
-                    </Button>
+                    <AnswerButton onClick={onOpenPostForm} disabled={isPosted} />
                 </>
             )}
         </VStack>
+    )
+}
+
+interface CardFooterProps {
+    ansNum: number
+}
+
+const CardFooter: FC<CardFooterProps> = ({ ansNum }) => {
+    const QA_IMAGE_PATH: string = '/images/ans.png'
+    return (
+        <HStack w="full" justify={'end'}>
+            <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
+            <Text>{ansNum}</Text>
+        </HStack>
+    )
+}
+
+interface AnswerButtonProps {
+    onClick: () => void
+    disabled: boolean
+}
+const AnswerButton: FC<AnswerButtonProps> = ({ onClick, disabled }) => {
+    return (
+        <Button
+            bg="white"
+            borderWidth={1}
+            borderColor="gray.300"
+            leftIcon={<BsChatText size={16} />}
+            w={{ base: 'full', md: '96' }}
+            alignSelf={'center'}
+            onClick={onClick}
+            borderRadius="sm"
+            disabled={disabled}
+        >
+            回答する
+        </Button>
     )
 }

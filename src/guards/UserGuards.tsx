@@ -3,7 +3,6 @@ import React, { ReactNode, useEffect } from 'react'
 import { Loading } from '../components/common/Loading'
 import { PAGE_LINKS } from '../constants/pageLinks'
 import { useAuth } from '../hooks/authentication'
-import { useUser } from '../store/atom'
 
 type Props = {
     children: ReactNode

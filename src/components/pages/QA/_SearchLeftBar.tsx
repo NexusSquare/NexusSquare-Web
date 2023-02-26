@@ -2,31 +2,41 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { Box, HStack, VStack, Text, Select, Wrap, WrapItem, Checkbox, Input, Button } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
-import { PAGE_LINKS } from '../../../../constants/pageLinks'
-import QACategories from '../../../../constants/qa/qaCategories'
-import { QACategory } from '../../../../constants/query'
-import { SORT, SortItem } from '../../../../constants/sort'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import { useDidUpdateEffect } from '../../../../hooks/useDidUpdateEffect'
-import { SecondaryButton } from '../../../common/SecondaryButton'
-import { Categories } from '../../../molecules/qa/question/Categories'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
+import { Direction, OrderBy, QACategory } from '../../../constants/query'
+import { SORT, SortItem } from '../../../constants/sort'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
+import { SecondaryButton } from '../../common/SecondaryButton'
+import { Categories } from '../../molecules/qa/question/Categories'
 
-import { BaseLeftBar } from '../../LeftBar/_Base'
+import { BaseLeftBar } from '../../layouts/LeftBar/_Base'
 
 interface Props {
     children?: ReactNode
     sortQuestions: (value: SortItem) => void
     filterQuestions: (value: QACategory[]) => void
     questionNum: number
+    initCategories: QACategory[]
+    initDirection: Direction
+    initOrderBy: OrderBy
 }
 
-export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: Props): JSX.Element => {
+export const SearchLeftBar = ({
+    sortQuestions,
+    filterQuestions,
+    questionNum,
+    initCategories,
+    initDirection,
+    initOrderBy,
+}: Props): JSX.Element => {
     const inputRef = useRef<HTMLInputElement>(null)
     const router = useRouter()
     const errorToast = useErrorToast()
-    const CATEGORIES = Object.values(QACategories)
-    const [categories, setCategories] = useState<QACategory[]>([])
-    const initSortValue = SORT[0]
+    const [categories, setCategories] = useState<QACategory[]>(initCategories)
+    const initSortValue =
+        SORT.find((sortItem) => initOrderBy === sortItem.orderBy && initDirection === sortItem.direction) ?? SORT[0]
+
     const [sortItem, setSortItem] = useState<SortItem>(initSortValue)
 
     const onChangeCategories = (e: ChangeEvent<HTMLInputElement>) => {
@@ -63,6 +73,8 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
     }
 
     const onClickRest = () => {
+        setSortItem(SORT[0])
+        setCategories([])
         router.push(PAGE_LINKS.QA.URL)
     }
 
@@ -76,7 +88,7 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
     }, [sortItem])
     return (
         <BaseLeftBar>
-            <VStack spacing={4} w="full" display={{ base: 'none', xl: 'flex' }}>
+            <VStack spacing={4} w="full">
                 <Box w="full">
                     <HStack justify={'space-between'} w="full" mb={2}>
                         <Text fontSize={'2xl'} fontWeight={'bold'}>
@@ -110,7 +122,7 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
                     <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         並び替え
                     </Text>
-                    <Select bgColor={'white'} onChange={onChangeSortItem}>
+                    <Select bgColor={'white'} onChange={onChangeSortItem} defaultValue={sortItem.value}>
                         {SORT.map((s, index) => {
                             return (
                                 <option value={s.value} key={index}>
@@ -125,7 +137,9 @@ export const SearchLeftBar = ({ sortQuestions, filterQuestions, questionNum }: P
                     <Text color="gray.600" mb={2} fontWeight={'bold'}>
                         カテゴリー
                     </Text>
-                    <Categories selectedCategories={categories} onChange={onChangeCategories} />
+                    <Box maxH={96} overflow={'scroll'} border={'1px'} borderColor={'gray.200'} rounded={'sm'}>
+                        <Categories selectedCategories={categories} onChange={onChangeCategories} />
+                    </Box>
                 </Box>
             </VStack>
         </BaseLeftBar>

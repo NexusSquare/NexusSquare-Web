@@ -1,7 +1,8 @@
 import { NextPageWithLayout } from 'next'
 import { useRouter } from 'next/router'
-import { Layout } from '../../components/layouts/QA/Layout'
-import { Page } from '../../components/pages/QA/Detail/Page'
+import { DefaultLayout } from '../../components/layouts/DefaultLayout'
+
+import { DetailPage } from '../../components/pages/QA/Detail/Page'
 import { UserGuards } from '../../guards/UserGuards'
 
 const Detail: NextPageWithLayout = () => {
@@ -9,11 +10,11 @@ const Detail: NextPageWithLayout = () => {
     const { id } = router.query
     return (
         <UserGuards>
-            <Page questionId={String(id)} />
+            <DetailPage questionId={String(id)} />
         </UserGuards>
     )
 }
 
-Detail.getLayout = (page) => <Layout pageName="Q&A一覧">{page}</Layout>
+Detail.getLayout = (page) => <DefaultLayout pageName="Q&A一覧">{page}</DefaultLayout>
 
 export default Detail

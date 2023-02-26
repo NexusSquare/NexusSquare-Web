@@ -14,10 +14,10 @@ interface Props {
     isOpen: boolean
     clickFilter: (value: QACategory[]) => void
     clickReset: () => void
+    initCategories: QACategory[]
 }
-export const CategoryDrawer = ({ onClose, isOpen, clickFilter, clickReset }: Props) => {
-    const CATEGORIES = Object.values(QACategories)
-    const [categories, setCategories] = useState<QACategory[]>([])
+export const CategoryDrawer = ({ onClose, isOpen, clickFilter, clickReset, initCategories }: Props) => {
+    const [categories, setCategories] = useState<QACategory[]>(initCategories)
 
     const errorToast = useErrorToast()
 
