@@ -14,7 +14,6 @@ export const TopFeature = () => {
             spacing="30px"
             background={'linear-gradient(0deg, transparent calc(10vw - 1px), white  10vw, #FBF6F0 100%)'}
         >
-            <Heading marginBottom="50px">機能紹介</Heading>
             <FeatureContent
                 heading="学生生活Q&A"
                 text="Nexus Squareは、愛知県立大学の学生が立ち上げた団体です。

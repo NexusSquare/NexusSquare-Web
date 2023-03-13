@@ -22,12 +22,12 @@ export const Page = (): JSX.Element => {
 
     const onSubmitAccount = async (account: UserAccount) => {
         login(account, {
-            onSuccess: () => router.push(pagesPath.qa.$url()),
+            onSuccess: () => router.back(),
         })
     }
 
     const onClickRegister = () => {
-        router.back()
+        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
     }
     return (
         <FormLayout title="ログイン">
