@@ -15,7 +15,7 @@ export const TopAbout = () => {
                     <Heading w="full" borderLeft={'5px solid'} borderColor="mainColor" padding={'10px 12px'}>
                         Nexus Squareとは
                     </Heading>
-                    <Text lineHeight="200%">
+                    <Text>
                         Nexus Squareは、愛知県立大学の学生が立ち上げた団体です。
                         友人関係やサークルに参加しているかどうかで、人によって得られる情報が限られ、「情報格差」が生まれています。
                         そこで、授業・留学・就活など、大学生活で生まれる悩みを解決するため、
