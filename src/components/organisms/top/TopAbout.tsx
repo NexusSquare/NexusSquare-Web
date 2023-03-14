@@ -12,7 +12,13 @@ export const TopAbout = () => {
                     <ChakraNextImage src={ICON_IMAGE_URL} alt="サービスの画像" width={300} height={300} />
                 </VStack>
                 <VStack w={{ base: '100%', md: '50%' }} spacing="30px">
-                    <Heading w="full" borderLeft={'5px solid'} borderColor="mainColor" padding={'10px 12px'}>
+                    <Heading
+                        w="full"
+                        borderLeft={'5px solid'}
+                        borderColor="mainColor"
+                        padding={'10px 12px'}
+                        fontSize="xl"
+                    >
                         Nexus Squareとは
                     </Heading>
                     <Text>

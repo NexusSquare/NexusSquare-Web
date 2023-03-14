@@ -19,13 +19,13 @@ export const FeatureContent = (props: FeatureContentProps) => {
                 </Box>
             </VStack>
             <VStack w={{ base: '100%', md: '50%' }} spacing="30px" alignSelf="center">
-                <Heading w="full" borderLeft={'5px solid'} borderColor="mainColor" padding={'10px 12px'} fontSize="3xl">
+                <Heading w="full" borderLeft={'5px solid'} borderColor="mainColor" padding={'10px 12px'} fontSize="xl">
                     {props.heading}
                     <Box as="span" paddingLeft="10px" h="full">
                         {props.children}
                     </Box>
                 </Heading>
-                <Text lineHeight="200%">{props.text}</Text>
+                <Text>{props.text}</Text>
             </VStack>
         </Stack>
     )
