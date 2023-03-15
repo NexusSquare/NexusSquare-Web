@@ -13,13 +13,13 @@ export const HistoryCard = ({ history }: Props) => {
         let displayType = ''
         switch (type) {
             case 'ANSWER':
-                displayType = '質問に答えた'
+                displayType = '質問に回答'
                 break
             case 'QUESTION':
-                displayType = '質問を投稿した'
+                displayType = '質問を投稿'
                 break
             case 'BEST_ANSWER':
-                displayType = 'ベストアンサーに選ばれた'
+                displayType = 'ベストアンサー'
                 break
         }
         return displayType
@@ -27,9 +27,11 @@ export const HistoryCard = ({ history }: Props) => {
     return (
         <Box w="full" border="1px" borderColor="gray.300" cursor="pointer" key={history.historyId} rounded="md">
             <HStack bgColor="white" p="4" justify="space-between" spacing={{ base: '2', md: '12' }}>
-                <Text fontSize={{ base: 'sm', md: 'lg' }}>{convertTimestampToString(history.createAt)}</Text>
+                <Text fontSize={'sm'} color={'textGray'}>
+                    {convertTimestampToString(history.createAt)}
+                </Text>
                 <HStack>
-                    <Text fontSize={{ base: 'md', md: 'xl' }}>{convertType(history.type)}</Text>
+                    <Text fontSize={'md'}>{convertType(history.type)}</Text>
                     <HiOutlineLightBulb size="30" />
                 </HStack>
                 <Text fontSize={{ base: 'md', md: 'xl' }} color="red.400">

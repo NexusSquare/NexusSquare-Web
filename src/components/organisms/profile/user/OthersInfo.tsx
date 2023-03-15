@@ -1,12 +1,6 @@
 /* eslint-disable react/display-name */
 import { HStack, VStack, Text, Box, Avatar, WrapItem } from '@chakra-ui/react'
-import { FiEdit } from 'react-icons/fi'
 import React, { memo } from 'react'
-import ChakraNextImage from '../../../common/chakraNextImage'
-import { useRouter } from 'next/router'
-import { AiFillCamera } from 'react-icons/ai'
-import { EditForm } from '../../../molecules/profile/EditForm'
-import { DefaultModal } from '../../../common/DefaultModal'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../../../entities/user'
 
