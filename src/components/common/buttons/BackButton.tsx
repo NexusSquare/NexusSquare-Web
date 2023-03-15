@@ -1,6 +1,7 @@
 import { HStack, Text, Box } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React from 'react'
+import { IoIosArrowBack } from 'react-icons/io'
 
 export const BackButton = () => {
     const router = useRouter()
@@ -8,13 +9,13 @@ export const BackButton = () => {
         router.back()
     }
     return (
-        <HStack w={'full'} p="4" onClick={onClick}>
-            <Text as="a" fontSize="lg" fontWeight="bold" cursor="pointer">
-                <Box as="span" color="mainColor">
-                    ◀︎
-                </Box>
-                戻る
-            </Text>
+        <HStack w="full" p="4">
+            <HStack onClick={onClick} as="button" spacing={1}>
+                <IoIosArrowBack />
+                <Text as="a" fontSize="md" fontWeight={'bold'}>
+                    戻る
+                </Text>
+            </HStack>
         </HStack>
     )
 }
