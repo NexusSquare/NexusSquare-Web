@@ -110,7 +110,7 @@ export const AnswerCard = ({
                 {answer.content}
             </Text>
             {answer.isBest && (
-                <HStack alignItems={'center'} alignSelf={'end'} color={'subSubColor'}>
+                <HStack alignItems={'center'} alignSelf={'end'} color={'red.400'}>
                     <Text fontSize={'sm'} fontWeight={'bold'}>
                         ベストアンサー
                     </Text>
