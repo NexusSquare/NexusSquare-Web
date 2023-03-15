@@ -145,19 +145,3 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
         </>
     )
 })
-
-interface profileItemProps {
-    label: string
-    value: string | number
-    isAnonymous?: boolean
-}
-const ProfileItem = ({ label, value, isAnonymous = false }: profileItemProps) => {
-    return (
-        <Text fontSize={{ base: 'md', md: 'xl' }}>
-            {label}：
-            <Box fontWeight={'bold'} as="span">
-                {isAnonymous ? '非表示' : value}
-            </Box>
-        </Text>
-    )
-}
