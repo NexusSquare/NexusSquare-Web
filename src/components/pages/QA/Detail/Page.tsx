@@ -39,7 +39,9 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const bestAnswer = answers.find((ans: Answer) => {
         return ans.answerId === question?.bestAnswerId
     })
-    const hasBestAnswer = bestAnswer !== undefined
+    const hasBestAnswer = answers.some((ans: Answer) => {
+        return ans.answerId === question?.bestAnswerId
+    })
 
     const onSuccessBestAnswer = async (userId: string) => {
         cacheClearQuestion(userId)
