@@ -7,7 +7,7 @@ export const chakraTheme = extendTheme({
         subSubColor: '#FFDA77',
         accentColor: '#3DB2FF',
         textPrimary: '#1A202C',
-        textGray: 'gray.300',
+        textGray: '#A0AEC0',
     },
     styles: {
         global: {
