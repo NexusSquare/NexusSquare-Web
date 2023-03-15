@@ -44,7 +44,7 @@ export const ProfilePage = ({ userId }: Props): JSX.Element => {
     if (!user) return <Loading />
     return (
         <ContentsLayout Left={<LeftBar />}>
-            <VStack w="full" pb="4" spacing={8}>
+            <VStack w="full" pb="4" spacing={0}>
                 <BackButton />
                 {userId === myUserId ? (
                     <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />

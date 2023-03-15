@@ -1,4 +1,4 @@
-import { Checkbox, Radio, RadioGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { Checkbox, HStack, Radio, RadioGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
 import React, { ChangeEvent, useState } from 'react'
 import QACategories from '../../../constants/qa/qaCategories'
 import { QACategory } from '../../../constants/query'
@@ -43,12 +43,12 @@ export const CategoryDrawer = ({ onClose, isOpen, clickFilter, clickReset, initC
         }
     }
     return (
-        <Drawer onClose={onClose} isOpen={isOpen} headerText={'並び替え'}>
+        <Drawer onClose={onClose} isOpen={isOpen} headerText={'カテゴリー'}>
             <Categories selectedCategories={categories} onChange={onChangeCategories} />
-            <VStack spacing={4}>
-                <PrimaryButton buttonText="設定する" type="button" width={'full'} onClick={onClickFilter} />
+            <HStack spacing={4}>
                 <SecondaryButton buttonText="リセット" type="button" width={'full'} onClick={onClickReset} />
-            </VStack>
+                <PrimaryButton buttonText="設定する" type="button" width={'full'} onClick={onClickFilter} />
+            </HStack>
         </Drawer>
     )
 }

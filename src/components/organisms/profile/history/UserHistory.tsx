@@ -54,65 +54,10 @@ export const UserHistory = ({
         <>
             <Tabs w="100%" isLazy defaultIndex={1}>
                 <TabList>
-                    <Tab
-                        w="full"
-                        border="1px"
-                        color="gray.400"
-                        bgColor="gray.200"
-                        borderRadius="sm"
-                        fontSize={{ base: 'md', sm: 'xl' }}
-                        _selected={{
-                            bgColor: 'white',
-                            borderColor: 'gray.400',
-                            borderBottomColor: 'mainColor',
-                            borderBottomWidth: '5px',
-                            color: 'black',
-                        }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        履歴
-                    </Tab>
-                    <Tab
-                        w="full"
-                        border="1px"
-                        color="gray.400"
-                        bgColor="gray.200"
-                        borderRadius="sm"
-                        fontSize={{ base: 'md', sm: 'xl' }}
-                        _selected={{
-                            bgColor: 'white',
-                            borderColor: 'gray.400',
-                            borderBottomColor: 'mainColor',
-                            borderBottomWidth: '5px',
-                            color: 'black',
-                        }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        質問
-                    </Tab>
-                    <Tab
-                        w="full"
-                        border="1px"
-                        color="gray.400"
-                        bgColor="gray.200"
-                        borderRadius="sm"
-                        fontSize={{ base: 'md', sm: 'xl' }}
-                        _selected={{
-                            bgColor: 'white',
-                            borderColor: 'gray.400',
-                            borderBottomColor: 'mainColor',
-                            borderBottomWidth: '5px',
-                            color: 'black',
-                        }}
-                        _active={{ outline: 'none' }}
-                        _focus={{ outline: 'none' }}
-                    >
-                        回答
-                    </Tab>
+                    <HistoryTab label="履歴" />
+                    <HistoryTab label="質問" />
+                    <HistoryTab label="回答" />
                 </TabList>
-
                 <TabPanels>
                     <TabPanel padding="0px">
                         <HistoryList historyList={histories} />
@@ -138,5 +83,32 @@ export const UserHistory = ({
                 </TabPanels>
             </Tabs>
         </>
+    )
+}
+
+interface HistoryTabProps {
+    label: string
+}
+const HistoryTab = ({ label }: HistoryTabProps) => {
+    return (
+        <Tab
+            w="full"
+            border="1px"
+            color="gray.400"
+            bgColor="gray.200"
+            borderRadius="sm"
+            fontSize={{ base: 'md', sm: 'xl' }}
+            _selected={{
+                bgColor: 'white',
+                borderColor: 'gray.400',
+                borderBottomColor: 'mainColor',
+                borderBottomWidth: '5px',
+                color: 'black',
+            }}
+            _active={{ outline: 'none' }}
+            _focus={{ outline: 'none' }}
+        >
+            {label}
+        </Tab>
     )
 }

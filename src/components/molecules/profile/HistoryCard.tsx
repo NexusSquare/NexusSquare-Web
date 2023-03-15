@@ -1,4 +1,4 @@
-import { Box, HStack, Text } from '@chakra-ui/react'
+import { Box, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
 import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
@@ -10,29 +10,33 @@ interface Props {
 
 export const HistoryCard = ({ history }: Props) => {
     const convertType = (type: HistoryType): string => {
-        let displayType = ''
         switch (type) {
             case 'ANSWER':
-                displayType = '質問に答えた'
-                break
+                return '質問に回答'
             case 'QUESTION':
-                displayType = '質問を投稿した'
-                break
+                return '質問を投稿'
             case 'BEST_ANSWER':
-                displayType = 'ベストアンサーに選ばれた'
-                break
+                return 'ベストアンサー'
         }
-        return displayType
     }
     return (
         <Box w="full" border="1px" borderColor="gray.300" cursor="pointer" key={history.historyId} rounded="md">
             <HStack bgColor="white" p="4" justify="space-between" spacing={{ base: '2', md: '12' }}>
-                <Text fontSize={{ base: 'sm', md: 'lg' }}>{convertTimestampToString(history.createAt)}</Text>
-                <HStack>
-                    <Text fontSize={{ base: 'md', md: 'xl' }}>{convertType(history.type)}</Text>
-                    <HiOutlineLightBulb size="30" />
-                </HStack>
-                <Text fontSize={{ base: 'md', md: 'xl' }} color="red.400">
+                <VStack justifyContent={'center'} alignItems={'start'}>
+                    <HStack>
+                        <Text fontSize={'sm'} fontWeight={'bold'}>
+                            {convertType(history.type)}
+                        </Text>
+                        <Box pb={1}>
+                            <HiOutlineLightBulb size="20" />
+                        </Box>
+                    </HStack>
+                    <Text fontSize={'sm'} color={'textGray'}>
+                        {convertTimestampToString(history.createAt)}
+                    </Text>
+                </VStack>
+
+                <Text fontSize={'md'} color="red.400" fontWeight={'bold'}>
                     +{history.point}pt
                 </Text>
             </HStack>

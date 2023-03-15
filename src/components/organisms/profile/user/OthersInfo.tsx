@@ -1,14 +1,9 @@
 /* eslint-disable react/display-name */
 import { HStack, VStack, Text, Box, Avatar, WrapItem } from '@chakra-ui/react'
-import { FiEdit } from 'react-icons/fi'
 import React, { memo } from 'react'
-import ChakraNextImage from '../../../common/chakraNextImage'
-import { useRouter } from 'next/router'
-import { AiFillCamera } from 'react-icons/ai'
-import { EditForm } from '../../../molecules/profile/EditForm'
-import { DefaultModal } from '../../../common/DefaultModal'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../../../entities/user'
+import { ProfileItem } from './_ProfileItem'
 
 interface Props {
     user: User
@@ -17,63 +12,46 @@ interface Props {
 export const OthersInfo = memo(({ user }: Props) => {
     return (
         <>
-            <HStack
+            <VStack
                 w="full"
                 border="1px"
-                borderColor="gray.400"
+                borderColor="gray.300"
                 borderRadius="sm"
-                boxShadow="md"
                 justifyContent="space-evenly"
-                py="0"
+                pb="2"
                 position="relative"
                 mx="4"
             >
                 <Box
-                    w={{ base: '100px', md: '150px' }}
-                    h={{ base: '100px', md: '150px' }}
-                    top={{ base: '-5', md: '-10' }}
                     position="relative"
+                    w={{ base: '80px', md: '100px' }}
+                    h={{ base: '80px', md: '100px' }}
+                    top={-10}
+                    mb={-10}
                 >
-                    <Avatar width="full" height="full" src={user.imageUrl} />
+                    <Avatar
+                        width="full"
+                        height="full"
+                        src={user.imageUrl}
+                        bg="white"
+                        borderColor={'gray.200'}
+                        borderWidth="1px"
+                    />
                 </Box>
-                <VStack>
-                    <HStack>
-                        <Text fontWeight="bold" fontSize={{ base: 'xl', md: '2xl' }}>
-                            {user.nickname}
-                        </Text>
-                    </HStack>
-                    {user.isDepartmentAnonymous ? (
-                        <Text>学部学科：非表示</Text>
-                    ) : (
-                        <HStack>
-                            <Text>{user.department}</Text>
-                            <Text>{user.subject}</Text>
-                        </HStack>
-                    )}
-                </VStack>
-                <VStack height={'full'}>
-                    <Text fontSize={{ base: 'lg', md: 'xl' }}>{user.grade}</Text>
-                </VStack>
-            </HStack>
-            <VStack
-                border="1px"
-                borderRadius="lg"
-                borderColor="gray.400"
-                py="2"
-                px={{ base: '16', md: '32' }}
-                spacing="1"
-                boxShadow="md"
-            >
-                <HStack>
-                    <FaCoins color={'#FF9037'} size={24} />
-                    <Text fontWeight="bold" fontSize={{ base: 'xl', md: '2xl' }} pr="2" color={'mainColor'}>
-                        ポイント
+                <VStack w="full">
+                    <Text fontWeight="bold" fontSize={{ base: 'lg', md: '2xl' }}>
+                        {user.nickname}
                     </Text>
-                </HStack>
-                <HStack fontSize={{ base: '2xl', md: '4xl' }}>
-                    <Text>{user.point}</Text>
-                    <Text>pt</Text>
-                </HStack>
+                    <ProfileItem label={'学部'} value={user.department} isAnonymous={user.isDepartmentAnonymous} />
+                    <ProfileItem label={'学科'} value={user.subject} isAnonymous={user.isDepartmentAnonymous} />
+                    <ProfileItem label={'学年'} value={user.grade} />
+                    <Text fontSize={{ base: 'md', md: 'xl' }}>
+                        現在のポイント：
+                        <Box color="red.400" fontWeight={'bold'} as="span">
+                            {user.point}pt
+                        </Box>
+                    </Text>
+                </VStack>
             </VStack>
         </>
     )
