@@ -5,7 +5,7 @@ interface profileItemProps {
     value: string | number
     isAnonymous?: boolean
 }
-export const ProfileItem = ({ label, value, isAnonymous = false }: profileItemProps) => {
+export const ProfileItem = ({ label, value, isAnonymous = false }: profileItemProps): JSX.Element => {
     return (
         <Text fontSize={{ base: 'md', md: 'xl' }}>
             {label}：

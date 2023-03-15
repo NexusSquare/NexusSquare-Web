@@ -27,6 +27,7 @@ import { STORAGE_URL } from '../../../../constants/storage'
 import { useUploadFile } from '../../../../hooks/storege/useUploadFile'
 import { useFile } from '../../../../hooks/useFile'
 import { Refetch } from '../../../../hooks/react-query/type'
+import { ProfileItem } from './_ProfileItem'
 
 interface Props {
     user: User
