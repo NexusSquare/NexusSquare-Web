@@ -20,7 +20,7 @@ export const useFetchUser = (uid?: string | null, queryOptions?: UseQueryOptions
 
 export const useFetchUserMeta = (uid?: string | null, queryOptions?: UseQueryOptions<UserMeta | undefined>) => {
     return useQuery<UserMeta | undefined>(
-        [QUERY_KEYS.USER_META, { enabled: Boolean(uid) }],
+        [QUERY_KEYS.USER_META(uid), { enabled: Boolean(uid) }],
         () => userMetaService.findOne(uid!),
         {
             ...queryOptions,
