@@ -114,7 +114,7 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                             />
                         </>
                     ) : (
-                        <NoCards text="回答はまだありません。" />
+                        <NoCards text="質問はまだありません。" />
                     )}
                 </VStack>
             )}
