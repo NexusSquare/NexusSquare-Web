@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore'
-
 export type Answer = {
     userId: string
     postUser: {
@@ -13,8 +11,8 @@ export type Answer = {
     questionTitle: string
     answerId: string
     content: string
-    createdAt: Timestamp
-    updatedAt: Timestamp
+    createdAt: Date
+    updatedAt: Date
     imageUrl?: string | null
     isEdited: boolean
     isBest: boolean

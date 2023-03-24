@@ -10,11 +10,11 @@ import {
     updateDoc,
     where,
 } from 'firebase/firestore'
-import { db } from '../plugins/firebase/client'
-import { Answer } from '../entities/qa/Answer'
-import { AnswerRes } from '../api/res/AnswerRes'
+import { db } from '../../plugins/firebase/client'
+import { Answer } from '../../entities/qa/Answer'
+import { AnswerRes } from '../../api/res/AnswerRes'
 
-export class AnswerRepository {
+export class AnswerRepositoryImpl {
     public findByQuestionId = async (questionId: string): Promise<AnswerRes[]> => {
         console.log('answer by questionId fetch')
         const answerCol = collection(db, 'answers')
@@ -48,4 +48,4 @@ export class AnswerRepository {
     }
 }
 
-export const answerRepository = new AnswerRepository()
+export const answerRepository = new AnswerRepositoryImpl()

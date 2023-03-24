@@ -4,8 +4,8 @@ import { Answer } from '../entities/qa/Answer'
 import { AnswerReq } from '../api/req/AnswerReq'
 import { User } from '../entities/user'
 import { ERROR } from '../constants/errors'
-import { answerRepository } from '../repositories/answerRepository'
 import { AnswerRes } from '../api/res/AnswerRes'
+import { answerRepository } from '../repositories/answer/answerRepositoryImpl'
 
 export class AnswerService {
     public findByQuestionId = async (questionId: string): Promise<Answer[]> => {
@@ -30,8 +30,8 @@ export class AnswerService {
                 imageUrl: postUser.imageUrl,
                 isDepartmentAnonymous: postUser.isDepartmentAnonymous,
             },
-            createdAt: Timestamp.now(),
-            updatedAt: Timestamp.now(),
+            createdAt: new Date(),
+            updatedAt: new Date(),
             content: answerReq.content,
             imageUrl: answerReq.imageUrl ? answerReq.imageUrl : null,
             isEdited: false,
@@ -41,7 +41,7 @@ export class AnswerService {
     }
     public update = async (answerReq: AnswerReq, answerId: string): Promise<void> => {
         const answer: Partial<Answer> = {
-            updatedAt: Timestamp.now(),
+            updatedAt: new Date(),
             isEdited: true,
             ...answerReq,
         }
