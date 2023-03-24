@@ -5,6 +5,6 @@ export type HistoryType = 'ANSWER' | 'QUESTION' | 'BEST_ANSWER'
 export type History = {
     historyId: string
     point: number
-    createAt: Timestamp
+    createdAt: Timestamp
     type: HistoryType
 }

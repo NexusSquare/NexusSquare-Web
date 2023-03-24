@@ -20,7 +20,7 @@ import React from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
-import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
+import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { useUser } from '../../../store/atom'
 import { Question } from '../../../entities/qa'
 import ChakraNextImage from '../../common/chakraNextImage'
@@ -36,7 +36,7 @@ interface Props {
 export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onClickCard, onClickDetail }: Props) => {
     const userId = useUser().user?.userId
     const QA_IMAGE_PATH: string = '/images/ans.png'
-    const date = convertTimestampToString(question.createAt)
+    const date = convertDateToString(question.createdAt)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]

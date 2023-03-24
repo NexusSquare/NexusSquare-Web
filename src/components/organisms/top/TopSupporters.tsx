@@ -7,19 +7,19 @@ export const TopSupporters = () => {
             <Heading fontSize={'2xl'}>スポンサー企業様</Heading>
             <Stack direction={{ base: 'column', md: 'row' }}>
                 <Box w="200px" h="100px" bgColor="gray.200">
-                    企業のロゴ？
+                    企業様のロゴ？
                 </Box>
                 <Box w="200px" h="100px" bgColor="gray.200">
-                    企業のロゴ？
+                    企業様のロゴ？
                 </Box>
                 <Box w="200px" h="100px" bgColor="gray.200">
-                    企業のロゴ？
+                    企業様のロゴ？
                 </Box>
                 <Box w="200px" h="100px" bgColor="gray.200">
-                    企業のロゴ？
+                    企業様のロゴ？
                 </Box>
                 <Box w="200px" h="100px" bgColor="gray.200">
-                    企業のロゴ？
+                    企業様のロゴ？
                 </Box>
             </Stack>
         </VStack>

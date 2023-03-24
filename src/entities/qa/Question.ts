@@ -5,21 +5,22 @@ export type Question = {
     userId: string
     postUser: {
         nickname: string
-        department: string | null
-        subject: string | null
+        department: string | undefined
+        subject: string | undefined
         imageUrl: string
         isDepartmentAnonymous: boolean
     }
     categories: string[]
-    createAt: Timestamp
-    updateAt: Timestamp
+    createdAt: Date
+    updatedAt: Date
+    deadlineDate: Date
     title: string
     content: string
     ansNum: number
-    imageUrl?: string | null
+    imageUrl?: string | undefined
     isEdited: boolean
     status: string
-    bestAnswerId: string | null
+    bestAnswerId: string | undefined
     biGram: {
         [key: string]: boolean
     }

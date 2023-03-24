@@ -6,7 +6,7 @@ export const notificationRepository = {
     async find(userId: string): Promise<Notification[]> {
         console.log('notification fetch')
         const notificationCol = collection(db, `users/${userId}/notifications`)
-        const notificationQuery = query(notificationCol, where('isRead', '==', false), orderBy('createAt', 'desc'))
+        const notificationQuery = query(notificationCol, where('isRead', '==', false), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(notificationQuery)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), notificationId: doc.id } as Notification

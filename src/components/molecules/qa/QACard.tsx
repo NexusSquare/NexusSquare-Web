@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { memo } from 'react'
 import { AiOutlineTag } from 'react-icons/ai'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
-import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
+import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../../lib/replaceLineFeed'
 import { Question } from '../../../entities/qa/Question'
 import ChakraNextImage from '../../common/chakraNextImage'
@@ -16,7 +16,7 @@ interface Props {
 const QACard = ({ question }: Props) => {
     const router = useRouter()
     const QA_IMAGE_PATH: string = '/images/ans.png'
-    const date = convertTimestampToString(question.createAt)
+    const date = convertDateToString(question.createdAt)
     const content = replaceLineFeed(question.content)
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`

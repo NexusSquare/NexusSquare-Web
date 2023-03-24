@@ -1,7 +1,7 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
-import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
+import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { History, HistoryType } from '../../../entities/history'
 
 interface Props {
@@ -32,7 +32,7 @@ export const HistoryCard = ({ history }: Props) => {
                         </Box>
                     </HStack>
                     <Text fontSize={'sm'} color={'textGray'}>
-                        {convertTimestampToString(history.createAt)}
+                        {convertDateToString(history.createdAt)}
                     </Text>
                 </VStack>
 

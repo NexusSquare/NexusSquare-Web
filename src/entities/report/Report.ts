@@ -5,5 +5,5 @@ export type Report = {
     userId: string
     type: string
     reason: string
-    createAt: Timestamp
+    createdAt: Timestamp
 }

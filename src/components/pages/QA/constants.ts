@@ -4,7 +4,7 @@ import { QuestionQuery } from '../../../constants/query'
 
 export const initQuestionQuery: QuestionQuery = {
     status: STATUS.NOT_SOLVED,
-    orderBy: 'createAt',
+    orderBy: 'createdAt',
     direction: 'desc',
     categories: [],
     page: INIT_PAGE,

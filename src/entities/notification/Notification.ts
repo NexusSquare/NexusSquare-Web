@@ -5,7 +5,7 @@ export type Notification = {
     questionId: string
     questionTitle: string
     isRead: boolean
-    createAt: Timestamp
+    createdAt: Timestamp
     postUserId: string
     nickname: string
     imageUrl: string

@@ -18,7 +18,7 @@ export class AnswerRepository {
     public findByQuestionId = async (questionId: string): Promise<AnswerRes[]> => {
         console.log('answer by questionId fetch')
         const answerCol = collection(db, 'answers')
-        const answerQuery = query(answerCol, where('questionId', '==', questionId), orderBy('createAt', 'desc'))
+        const answerQuery = query(answerCol, where('questionId', '==', questionId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {
             return { document: doc.data(), documentId: doc.id } as AnswerRes
@@ -27,7 +27,7 @@ export class AnswerRepository {
     public findByUserId = async (userId: string): Promise<AnswerRes[]> => {
         console.log('answer by userId fetch')
         const answerCol = collection(db, 'answers')
-        const answerQuery = query(answerCol, where('userId', '==', userId), orderBy('createAt', 'desc'))
+        const answerQuery = query(answerCol, where('userId', '==', userId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {
             return { document: doc.data(), documentId: doc.id } as AnswerRes

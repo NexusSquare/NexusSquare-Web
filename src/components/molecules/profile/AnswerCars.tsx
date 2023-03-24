@@ -14,7 +14,7 @@ import {
 } from '@chakra-ui/react'
 import { BiMedal } from 'react-icons/bi'
 import { HiDotsHorizontal } from 'react-icons/hi'
-import { convertTimestampToString } from '../../../lib/convert/convertTimestamp'
+import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { replaceLineFeed } from '../../../lib/replaceLineFeed'
 import { useUser } from '../../../store/atom'
 import { Answer } from '../../../entities/qa/Answer'
@@ -36,7 +36,7 @@ export const AnswerCard = ({
 }: Props): JSX.Element => {
     const { user } = useUser()
     const userId = user?.userId
-    const date = convertTimestampToString(answer.createAt)
+    const date = convertDateToString(answer.createdAt)
     // const content = replaceLineFeed(answer.content)
     return (
         <VStack

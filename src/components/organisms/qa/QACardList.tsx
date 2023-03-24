@@ -4,10 +4,14 @@ import QACard from '../../molecules/qa/QACard'
 import { Question } from '../../../entities/qa'
 import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'
-import { STATUS } from '../../../constants/qa/status'
+
 import { Status } from '../../../constants/query'
 
-type QuestionStatus = keyof typeof STATUS
+const QuestionStatus = {
+    SOLVED: 'SOLVED' as const,
+    NOT_SOLVED: 'NOT_SOLVED' as const,
+}
+type QuestionStatus = 'SOLVED' | 'NOT_SOLVED'
 
 interface Props {
     questions: Question[]
@@ -16,13 +20,13 @@ interface Props {
     initStatus: Status
 }
 const QACardListBox = ({ questions, isLoading, changeStatus, initStatus }: Props): JSX.Element => {
-    const defaultIndex = initStatus === STATUS.SOLVED ? 0 : 1
+    const defaultIndex = initStatus === QuestionStatus.SOLVED ? 0 : 1
 
     return (
         <Tabs w="100%" isLazy defaultIndex={defaultIndex}>
             <TabList>
-                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(STATUS.SOLVED)} />
-                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(STATUS.NOT_SOLVED)} />
+                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(QuestionStatus.SOLVED)} />
+                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(QuestionStatus.NOT_SOLVED)} />
             </TabList>
             <TabPanels>
                 <TabPanel padding="0px">
