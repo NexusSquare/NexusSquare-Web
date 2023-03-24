@@ -30,8 +30,8 @@ export class AnswerService {
                 imageUrl: postUser.imageUrl,
                 isDepartmentAnonymous: postUser.isDepartmentAnonymous,
             },
-            createAt: Timestamp.now(),
-            updateAt: Timestamp.now(),
+            createdAt: Timestamp.now(),
+            updatedAt: Timestamp.now(),
             content: answerReq.content,
             imageUrl: answerReq.imageUrl ? answerReq.imageUrl : null,
             isEdited: false,
@@ -41,7 +41,7 @@ export class AnswerService {
     }
     public update = async (answerReq: AnswerReq, answerId: string): Promise<void> => {
         const answer: Partial<Answer> = {
-            updateAt: Timestamp.now(),
+            updatedAt: Timestamp.now(),
             isEdited: true,
             ...answerReq,
         }
@@ -58,8 +58,8 @@ export class AnswerService {
             questionTitle: d.questionTitle,
             userId: d.userId,
             postUser: d.postUser,
-            createAt: d.createAt,
-            updateAt: d.updateAt,
+            createdAt: d.createdAt,
+            updatedAt: d.updatedAt,
             content: d.content,
             imageUrl: d.imageUrl ?? undefined,
             isEdited: d.isEdited,

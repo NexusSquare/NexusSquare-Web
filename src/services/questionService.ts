@@ -1,19 +1,20 @@
 import { Timestamp } from 'firebase/firestore'
 import { bigram } from 'n-gram'
 import { ERROR } from '../constants/errors'
-import { STATUS } from '../constants/qa/status'
 import { Direction, OrderBy, QuestionQuery } from '../constants/query'
 import { USER_ID } from '../constants/token'
-import { questionRepository } from '../repositories/questionRepository'
 import { QuestionReq } from '../api/req'
 import { Question } from '../entities/qa/Question'
 import { User } from '../entities/user'
+import { questionRepository } from '../repositories/question/QuestionRepositoryImpl'
+import { questionFactory } from '../entities/factories/questionFactory'
+import { QuestionStatus } from '../constants/qa/status'
 
 export const questionService = {
     async find(queryQuestion: QuestionQuery): Promise<Question[]> {
-        return questionRepository.find(queryQuestion)
+        return questionRepository.findAll(queryQuestion)
     },
-    async findById(id: string): Promise<Question> {
+    async findById(id: string): Promise<Question | undefined> {
         return questionRepository.findById(id)
     },
     async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
@@ -29,47 +30,29 @@ export const questionService = {
         if (!userId) {
             throw new Error(ERROR.INVALID_USER_TOKEN)
         }
-        const gram: string[] = bigram(questionReq.title)
-        const question: Omit<Question, 'questionId'> = {
+        const question = questionFactory.create({
             userId: userId,
+            ...questionReq,
             postUser: {
                 nickname: postUser.nickname,
-                department: postUser.isDepartmentAnonymous ? null : postUser.department,
-                subject: postUser.isDepartmentAnonymous ? null : postUser.subject,
+                department: postUser.department,
+                subject: postUser.subject,
                 imageUrl: postUser.imageUrl,
                 isDepartmentAnonymous: postUser.isDepartmentAnonymous,
             },
-            categories: convertCategories(questionReq.category1, questionReq.category2),
-            createAt: Timestamp.now(),
-            updateAt: Timestamp.now(),
-            title: questionReq.title,
-            content: questionReq.content,
-            ansNum: 0,
-            imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
-            isEdited: false,
-            status: STATUS.NOT_SOLVED,
-            bestAnswerId: null,
-            biGram: toBiGramObject(gram),
-        }
+        })
         return questionRepository.save(question)
     },
     async update(questionReq: QuestionReq, questionId: string): Promise<void> {
-        const gram: string[] = bigram(questionReq.title)
-        const question: Partial<Question> = {
-            updateAt: Timestamp.now(),
-            categories: convertCategories(questionReq.category1, questionReq.category2),
-            title: questionReq.title,
-            content: questionReq.content,
-            imageUrl: questionReq.imageUrl ? questionReq.imageUrl : null,
-            isEdited: true,
-            biGram: toBiGramObject(gram),
-        }
+        const question = questionFactory.update({
+            ...questionReq,
+        })
         return questionRepository.update(question, questionId)
     },
     async declareBestAnswer(answerId: string, questionId: string): Promise<void> {
         const question: Partial<Question> = {
             bestAnswerId: answerId,
-            status: STATUS.SOLVED,
+            status: QuestionStatus.SOLVED,
         }
         return questionRepository.update(question, questionId)
     },
@@ -78,19 +61,6 @@ export const questionService = {
     },
 }
 
-// NOTE firebaseの検索に対応するため、配列に変換する必要がある
-const convertCategories = (cat1: string, cat2?: string): string[] => {
-    if (!cat2) return [cat1]
-    return [cat1, cat2]
-}
-
-const toBiGramObject = (grams: string[]) => {
-    let obj = {}
-    grams.forEach((gram: string) => {
-        obj = { ...obj, [gram]: true }
-    })
-    return obj
-}
 // HACK:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
 const questionSort = (q1: Question, q2: Question, orderBy: OrderBy, direction: Direction) => {
     console.log(q1, q2)
