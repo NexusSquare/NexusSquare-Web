@@ -6,37 +6,32 @@ import { User } from '../entities/user'
 import { ERROR } from '../constants/errors'
 import { AnswerRes } from '../api/res/AnswerRes'
 import { answerRepository } from '../repositories/answer/answerRepositoryImpl'
+import { answerFactory } from '../entities/factories/answerFactory'
 
 export class AnswerService {
     public findByQuestionId = async (questionId: string): Promise<Answer[]> => {
-        return (await answerRepository.findByQuestionId(questionId)).map((res) => this.convert(res))
+        return await answerRepository.findByQuestionId(questionId)
     }
     public findByUserId = async (userId: string): Promise<Answer[]> => {
-        return (await answerRepository.findByUserId(userId)).map((res) => this.convert(res))
+        return await answerRepository.findByUserId(userId)
     }
     public save = async (answerReq: AnswerReq, postUser: User): Promise<void> => {
         const userId = sessionStorage.getItem(USER_ID)
         if (!userId) {
             throw new Error(ERROR.INVALID_USER_TOKEN)
         }
-        const answer: Omit<Answer, 'answerId'> = {
-            questionId: answerReq.questionId,
-            questionTitle: answerReq.questionTitle,
+        const answer: Answer = answerFactory.create({
             userId: userId,
+            ...answerReq,
             postUser: {
                 nickname: postUser.nickname,
-                department: postUser.isDepartmentAnonymous ? null : postUser.department,
-                subject: postUser.isDepartmentAnonymous ? null : postUser.subject,
+                department: postUser.department,
+                subject: postUser.subject,
                 imageUrl: postUser.imageUrl,
                 isDepartmentAnonymous: postUser.isDepartmentAnonymous,
             },
-            createdAt: new Date(),
-            updatedAt: new Date(),
-            content: answerReq.content,
-            imageUrl: answerReq.imageUrl ? answerReq.imageUrl : null,
-            isEdited: false,
-            isBest: false,
-        }
+        })
+
         return answerRepository.save(answer)
     }
     public update = async (answerReq: AnswerReq, answerId: string): Promise<void> => {
@@ -49,23 +44,6 @@ export class AnswerService {
     }
     public delete = async (answerId: string): Promise<void> => {
         return answerRepository.delete(answerId)
-    }
-    private convert = (answerRes: AnswerRes): Answer => {
-        const { document: d, documentId } = answerRes
-        const answer: Answer = {
-            answerId: documentId,
-            questionId: d.questionId,
-            questionTitle: d.questionTitle,
-            userId: d.userId,
-            postUser: d.postUser,
-            createdAt: d.createdAt,
-            updatedAt: d.updatedAt,
-            content: d.content,
-            imageUrl: d.imageUrl ?? undefined,
-            isEdited: d.isEdited,
-            isBest: d.isBest,
-        }
-        return answer
     }
 }
 

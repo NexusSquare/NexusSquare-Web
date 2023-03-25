@@ -26,8 +26,8 @@ export const userService = {
             grade: userReq.grade,
             nickname: userReq.nickname,
             imageUrl: userReq.imageUrl ? userReq.imageUrl : DEFAULT_AVATAR_IMAGE_URL,
-            updatedAt: Timestamp.now(),
-            createdAt: Timestamp.now(),
+            updatedAt: new Date(),
+            createdAt: new Date(),
             isDepartmentAnonymous: userReq.isDepartmentAnonymous,
             point: 0,
             totalPoint: 0,
@@ -41,7 +41,7 @@ export const userService = {
         }
         const user: Partial<User> = {
             ...userReq,
-            updatedAt: Timestamp.now(),
+            updatedAt: new Date(),
         }
         return userRepository.update(user, userId)
     },

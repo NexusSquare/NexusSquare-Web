@@ -12,31 +12,30 @@ import {
 } from 'firebase/firestore'
 import { db } from '../../plugins/firebase/client'
 import { Answer } from '../../entities/qa/Answer'
-import { AnswerRes } from '../../api/res/AnswerRes'
+import { answerConverter } from './AnswerConverter'
+import { AnswerRepository } from './AnswerRepository'
 
-export class AnswerRepositoryImpl {
-    public findByQuestionId = async (questionId: string): Promise<AnswerRes[]> => {
+export class AnswerRepositoryImpl implements AnswerRepository {
+    private answerCol = collection(db, 'answers').withConverter(answerConverter)
+    public findByQuestionId = async (questionId: string): Promise<Answer[]> => {
         console.log('answer by questionId fetch')
-        const answerCol = collection(db, 'answers')
-        const answerQuery = query(answerCol, where('questionId', '==', questionId), orderBy('createdAt', 'desc'))
+        const answerQuery = query(this.answerCol, where('questionId', '==', questionId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {
-            return { document: doc.data(), documentId: doc.id } as AnswerRes
+            return doc.data()
         })
     }
-    public findByUserId = async (userId: string): Promise<AnswerRes[]> => {
+    public findByUserId = async (userId: string): Promise<Answer[]> => {
         console.log('answer by userId fetch')
-        const answerCol = collection(db, 'answers')
-        const answerQuery = query(answerCol, where('userId', '==', userId), orderBy('createdAt', 'desc'))
+        const answerQuery = query(this.answerCol, where('userId', '==', userId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {
-            return { document: doc.data(), documentId: doc.id } as AnswerRes
+            return doc.data()
         })
     }
-    // NOTE answerにIDが含まれていないため、Omitを使用
-    public save = async (answer: Omit<Answer, 'answerId'>): Promise<void> => {
-        const answerCol = collection(db, 'answers')
-        addDoc(answerCol, answer)
+
+    public save = async (answer: Answer): Promise<void> => {
+        addDoc(this.answerCol, answer)
     }
     public update = async (answer: Partial<Answer>, answerId: string): Promise<void> => {
         const answerDoc = doc(db, 'answers', answerId)

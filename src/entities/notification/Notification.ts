@@ -1,11 +1,9 @@
-import { Timestamp } from 'firebase/firestore'
-
 export type Notification = {
     notificationId: string
     questionId: string
     questionTitle: string
     isRead: boolean
-    createdAt: Timestamp
+    createdAt: Date
     postUserId: string
     nickname: string
     imageUrl: string

@@ -2,8 +2,8 @@ export type Answer = {
     userId: string
     postUser: {
         nickname: string
-        department: string | null
-        subject: string | null
+        department?: string
+        subject?: string
         imageUrl: string
         isDepartmentAnonymous: boolean
     }
@@ -13,7 +13,7 @@ export type Answer = {
     content: string
     createdAt: Date
     updatedAt: Date
-    imageUrl?: string | null
+    imageUrl?: string
     isEdited: boolean
     isBest: boolean
 }
