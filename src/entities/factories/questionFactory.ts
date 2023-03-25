@@ -39,7 +39,7 @@ export const questionFactory = {
             ansNum: 0,
             imageUrl: params.imageUrl,
             isEdited: false,
-            status: QuestionStatus.OPEN,
+            status: 'OPEN',
             bestAnswerId: undefined,
             biGram: toBiGramObject(bigram(params.title)),
         }
