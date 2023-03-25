@@ -6,27 +6,22 @@ import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'
 
 import { Status } from '../../../constants/query'
-
-const QuestionStatus = {
-    SOLVED: 'SOLVED' as const,
-    NOT_SOLVED: 'NOT_SOLVED' as const,
-}
-type QuestionStatus = 'SOLVED' | 'NOT_SOLVED'
+import { QuestionType } from '../../../constants/qa/status'
 
 interface Props {
     questions: Question[]
     isLoading: boolean
-    changeStatus: (value: QuestionStatus) => void
+    changeStatus: (value: QuestionType) => void
     initStatus: Status
 }
 const QACardListBox = ({ questions, isLoading, changeStatus, initStatus }: Props): JSX.Element => {
-    const defaultIndex = initStatus === QuestionStatus.SOLVED ? 0 : 1
+    const defaultIndex = initStatus === QuestionType.SOLVED ? 0 : 1
 
     return (
         <Tabs w="100%" isLazy defaultIndex={defaultIndex}>
             <TabList>
-                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(QuestionStatus.SOLVED)} />
-                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(QuestionStatus.NOT_SOLVED)} />
+                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(QuestionType.SOLVED)} />
+                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(QuestionType.NOT_SOLVED)} />
             </TabList>
             <TabPanels>
                 <TabPanel padding="0px">

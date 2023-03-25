@@ -1,6 +1,6 @@
 import { bigram } from 'n-gram'
 import { Question } from '../qa/Question'
-import { QuestionStatus } from '../../constants/qa/status'
+import { QuestionStatus } from '../qa/QuestionStatus'
 
 export type QuestionParams = {
     userId: string
