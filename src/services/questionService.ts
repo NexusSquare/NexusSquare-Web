@@ -8,24 +8,30 @@ import { Question } from '../entities/qa/Question'
 import { User } from '../entities/user'
 import { questionRepository } from '../repositories/question/QuestionRepositoryImpl'
 import { questionFactory } from '../entities/factories/questionFactory'
-import { QuestionStatus } from '../constants/qa/status'
+import { QuestionStatus } from '../entities/qa/QuestionStatus'
 
-export const questionService = {
-    async find(queryQuestion: QuestionQuery): Promise<Question[]> {
+export class QuestionService {
+    private readonly NOT_FOUND_ERROR_MESSAGE = '質問が見つかりませんでした。'
+
+    public async find(queryQuestion: QuestionQuery): Promise<Question[]> {
         return questionRepository.findAll(queryQuestion)
-    },
-    async findById(id: string): Promise<Question | undefined> {
-        return questionRepository.findById(id)
-    },
-    async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
+    }
+    public async findById(id: string): Promise<Question> {
+        const question = await questionRepository.findById(id)
+        if (!question) {
+            throw new Error(this.NOT_FOUND_ERROR_MESSAGE)
+        }
+        return question
+    }
+    public async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
         const question = await questionRepository.findByTitle(queryQuestion)
         console.log(question)
         return question.sort((a, b) => questionSort(a, b, queryQuestion.orderBy, queryQuestion.direction))
-    },
-    async findByUserId(userId: string): Promise<Question[]> {
+    }
+    public async findByUserId(userId: string): Promise<Question[]> {
         return questionRepository.findByUserId(userId)
-    },
-    async save(questionReq: QuestionReq, postUser: User): Promise<void> {
+    }
+    public async save(questionReq: QuestionReq, postUser: User): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         if (!userId) {
             throw new Error(ERROR.INVALID_USER_TOKEN)
@@ -42,23 +48,23 @@ export const questionService = {
             },
         })
         return questionRepository.save(question)
-    },
-    async update(questionReq: QuestionReq, questionId: string): Promise<void> {
+    }
+    public async update(questionReq: QuestionReq, questionId: string): Promise<void> {
         const question = questionFactory.update({
             ...questionReq,
         })
         return questionRepository.update(question, questionId)
-    },
-    async declareBestAnswer(answerId: string, questionId: string): Promise<void> {
+    }
+    public async declareBestAnswer(answerId: string, questionId: string): Promise<void> {
         const question: Partial<Question> = {
             bestAnswerId: answerId,
             status: QuestionStatus.SOLVED,
         }
         return questionRepository.update(question, questionId)
-    },
-    async delete(questionId: string): Promise<void> {
+    }
+    public async delete(questionId: string): Promise<void> {
         return questionRepository.delete(questionId)
-    },
+    }
 }
 
 // HACK:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
@@ -69,3 +75,5 @@ const questionSort = (q1: Question, q2: Question, orderBy: OrderBy, direction: D
     if (q1[orderBy] > q2[orderBy]) return -1 * toNumDirection
     return 0
 }
+
+export const questionService = new QuestionService()
