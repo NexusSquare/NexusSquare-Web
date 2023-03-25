@@ -13,8 +13,8 @@ export type Question = {
             isDepartmentAnonymous: boolean
         }
         categories: string[]
-        createAt: Timestamp
-        updateAt: Timestamp
+        createdAt: Timestamp
+        updatedAt: Timestamp
         title: string
         content: string
         ansNum: number

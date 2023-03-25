@@ -20,7 +20,6 @@ export const ContentsLayout = ({ children, Left }: Props) => {
             </Box>
             <Box w={MAIN_CONTENT_WIDTH} ml={LEFT_MARGIN}>
                 {children}
-                <Footer />
             </Box>
         </>
     )

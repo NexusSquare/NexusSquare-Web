@@ -4,25 +4,24 @@ import QACard from '../../molecules/qa/QACard'
 import { Question } from '../../../entities/qa'
 import { QASkeleton } from '../../common/QASkeleton'
 import { NoCards } from '../../common/NoCards'
-import { STATUS } from '../../../constants/qa/status'
-import { Status } from '../../../constants/query'
 
-type QuestionStatus = keyof typeof STATUS
+import { Status } from '../../../constants/query'
+import { QuestionType } from '../../../constants/qa/status'
 
 interface Props {
     questions: Question[]
     isLoading: boolean
-    changeStatus: (value: QuestionStatus) => void
+    changeStatus: (value: QuestionType) => void
     initStatus: Status
 }
 const QACardListBox = ({ questions, isLoading, changeStatus, initStatus }: Props): JSX.Element => {
-    const defaultIndex = initStatus === STATUS.SOLVED ? 0 : 1
+    const defaultIndex = initStatus === QuestionType.SOLVED ? 0 : 1
 
     return (
         <Tabs w="100%" isLazy defaultIndex={defaultIndex}>
             <TabList>
-                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(STATUS.SOLVED)} />
-                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(STATUS.NOT_SOLVED)} />
+                <QuestionTabLabel labelName="解決済み" onClick={() => changeStatus(QuestionType.SOLVED)} />
+                <QuestionTabLabel labelName="回答募集中" onClick={() => changeStatus(QuestionType.NOT_SOLVED)} />
             </TabList>
             <TabPanels>
                 <TabPanel padding="0px">

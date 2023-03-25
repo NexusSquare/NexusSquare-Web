@@ -6,7 +6,7 @@ export const historyRepository = {
     async find(userId: string): Promise<History[]> {
         console.log('history fethc')
         const historyCol = collection(db, `users/${userId}/histories`)
-        const historyQuery = query(historyCol, orderBy('createAt', 'desc'), limit(5))
+        const historyQuery = query(historyCol, orderBy('createdAt', 'desc'), limit(5))
         const snapShot = await getDocs(historyQuery)
         return snapShot.docs.map((doc) => {
             return { ...doc.data(), historyId: doc.id } as History

@@ -15,8 +15,8 @@ export type AnswerRes = {
         questionTitle: string
         answerId: string
         content: string
-        createAt: Timestamp
-        updateAt: Timestamp
+        createdAt: Date
+        updatedAt: Date
         imageUrl?: string | null
         isEdited: boolean
         isBest: boolean

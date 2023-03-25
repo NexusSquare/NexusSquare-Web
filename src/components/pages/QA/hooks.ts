@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react'
 import { QACategory, QuestionQuery } from '../../../constants/query'
 import { initQuestionQuery } from './constants'
 import { SortItem } from '../../../constants/sort'
-import { QuestionStatus } from '../../../constants/qa/status'
+import { QuestionType } from '../../../constants/qa/status'
 import { useSessionStorage } from 'react-use'
 
 export const useSearchQuestionQuery = () => {
@@ -23,7 +23,7 @@ export const useSearchQuestionQuery = () => {
         [questionQuery]
     )
     const changeQuestionStatus = useCallback(
-        (status: QuestionStatus) => {
+        (status: QuestionType) => {
             setQuestionQuery({ ...questionQuery, status })
         },
         [questionQuery]

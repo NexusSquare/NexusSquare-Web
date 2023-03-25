@@ -76,13 +76,13 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
     return (
         <>
             {isLoading || !questions ? (
-                <VStack as="section" w="full" spacing={0} pb="24">
+                <VStack as="section" w="full" spacing={0}>
                     <QASkeleton />
                     <QASkeleton />
                     <QASkeleton />
                 </VStack>
             ) : (
-                <VStack as="section" w="full" spacing={0} pb="24">
+                <VStack as="section" w="full" spacing={0}>
                     {questions.length > 0 ? (
                         <>
                             {questions.map((questions: Question) => {
@@ -114,7 +114,7 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                             />
                         </>
                     ) : (
-                        <NoCards text="回答はまだありません。" />
+                        <NoCards text="質問はまだありません。" />
                     )}
                 </VStack>
             )}

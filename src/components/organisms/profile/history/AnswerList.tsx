@@ -66,13 +66,13 @@ export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAns
     return (
         <>
             {isLoading || !answers ? (
-                <VStack as="section" w="full" spacing={0} pb="24">
+                <VStack as="section" w="full" spacing={0}>
                     <QASkeleton />
                     <QASkeleton />
                     <QASkeleton />
                 </VStack>
             ) : (
-                <VStack as="section" w="full" spacing={0} pb="24">
+                <VStack as="section" w="full" spacing={0}>
                     {answers.length > 0 ? (
                         <>
                             {answers.map((answer: Answer) => {

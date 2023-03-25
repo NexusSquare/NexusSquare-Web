@@ -5,7 +5,7 @@ import QACardList from '../../../organisms/qa/QACardList'
 import { SearchForm } from '../../../molecules/qa/SearchForm'
 import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/question/useFetchQuestion'
 import { QACategory, QuestionQuery } from '../../../../constants/query'
-import { QuestionStatus, STATUS } from '../../../../constants/qa/status'
+
 import { useRouter } from 'next/router'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'

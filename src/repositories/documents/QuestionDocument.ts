@@ -1,26 +1,25 @@
 import { Timestamp } from 'firebase/firestore'
 
-export type Question = {
-    questionId: string
+export type QuestionDocument = {
     userId: string
     postUser: {
         nickname: string
-        department: string | undefined
-        subject: string | undefined
+        department: string | null
+        subject: string | null
         imageUrl: string
         isDepartmentAnonymous: boolean
     }
     categories: string[]
-    createdAt: Date
-    updatedAt: Date
-    deadlineDate: Date
+    createdAt: Timestamp
+    updatedAt: Timestamp
+    deadlineDate: Timestamp
     title: string
     content: string
     ansNum: number
-    imageUrl?: string | undefined
     isEdited: boolean
     status: string
-    bestAnswerId: string | undefined
+    imageUrl: string | null
+    bestAnswerId: string | null
     biGram: {
         [key: string]: boolean
     }

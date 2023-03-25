@@ -9,8 +9,8 @@ export type UserRes = {
         grade: number
         nickname: string
         imageUrl: string
-        updateAt: Timestamp
-        createAt: Timestamp
+        updatedAt: Timestamp
+        createdAt: Timestamp
         isDepartmentAnonymous: boolean
         point: number
         totalPoint: number

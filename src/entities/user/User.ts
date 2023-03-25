@@ -1,5 +1,3 @@
-import { Timestamp } from 'firebase/firestore'
-
 export type User = {
     userId: string
     department: string
@@ -7,8 +5,8 @@ export type User = {
     grade: number
     nickname: string
     imageUrl: string
-    updateAt: Timestamp
-    createAt: Timestamp
+    updatedAt: Date
+    createdAt: Date
     isDepartmentAnonymous: boolean
     point: number
     totalPoint: number

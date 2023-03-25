@@ -17,7 +17,7 @@ import {
 import { useRouter } from 'next/router'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
-import { convertTimestampToString } from '../../../../lib/convert/convertTimestamp'
+import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../entities/qa/Answer'
 import { BiMedal } from 'react-icons/bi'
 import { BsChatText } from 'react-icons/bs'
@@ -46,7 +46,7 @@ const AnswerCard = ({
     hasBestAnswer,
 }: Props): JSX.Element => {
     const router = useRouter()
-    const date = convertTimestampToString(answer.createAt)
+    const date = convertDateToString(answer.createdAt)
     const onClickUserInfo = () => {
         router.push(PAGE_LINKS.PROFILE._USER_ID(answer.userId).URL)
     }

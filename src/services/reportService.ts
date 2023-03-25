@@ -16,7 +16,7 @@ export const reportService = {
             userId: userId,
             type: reportReq.type,
             reason: reportReq.reason,
-            createAt: Timestamp.now(),
+            createdAt: new Date(),
         }
         return reportRepository.save(report)
     },

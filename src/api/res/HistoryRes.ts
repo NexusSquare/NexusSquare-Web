@@ -5,7 +5,7 @@ export type HistoryRes = {
     document: {
         historyId: string
         point: number
-        createAt: Timestamp
+        createdAt: Timestamp
         type: string
     }
 }
