@@ -6,6 +6,7 @@ export const ERROR = {
     INVALID_USER_TOKEN: 'auth/invalid-user-token',
     NO_SUCH_DOCUMENT: 'db/no-such-documents',
     EXISTS_DOCUMENT_ALREADY: 'db/exists_document_already',
+    LOGIN_REQUIRED: 'auth/login-required',
 } as const
 
 export const ERROR_MESSAGE = {
