@@ -5,6 +5,8 @@ import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import ChakraNextImage from '../../common/chakraNextImage'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
+import { SPONSERS } from '../../../constants/sponser'
+import { SponserBanner } from '../../common/suponser/Banner'
 
 interface Props {
     children?: ReactNode
@@ -40,15 +42,8 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
     return (
         <VStack w="100%" spacing={0}>
             {children}
-            <HStack w="100%" h="250px" margin="10px 20px" minW={{ base: '210px', sm: '420px' }}>
-                <Spacer />
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200">
-                    広告枠3
-                </Box>
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200" display={{ base: 'none', sm: 'flex' }}>
-                    広告枠4
-                </Box>
-                <Spacer />
+            <HStack justifyContent={'center'} py="12">
+                <SponserBanner sponser={SPONSERS.mapquest} width={240} height={240} />
             </HStack>
 
             <HStack

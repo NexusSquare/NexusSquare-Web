@@ -13,6 +13,8 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
+import { SPONSERS } from '../../../../constants/sponser'
+import { SponserBanner } from '../../../common/suponser/Banner'
 
 interface Props {
     questionId: string
@@ -90,13 +92,9 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     isPosted={isPosted}
                     isMine={isMine}
                 />
-                <HStack py="12">
-                    <Box w="180px" h="180px" bgColor="gray.200">
-                        広告枠
-                    </Box>
-                    <Box w="180px" h="180px" bgColor="gray.200">
-                        広告枠
-                    </Box>
+                <HStack py="6">
+                    {/* <SponserBanner sponser={SPONSERS.shinnichi} /> */}
+                    <SponserBanner sponser={SPONSERS.tasuki} width={240} height={240} />
                 </HStack>
                 <AnswerList
                     answers={displayAnswers}
