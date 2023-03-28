@@ -21,7 +21,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
-import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { FormLayout } from '../../../molecules/common/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'
 
 export const Page = (): JSX.Element => {

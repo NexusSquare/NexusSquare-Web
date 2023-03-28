@@ -7,7 +7,7 @@ import { PasswordRepository } from './PasswordRepository'
 
 class PasswordRepositoryImpl implements PasswordRepository {
     public sendResetEmail = async (email: string): Promise<void> => {
-        sendPasswordResetEmail(auth, email)
+        await sendPasswordResetEmail(auth, email)
     }
 
     public update = (password: string) => {

@@ -17,7 +17,7 @@ import { useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
 import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { FormLayout } from '../../../molecules/common/FormLayout'
 
 export const Page = (): JSX.Element => {
     const { mutate: sendEmail, isLoading: sending, error } = useSendEmail()

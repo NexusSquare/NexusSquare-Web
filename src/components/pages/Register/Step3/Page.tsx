@@ -22,7 +22,7 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { usePostUser } from '../../../../hooks/user'
 import { UserReq } from '../../../../api/req/UserReq'
-import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { FormLayout } from '../../../molecules/common/FormLayout'
 import { RuleModal } from '../../../molecules/sign/RuleModal'
 import { useState } from 'react'
 
