@@ -1,30 +1,25 @@
 import { ChakraProvider, extendTheme } from '@chakra-ui/react'
-import { SessionProvider } from 'next-auth/react'
-import type { AppProps } from 'next/app'
-import Header from '../components/common/Header'
+import type { AppProps, AppPropsWithLayout } from 'next/app'
+import { AuthProvider } from '../providers/AuthProvider'
+import { QueryClient, QueryClientProvider } from 'react-query'
+import { RecoilRoot } from 'recoil'
+import { chakraTheme } from '../styles/chakra/config'
 
-function MyApp({ Component, pageProps }: AppProps) {
-    const theme = extendTheme({
-        colors: {
-            mainColor: '#FF9037',
-            subColor: '#FBF6F0',
-            subSubColor: '#FFDA77',
-            accentColor: '#3DB2FF',
-        },
-        styles: {
-            global: {
-                html: { height: '100%' },
-                body: { height: '100%' },
-            },
-        },
-    })
+const queryClient = new QueryClient()
+function MyApp({ Component, pageProps }: AppPropsWithLayout) {
+    const getLayout = Component.getLayout ?? ((page) => page)
     return (
-        <ChakraProvider theme={theme}>
-            <SessionProvider session={pageProps.session}>
-                <Header />
-                <Component {...pageProps} />
-            </SessionProvider>
-        </ChakraProvider>
+        <RecoilRoot>
+            <QueryClientProvider client={queryClient}>
+                <ChakraProvider theme={chakraTheme}>
+                    {getLayout(
+                        <AuthProvider>
+                            <Component {...pageProps} />
+                        </AuthProvider>
+                    )}
+                </ChakraProvider>
+            </QueryClientProvider>
+        </RecoilRoot>
     )
 }
 
