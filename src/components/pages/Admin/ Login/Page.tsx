@@ -6,7 +6,7 @@ import { UserAccount } from '../../../../entities/user'
 import { useLogin } from '../../../../hooks/authentication'
 import { validators } from '../../../../lib/validator/Validators'
 import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { FormLayout } from '../../../molecules/sign/FormLayout'
+import { FormLayout } from '../../../molecules/common/FormLayout'
 
 export const AdminLoginPage = (): JSX.Element => {
     const router = useRouter()
