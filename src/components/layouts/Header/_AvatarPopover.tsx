@@ -28,14 +28,7 @@ export const AvatarPopover = ({ user, userMeta, seeProfile, signOut }: Props) =>
     return (
         <Popover>
             <PopoverTrigger>
-                <Avatar
-                    as="button"
-                    width="40px"
-                    height="40px"
-                    src={user.imageUrl}
-                    bg="mainColor"
-                    onClick={seeProfile}
-                />
+                <Avatar as="button" width="40px" height="40px" src={user.imageUrl} bg="mainColor" />
             </PopoverTrigger>
             <PopoverContent>
                 <PopoverHeader fontWeight="semibold">
@@ -48,6 +41,7 @@ export const AvatarPopover = ({ user, userMeta, seeProfile, signOut }: Props) =>
                             bg="white"
                             borderWidth={'1px'}
                             borderColor={'gray.200'}
+                            onClick={seeProfile}
                         />
                         <VStack w="full" alignItems={'left'} spacing="0">
                             <Text>{userMeta?.name}</Text>
