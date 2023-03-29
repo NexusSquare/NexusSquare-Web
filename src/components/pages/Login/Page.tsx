@@ -6,9 +6,11 @@ import { useLogin } from '../../../hooks/authentication'
 import { PrimaryButton } from '../../common/buttons/PrimaryButton'
 
 import { UserAccount } from '../../../entities/user'
-import { FormLayout } from '../../molecules/sign/FormLayout'
+import { FormLayout } from '../../molecules/common/FormLayout'
 import { validators } from '../../../lib/validator/Validators'
-import { pagesPath } from '../../../plugins/$path'
+
+import { TextLink } from '../../common/TextLink'
+import { pagesPath } from '../../../lib/$path'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -28,6 +30,10 @@ export const Page = (): JSX.Element => {
 
     const onClickRegister = () => {
         router.push(PAGE_LINKS.REGISTER.STEP1.URL)
+    }
+
+    const onClickForgotPassword = () => {
+        router.push(pagesPath.password.forgot.$url())
     }
     return (
         <FormLayout title="ログイン">
@@ -73,17 +79,17 @@ export const Page = (): JSX.Element => {
                     <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
                     <FormHelperText>半角英数8~16</FormHelperText>
                 </FormControl>
+
                 <PrimaryButton buttonText="ログイン" type="submit" width={48} isLoading={loading} disabled={loading} />
             </VStack>
-            <Text
-                fontWeight={'bold'}
-                fontSize={'sm'}
-                as="button"
-                _hover={{ textDecoration: 'underline' }}
-                onClick={onClickRegister}
-            >
-                新規登録はこちら
-            </Text>
+            <VStack alignItems="center" spacing={1}>
+                <TextLink as="button" onClick={onClickRegister}>
+                    新規登録はこちら
+                </TextLink>
+                <Text as="button" onClick={onClickForgotPassword} fontWeight={'normal'} fontSize={'sm'}>
+                    パスワードを忘れた方
+                </Text>
+            </VStack>
         </FormLayout>
     )
 }
