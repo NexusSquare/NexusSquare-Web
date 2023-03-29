@@ -4,6 +4,7 @@ import { Report } from '../entities/report'
 
 export const reportRepository = {
     async save(report: Report): Promise<void> {
+        console.log(report)
         const reportCol = collection(db, 'reports')
         addDoc(reportCol, report)
     },

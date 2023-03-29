@@ -2,7 +2,7 @@ export type User = {
     userId: string
     department: string
     subject: string
-    grade: number
+    grade: string
     nickname: string
     imageUrl: string
     updatedAt: Date

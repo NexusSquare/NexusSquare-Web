@@ -1,7 +1,7 @@
 export type UserReq = {
     department: string
     subject: string
-    grade: number
+    grade: string
     nickname: string
     imageUrl?: string
     isDepartmentAnonymous: boolean
