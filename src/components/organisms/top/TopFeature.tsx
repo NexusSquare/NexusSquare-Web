@@ -16,17 +16,14 @@ export const TopFeature = () => {
         >
             <FeatureContent
                 heading="学生生活Q&A"
-                text="Nexus Squareは、愛知県立大学の学生が立ち上げた団体です。
-            友人関係やサークルに参加しているかどうかで、人によって得られる情報が限られ、「情報格差」が生まれています。
-            そこで、授業・留学・就活など、大学生活で生まれる悩みを解決するため、
-            自由に質問・回答ができるサービスです。"
+                text="学生生活Q&Aは、愛知県立の学生間で質問・回答し合えるサービスです。学部別、内容別にカテゴリーされており、質問のタイトル検索機能もあるため、質問・回答以外の利用もしていただけます。プロフィールからは、ユーザー名の変更や過去の活動履歴を確認できます。"
                 isReversed={true}
             >
                 <RiQuestionAnswerLine color="#FF9037" style={{ display: 'inline' }} />
             </FeatureContent>
             <FeatureContent
-                heading="ポイント制"
-                text="質問で10ポイント、回答で20ポイントなどNexus Square内で投稿をして県大生をお助けすると、 ポイントが付与されます。500ポイントでamazonギフト券獲得の抽選に応募できます。"
+                heading="ポイント制（導入予定）"
+                text="質問で10ポイント、回答で20ポイントなどNexus Square内で投稿をして県大生をお助けすると、 ポイントが付与されます。いっぱい貯めるといいことがある予感...！"
                 isReversed={false}
             >
                 <FaCoins color="#FF9037" style={{ display: 'inline' }} />
