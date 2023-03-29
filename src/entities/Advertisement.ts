@@ -1,9 +1,10 @@
+import { generateRandomIndexNumber, generateRandomIndexNumberList } from '../lib/generators/generateRandomIndexNumber'
 import { Sponser, SPONSERS } from './Sponser'
 
 class Advertisement {
     private readonly sponsers: Sponser[] = SPONSERS
     public getOne = (): Sponser => {
-        const random = Math.floor(Math.random() * this.sponsers.length)
+        const random = generateRandomIndexNumber(this.sponsers.length)
         return this.sponsers[random]
     }
 
@@ -12,15 +13,9 @@ class Advertisement {
     }
 
     public getSome = (count: number): Sponser[] => {
-        const randoms: number[] = []
-        const result: Sponser[] = []
-        while (randoms.length < count) {
-            const random = Math.floor(Math.random() * this.sponsers.length)
-            if (!randoms.includes(random)) {
-                randoms.push(random)
-                result.push(this.sponsers[random])
-            }
-        }
-        return result
+        const randoms = generateRandomIndexNumberList(count)
+        return randoms.map((random) => this.sponsers[random])
     }
 }
+
+export const advertisement = new Advertisement()
