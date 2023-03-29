@@ -23,6 +23,7 @@ import { NotificationButton } from './notifications/_NotificationButton'
 import { AvatarPopover } from './_AvatarPopover'
 import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
+import { pagesPath } from '../../../lib/$path'
 
 interface Props {
     children?: ReactNode
@@ -40,7 +41,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onClickProfile = () => {
         if (!user?.userId) return
-        router.push(PAGE_LINKS.PROFILE._USER_ID(user.userId).URL)
+        router.push(pagesPath.profile._id(user.userId).$url())
     }
 
     const onClickRegister = () => {
@@ -149,3 +150,6 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         </VStack>
     )
 })
+function pathPath(pathPath: any) {
+    throw new Error('Function not implemented.')
+}
