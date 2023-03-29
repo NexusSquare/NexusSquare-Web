@@ -13,7 +13,7 @@ class Advertisement {
     }
 
     public getSome = (count: number): Sponser[] => {
-        const randoms = generateRandomIndexNumberList(count)
+        const randoms = generateRandomIndexNumberList(this.sponsers.length, count)
         return randoms.map((random) => this.sponsers[random])
     }
 }
