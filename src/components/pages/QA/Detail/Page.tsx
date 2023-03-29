@@ -13,7 +13,7 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
-import { SPONSERS } from '../../../../constants/sponser'
+import { SPONSERS } from '../../../../entities/Sponser'
 import { SponserBanner } from '../../../common/suponser/Banner'
 
 interface Props {

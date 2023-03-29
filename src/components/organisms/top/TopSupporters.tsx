@@ -1,6 +1,6 @@
 import { Box, Heading, HStack, Stack, VStack } from '@chakra-ui/react'
 import React from 'react'
-import { Sponser, SPONSERS } from '../../../constants/sponser'
+import { Sponser, SPONSERS } from '../../../entities/Sponser'
 import Image from 'next/image'
 
 export const TopSupporters = () => {

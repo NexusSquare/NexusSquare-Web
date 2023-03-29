@@ -1,6 +1,6 @@
 import { Box, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
-import { Sponser } from '../../../constants/sponser'
+import { Sponser } from '../../../entities/Sponser'
 
 interface Props {
     sponser: Sponser
