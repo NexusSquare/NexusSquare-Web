@@ -28,7 +28,14 @@ export const AvatarPopover = ({ user, userMeta, seeProfile, signOut }: Props) =>
     return (
         <Popover>
             <PopoverTrigger>
-                <Avatar as="button" width="40px" height="40px" src={user.imageUrl} bg="mainColor" />
+                <Avatar
+                    as="button"
+                    width="40px"
+                    height="40px"
+                    src={user.imageUrl}
+                    bg="mainColor"
+                    onClick={seeProfile}
+                />
             </PopoverTrigger>
             <PopoverContent>
                 <PopoverHeader fontWeight="semibold">
