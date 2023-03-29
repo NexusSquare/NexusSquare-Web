@@ -89,7 +89,7 @@ interface FooterLinkProps {
 
 const FooterLink = ({ href, text }: FooterLinkProps): JSX.Element => {
     return (
-        <Link href="/privacy" passHref>
+        <Link href={href} passHref>
             <Box
                 as="a"
                 href={href}
