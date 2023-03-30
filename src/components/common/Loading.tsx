@@ -1,4 +1,4 @@
-import { Box, CircularProgress, HStack, Spinner, Text, VStack } from '@chakra-ui/react'
+import { CircularProgress, HStack, Spinner, VStack } from '@chakra-ui/react'
 import React from 'react'
 
 export const Loading = () => {

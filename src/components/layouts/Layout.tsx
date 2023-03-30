@@ -1,8 +1,7 @@
-import { Box } from '@chakra-ui/react'
 import React, { ReactNode } from 'react'
-import CommonMeta from './CommonMeta'
+
 import { Footer } from './Footer'
-import { Header } from './Header'
+
 import { DefaultLayout } from './DefaultLayout'
 
 interface Props {

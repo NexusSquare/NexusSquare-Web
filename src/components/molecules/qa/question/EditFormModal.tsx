@@ -29,7 +29,7 @@ interface Props {
 }
 
 type QACategoriesType = typeof QACategories
-type QACategories = typeof QACategories[keyof QACategoriesType]
+type QACategories = (typeof QACategories)[keyof QACategoriesType]
 
 export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion, isUpdateLoading }: Props) => {
     const [contentLength, setContentLength] = useState(question.content.length)

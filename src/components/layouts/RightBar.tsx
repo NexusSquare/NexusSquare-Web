@@ -1,4 +1,4 @@
-import { Box, Button, HStack, Text, VStack } from '@chakra-ui/react'
+import { Button, HStack, Text, VStack } from '@chakra-ui/react'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { advertisement } from '../../entities/Advertisement'

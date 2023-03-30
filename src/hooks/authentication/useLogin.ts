@@ -9,7 +9,7 @@ import { auth } from '../../plugins/firebase/client'
 import { userMetaService } from '../../services/user/userMetaService'
 import { userService } from '../../services/user/userService'
 import { useUser, useUserMeta } from '../../store/atom'
-import { User, UserMeta } from '../../entities/user'
+import { User, UserAccount, UserMeta } from '../../entities/user'
 import { useAlertLoginError } from '../errors/useAlertLoginError'
 import { useSessionToken } from '../useSessionToken'
 
@@ -51,7 +51,7 @@ export const useLogin = () => {
         }
         initUser(user, userMeta)
     }
-    const login = useCallback(async ({ email, password }, args?: AfterFunction) => {
+    const login = useCallback(async ({ email, password }: UserAccount, args?: AfterFunction) => {
         mutate(
             {
                 email,

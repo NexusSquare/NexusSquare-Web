@@ -1,7 +1,6 @@
 import { EditIcon, NotAllowedIcon, HamburgerIcon, DeleteIcon } from '@chakra-ui/icons'
 import {
     Avatar,
-    Box,
     HStack,
     IconButton,
     Image,

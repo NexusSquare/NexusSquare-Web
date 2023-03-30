@@ -1,15 +1,15 @@
 import { Box, Heading, HStack, VStack, Text, useBreakpointValue } from '@chakra-ui/react'
 import React from 'react'
 import ChakraNextImage from '../../common/chakraNextImage'
-
+import Image from 'next/image'
 export const TopAbout = () => {
     const ICON_IMAGE_URL: string = '/android-chrome-512x512.png'
 
     return (
         <Box bgColor="white" paddingX={{ base: '5%', md: '10%' }} paddingY={'5%'}>
             <HStack>
-                <VStack w={{ base: '100%', md: '50%' }} d={{ base: 'none', md: 'flex' }} justifyContent="center">
-                    <ChakraNextImage src={ICON_IMAGE_URL} alt="サービスの画像" width={300} height={300} />
+                <VStack w={{ base: '100%', md: '50%' }} display={{ base: 'none', md: 'flex' }} justifyContent="center">
+                    <Image src={ICON_IMAGE_URL} alt="サービスの画像" width={300} height={300} />
                 </VStack>
                 <VStack w={{ base: '100%', md: '50%' }} spacing="30px">
                     <Heading

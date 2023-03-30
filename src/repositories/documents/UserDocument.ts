@@ -6,8 +6,10 @@ export type UserDocument = {
     grade: string
     nickname: string
     imageUrl: string
+
     updatedAt: Timestamp
     createdAt: Timestamp
+
     isDepartmentAnonymous: boolean
     point: number
     totalPoint: number

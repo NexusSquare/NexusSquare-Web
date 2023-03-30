@@ -24,7 +24,7 @@ import { AvatarPopover } from './_AvatarPopover'
 import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
 import { pagesPath } from '../../../lib/$path'
-
+import Image from 'next/image'
 interface Props {
     children?: ReactNode
 }
@@ -110,14 +110,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         marginX={{ base: '0px', xs: '10px' }}
                     >
                         <Link href="/" passHref>
-                            <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
-                                <ChakraNextImage
-                                    src={LOGO_URL}
-                                    alt="NexusSquare"
-                                    width={180}
-                                    height={45}
-                                ></ChakraNextImage>
-                            </Box>
+                            <Image src={LOGO_URL} alt="NexusSquare" width={180} height={45}></Image>
                         </Link>
                     </Box>
                     <HStack

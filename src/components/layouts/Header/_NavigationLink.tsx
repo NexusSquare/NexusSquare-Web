@@ -11,8 +11,7 @@ export const NavigationLink: React.VFC<Props> = (props) => {
     return props.isComp ? (
         <Link href={props.url} passHref>
             <Box
-                as="a"
-                href={props.url}
+                as="span"
                 whiteSpace="nowrap"
                 fontWeight="bold"
                 color="#FEEBC8"

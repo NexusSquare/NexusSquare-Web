@@ -24,20 +24,7 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
     const onClickPostButton = () => {
         router.push(PAGE_LINKS.QA.POST.URL)
     }
-    const NavButton: React.VFC<NavButtonProps> = (props) => (
-        <Link href={props.url} passHref>
-            <Box as="a" href={props.url} bgColor="white" borderRadius="50%" h="42px" w="42px" padding="10px">
-                <ChakraNextImage
-                    src={props.imageSrc}
-                    alt={props.altText}
-                    width={30}
-                    height={30}
-                    minW="30px"
-                    minH="30px"
-                />
-            </Box>
-        </Link>
-    )
+
     return (
         <VStack w="100%" spacing={0}>
             {children}
