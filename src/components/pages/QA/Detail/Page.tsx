@@ -13,10 +13,15 @@ import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
+import { SPONSERS } from '../../../../entities/Sponser'
+import { SponserBanner } from '../../../common/suponser/Banner'
+import { advertisement } from '../../../../entities/Advertisement'
 
 interface Props {
     questionId: string
 }
+
+const sponser = advertisement.getOne()
 
 export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
@@ -90,13 +95,8 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     isPosted={isPosted}
                     isMine={isMine}
                 />
-                <HStack py="12">
-                    <Box w="180px" h="180px" bgColor="gray.200">
-                        広告枠
-                    </Box>
-                    <Box w="180px" h="180px" bgColor="gray.200">
-                        広告枠
-                    </Box>
+                <HStack py="6">
+                    <SponserBanner sponser={sponser} />
                 </HStack>
                 <AnswerList
                     answers={displayAnswers}
