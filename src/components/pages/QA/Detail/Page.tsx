@@ -36,7 +36,6 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
 
-    console.log('question', question)
     console.log('answer', answers)
 
     const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
@@ -62,13 +61,6 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
             }
         )
-    }
-
-    const sortAnswersByBestAnswer = (bestAnswer: Answer, answers: Answer[]): Answer[] => {
-        const filletedAnswer = answers.filter((ans: Answer) => {
-            ans.answerId !== bestAnswer?.answerId
-        })
-        return [bestAnswer, ...filletedAnswer]
     }
 
     return (

@@ -28,10 +28,11 @@ import { pagesPath } from '../../../lib/$path'
 interface Props {
     children?: ReactNode
 }
+const LOGO_URL: string = '/images/logo.jpg'
 
 export const Header = memo(({ children }: Props): JSX.Element => {
-    const LOGO_URL: string = '/images/logo.jpg'
     const { user } = useUser()
+
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
     const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(user?.userId)
@@ -127,9 +128,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         display={{ base: 'none', md: 'flex' }}
                         paddingTop={1}
                     >
-                        <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
-                        <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
-                        <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+                        <NavigationLinkList />
                     </HStack>
                 </HStack>
                 <LoginOrProfile />
@@ -143,10 +142,18 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                 aria-labelledby="jump to other functions - mini version"
                 display={{ base: 'flex', md: 'none' }}
             >
-                <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
-                <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
-                <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+                <NavigationLinkList />
             </HStack>
         </VStack>
     )
 })
+
+const NavigationLinkList = () => {
+    return (
+        <>
+            <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
+            <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
+            <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+        </>
+    )
+}
