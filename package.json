@@ -54,11 +54,6 @@
         "react-query": "^3.39.3",
         "typescript": "^ 4.9.5"
     },
-    "husky": {
-        "hooks": {
-            "pre-commit": "lint-staged"
-        }
-    },
     "lint-staged": {
         "src/**/*.{js,jsx,ts,tsx} --ignore-path src/plugins/$path.ts": [
             "npm run lint-fix"
