@@ -10,3 +10,15 @@ const Department = {
     infore: '情報科学研究科',
 } as const
 export default Department
+
+export const Departments = {
+    FOREIGN_LANGRAGE: '外国語学部',
+    JAPANESE_CULTURE: '日本文化学部',
+    TEACH_WELFARE: '教育福祉学部',
+    NURSE: '看護学部',
+    INFORMATION_SCIENCE: '情報科学部',
+    GLOBAL_CULTURE: '国際文化研究科',
+    HUMAN_DEVELOPMENT: '人間発達学研究科',
+    NURSE_SCIENCE: '看護学研究科',
+    INFORMATION_SCIENCE_RESEARCH: '情報科学研究科',
+}
