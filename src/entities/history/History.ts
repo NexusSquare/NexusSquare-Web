@@ -5,4 +5,5 @@ export type History = {
     point: number
     createdAt: Date
     type: HistoryType
+    postId: string
 }
