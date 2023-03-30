@@ -150,6 +150,3 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         </VStack>
     )
 })
-function pathPath(pathPath: any) {
-    throw new Error('Function not implemented.')
-}
