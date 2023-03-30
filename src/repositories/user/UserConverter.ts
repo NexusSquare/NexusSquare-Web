@@ -22,8 +22,8 @@ export const userConverter = {
         const data = snapshot.data(options) as UserDocument
         return {
             userId: snapshot.id,
-            department: data.department ?? undefined,
-            subject: data.subject ?? undefined,
+            department: data.department,
+            subject: data.subject,
             grade: data.grade,
             nickname: data.nickname,
             imageUrl: data.imageUrl,
