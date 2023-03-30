@@ -7,6 +7,7 @@ import ChakraNextImage from '../../common/chakraNextImage'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { SPONSERS } from '../../../entities/Sponser'
 import { SponserBanner } from '../../common/suponser/Banner'
+import { advertisement } from '../../../entities/Advertisement'
 
 interface Props {
     children?: ReactNode
@@ -16,11 +17,9 @@ interface NavButtonProps {
     altText: string
     url: string
 }
+const sponser = advertisement.getOne()
 
 const QACardWindow: Function = ({ children }: Props): JSX.Element => {
-    const CATEGORY_IMAGE_PATH: string = '/images/category.png'
-    const ALL_Q_IMAGE_PATH: string = '/images/all.png'
-    const RANKING_IMAGE_PATH: string = '/images/crown.png'
     const router = useRouter()
     const onClickPostButton = () => {
         router.push(PAGE_LINKS.QA.POST.URL)
@@ -43,7 +42,7 @@ const QACardWindow: Function = ({ children }: Props): JSX.Element => {
         <VStack w="100%" spacing={0}>
             {children}
             <HStack justifyContent={'center'} py="12">
-                <SponserBanner sponser={SPONSERS.mapquest} width={240} height={240} />
+                <SponserBanner sponser={sponser} />
             </HStack>
 
             <HStack

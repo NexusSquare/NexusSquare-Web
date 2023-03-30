@@ -1,4 +1,4 @@
-import { Box, VStack } from '@chakra-ui/react'
+import { Box, Link, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { Sponser } from '../../../entities/Sponser'
 
@@ -18,13 +18,15 @@ export const SponserBanner = ({ sponser, width = 200, height = 200, rate = 1 }: 
             border={'1px'}
             borderColor={'gray.200'}
         >
-            <Image
-                src={sponser.image.banner}
-                width={width * rate}
-                height={height * rate}
-                alt={sponser.name}
-                key={sponser.name}
-            />
+            <Link isExternal href={sponser.urls.banner}>
+                <Image
+                    src={sponser.image.banner}
+                    width={width * rate}
+                    height={height * rate}
+                    alt={sponser.name}
+                    key={sponser.name}
+                />
+            </Link>
         </VStack>
     )
 }

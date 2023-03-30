@@ -15,10 +15,13 @@ import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { SPONSERS } from '../../../../entities/Sponser'
 import { SponserBanner } from '../../../common/suponser/Banner'
+import { advertisement } from '../../../../entities/Advertisement'
 
 interface Props {
     questionId: string
 }
+
+const sponser = advertisement.getOne()
 
 export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
@@ -93,8 +96,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     isMine={isMine}
                 />
                 <HStack py="6">
-                    {/* <SponserBanner sponser={SPONSERS.shinnichi} /> */}
-                    <SponserBanner sponser={SPONSERS.tasuki} width={240} height={240} />
+                    <SponserBanner sponser={sponser} />
                 </HStack>
                 <AnswerList
                     answers={displayAnswers}
