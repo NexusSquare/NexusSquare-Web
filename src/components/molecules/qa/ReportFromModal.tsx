@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     FormControl,
     FormErrorMessage,
@@ -31,7 +30,7 @@ interface Props {
 }
 
 type QACategoriesType = typeof QACategories
-type QACategories = typeof QACategories[keyof QACategoriesType]
+type QACategories = (typeof QACategories)[keyof QACategoriesType]
 
 export const ReportFormModal = ({ isOpen, onClose, onClickReport, isReportLoading, type, postId }: Props) => {
     const {

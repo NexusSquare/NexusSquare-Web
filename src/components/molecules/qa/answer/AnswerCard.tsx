@@ -1,7 +1,6 @@
 import { DeleteIcon, EditIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import {
     Avatar,
-    Box,
     Button,
     Divider,
     HStack,
@@ -20,7 +19,6 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../entities/qa/Answer'
 import { BiMedal } from 'react-icons/bi'
-import { BsChatText } from 'react-icons/bs'
 
 interface Props {
     userId: string

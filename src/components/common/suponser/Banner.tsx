@@ -1,4 +1,4 @@
-import { Box, Link, VStack } from '@chakra-ui/react'
+import { Link, VStack } from '@chakra-ui/react'
 import Image from 'next/image'
 import { Sponser } from '../../../entities/Sponser'
 

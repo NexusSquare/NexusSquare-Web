@@ -1,6 +1,5 @@
-import { Box, HStack, Text, VStack, Flex, Wrap, WrapItem, Stack, Spacer } from '@chakra-ui/react'
-import Link from 'next/link'
-import { useEffect } from 'react'
+import { Box, HStack, Text, VStack, Flex, Wrap, WrapItem, Stack, Spacer, Link } from '@chakra-ui/react'
+
 import { BsTwitter } from 'react-icons/bs'
 import { useSpMediaQuery } from '../../hooks/useSpMediaQuery'
 import ChakraNextImage from '../common/chakraNextImage'
@@ -35,7 +34,7 @@ const PcFooter = (): JSX.Element => {
                     <FooterLinkList />
                 </Stack>
             </HStack>
-            <Box justifyContent={'right'} d="flex" w="full">
+            <Box justifyContent={'right'} display="flex" w="full">
                 <TwitterLink />
             </Box>
 
@@ -89,10 +88,9 @@ interface FooterLinkProps {
 
 const FooterLink = ({ href, text }: FooterLinkProps): JSX.Element => {
     return (
-        <Link href={href} passHref>
+        <Link href={href}>
             <Box
-                as="a"
-                href={href}
+                as="span"
                 whiteSpace="nowrap"
                 fontWeight="700"
                 color="white"
@@ -113,10 +111,8 @@ const NexusSquareLogo = () => {
 const TwitterLink = () => {
     const TWITTER_URL: string = 'https://twitter.com/NexusSquare_apu'
     return (
-        <Link href={TWITTER_URL} passHref>
-            <HStack as="a" target="_blank">
-                <BsTwitter size={30} color="white" />
-            </HStack>
+        <Link href={TWITTER_URL} isExternal>
+            <BsTwitter size={30} color="white" />
         </Link>
     )
 }

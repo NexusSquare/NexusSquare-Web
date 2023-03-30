@@ -1,4 +1,4 @@
-import { Box, Button, Tab, TabList, TabPanel, TabPanels, VStack, Tabs, HStack, Text } from '@chakra-ui/react'
+import { Button, Tab, TabList, TabPanel, TabPanels, VStack, Tabs, HStack, Text } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import QACard from '../../molecules/qa/QACard'
 import { Question } from '../../../entities/qa'
@@ -41,11 +41,11 @@ interface QASkeletonsProps {
 const QASkeletons: FC<QASkeletonsProps> = ({ sheltonCount }) => {
     const _sequential = new Array(sheltonCount).fill(null).map((_, i) => i)
     return (
-        <Box w="full">
+        <>
             {_sequential.map((index) => {
                 return <QASkeleton key={index} />
             })}
-        </Box>
+        </>
     )
 }
 
@@ -79,13 +79,11 @@ const QuestionTabLabel: FC<QuestionTabLabelProps> = ({ onClick, labelName }) => 
     )
 }
 
-interface QuestionTabItemProps {
-    isLoading: boolean
+interface QuestionListProps {
     questions: Question[]
 }
-const QuestionTabItem: FC<QuestionTabItemProps> = ({ isLoading, questions }) => {
-    if (isLoading) return <QASkeletons sheltonCount={3} />
-    if (questions.length === 0) return <NoCards text="質問が見つかりませんでした。" />
+
+const QuestionList = ({ questions }: QuestionListProps) => {
     return (
         <>
             {questions.map((question: Question) => {
@@ -93,6 +91,16 @@ const QuestionTabItem: FC<QuestionTabItemProps> = ({ isLoading, questions }) => 
             })}
         </>
     )
+}
+
+interface QuestionTabItemProps {
+    isLoading: boolean
+    questions: Question[]
+}
+const QuestionTabItem: FC<QuestionTabItemProps> = ({ isLoading, questions }) => {
+    if (isLoading) return <QASkeletons sheltonCount={3} />
+    if (questions.length === 0) return <NoCards text="質問が見つかりませんでした。" />
+    return <QuestionList questions={questions} />
 }
 
 export default React.memo(QACardListBox)

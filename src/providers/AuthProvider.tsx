@@ -8,7 +8,10 @@ import { useSessionToken } from '../hooks/useSessionToken'
 import { useUser, useUserMeta } from '../store/atom'
 import { User, UserMeta } from '../entities/user'
 
-export const AuthProvider: React.FC = ({ children }) => {
+interface AuthProviderProps {
+    children: React.ReactNode
+}
+export const AuthProvider = ({ children }: AuthProviderProps) => {
     const router = useRouter()
     const { data: currentUser } = useAuth()
     const { setUser } = useUser()

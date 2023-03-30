@@ -2,8 +2,7 @@ import { Box, Button, Heading, HStack, Stack, Text, VStack } from '@chakra-ui/re
 import { useRouter } from 'next/router'
 import React from 'react'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
-import ChakraNextImage from '../../common/chakraNextImage'
-
+import Image from 'next/image'
 export const TopInfo = () => {
     const TOP_INFO_URL: string = '/images/ui_img.png'
     const router = useRouter()
@@ -45,7 +44,7 @@ export const TopInfo = () => {
                     </VStack>
                 </HStack>
                 <VStack w={{ base: '100%', md: '50%' }} justifyContent="center">
-                    <ChakraNextImage src={TOP_INFO_URL} alt="サービスの画像" width={500} height={500} />
+                    <Image src={TOP_INFO_URL} alt="サービスの画像" width={500} height={500} />
                 </VStack>
             </Stack>
         </Box>
