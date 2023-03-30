@@ -1,11 +1,13 @@
+import { Timestamp } from 'firebase-admin/firestore'
+
 export type UserDocument = {
-    department: string | null
-    subject: string | null
+    department: string
+    subject: string
     grade: string
     nickname: string
     imageUrl: string
-    updatedAt: Date
-    createdAt: Date
+    updatedAt: Timestamp
+    createdAt: Timestamp
     isDepartmentAnonymous: boolean
     point: number
     totalPoint: number

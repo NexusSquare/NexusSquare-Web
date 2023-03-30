@@ -26,7 +26,7 @@ const sponser = advertisement.getOne()
 export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
     const errorToast = useErrorToast()
-    const [displayAnswers, setDisplayAnswers] = useState<Answer[]>([])
+
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
     const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
     const { mutate: declareBestAnswer, isLoading: isDeclareLoading, cacheClearQuestion } = useBestAnswer()
@@ -36,17 +36,16 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
 
+    console.log('answer', answers)
+
+    const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
+    const otherAnswers: Answer[] = answers.filter((answer) => answer.answerId !== question?.bestAnswerId)
+    const sortedAnswers = bestAnswer ? [bestAnswer, ...otherAnswers] : answers
+
     // NOTE:既に投稿したか
     const isPosted: boolean = answers.some((answer) => answer.userId === user?.userId)
     // NOTE:自分の投稿かどうか
     const isMine = user?.userId === question?.userId
-
-    const bestAnswer = answers.find((ans: Answer) => {
-        return ans.answerId === question?.bestAnswerId
-    })
-    const hasBestAnswer = answers.some((ans: Answer) => {
-        return ans.answerId === question?.bestAnswerId
-    })
 
     const onSuccessBestAnswer = async (userId: string) => {
         cacheClearQuestion(userId)
@@ -63,24 +62,6 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
             }
         )
     }
-
-    const sortAnswersByBestAnswer = (bestAnswer: Answer, answers: Answer[]): Answer[] => {
-        const filletedAnswer = answers.filter((ans: Answer) => {
-            ans.answerId !== bestAnswer?.answerId
-        })
-        return [bestAnswer, ...filletedAnswer]
-    }
-
-    // NOTE:ベストアンサーが先頭に来るようにソート
-    useEffect(() => {
-        if (!bestAnswer) {
-            // NOTE:ベストアンサーが存在しない時そのまま表示
-            setDisplayAnswers(answers)
-        } else {
-            const sortedAnswers: Answer[] = sortAnswersByBestAnswer(bestAnswer, answers)
-            setDisplayAnswers(sortedAnswers)
-        }
-    }, [answers, bestAnswer])
 
     return (
         <ContentsLayout Left={<LeftBar />}>
@@ -99,7 +80,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     <SponserBanner sponser={sponser} />
                 </HStack>
                 <AnswerList
-                    answers={displayAnswers}
+                    answers={sortedAnswers}
                     isFetchLoading={isFetchAnswersLoading}
                     questionId={questionId}
                     isMine={isMine}
@@ -108,7 +89,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     onCloseBestAnswerForm={onCloseBestAnswerForm}
                     onClickBestAnswer={onClickBestAnswer}
                     isDeclareLoading={isDeclareLoading}
-                    hasBestAnswer={hasBestAnswer}
+                    bestAnswerId={question?.bestAnswerId}
                 />
             </VStack>
         </ContentsLayout>

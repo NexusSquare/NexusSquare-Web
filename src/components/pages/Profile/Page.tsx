@@ -11,6 +11,7 @@ import { BackButton } from '../../common/buttons/BackButton'
 import { useUser } from '../../../store/atom'
 import { ContentsLayout } from '../../layouts/ContentsLayout'
 import { LeftBar } from '../../layouts/LeftBar'
+import { NoItem } from '../../common/NoItem'
 interface Props {
     userId: string
 }
@@ -19,7 +20,7 @@ export const ProfilePage = ({ userId }: Props): JSX.Element => {
     const { user: currentUser } = useUser()
     const myUserId = currentUser?.userId
 
-    const { data: user, refetch: refetchUser } = useFetchUser(userId)
+    const { data: user, refetch: refetchUser, isError } = useFetchUser(userId)
     const { data: userMeta } = useFetchUserMeta(userId)
     const {
         data: questions = [],
@@ -41,6 +42,7 @@ export const ProfilePage = ({ userId }: Props): JSX.Element => {
     }
     const isFetchLoading: boolean = isFetchQuestionsLoading || isFetchAnswersLoading
 
+    if (isError) return <NoItem title="ユーザー" />
     if (!user) return <Loading />
     return (
         <ContentsLayout Left={<LeftBar />}>

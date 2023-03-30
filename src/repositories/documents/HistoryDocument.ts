@@ -1,6 +1,8 @@
+import { Timestamp } from 'firebase-admin/firestore'
+
 export type HistoryDocument = {
     point: number
-    createdAt: Date
+    createdAt: Timestamp
     type: string
     postId: string
 }

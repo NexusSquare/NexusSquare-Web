@@ -1,4 +1,4 @@
-import { DocumentData, QueryDocumentSnapshot, SnapshotOptions } from 'firebase/firestore'
+import { DocumentData, QueryDocumentSnapshot, SnapshotOptions, Timestamp } from 'firebase/firestore'
 import { User } from '../../entities/user'
 import { UserDocument } from '../documents/UserDocument'
 
@@ -10,8 +10,8 @@ export const userConverter = {
             grade: user.grade,
             nickname: user.nickname,
             imageUrl: user.imageUrl,
-            updatedAt: user.updatedAt,
-            createdAt: user.createdAt,
+            updatedAt: Timestamp.fromDate(user.updatedAt),
+            createdAt: Timestamp.fromDate(user.createdAt),
             isDepartmentAnonymous: user.isDepartmentAnonymous,
             point: user.point,
             totalPoint: user.totalPoint,
@@ -19,16 +19,16 @@ export const userConverter = {
         return document
     },
     fromFirestore: (snapshot: QueryDocumentSnapshot, options: SnapshotOptions): User => {
-        const data = snapshot.data(options)
+        const data = snapshot.data(options) as UserDocument
         return {
             userId: snapshot.id,
-            department: data.department ?? undefined,
-            subject: data.subject ?? undefined,
+            department: data.department,
+            subject: data.subject,
             grade: data.grade,
             nickname: data.nickname,
             imageUrl: data.imageUrl,
-            updatedAt: data.updatedAt,
-            createdAt: data.createdAt,
+            updatedAt: data.updatedAt.toDate(),
+            createdAt: data.createdAt.toDate(),
             isDepartmentAnonymous: data.isDepartmentAnonymous,
             point: data.point,
             totalPoint: data.totalPoint,

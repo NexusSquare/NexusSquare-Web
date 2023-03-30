@@ -29,7 +29,7 @@ export const QuestionConverter = {
         return document
     },
     fromFirestore(snapshot: QueryDocumentSnapshot, options: SnapshotOptions): Question {
-        const data = snapshot.data(options)!
+        const data = snapshot.data(options)! as QuestionDocument
         return {
             questionId: snapshot.id,
             userId: data.userId,
