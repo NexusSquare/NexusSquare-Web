@@ -45,11 +45,11 @@ export const Header = memo(({ children }: Props): JSX.Element => {
     }
 
     const onClickRegister = () => {
-        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
+        router.push(pagesPath.register.step1.$url())
     }
 
     const onClickLogin = () => {
-        router.push(PAGE_LINKS.LOGIN.URL)
+        router.push(pagesPath.login.$url())
     }
 
     const onClickLogOut = () => {
