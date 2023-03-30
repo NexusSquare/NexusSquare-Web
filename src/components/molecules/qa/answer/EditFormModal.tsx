@@ -1,5 +1,4 @@
 import {
-    Box,
     Button,
     FormControl,
     FormErrorMessage,
@@ -11,10 +10,10 @@ import {
     Select,
     VStack,
 } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { DefaultModal } from '../../../common/DefaultModal'
-import { AnswerReq, QuestionReq } from '../../../../api/req'
+import { AnswerReq } from '../../../../api/req'
 import { SecondaryButton } from '../../../common/buttons/SecondaryButton'
 import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
 import { Answer } from '../../../../entities/qa/Answer'

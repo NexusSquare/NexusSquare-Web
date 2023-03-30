@@ -34,7 +34,7 @@ import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
 
 type QACategoriesType = typeof QACategories
-type QACategories = typeof QACategories[keyof QACategoriesType]
+type QACategories = (typeof QACategories)[keyof QACategoriesType]
 
 export const PostPage = (): JSX.Element => {
     const { user: postUser } = useUser()

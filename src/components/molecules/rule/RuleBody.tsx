@@ -1,5 +1,4 @@
 import { VStack, Text, Heading, UnorderedList, ListItem, Link } from '@chakra-ui/react'
-import { Item } from 'framer-motion/types/components/Reorder/Item'
 import React from 'react'
 import { RuleLayout } from './RuleLayout'
 
