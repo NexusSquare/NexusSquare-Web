@@ -7,8 +7,8 @@ import { userFactory } from '../../entities/factories/userFactory'
 import { userMetaRepository } from '../../repositories/user/meta/UserMetaRepositoryImpl'
 
 export const userService = {
-    async findOne(uid: string): Promise<User | undefined> {
-        const user = userRepository.findById(uid)
+    async findOne(uid: string): Promise<User> {
+        const user = await userRepository.findById(uid)
         if (!user) throw new Error(ERROR.NO_SUCH_DOCUMENT)
         return user
     },
