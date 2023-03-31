@@ -19,7 +19,6 @@ export const AdminLoginPage = (): JSX.Element => {
     const { mutate: login, isLoading: loading } = useLogin()
 
     const onSubmitAccount = async (account: UserAccount) => {
-        console.log(account)
         login(account, {
             onSuccess: () => router.push(PAGE_LINKS.QA.URL),
         })

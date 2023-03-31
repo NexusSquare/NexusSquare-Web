@@ -12,7 +12,7 @@ export const useAuthTokenListener = () => {
                 return
             }
             const token = await user.getIdToken()
-            nookies.destroy(null, cookieKey)
+            console.log(token, 'token')
             nookies.set(undefined, cookieKey, token, {})
         })
     }, [])

@@ -5,7 +5,7 @@ import { Answer } from '../../../../entities/qa/Answer'
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../../common/buttons/BackButton'
-import { AnswerList } from '../../../organisms/qa/AnswerList'
+import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useEffect, useState } from 'react'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
@@ -28,7 +28,11 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const errorToast = useErrorToast()
 
     const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
-    const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
+    const {
+        data: answers = [],
+        isLoading: isFetchAnswersLoading,
+        refetch: refetchAnswers,
+    } = useFetchAnswersByQuestionId(questionId)
     const { mutate: declareBestAnswer, isLoading: isDeclareLoading, cacheClearQuestion } = useBestAnswer()
     const {
         isOpen: isOpenBestAnswerForm,
@@ -75,6 +79,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     question={question}
                     isPosted={isPosted}
                     isMine={isMine}
+                    refetchAnswers={refetchAnswers}
                 />
                 <HStack py="6">
                     <SponserBanner sponser={sponser} />
@@ -90,6 +95,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     onClickBestAnswer={onClickBestAnswer}
                     isDeclareLoading={isDeclareLoading}
                     bestAnswerId={question?.bestAnswerId}
+                    refetchAnswers={refetchAnswers}
                 />
             </VStack>
         </ContentsLayout>
