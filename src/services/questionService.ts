@@ -25,7 +25,6 @@ export class QuestionService {
     }
     public async findByTitle(queryQuestion: QuestionQuery): Promise<Question[]> {
         const question = await questionRepository.findByTitle(queryQuestion)
-        console.log(question)
         return question.sort((a, b) => questionSort(a, b, queryQuestion.orderBy, queryQuestion.direction))
     }
     public async findByUserId(userId: string): Promise<Question[]> {
@@ -69,7 +68,6 @@ export class QuestionService {
 
 // HACK:Firebaseの仕様上タイトル検索をしてソートをすることができないため、フロントでソートを行う。
 const questionSort = (q1: Question, q2: Question, orderBy: OrderBy, direction: Direction) => {
-    console.log(q1, q2)
     const toNumDirection = direction === 'desc' ? 1 : -1
     if (q1[orderBy] < q2[orderBy]) return 1 * toNumDirection
     if (q1[orderBy] > q2[orderBy]) return -1 * toNumDirection

@@ -26,6 +26,7 @@ import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
 import { useUser } from '../../../../store/atom'
 import { Question } from '../../../../entities/qa'
 import ChakraNextImage from '../../../common/chakraNextImage'
+import { QuestionStatus } from '../../../../entities/qa/QuestionStatus'
 
 interface Props {
     question: Question
@@ -56,15 +57,8 @@ export const QAPerfectCard = ({
         router.push(PAGE_LINKS.PROFILE._USER_ID(question.userId).URL)
     }
 
-    const QuestionImage = (): JSX.Element => {
-        return question.imageUrl ? (
-            <Box>
-                <ChakraNextImage src={question.imageUrl} alt="質問の画像" width={200} height={200} />
-            </Box>
-        ) : (
-            <></>
-        )
-    }
+    const canPost = question.status === QuestionStatus.OPEN && !isPosted && !isMine
+
     return (
         <VStack
             as="section"
@@ -139,10 +133,10 @@ export const QAPerfectCard = ({
                 </Text>
             </HStack>
             <CardFooter ansNum={question.ansNum} />
-            {isMine || (
+            {canPost && (
                 <>
                     <Divider />
-                    <AnswerButton onClick={onOpenPostForm} disabled={isPosted} />
+                    <AnswerButton onClick={onOpenPostForm} />
                 </>
             )}
         </VStack>
@@ -165,9 +159,8 @@ const CardFooter: FC<CardFooterProps> = ({ ansNum }) => {
 
 interface AnswerButtonProps {
     onClick: () => void
-    disabled: boolean
 }
-const AnswerButton: FC<AnswerButtonProps> = ({ onClick, disabled }) => {
+const AnswerButton: FC<AnswerButtonProps> = ({ onClick }) => {
     return (
         <Button
             bg="white"
@@ -178,7 +171,6 @@ const AnswerButton: FC<AnswerButtonProps> = ({ onClick, disabled }) => {
             alignSelf={'center'}
             onClick={onClick}
             borderRadius="sm"
-            disabled={disabled}
         >
             回答する
         </Button>

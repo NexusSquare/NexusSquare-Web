@@ -23,7 +23,6 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
         <VStack
             as="form"
             onSubmit={handleSubmit((formValue) => {
-                console.log(formValue)
                 updateProfile(formValue)
             })}
             w={'full'}

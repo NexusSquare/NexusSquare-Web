@@ -39,7 +39,6 @@ export const SPONSERS: Sponser[] = [
     },
     {
         name: 'tasuki',
-
         image: {
             banner: '/images/sponser/banners/tasuki.png',
             logo: '/images/sponser/logos/tasuki.png',

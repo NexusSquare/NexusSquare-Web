@@ -18,7 +18,6 @@ import { AnswerRepository } from './AnswerRepository'
 export class AnswerRepositoryImpl implements AnswerRepository {
     private answerCol = collection(db, 'answers').withConverter(answerConverter)
     public findByQuestionId = async (questionId: string): Promise<Answer[]> => {
-        console.log('answer by questionId fetch')
         const answerQuery = query(this.answerCol, where('questionId', '==', questionId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {
@@ -26,7 +25,6 @@ export class AnswerRepositoryImpl implements AnswerRepository {
         })
     }
     public findByUserId = async (userId: string): Promise<Answer[]> => {
-        console.log('answer by userId fetch')
         const answerQuery = query(this.answerCol, where('userId', '==', userId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(answerQuery)
         return snapShot.docs.map((doc) => {

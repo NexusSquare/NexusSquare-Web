@@ -7,7 +7,6 @@ import { convertUndefinedToNull } from '../../../lib/convert/convertUndefinedToN
 
 class UserMetaRepositoryImpl implements UserMetaRepository {
     async findById(uid: string): Promise<UserMeta | undefined> {
-        console.log('userMeta fetch')
         const userRef = doc(db, `user_meta/${uid}`).withConverter(userMetaConverter)
         const res = await getDoc(userRef)
         return res.data()

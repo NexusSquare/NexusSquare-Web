@@ -1,4 +1,5 @@
 import { Box, HStack, Text, VStack, Flex, Wrap, WrapItem, Stack, Spacer, Link } from '@chakra-ui/react'
+import Image from 'next/image'
 
 import { BsTwitter } from 'react-icons/bs'
 import { useSpMediaQuery } from '../../hooks/useSpMediaQuery'
@@ -105,7 +106,7 @@ const FooterLink = ({ href, text }: FooterLinkProps): JSX.Element => {
 
 const NexusSquareLogo = () => {
     const LOGO_URL: string = '/images/logo.jpg'
-    return <ChakraNextImage src={LOGO_URL} alt="NexusSquare" width={180} height={45}></ChakraNextImage>
+    return <Image src={LOGO_URL} alt="NexusSquare" width={180} height={45}></Image>
 }
 
 const TwitterLink = () => {

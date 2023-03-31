@@ -12,7 +12,7 @@ export const BaseLeftBar: Function = ({ children }: Props): JSX.Element => {
         <VStack
             as="nav"
             aria-labelledby="QA navigation"
-            bgColor="#FBF6F0"
+            bgColor="subColor"
             paddingY={6}
             h={LEFT_BAR_HEIGHT}
             w={LEFT_BAR_WIDTH}
