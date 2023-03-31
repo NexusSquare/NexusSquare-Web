@@ -108,7 +108,7 @@ export const Page = (): JSX.Element => {
                     <Text fontSize="lg">
                         メールアドレス:
                         <Link color="accentColor" href="mailto:apu.nexussquare@gmail.com">
-                            apu.nexussquare@gmail.com
+                            nexsqu@gmail.com
                         </Link>
                     </Text>
                 </VStack>
