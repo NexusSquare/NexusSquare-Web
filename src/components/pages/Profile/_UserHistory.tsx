@@ -13,25 +13,28 @@ import {
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
-import { PAGE_LINKS } from '../../../../constants/pageLinks'
-import { useFetchAnswersByUserId } from '../../../../hooks/answer/useFethcAnswer'
-import { useFetchHistories } from '../../../../hooks/history/useFetchHistory'
-import { useFetchQuestionsByUserId } from '../../../../hooks/question/useFetchQuestion'
-import { History } from '../../../../entities/history'
-import { Question } from '../../../../entities/qa'
-import { Answer } from '../../../../entities/qa/Answer'
-import { NoCards } from '../../../common/NoCards'
-import { AnswerList } from './AnswerList'
-import { HistoryList } from './HistoryList'
-import { QuestionList } from './QuestionList'
+import { PAGE_LINKS } from '../../../constants/pageLinks'
+import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
+import { useFetchHistories } from '../../../hooks/history/useFetchHistory'
+import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
+import { History } from '../../../entities/history'
+import { Question } from '../../../entities/qa'
+import { Answer } from '../../../entities/qa/Answer'
+import { NoCards } from '../../common/NoCards'
+import { AnswerList } from './_AnswerList'
+import { HistoryList } from './_HistoryList'
+import { QuestionList } from './_QuestionList'
+import { Refetch } from '../../../hooks/react-query/type'
+import { pagesPath } from '../../../lib/$path'
 
 interface Props {
     userId: string
     answers: Answer[]
     questions: Question[]
     isFetchLoading: boolean
-    refetchQuestions: () => Promise<void>
-    refetchAnswers: () => Promise<void>
+    refetchQuestions: Refetch<Question[]>
+    refetchAnswers: Refetch<Answer[]>
+    defaultTab?: string
 }
 // NOTE　責務を分離させるためにhooksの使用を許可
 export const UserHistory = ({
@@ -41,22 +44,43 @@ export const UserHistory = ({
     isFetchLoading,
     refetchQuestions,
     refetchAnswers,
+    defaultTab,
 }: Props) => {
     const { data: histories = [] } = useFetchHistories(userId)
 
     const router = useRouter()
 
     const onClickCard = (postId: string) => {
-        router.push(PAGE_LINKS.QA._QUESTIONS_ID(postId).URL)
+        router.push(pagesPath.qa._id(postId).$url())
     }
-
+    const onClickTab = (query: string) => {
+        router.push(
+            pagesPath.profile._id(userId).$url({
+                query: {
+                    tab: query,
+                },
+            })
+        )
+    }
+    const convertIndex = (tab?: string) => {
+        switch (tab) {
+            case 'history':
+                return 0
+            case 'question':
+                return 1
+            case 'answer':
+                return 2
+            default:
+                return 1
+        }
+    }
     return (
         <>
-            <Tabs w="100%" isLazy defaultIndex={1}>
+            <Tabs w="100%" isLazy defaultIndex={convertIndex(defaultTab)}>
                 <TabList>
-                    <HistoryTab label="履歴" />
-                    <HistoryTab label="質問" />
-                    <HistoryTab label="回答" />
+                    <HistoryTab label="履歴" onClick={() => onClickTab('history')} />
+                    <HistoryTab label="質問" onClick={() => onClickTab('question')} />
+                    <HistoryTab label="回答" onClick={() => onClickTab('answer')} />
                 </TabList>
                 <TabPanels>
                     <TabPanel padding="0px">
@@ -88,8 +112,9 @@ export const UserHistory = ({
 
 interface HistoryTabProps {
     label: string
+    onClick: () => void
 }
-const HistoryTab = ({ label }: HistoryTabProps) => {
+const HistoryTab = ({ label, onClick }: HistoryTabProps) => {
     return (
         <Tab
             w="full"
@@ -107,6 +132,7 @@ const HistoryTab = ({ label }: HistoryTabProps) => {
             }}
             _active={{ outline: 'none' }}
             _focus={{ outline: 'none' }}
+            onClick={onClick}
         >
             {label}
         </Tab>

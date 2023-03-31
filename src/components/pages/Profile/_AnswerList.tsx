@@ -1,23 +1,24 @@
 import { useDisclosure, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
-import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { useDeleteAnswer } from '../../../../hooks/answer/useDeleteAnswer'
-import { useUpdateAnswer } from '../../../../hooks/answer/useUpdateAnswer'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import { AnswerReq } from '../../../../api/req'
-import { Answer } from '../../../../entities/qa/Answer'
-import { NoCards } from '../../../common/NoCards'
-import { QASkeleton } from '../../../common/QASkeleton'
-import { AnswerCard } from '../../../molecules/profile/AnswerCars'
-import { EditFormModal } from '../../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
+import { ERROR_MESSAGE } from '../../../constants/errors'
+import { useDeleteAnswer } from '../../../hooks/answer/useDeleteAnswer'
+import { useUpdateAnswer } from '../../../hooks/answer/useUpdateAnswer'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { AnswerReq } from '../../../api/req'
+import { Answer } from '../../../entities/qa/Answer'
+import { NoCards } from '../../common/NoCards'
+import { QASkeleton } from '../../common/QASkeleton'
+import { AnswerCard } from '../../molecules/profile/AnswerCars'
+import { EditFormModal } from '../../molecules/qa/answer/EditFormModal'
+import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
+import { Refetch } from '../../../hooks/react-query/type'
 
 interface Props {
     userId: string
     answers: Answer[]
     isLoading: boolean
     onClickCard: (value: string) => void
-    refetchAnswers: () => Promise<void>
+    refetchAnswers: Refetch<Answer[]>
 }
 export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAnswers }: Props) => {
     const errorToast = useErrorToast()
@@ -39,6 +40,7 @@ export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAns
     }
     const onSuccessUpdateAnswer = async () => {
         await refetchAnswers()
+        console.log('refetchAnswers')
         onCloseEditForm()
     }
     const onClickUpdateAnswer = async (answerReq: AnswerReq) => {
