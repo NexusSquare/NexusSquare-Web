@@ -53,8 +53,9 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         router.push(pagesPath.login.$url())
     }
 
-    const onClickLogOut = () => {
-        logOut()
+    const onClickLogOut = async () => {
+        await logOut()
+        router.push(pagesPath.qa.$url())
     }
 
     const onSuccessUpdateNotification = async (questionId: string) => {

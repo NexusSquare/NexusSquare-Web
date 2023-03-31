@@ -7,6 +7,9 @@ import { useFetchUser, useFetchUserMeta } from '../hooks/user/useFetchUser'
 import { useSessionToken } from '../hooks/useSessionToken'
 import { useUser, useUserMeta } from '../store/atom'
 import { User, UserMeta } from '../entities/user'
+import { authRepository } from '../repositories/auth/AuthRepositoryImpl'
+import { userRepository } from '../repositories/user/UserRepositoryImpl'
+import { useAuthTokenListener } from '../hooks/authentication/useAuthTokenListener'
 
 interface AuthProviderProps {
     children: React.ReactNode
@@ -17,6 +20,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { setUser } = useUser()
     const { setUserMeta } = useUserMeta()
     const { setToken, deleteToken } = useSessionToken()
+
+    // NOTE ログインするとcookieにtokenが保存される。
+    useAuthTokenListener()
+
     // NOTE idが存在するときのみfetchされる
     // NOTE メール認証がされている場合、アカウント登録されている確認
     // NOTE プロフィールを編集するとキャッシュクリアされ、グローバルstateも更新される。
@@ -27,18 +34,21 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         onSuccess: (data) => setUserMeta(data),
     })
 
+    const clearUser = () => {
+        setUser(undefined)
+        setUserMeta(undefined)
+        deleteToken()
+        return
+    }
+
     useEffect(() => {
         // NOTE userが存在しない場合、ログインしていないとみなす。
-        if (!currentUser) {
-            setUser(undefined)
-            setUserMeta(undefined)
-            deleteToken()
-            return
-        }
+        if (!currentUser) return clearUser()
 
         // setCurrentUser(user)
+        const userId = currentUser.uid
 
-        setToken(currentUser.uid, currentUser.email!)
+        setToken(userId, currentUser.email!)
 
         // NOTE メール認証・ユーザー登録を確認
         if (!currentUser?.emailVerified) {

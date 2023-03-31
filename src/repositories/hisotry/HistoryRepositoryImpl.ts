@@ -6,7 +6,6 @@ import { historyConverter } from './HistoryConverter'
 
 class HistoryRepositoryImpl implements HistoryRepository {
     public findByUserId = async (userId: string): Promise<History[]> => {
-        console.log('history fethc')
         const historyCol = collection(db, `users/${userId}/histories`).withConverter(historyConverter)
         const historyQuery = query(historyCol, orderBy('createdAt', 'desc'), limit(5))
         const snapShot = await getDocs(historyQuery)

@@ -1,12 +1,12 @@
 import { collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
-import { db } from '../../plugins/firebase/client'
+import { auth, db } from '../../plugins/firebase/client'
 import { User } from '../../entities/user'
 import { UserRepository } from './UserRepository'
 import { userConverter } from './UserConverter'
 
 class UserRepositoryImpl implements UserRepository {
     async findById(uid: string): Promise<User | undefined> {
-        console.log('user fetch')
+        console.count('user fetch')
         const userRef = doc(db, `users/${uid}`).withConverter(userConverter)
         const res = await getDoc(userRef)
         return res.data()
