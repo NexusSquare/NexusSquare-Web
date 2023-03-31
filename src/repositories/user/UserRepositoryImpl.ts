@@ -6,7 +6,6 @@ import { userConverter } from './UserConverter'
 
 class UserRepositoryImpl implements UserRepository {
     async findById(uid: string): Promise<User | undefined> {
-        console.count('user fetch')
         const userRef = doc(db, `users/${uid}`).withConverter(userConverter)
         const res = await getDoc(userRef)
         return res.data()
