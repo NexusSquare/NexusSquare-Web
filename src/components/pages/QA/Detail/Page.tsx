@@ -16,6 +16,7 @@ import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { SPONSERS } from '../../../../entities/Sponser'
 import { SponserBanner } from '../../../common/suponser/Banner'
 import { advertisement } from '../../../../entities/Advertisement'
+import { NoItem } from '../../../common/NoItem'
 
 interface Props {
     questionId: string
@@ -27,7 +28,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
     const errorToast = useErrorToast()
 
-    const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
+    const { data: question, isLoading, refetch: refetchQuestion, isError } = useFetchQuestion(questionId)
     const {
         data: answers = [],
         isLoading: isFetchAnswersLoading,
@@ -39,8 +40,6 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         onOpen: onOpenBestAnswerForm,
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
-
-    console.log('answer', answers)
 
     const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
     const otherAnswers: Answer[] = answers.filter((answer) => answer.answerId !== question?.bestAnswerId)
@@ -67,6 +66,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         )
     }
 
+    if (isError) return <NoItem title="質問" />
     return (
         <ContentsLayout Left={<LeftBar />}>
             <VStack w="full" spacing={2}>
