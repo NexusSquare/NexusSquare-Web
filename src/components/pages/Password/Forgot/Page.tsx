@@ -64,7 +64,7 @@ export const PasswordForgotPage = (): JSX.Element => {
                         placeholder="xx000000@xxx.aichi-pu.ac.jp"
                         type="email"
                     />
-                    <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+                    {/* <FormErrorMessage>{errors.email}</FormErrorMessage> */}
                     <FormHelperText>愛知県立県大学のメールアドレスを入力</FormHelperText>
                 </FormControl>
                 <PrimaryButton

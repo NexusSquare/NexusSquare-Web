@@ -5,6 +5,9 @@ import { ReactNode } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import ChakraNextImage from '../../common/chakraNextImage'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
+import { SPONSERS } from '../../../entities/Sponser'
+import { SponserBanner } from '../../common/suponser/Banner'
+import { advertisement } from '../../../entities/Advertisement'
 
 interface Props {
     children?: ReactNode
@@ -14,41 +17,19 @@ interface NavButtonProps {
     altText: string
     url: string
 }
+const sponser = advertisement.getOne()
 
 const QACardWindow: Function = ({ children }: Props): JSX.Element => {
-    const CATEGORY_IMAGE_PATH: string = '/images/category.png'
-    const ALL_Q_IMAGE_PATH: string = '/images/all.png'
-    const RANKING_IMAGE_PATH: string = '/images/crown.png'
     const router = useRouter()
     const onClickPostButton = () => {
         router.push(PAGE_LINKS.QA.POST.URL)
     }
-    const NavButton: React.VFC<NavButtonProps> = (props) => (
-        <Link href={props.url} passHref>
-            <Box as="a" href={props.url} bgColor="white" borderRadius="50%" h="42px" w="42px" padding="10px">
-                <ChakraNextImage
-                    src={props.imageSrc}
-                    alt={props.altText}
-                    width={30}
-                    height={30}
-                    minW="30px"
-                    minH="30px"
-                />
-            </Box>
-        </Link>
-    )
+
     return (
         <VStack w="100%" spacing={0}>
             {children}
-            <HStack w="100%" h="250px" margin="10px 20px" minW={{ base: '210px', sm: '420px' }}>
-                <Spacer />
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200">
-                    広告枠3
-                </Box>
-                <Box h="210px" w="210px" padding="10px 20px" bgColor="gray.200" display={{ base: 'none', sm: 'flex' }}>
-                    広告枠4
-                </Box>
-                <Spacer />
+            <HStack justifyContent={'center'} py="12">
+                <SponserBanner sponser={sponser} />
             </HStack>
 
             <HStack

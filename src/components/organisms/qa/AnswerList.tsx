@@ -28,7 +28,7 @@ interface Props {
     onCloseBestAnswerForm: () => void
     onClickBestAnswer: (value: string) => void
     isDeclareLoading: boolean
-    hasBestAnswer: boolean
+    bestAnswerId?: string
 }
 
 export const AnswerList = ({
@@ -41,7 +41,7 @@ export const AnswerList = ({
     onCloseBestAnswerForm,
     onClickBestAnswer,
     isDeclareLoading,
-    hasBestAnswer,
+    bestAnswerId,
 }: Props) => {
     const userId = useUser().user?.userId
     const errorToast = useErrorToast()
@@ -136,7 +136,7 @@ export const AnswerList = ({
                                         onClickDetail={onClickDetail}
                                         onOpenBestAnswerModal={onOpenBestAnswerModal}
                                         isMyQuestion={isMine}
-                                        hasBestAnswer={hasBestAnswer}
+                                        bestAnswerId={bestAnswerId}
                                     />
                                 )
                             })}

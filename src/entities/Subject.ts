@@ -47,3 +47,28 @@ export const Nursere = {
     wide: '広域看護学',
     health: 'ウィメンズヘルス・助産学',
 } as const
+
+const departmentToSubject = (department: string): string[] => {
+    switch (department) {
+        case '外国語学部':
+            return Object.values(Foreign)
+        case '日本文化学部':
+            return Object.values(Japan)
+        case '教育福祉学部':
+            return Object.values(Teach)
+        case '看護学部':
+            return Object.values(Nurse)
+        case '情報科学部':
+            return Object.values(Info)
+        case '国際文化研究科':
+            return Object.values(Globalre)
+        case '人間発達学研究科':
+            return Object.values(Humanre)
+        case '看護学研究科':
+            return Object.values(Nursere)
+        case '情報科学絵研究科':
+            return Object.values(Infore)
+        default:
+            return []
+    }
+}

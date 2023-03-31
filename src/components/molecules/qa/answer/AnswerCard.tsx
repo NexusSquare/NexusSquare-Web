@@ -1,7 +1,6 @@
 import { DeleteIcon, EditIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import {
     Avatar,
-    Box,
     Button,
     Divider,
     HStack,
@@ -20,7 +19,6 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
 import { Answer } from '../../../../entities/qa/Answer'
 import { BiMedal } from 'react-icons/bi'
-import { BsChatText } from 'react-icons/bs'
 
 interface Props {
     userId: string
@@ -31,7 +29,7 @@ interface Props {
     onClickDetail: (value: Answer) => void
     onOpenBestAnswerModal: (value: Answer) => void
     isMyQuestion: boolean
-    hasBestAnswer: boolean
+    bestAnswerId?: string
 }
 
 const AnswerCard = ({
@@ -43,7 +41,7 @@ const AnswerCard = ({
     onOpenBestAnswerModal,
     onOpenReportForm,
     isMyQuestion,
-    hasBestAnswer,
+    bestAnswerId,
 }: Props): JSX.Element => {
     const router = useRouter()
     const date = convertDateToString(answer.createdAt)
@@ -116,7 +114,7 @@ const AnswerCard = ({
             <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
                 {answer.content}
             </Text>
-            {isMyQuestion && !hasBestAnswer && (
+            {isMyQuestion && !bestAnswerId && (
                 <>
                     <Divider />
                     <Button
@@ -129,11 +127,11 @@ const AnswerCard = ({
                         borderWidth={1}
                         onClick={() => onOpenBestAnswerModal(answer)}
                     >
-                        ベストアンサーにする　
+                        ベストアンサーにする
                     </Button>
                 </>
             )}
-            {answer.isBest && (
+            {answer.answerId === bestAnswerId && (
                 <HStack alignItems={'center'} alignSelf={'end'} color={'red.400'}>
                     <Text fontSize={'sm'} fontWeight={'bold'}>
                         ベストアンサー

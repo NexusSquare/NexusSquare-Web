@@ -27,72 +27,58 @@ const QACard = ({ question }: Props) => {
     }
     return (
         <Link href={'/qa/' + question.questionId} passHref>
-            <Box as="a">
-                <VStack
-                    as="section"
-                    w="100%"
-                    padding="10px 20px"
-                    border="1px"
-                    borderColor="gray.300"
-                    _hover={{ opacity: '50%' }}
-                    bgColor={'white'}
-                    spacing={2}
-                    alignItems={'start'}
-                >
-                    <HStack>
-                        <Avatar
-                            width={8}
-                            height={8}
-                            src={question.postUser.imageUrl}
-                            onClick={onClickUserInfo}
-                            _hover={{ cursor: 'pointer' }}
-                        />
-                        <VStack
-                            spacing={0}
-                            alignItems={'start'}
-                            onClick={onClickUserInfo}
-                            _hover={{ cursor: 'pointer' }}
-                        >
-                            <HStack>
-                                <Text color="gray.400" isTruncated>
-                                    {question.postUser.nickname}
-                                </Text>
-                                {!question.postUser.isDepartmentAnonymous && (
-                                    <Text color="gray.400">{question.postUser.subject}</Text>
-                                )}
-                            </HStack>
-
-                            <Text color="gray.400" fontSize={'sm'}>
-                                {date}
+            <VStack
+                as="section"
+                w="100%"
+                padding="10px 20px"
+                border="1px"
+                borderColor="gray.300"
+                _hover={{ opacity: '50%' }}
+                bgColor={'white'}
+                spacing={2}
+                alignItems={'start'}
+            >
+                <HStack>
+                    <Avatar
+                        width={8}
+                        height={8}
+                        src={question.postUser.imageUrl}
+                        onClick={onClickUserInfo}
+                        _hover={{ cursor: 'pointer' }}
+                    />
+                    <VStack spacing={0} alignItems={'start'} onClick={onClickUserInfo} _hover={{ cursor: 'pointer' }}>
+                        <HStack>
+                            <Text color="gray.400" isTruncated>
+                                {question.postUser.nickname}
                             </Text>
-                        </VStack>
-                    </HStack>
-                    <Text as="h3" fontSize="xl" fontWeight="bold" noOfLines={1}>
-                        {question.title}
-                    </Text>
-                    <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
-                        {question.content}
-                    </Text>
-                    <HStack>
-                        <AiOutlineTag color={'#a0acc0'} />
-                        <Text color="gray.400" fontSize={'sm'}>
-                            {categoryText}
-                        </Text>
-                    </HStack>
+                            {!question.postUser.isDepartmentAnonymous && (
+                                <Text color="gray.400">{question.postUser.subject}</Text>
+                            )}
+                        </HStack>
 
-                    <HStack w="full" justifyContent={'end'}>
-                        <ChakraNextImage
-                            src={QA_IMAGE_PATH}
-                            alt="回答数"
-                            width={25}
-                            height={25}
-                            minW="25px"
-                            minH="25px"
-                        />
-                        <Text>{question.ansNum}</Text>
-                    </HStack>
-                </VStack>
-            </Box>
+                        <Text color="gray.400" fontSize={'sm'}>
+                            {date}
+                        </Text>
+                    </VStack>
+                </HStack>
+                <Text as="h3" fontSize="xl" fontWeight="bold" noOfLines={1}>
+                    {question.title}
+                </Text>
+                <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
+                    {question.content}
+                </Text>
+                <HStack>
+                    <AiOutlineTag color={'#a0acc0'} />
+                    <Text color="gray.400" fontSize={'sm'}>
+                        {categoryText}
+                    </Text>
+                </HStack>
+
+                <HStack w="full" justifyContent={'end'}>
+                    <ChakraNextImage src={QA_IMAGE_PATH} alt="回答数" width={25} height={25} minW="25px" minH="25px" />
+                    <Text>{question.ansNum}</Text>
+                </HStack>
+            </VStack>
         </Link>
     )
 }

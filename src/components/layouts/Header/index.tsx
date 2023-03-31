@@ -23,14 +23,16 @@ import { NotificationButton } from './notifications/_NotificationButton'
 import { AvatarPopover } from './_AvatarPopover'
 import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
-
+import { pagesPath } from '../../../lib/$path'
+import Image from 'next/image'
 interface Props {
     children?: ReactNode
 }
+const LOGO_URL: string = '/images/logo.jpg'
 
 export const Header = memo(({ children }: Props): JSX.Element => {
-    const LOGO_URL: string = '/images/logo.jpg'
     const { user } = useUser()
+
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
     const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(user?.userId)
@@ -40,15 +42,15 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onClickProfile = () => {
         if (!user?.userId) return
-        router.push(PAGE_LINKS.PROFILE._USER_ID(user.userId).URL)
+        router.push(pagesPath.profile._id(user.userId).$url())
     }
 
     const onClickRegister = () => {
-        router.push(PAGE_LINKS.REGISTER.STEP1.URL)
+        router.push(pagesPath.register.step1.$url())
     }
 
     const onClickLogin = () => {
-        router.push(PAGE_LINKS.LOGIN.URL)
+        router.push(pagesPath.login.$url())
     }
 
     const onClickLogOut = () => {
@@ -108,14 +110,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         marginX={{ base: '0px', xs: '10px' }}
                     >
                         <Link href="/" passHref>
-                            <Box as="a" href="/" display="flex" flexDirection="row" alignItems="center">
-                                <ChakraNextImage
-                                    src={LOGO_URL}
-                                    alt="NexusSquare"
-                                    width={180}
-                                    height={45}
-                                ></ChakraNextImage>
-                            </Box>
+                            <Image src={LOGO_URL} alt="NexusSquare" width={180} height={45}></Image>
                         </Link>
                     </Box>
                     <HStack
@@ -126,9 +121,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         display={{ base: 'none', md: 'flex' }}
                         paddingTop={1}
                     >
-                        <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
-                        <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
-                        <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+                        <NavigationLinkList />
                     </HStack>
                 </HStack>
                 <LoginOrProfile />
@@ -142,10 +135,18 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                 aria-labelledby="jump to other functions - mini version"
                 display={{ base: 'flex', md: 'none' }}
             >
-                <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
-                <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
-                <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+                <NavigationLinkList />
             </HStack>
         </VStack>
     )
 })
+
+const NavigationLinkList = () => {
+    return (
+        <>
+            <NavigationLink url="/qa" funcName="学生生活Q&A" isComp={true} />
+            <NavigationLink url="/qa/post" funcName="質問投稿" isComp={true} />
+            <NavigationLink url="#" funcName="授業口コミ" isComp={false} />
+        </>
+    )
+}

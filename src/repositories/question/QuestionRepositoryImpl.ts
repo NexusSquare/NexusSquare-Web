@@ -19,6 +19,7 @@ import { Question } from '../../entities/qa/Question'
 import { QuestionRepository } from './QuestionRepository'
 import { QuestionConverter } from './QuestionConverter'
 import { QuestionQueryBuilder } from './QueryBuilder'
+import { convertUndefinedToNull } from '../../lib/convert/convertUndefinedToNull'
 
 class QuestionRepositoryImpl implements QuestionRepository {
     private questionCol = collection(db, 'questions').withConverter(QuestionConverter)
@@ -60,7 +61,7 @@ class QuestionRepositoryImpl implements QuestionRepository {
     }
     public async update(question: Partial<Question>, questionId: string): Promise<void> {
         const questionDoc = doc(db, 'questions', questionId)
-        updateDoc(questionDoc, question)
+        updateDoc(questionDoc, convertUndefinedToNull(question))
     }
     public async delete(questionId: string): Promise<void> {
         const questionDoc = doc(db, 'questions', questionId)

@@ -4,7 +4,6 @@ import { Answer } from '../entities/qa/Answer'
 import { AnswerReq } from '../api/req/AnswerReq'
 import { User } from '../entities/user'
 import { ERROR } from '../constants/errors'
-
 import { answerFactory } from '../entities/factories/answerFactory'
 import { answerRepository } from '../repositories/answer/AnswerRepositoryImpl'
 

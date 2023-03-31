@@ -4,7 +4,7 @@ interface Props {
     buttonText: string
     onClick?: MouseEventHandler<HTMLButtonElement>
     isLoading?: boolean
-    type: 'submit' | 'button'
+    type?: 'submit' | 'button'
     width?: string | number
     disabled?: boolean
     size?: 'xs' | 'sm' | 'md' | 'lg'
@@ -14,7 +14,7 @@ export const PrimaryButton = ({
     buttonText,
     onClick,
     isLoading,
-    type,
+    type = 'button',
     width,
     disabled,
     size,
