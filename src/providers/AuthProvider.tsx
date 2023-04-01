@@ -24,17 +24,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const { setUserMeta } = useUserMeta()
     const { setToken, deleteToken } = useSessionToken()
 
-    // NOTE ログインするとcookieにtokenが保存される。
-    useAuthTokenListener()
-
-    // NOTE idが存在するときのみfetchされる
-    // NOTE メール認証がされている場合、アカウント登録されている確認
-    // NOTE プロフィールを編集するとキャッシュクリアされ、グローバルstateも更新される。
-    const { data: user, isError: isUserError } = useFetchUser(currentUser?.uid)
-    const { data: userMeta, isError: isUserMetaError } = useFetchUserMeta(currentUser?.uid)
-
-    const isExistUser = !isUserError && !isUserMetaError
-
     const clearUser = () => {
         setUser(undefined)
         setUserMeta(undefined)
@@ -49,26 +38,34 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
 
     useEffect(() => {
-        // NOTE userが存在しない場合、ログインしていないとみなす。
-        if (currentUser === undefined) return
-        if (currentUser === null) return clearUser()
+        ;(async () => {
+            console.log('currentUser', currentUser)
+            // NOTE userが存在しない場合、ログインしていないとみなす。
+            if (currentUser === undefined) return
 
-        // NOTE メール認証・ユーザー登録を確認
-        if (!currentUser?.emailVerified) {
-            router.push(pagesPath.register.step2.$url())
-            return
-        }
+            if (currentUser === null) {
+                clearUser()
+                return
+            }
 
-        // NOTE ユーザー登録がされていない場合、登録画面へ遷移
-        if (!isExistUser) {
-            router.push(pagesPath.register.step3.$url())
-            return
-        }
+            // NOTE メール認証・ユーザー登録を確認
+            if (!currentUser.emailVerified) {
+                router.push(pagesPath.register.step2.$url())
+                return
+            }
 
-        if (user && userMeta) {
+            const user = await userRepository.findById(currentUser.uid)
+            const userMeta = await userMetaRepository.findById(currentUser.uid)
+
+            // NOTE ユーザー登録がされていない場合、登録画面へ遷移
+            if (user === undefined || userMeta === undefined) {
+                router.push(pagesPath.register.step3.$url())
+                return
+            }
+
             initUser(user, userMeta)
-        }
-    }, [currentUser, user, userMeta, isExistUser])
+        })()
+    }, [currentUser])
 
     return <>{children}</>
 }

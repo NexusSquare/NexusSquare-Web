@@ -19,45 +19,42 @@ import Department from '../../../../entities/Department'
 import { gradeList } from '../../../../entities/Grade'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { usePostUser } from '../../../../hooks/user'
 import { UserReq } from '../../../../api/req/UserReq'
 import { FormLayout } from '../../../molecules/common/FormLayout'
-import { RuleModal } from '../../../molecules/sign/RuleModal'
+import { RuleModal } from './_RuleModal'
 import { useState } from 'react'
+import { pagesPath } from '../../../../lib/$path'
+import { UserParams } from '../../../../entities/factories/userFactory'
+import { User, UserMeta } from '../../../../entities/user'
+import { useUser, useUserMeta } from '../../../../store/atom'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
     const { register, handleSubmit, errors, selectSubjects } = useCreateUserForm()
-    const [formValue, setFormValue] = useState<UserReq>()
-    const [userMutate, userMetaMutate] = usePostUser()
-    const { mutate: postUser, isLoading: postUserLoading } = userMutate
-    const { mutate: postUserMeta, isLoading: postUserMetaLoading } = userMetaMutate
-    const loading: boolean = postUserLoading || postUserMetaLoading
+    const [formValue, setFormValue] = useState<UserParams>()
+    const { mutate: postUser, isLoading } = usePostUser()
+    const { setUser } = useUser()
+    const { setUserMeta } = useUserMeta()
     const errorToast = useErrorToast()
     const { isOpen: isOpenRuleModal, onOpen: onOpenRuleModal, onClose: onCloseRuleModal } = useDisclosure()
 
-    const onSubmit = handleSubmit((value: UserReq) => {
+    const onSubmit = handleSubmit((value: UserParams) => {
         setFormValue(value)
         onOpenRuleModal()
     })
 
-    const onSuccessPostUser = async (formValue: UserReq) => {
-        postUserMeta(formValue, {
-            onSuccess: () => {
-                router.push(PAGE_LINKS.QA.URL)
-            },
-            onError: () => {
-                errorToast(ERROR_MESSAGE.SERVER)
-            },
-        })
+    const onSuccessPostUser = async ({ user, userMeta }: { user: User; userMeta: UserMeta }) => {
+        setUser(user)
+        setUserMeta(userMeta)
+        router.push(pagesPath.qa.$url())
     }
 
-    const onClickAgreeRule = async (formValue?: UserReq) => {
+    const onClickAgreeRule = async (formValue?: UserParams) => {
         if (!formValue) return
         postUser(formValue, {
-            onSuccess: () => {
-                onSuccessPostUser(formValue)
+            onSuccess: (data) => {
+                onSuccessPostUser(data)
             },
             onError: () => {
                 errorToast(ERROR_MESSAGE.SERVER)
@@ -173,15 +170,15 @@ export const Page = (): JSX.Element => {
                         buttonText="アカウント登録"
                         type="submit"
                         width={48}
-                        isLoading={loading}
-                        disabled={loading}
+                        isLoading={isLoading}
+                        disabled={isLoading}
                     />
                 </VStack>
             </FormLayout>
             <RuleModal
                 isOpen={isOpenRuleModal}
                 onClose={onCloseRuleModal}
-                isLoading={loading}
+                isLoading={isLoading}
                 onClick={() => {
                     onClickAgreeRule(formValue)
                 }}

@@ -9,7 +9,7 @@ class NotificationRepositoryImpl implements NotificationRepository {
         const notificationCol = collection(db, `users/${userId}/notifications`).withConverter(notificationCOnverter)
         const notificationQuery = query(notificationCol, where('isRead', '==', false), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(notificationQuery)
-        console.log(snapShot.docs.map((doc) => doc.data()))
+
         return snapShot.docs.map((doc) => doc.data())
     }
     // NOTE 既読に更新

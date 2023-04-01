@@ -12,7 +12,7 @@ class UserRepositoryImpl implements UserRepository {
     }
     async save(user: User): Promise<void> {
         const userRef = doc(db, 'users', user.userId).withConverter(userConverter)
-        return await setDoc(userRef, user)
+        await setDoc(userRef, user)
     }
 
     async update(user: Partial<User>, uid: string): Promise<void> {

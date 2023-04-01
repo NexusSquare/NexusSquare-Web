@@ -1,18 +1,12 @@
 import { useAuthSignInWithEmailAndPassword, useAuthSignOut } from '@react-query-firebase/auth'
-import { UserCredential } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { MutateOptions } from 'react-query'
-import { PAGE_LINKS } from '../../constants/pageLinks'
-import { EMAIL, USER_ID } from '../../constants/token'
 import { auth } from '../../plugins/firebase/client'
-import { userMetaService } from '../../services/user/userMetaService'
-import { userService } from '../../services/user/userService'
+
 import { useUser, useUserMeta } from '../../store/atom'
 import { User, UserAccount, UserMeta } from '../../entities/user'
 import { useAlertLoginError } from '../errors/useAlertLoginError'
 import { useSessionToken } from '../useSessionToken'
-import { pagesPath } from '../../lib/$path'
 
 export const useLogin = () => {
     const router = useRouter()
@@ -27,7 +21,7 @@ export const useLogin = () => {
                 password,
             },
             {
-                onSuccess: () => router.push(pagesPath.qa.$url()),
+                onSuccess: () => router.back(),
                 onError: async (error) => {
                     alertLoginError(error.code)
                 },

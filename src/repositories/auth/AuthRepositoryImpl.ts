@@ -10,6 +10,10 @@ class AuthRepositoryImpl implements AuthRepository {
         const uid = auth.currentUser?.uid
         return uid
     }
+    public getMyEmail = (): string | undefined | null => {
+        const email = auth.currentUser?.email
+        return email
+    }
 }
 
 export const authRepository = new AuthRepositoryImpl()

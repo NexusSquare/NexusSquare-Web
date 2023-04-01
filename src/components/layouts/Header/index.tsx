@@ -18,7 +18,6 @@ import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
 import { pagesPath } from '../../../lib/$path'
 import Image from 'next/image'
-import { useFetchMyUser, useFetchMyUserMeta } from '../../../hooks/user/useFetchUser'
 import { useUser, useUserMeta } from '../../../store/atom'
 interface Props {
     children?: ReactNode
