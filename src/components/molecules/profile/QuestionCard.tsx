@@ -107,6 +107,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                 noOfLines={3}
                 onClick={() => onClickCard(question.questionId)}
                 _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
+                whiteSpace={'pre-line'}
             >
                 {question.content}
             </Text>

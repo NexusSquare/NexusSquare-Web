@@ -23,7 +23,6 @@ import { BsChatText } from 'react-icons/bs'
 import { HiDotsHorizontal } from 'react-icons/hi'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
-import { useUser } from '../../../../store/atom'
 import { Question } from '../../../../entities/qa'
 import ChakraNextImage from '../../../common/chakraNextImage'
 import { QuestionStatus } from '../../../../entities/qa/QuestionStatus'
@@ -123,7 +122,7 @@ export const QAPerfectCard = ({
             <Text as="h3" fontSize="xl" fontWeight="bold">
                 {question.title}
             </Text>
-            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
+            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" whiteSpace={'pre-line'}>
                 {question.content}
             </Text>
             <HStack>

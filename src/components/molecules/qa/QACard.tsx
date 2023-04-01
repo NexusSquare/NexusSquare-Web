@@ -17,7 +17,7 @@ const QACard = ({ question }: Props) => {
     const router = useRouter()
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertDateToString(question.createdAt)
-    const content = replaceLineFeed(question.content)
+
     const categoryText: string = question.categories[1]
         ? `${question.categories[0]}、${question.categories[1]}`
         : question.categories[0]
@@ -64,7 +64,14 @@ const QACard = ({ question }: Props) => {
                 <Text as="h3" fontSize="xl" fontWeight="bold" noOfLines={1}>
                     {question.title}
                 </Text>
-                <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" noOfLines={3}>
+                <Text
+                    width="100%"
+                    maxWidth="100%"
+                    minWidth="100%"
+                    overflowWrap="break-word"
+                    noOfLines={3}
+                    whiteSpace={'pre-line'}
+                >
                     {question.content}
                 </Text>
                 <HStack>
