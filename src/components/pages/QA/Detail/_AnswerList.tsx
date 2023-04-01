@@ -1,22 +1,23 @@
 import { Box, VStack, Text, useDisclosure } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { ERROR_MESSAGE } from '../../../constants/errors'
-import { USER_ID } from '../../../constants/token'
-import { useDeleteAnswer } from '../../../hooks/answer/useDeleteAnswer'
-import { useUpdateAnswer } from '../../../hooks/answer/useUpdateAnswer'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
-import { useBestAnswer } from '../../../hooks/question/useUpdateQuestion'
-import { useReport } from '../../../hooks/report/useReport'
-import { useUser } from '../../../store/atom'
-import { AnswerReq, ReportReq } from '../../../api/req'
-import { Answer } from '../../../entities/qa/Answer'
-import { NoCards } from '../../common/NoCards'
-import { QASkeleton } from '../../common/QASkeleton'
-import AnswerCard from '../../molecules/qa/answer/AnswerCard'
-import { BestAnswerModal } from '../../molecules/qa/answer/BestAnswerModal'
-import { EditFormModal } from '../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
-import { ReportFormModal } from '../../molecules/qa/ReportFromModal'
+import { ERROR_MESSAGE } from '../../../../constants/errors'
+import { USER_ID } from '../../../../constants/token'
+import { useDeleteAnswer } from '../../../../hooks/answer/useDeleteAnswer'
+import { useUpdateAnswer } from '../../../../hooks/answer/useUpdateAnswer'
+import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
+import { useReport } from '../../../../hooks/report/useReport'
+import { useUser } from '../../../../store/atom'
+import { AnswerReq, ReportReq } from '../../../../api/req'
+import { Answer } from '../../../../entities/qa/Answer'
+import { NoCards } from '../../../common/NoCards'
+import { QASkeleton } from '../../../common/QASkeleton'
+import AnswerCard from './_AnswerCard'
+import { BestAnswerModal } from '../../../molecules/qa/answer/BestAnswerModal'
+import { EditFormModal } from '../../../molecules/qa/answer/EditFormModal'
+import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
+import { ReportFormModal } from '../../../molecules/qa/ReportFromModal'
+import { Refetch } from '../../../../hooks/react-query/type'
 
 interface Props {
     questionId: string
@@ -29,6 +30,7 @@ interface Props {
     onClickBestAnswer: (value: string) => void
     isDeclareLoading: boolean
     bestAnswerId?: string
+    refetchAnswers: Refetch<Answer[]>
 }
 
 export const AnswerList = ({
@@ -42,6 +44,7 @@ export const AnswerList = ({
     onClickBestAnswer,
     isDeclareLoading,
     bestAnswerId,
+    refetchAnswers,
 }: Props) => {
     const userId = useUser().user?.userId
     const errorToast = useErrorToast()
@@ -68,6 +71,7 @@ export const AnswerList = ({
     }
     const onSuccessUpdateAnswer = async () => {
         cacheClearForUpdate(userId!, questionId)
+        refetchAnswers()
         onCloseEditForm()
     }
     const onClickUpdateAnswer = async (answerReq: AnswerReq) => {
@@ -84,6 +88,7 @@ export const AnswerList = ({
     }
     const onSuccessDeleteAnswer = async () => {
         cacheClearForDelete(userId!, questionId)
+        refetchAnswers()
         onCloseDeleteForm()
     }
     const onClickDeleteAnswer = async () => {

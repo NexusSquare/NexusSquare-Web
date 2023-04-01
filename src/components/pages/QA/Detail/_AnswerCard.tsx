@@ -111,7 +111,7 @@ const AnswerCard = ({
                 </Menu>
             </HStack>
 
-            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word">
+            <Text width="100%" maxWidth="100%" minWidth="100%" overflowWrap="break-word" whiteSpace={'pre-line'}>
                 {answer.content}
             </Text>
             {isMyQuestion && !bestAnswerId && (

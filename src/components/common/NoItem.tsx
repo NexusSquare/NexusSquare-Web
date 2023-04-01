@@ -1,13 +1,16 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { FC } from 'react'
+import { pagesPath } from '../../lib/$path'
 import { PrimaryButton } from './buttons/PrimaryButton'
 
 interface Props {
     title: string
 }
 export const NoItem: FC<Props> = ({ title }) => {
+    const router = useRouter()
     const onClick = () => {
-        window.location.href = '/'
+        router.push(pagesPath.$url())
     }
     return (
         <VStack justifyContent={'center'} alignItems={'center'} h={'100vh'}>

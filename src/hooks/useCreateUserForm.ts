@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Foreign, Globalre, Humanre, Info, Infore, Japan, Nurse, Nursere, Teach } from '../entities/Subject'
-import { UserReq } from '../api/req/UserReq'
+
+import { UserParams } from '../entities/factories/userFactory'
 
 // NOTE optionsの型推論が効かない。UseFormProps
 export const useCreateUserForm = (options?: any) => {
@@ -11,7 +12,7 @@ export const useCreateUserForm = (options?: any) => {
         resetField,
         watch,
         formState: { errors, isSubmitting },
-    } = useForm<UserReq>(options)
+    } = useForm<UserParams>(options)
 
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
     const watchDepartment = watch('department')

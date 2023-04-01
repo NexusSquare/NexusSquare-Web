@@ -1,12 +1,12 @@
 import React, { ReactNode } from 'react'
 import { Box, Heading, HStack, VStack, Text, useBreakpointValue, Stack, Spacer } from '@chakra-ui/react'
-import ChakraNextImage from '../../common/chakraNextImage'
-import { RiQuestionAnswerLine } from 'react-icons/ri'
+import Image from 'next/image'
 interface FeatureContentProps {
     heading: string
     text: string
     isReversed: boolean
     children: ReactNode
+    imageSrc: string
 }
 
 export const FeatureContent = (props: FeatureContentProps) => {
@@ -14,9 +14,7 @@ export const FeatureContent = (props: FeatureContentProps) => {
     return (
         <Stack direction={{ base: 'column', md: direction }} spacing="30px">
             <VStack w={{ base: '100%', md: '50%' }} justifyContent="center">
-                <Box w="220px" h="380px" bgColor="gray.200">
-                    サービスの画像が入ります
-                </Box>
+                <Image width={220} height={380} src={props.imageSrc} alt={'サービスの画像'} />
             </VStack>
             <VStack w={{ base: '100%', md: '50%' }} spacing="30px" alignSelf="center">
                 <Heading w="full" borderLeft={'5px solid'} borderColor="mainColor" padding={'10px 12px'} fontSize="xl">

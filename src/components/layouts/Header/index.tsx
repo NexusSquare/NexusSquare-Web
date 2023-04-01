@@ -5,19 +5,12 @@ import Link from 'next/link'
 import { FC, memo, useEffect, useState } from 'react'
 import { ReactNode } from 'react'
 import { useRouter } from 'next/router'
-import { FiEdit, FiLogIn, FiUserPlus } from 'react-icons/fi'
-import { VscSignOut } from 'react-icons/vsc'
-import ChakraNextImage from '../../common/chakraNextImage'
-import { Notification } from '../../../entities/notification/Notification'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogOut } from '../../../hooks/authentication'
-import { useUser, useUserMeta } from '../../../store/atom'
 import { useFetchNotifications } from '../../../hooks/notification/useFetchNotification'
-import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { useUpdateNotification } from '../../../hooks/notification/useUpdateNotification'
 import { useErrorToast } from '../../../hooks/errors/useErrorToast'
 import { ERROR_MESSAGE } from '../../../constants/errors'
-import { createNotificationMessage } from '../../../constants/notification'
 import { HEADER_HEIGHT } from '../constants'
 import { NotificationButton } from './notifications/_NotificationButton'
 import { AvatarPopover } from './_AvatarPopover'
@@ -25,6 +18,7 @@ import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
 import { pagesPath } from '../../../lib/$path'
 import Image from 'next/image'
+import { useUser, useUserMeta } from '../../../store/atom'
 interface Props {
     children?: ReactNode
 }
@@ -32,7 +26,6 @@ const LOGO_URL: string = '/images/logo.jpg'
 
 export const Header = memo(({ children }: Props): JSX.Element => {
     const { user } = useUser()
-
     const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
     const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(user?.userId)
@@ -42,7 +35,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
 
     const onClickProfile = () => {
         if (!user?.userId) return
-        router.push(pagesPath.profile._id(user.userId).$url())
+        router.push(pagesPath.profile._id(user.userId).$url({ query: { tab: undefined } }))
     }
 
     const onClickRegister = () => {
@@ -53,8 +46,9 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         router.push(pagesPath.login.$url())
     }
 
-    const onClickLogOut = () => {
-        logOut()
+    const onClickLogOut = async () => {
+        await logOut()
+        router.push(pagesPath.qa.$url())
     }
 
     const onSuccessUpdateNotification = async (questionId: string) => {

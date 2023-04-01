@@ -16,21 +16,32 @@ import { QASkeleton } from '../../../common/QASkeleton'
 import { PostFormModal } from '../../../molecules/qa/answer/PostFormModal'
 import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
 import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
-import { QAPerfectCard } from '../../../molecules/qa/question/QAPerfectCard'
+import { QAPerfectCard } from './_QAPerfectCard'
 import { ReportFormModal } from '../../../molecules/qa/ReportFromModal'
 import { useUser } from '../../../../store/atom'
+import { Answer } from '../../../../entities/qa/Answer'
 
 interface Props {
     questionId: string
     isLoading: boolean
     question?: Question
     refetch: Refetch<Question>
+    refetchAnswers: Refetch<Answer[]>
     postUser?: User
     isPosted: boolean
     isMine: boolean
 }
 
-export const QuestionDetail = ({ questionId, isLoading, question, refetch, postUser, isPosted, isMine }: Props) => {
+export const QuestionDetail = ({
+    questionId,
+    isLoading,
+    question,
+    refetch,
+    postUser,
+    isPosted,
+    isMine,
+    refetchAnswers,
+}: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
     const { user } = useUser()
@@ -94,7 +105,7 @@ export const QuestionDetail = ({ questionId, isLoading, question, refetch, postU
         postAnswer(
             { answerReq, postUser },
             {
-                onSuccess: () => onSuccessPostAnswer(),
+                onSuccess: () => refetchAnswers(),
                 onError: () => errorToast(ERROR_MESSAGE.SERVER),
                 onSettled: () => onClosePostForm(),
             }

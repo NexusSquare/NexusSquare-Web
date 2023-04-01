@@ -1,72 +1,30 @@
 import { useAuthSignInWithEmailAndPassword, useAuthSignOut } from '@react-query-firebase/auth'
-import { UserCredential } from 'firebase/auth'
 import { useRouter } from 'next/router'
 import { useCallback } from 'react'
-import { MutateOptions } from 'react-query'
-import { PAGE_LINKS } from '../../constants/pageLinks'
-import { EMAIL, USER_ID } from '../../constants/token'
 import { auth } from '../../plugins/firebase/client'
-import { userMetaService } from '../../services/user/userMetaService'
-import { userService } from '../../services/user/userService'
+
 import { useUser, useUserMeta } from '../../store/atom'
 import { User, UserAccount, UserMeta } from '../../entities/user'
 import { useAlertLoginError } from '../errors/useAlertLoginError'
 import { useSessionToken } from '../useSessionToken'
 
-interface AfterFunction {
-    onSuccess?: Function
-    onSettled?: Function
-    onError?: Function
-}
-
 export const useLogin = () => {
+    const router = useRouter()
     const { alertLoginError } = useAlertLoginError()
     const mutation = useAuthSignInWithEmailAndPassword(auth)
-    const router = useRouter()
-    const { setUser } = useUser()
-    const { setUserMeta } = useUserMeta()
     const { mutate } = mutation
-    const { setToken } = useSessionToken()
 
-    const initUser = async (user: User, userMeta: UserMeta) => {
-        setUser(user)
-        setUserMeta(userMeta)
-        setToken(user.userId, userMeta.email)
-        console.log(user)
-    }
-
-    const onSuccessLogin = async (data: UserCredential) => {
-        // NOTE メール認証がされている場合、アカウント登録されている確認
-        const { emailVerified, uid } = data.user
-        if (!emailVerified) {
-            router.push(PAGE_LINKS.REGISTER.STEP2.URL)
-            return
-        }
-        // NOTE idが存在するときのみfetchされる
-        const user = await userService.findOne(uid)
-        const userMeta = await userMetaService.findOne(uid)
-        if (!user || !userMeta) {
-            router.push(PAGE_LINKS.REGISTER.STEP3.URL)
-            return
-        }
-        initUser(user, userMeta)
-    }
-    const login = useCallback(async ({ email, password }: UserAccount, args?: AfterFunction) => {
+    const login = useCallback(async ({ email, password }: UserAccount) => {
         mutate(
             {
                 email,
                 password,
             },
             {
-                onSuccess: async (data) => {
-                    await onSuccessLogin(data)
-                    args?.onSuccess?.(data)
-                },
+                onSuccess: () => router.back(),
                 onError: async (error) => {
                     alertLoginError(error.code)
-                    args?.onError?.(error)
                 },
-                onSettled: async (data) => args?.onSettled?.(data),
             }
         )
     }, [])
@@ -85,7 +43,7 @@ export const useLogOut = () => {
         deleteToken()
     }
 
-    const logOut = useCallback(() => {
+    const logOut = useCallback(async () => {
         mutate()
         clearUser()
     }, [])

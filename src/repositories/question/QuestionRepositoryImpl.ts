@@ -25,7 +25,6 @@ class QuestionRepositoryImpl implements QuestionRepository {
     private questionCol = collection(db, 'questions').withConverter(QuestionConverter)
 
     public async findAll(queryQuestion: QuestionQuery): Promise<Question[]> {
-        console.log('question fetch')
         const query = new QuestionQueryBuilder(queryQuestion, this.questionCol).build()
         const snapShot = await getDocs(query)
         return snapShot.docs.map((doc) => {
@@ -42,13 +41,11 @@ class QuestionRepositoryImpl implements QuestionRepository {
         })
     }
     public async findById(questionId: string): Promise<Question | undefined> {
-        console.log('question by id fetch')
         const questionRef = doc(db, `questions/${questionId}`).withConverter(QuestionConverter)
         const res = await getDoc(questionRef)
         return res.data()
     }
     public async findByUserId(userId: string): Promise<Question[]> {
-        console.log('question by userId fetch')
         const questionQuery = query(this.questionCol, where('userId', '==', userId), orderBy('createdAt', 'desc'))
         const snapShot = await getDocs(questionQuery)
         return snapShot.docs.map((doc) => {
@@ -56,7 +53,6 @@ class QuestionRepositoryImpl implements QuestionRepository {
         })
     }
     public async save(question: Question): Promise<void> {
-        console.log(question)
         addDoc(this.questionCol, question)
     }
     public async update(question: Partial<Question>, questionId: string): Promise<void> {
