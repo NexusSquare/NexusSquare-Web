@@ -29,7 +29,7 @@ export const PrimaryButton = ({
             onClick={onClick}
             type={type}
             width={width}
-            disabled={disabled}
+            isDisabled={disabled}
             size={size}
             borderRadius={borderRadius}
         >

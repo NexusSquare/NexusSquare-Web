@@ -1,17 +1,4 @@
-import {
-    Box,
-    Button,
-    Divider,
-    FormControl,
-    FormErrorMessage,
-    FormHelperText,
-    FormLabel,
-    HStack,
-    Input,
-    Spacer,
-    Text,
-    VStack,
-} from '@chakra-ui/react'
+import { Box, Text, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'

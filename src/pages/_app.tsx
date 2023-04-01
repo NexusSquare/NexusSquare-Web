@@ -12,11 +12,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
                 <ChakraProvider theme={chakraTheme}>
-                    {getLayout(
-                        <AuthProvider>
-                            <Component {...pageProps} />
-                        </AuthProvider>
-                    )}
+                    <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
                 </ChakraProvider>
             </QueryClientProvider>
         </RecoilRoot>

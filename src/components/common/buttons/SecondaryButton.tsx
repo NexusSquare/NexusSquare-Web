@@ -32,7 +32,7 @@ export const SecondaryButton = ({
             _hover={{ bgColor: 'mainColor', color: 'white' }}
             type={type}
             width={width}
-            disabled={disabled}
+            isDisabled={disabled}
             size={size}
             borderRadius={borderRadius}
         >

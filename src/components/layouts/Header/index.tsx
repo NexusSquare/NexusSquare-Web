@@ -18,16 +18,15 @@ import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
 import { pagesPath } from '../../../lib/$path'
 import Image from 'next/image'
-import { useFetchMyUser, useFetchMyUserMeta } from '../../../hooks/user/useFetchUser'
+import { useUser, useUserMeta } from '../../../store/atom'
 interface Props {
     children?: ReactNode
 }
 const LOGO_URL: string = '/images/logo.jpg'
 
 export const Header = memo(({ children }: Props): JSX.Element => {
-    const { data: user } = useFetchMyUser()
-    const { data: userMeta } = useFetchMyUserMeta()
-
+    const { user } = useUser()
+    const { userMeta } = useUserMeta()
     const { mutate: logOut } = useLogOut()
     const { data: notifications = [], refetch: refetchNotification } = useFetchNotifications(user?.userId)
     const { mutate: updateNotification } = useUpdateNotification()

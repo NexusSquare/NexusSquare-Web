@@ -1,8 +1,9 @@
 import { useQuery, UseQueryOptions } from 'react-query'
 import { userMetaService } from '../../services/user/userMetaService'
-import { userService } from '../../services/user/userService'
+
 import { User, UserMeta } from '../../entities/user'
 import { DEFAULT_QUERY_OPTIONS } from '../react-query/config'
+import { userService } from '../../services/user/UserServiceImpl'
 
 const QUERY_KEYS = {
     USER_ONE: (id?: string | null) => `user-${id}`,
@@ -14,7 +15,7 @@ const QUERY_KEYS = {
 // NOTE sessionストレージがnullを撮るため、nullを許す
 // uidが存在するときのみfetchされる
 export const useFetchUser = (uid?: string | null, queryOptions?: UseQueryOptions<User>) => {
-    return useQuery<User>([QUERY_KEYS.USER_ONE(uid), { enabled: Boolean(uid) }], () => userService.findOne(uid!), {
+    return useQuery<User>([QUERY_KEYS.USER_ONE(uid), { enabled: Boolean(uid) }], () => userService.findById(uid!), {
         ...queryOptions,
         ...DEFAULT_QUERY_OPTIONS,
     })
