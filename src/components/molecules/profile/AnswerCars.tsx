@@ -36,7 +36,6 @@ export const AnswerCard = ({
     const { user } = useUser()
     const userId = user?.userId
     const date = convertDateToString(answer.createdAt)
-    // const content = replaceLineFeed(answer.content)
     return (
         <VStack
             as="section"
@@ -105,6 +104,7 @@ export const AnswerCard = ({
                 noOfLines={3}
                 onClick={() => onClickCard(answer.questionId)}
                 _hover={{ textDecoration: 'underline', cursor: 'pointer' }}
+                whiteSpace={'pre-line'}
             >
                 {answer.content}
             </Text>
