@@ -9,7 +9,7 @@ import { useUser, useUserMeta } from '../store/atom'
 import { User, UserMeta } from '../entities/user'
 import { authRepository } from '../repositories/auth/AuthRepositoryImpl'
 import { userRepository } from '../repositories/user/UserRepositoryImpl'
-import { useAuthTokenListener } from '../hooks/authentication/useAuthListener'
+
 import { pagesPath } from '../lib/$path'
 import { userMetaRepository } from '../repositories/user/meta/UserMetaRepositoryImpl'
 import { auth } from '../plugins/firebase/client'
