@@ -19,7 +19,9 @@ export const pagesPath = {
   },
   "profile": {
     _id: (id: string | number) => ({
+
       $url: (url: { query: Query0, hash?: string }) => ({ pathname: '/profile/[id]' as const, query: { id, ...url.query }, hash: url.hash })
+
     })
   },
   "qa": {
