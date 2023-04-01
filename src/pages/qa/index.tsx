@@ -1,5 +1,4 @@
 import { NextPageWithLayout } from 'next'
-
 import { QAPage } from '../../components/pages/QA/Page'
 
 import { DefaultLayout } from '../../components/layouts/DefaultLayout'

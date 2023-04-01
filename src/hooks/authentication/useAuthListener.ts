@@ -1,19 +1,21 @@
 import { useEffect } from 'react'
 import { auth } from '../../plugins/firebase/client'
-import nookies from 'nookies'
+import nookies, { setCookie } from 'nookies'
 import { cookieKey } from '../../constants/cookies'
+import { useAuth } from './useAuth'
+import { useRouter } from 'next/router'
 
 const FIREBASE_ID_TOKEN_INTERVAL = 10 * 60 * 1000
 export const useAuthTokenListener = () => {
     useEffect(() => {
         return auth.onIdTokenChanged(async (user) => {
             if (!user) {
-                nookies.destroy(null, cookieKey)
+                removeIdToken()
                 return
             }
             const token = await user.getIdToken()
-
-            nookies.set(undefined, cookieKey, token, {})
+            console.log('token', token)
+            setIdToken(token)
         })
     }, [])
 
@@ -27,4 +29,12 @@ export const useAuthTokenListener = () => {
         }, FIREBASE_ID_TOKEN_INTERVAL)
         return () => clearInterval(handler)
     }, [])
+
+    const setIdToken = (token: string) => {
+        setCookie(null, cookieKey, token)
+    }
+
+    const removeIdToken = () => {
+        nookies.destroy(null, cookieKey)
+    }
 }

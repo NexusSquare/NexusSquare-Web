@@ -23,9 +23,7 @@ export const Page = (): JSX.Element => {
     const { mutate: login, isLoading: loading } = useLogin()
 
     const onSubmitAccount = async (account: UserAccount) => {
-        login(account, {
-            onSuccess: () => router.back(),
-        })
+        login(account)
     }
 
     const onClickRegister = () => {

@@ -7,6 +7,7 @@ import { cookieKey } from './constants/cookies'
 export default async function middleware(request: NextRequest) {
     const cookie = request.cookies.get(cookieKey)
     const idToken = cookie?.value
+    console.log('idToken', idToken)
 
     if (!idToken) {
         return NextResponse.redirect(new URL('/login', request.url))
