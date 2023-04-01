@@ -18,6 +18,7 @@ export const TopFeature = () => {
                 heading="学生生活Q&A"
                 text="学生生活Q&Aは、愛知県立の学生間で質問・回答し合えるサービスです。学部別、内容別にカテゴリーされており、質問のタイトル検索機能もあるため、質問・回答以外の利用もしていただけます。プロフィールからは、ユーザー名の変更や過去の活動履歴を確認できます。"
                 isReversed={true}
+                imageSrc="/images/iphone/qa.png"
             >
                 <RiQuestionAnswerLine color="#FF9037" style={{ display: 'inline' }} />
             </FeatureContent>
@@ -25,6 +26,7 @@ export const TopFeature = () => {
                 heading="ポイント制（導入予定）"
                 text="質問で10ポイント、回答で20ポイントなどNexus Square内で投稿をして県大生をお助けすると、 ポイントが付与されます。いっぱい貯めるといいことがある予感...！"
                 isReversed={false}
+                imageSrc="/images/iphone/point.png"
             >
                 <FaCoins color="#FF9037" style={{ display: 'inline' }} />
             </FeatureContent>
