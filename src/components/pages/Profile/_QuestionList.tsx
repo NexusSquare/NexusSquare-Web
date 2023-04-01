@@ -2,24 +2,25 @@ import { useDisclosure, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { QueryObserverResult } from 'react-query'
-import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
-import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
-import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
-import { QuestionReq } from '../../../../api/req'
-import { Question } from '../../../../entities/qa'
-import { NoCards } from '../../../common/NoCards'
-import { QASkeleton } from '../../../common/QASkeleton'
-import { QuestionCard } from '../../../molecules/profile/QuestionCard'
-import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
-import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
+import { ERROR_MESSAGE } from '../../../constants/errors'
+import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useDeleteQuestion } from '../../../hooks/question/useDeleteQuestion'
+import { useUpdateQuestion } from '../../../hooks/question/useUpdateQuestion'
+import { QuestionReq } from '../../../api/req'
+import { Question } from '../../../entities/qa'
+import { NoCards } from '../../common/NoCards'
+import { QASkeleton } from '../../common/QASkeleton'
+import { QuestionCard } from '../../molecules/profile/QuestionCard'
+import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
+import { EditFormModal } from '../../molecules/qa/question/EditFormModal'
+import { Refetch } from '../../../hooks/react-query/type'
 
 interface Props {
     userId: string
     questions: Question[]
     isLoading: boolean
     onClickCard: (value: string) => void
-    refetchQuestions: () => Promise<void>
+    refetchQuestions: Refetch<Question[]>
 }
 export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions, userId }: Props): JSX.Element => {
     const errorToast = useErrorToast()

@@ -4,7 +4,7 @@ import { UserInfo } from '../../organisms/profile/user/UserInfo'
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
 import { Loading } from '../../common/Loading'
 import { OthersInfo } from '../../organisms/profile/user/OthersInfo'
-import { UserHistory } from '../../organisms/profile/history/UserHistory'
+import { UserHistory } from './_UserHistory'
 import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../common/buttons/BackButton'
@@ -14,9 +14,10 @@ import { LeftBar } from '../../layouts/LeftBar'
 import { NoItem } from '../../common/NoItem'
 interface Props {
     userId: string
+    tab?: string
 }
 // TODO　 コンポーネント分割（責務の分離）
-export const ProfilePage = ({ userId }: Props): JSX.Element => {
+export const ProfilePage = ({ userId, tab }: Props): JSX.Element => {
     const { user: currentUser } = useUser()
     const myUserId = currentUser?.userId
 
@@ -32,14 +33,7 @@ export const ProfilePage = ({ userId }: Props): JSX.Element => {
         refetch: refetchAnswers,
         isLoading: isFetchAnswersLoading,
     } = useFetchAnswersByUserId(userId)
-    const refetchUserAndQuestions = async () => {
-        refetchQuestions()
-        await refetchUser()
-    }
-    const refetchUserAndAnswers = async () => {
-        await refetchAnswers()
-        refetchUser()
-    }
+
     const isFetchLoading: boolean = isFetchQuestionsLoading || isFetchAnswersLoading
 
     if (isError) return <NoItem title="ユーザー" />
@@ -58,8 +52,9 @@ export const ProfilePage = ({ userId }: Props): JSX.Element => {
                     answers={answers}
                     questions={questions}
                     isFetchLoading={isFetchLoading}
-                    refetchQuestions={refetchUserAndQuestions}
-                    refetchAnswers={refetchUserAndAnswers}
+                    refetchQuestions={refetchQuestions}
+                    refetchAnswers={refetchAnswers}
+                    defaultTab={tab}
                 />
             </VStack>
         </ContentsLayout>

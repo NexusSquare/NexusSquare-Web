@@ -5,7 +5,7 @@ import { Answer } from '../../../../entities/qa/Answer'
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../../common/buttons/BackButton'
-import { AnswerList } from '../../../organisms/qa/AnswerList'
+import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useEffect, useState } from 'react'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
@@ -16,6 +16,7 @@ import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { SPONSERS } from '../../../../entities/Sponser'
 import { SponserBanner } from '../../../common/suponser/Banner'
 import { advertisement } from '../../../../entities/Advertisement'
+import { NoItem } from '../../../common/NoItem'
 
 interface Props {
     questionId: string
@@ -27,16 +28,18 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     const { user } = useUser()
     const errorToast = useErrorToast()
 
-    const { data: question, isLoading, refetch: refetchQuestion } = useFetchQuestion(questionId)
-    const { data: answers = [], isLoading: isFetchAnswersLoading } = useFetchAnswersByQuestionId(questionId)
+    const { data: question, isLoading, refetch: refetchQuestion, isError } = useFetchQuestion(questionId)
+    const {
+        data: answers = [],
+        isLoading: isFetchAnswersLoading,
+        refetch: refetchAnswers,
+    } = useFetchAnswersByQuestionId(questionId)
     const { mutate: declareBestAnswer, isLoading: isDeclareLoading, cacheClearQuestion } = useBestAnswer()
     const {
         isOpen: isOpenBestAnswerForm,
         onOpen: onOpenBestAnswerForm,
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
-
-    console.log('answer', answers)
 
     const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
     const otherAnswers: Answer[] = answers.filter((answer) => answer.answerId !== question?.bestAnswerId)
@@ -63,6 +66,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         )
     }
 
+    if (isError) return <NoItem title="質問" />
     return (
         <ContentsLayout Left={<LeftBar />}>
             <VStack w="full" spacing={2}>
@@ -75,6 +79,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     question={question}
                     isPosted={isPosted}
                     isMine={isMine}
+                    refetchAnswers={refetchAnswers}
                 />
                 <HStack py="6">
                     <SponserBanner sponser={sponser} />
@@ -90,6 +95,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     onClickBestAnswer={onClickBestAnswer}
                     isDeclareLoading={isDeclareLoading}
                     bestAnswerId={question?.bestAnswerId}
+                    refetchAnswers={refetchAnswers}
                 />
             </VStack>
         </ContentsLayout>

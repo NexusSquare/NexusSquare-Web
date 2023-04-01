@@ -32,7 +32,6 @@ export const useLogin = () => {
         setUser(user)
         setUserMeta(userMeta)
         setToken(user.userId, userMeta.email)
-        console.log(user)
     }
 
     const onSuccessLogin = async (data: UserCredential) => {
@@ -85,7 +84,7 @@ export const useLogOut = () => {
         deleteToken()
     }
 
-    const logOut = useCallback(() => {
+    const logOut = useCallback(async () => {
         mutate()
         clearUser()
     }, [])

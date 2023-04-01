@@ -5,13 +5,23 @@ import { UserReq } from '../../api/req/UserReq'
 import { User, UserMeta } from '../../entities/user'
 import { userFactory } from '../../entities/factories/userFactory'
 import { userMetaRepository } from '../../repositories/user/meta/UserMetaRepositoryImpl'
+import { authRepository } from '../../repositories/auth/AuthRepositoryImpl'
 
-export const userService = {
+class UserService {
+    async findMyself(): Promise<User> {
+        const userId = authRepository.getMyId()
+        if (!userId) {
+            throw new Error(ERROR.INVALID_USER_TOKEN)
+        }
+        const user = await userRepository.findById(userId)
+        if (!user) throw new Error(ERROR.NO_SUCH_DOCUMENT)
+        return user
+    }
     async findOne(uid: string): Promise<User> {
         const user = await userRepository.findById(uid)
         if (!user) throw new Error(ERROR.NO_SUCH_DOCUMENT)
         return user
-    },
+    }
     async save(userReq: UserReq): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         if (!userId) {
@@ -19,7 +29,7 @@ export const userService = {
         }
         const user: User = userFactory.create(userReq, userId)
         return userRepository.save(user)
-    },
+    }
     async update(userReq: Partial<UserReq>): Promise<void> {
         const userId = sessionStorage.getItem(USER_ID)
         if (!userId) {
@@ -37,5 +47,7 @@ export const userService = {
             grade: userReq.grade,
         }
         userMetaRepository.update(userMeta, userId)
-    },
+    }
 }
+
+export const userService = new UserService()
