@@ -17,7 +17,7 @@ export const RulePage = (): JSX.Element => {
                 <RuleBody />
                 <Text fontSize="lg">
                     連絡先:
-                    <Link color="accentColor" href="mailto:apu.nexussquare@gmail.com">
+                    <Link color="accentColor" href="mailto:nexsqu@gmail.com">
                         nexsqu@gmail.com
                     </Link>
                 </Text>

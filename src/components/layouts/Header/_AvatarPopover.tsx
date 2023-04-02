@@ -16,7 +16,7 @@ import React from 'react'
 import { FiEdit } from 'react-icons/fi'
 import { VscSignOut } from 'react-icons/vsc'
 import { User, UserMeta } from '../../../entities/user'
-
+import { AiOutlineMail } from 'react-icons/ai'
 interface Props {
     user: User
     userMeta: UserMeta
@@ -26,7 +26,7 @@ interface Props {
 
 export const AvatarPopover = ({ user, userMeta, seeProfile, signOut }: Props) => {
     return (
-        <Popover>
+        <Popover placement="bottom-start">
             <PopoverTrigger>
                 <Avatar as="button" width="40px" height="40px" src={user.imageUrl} bg="mainColor" />
             </PopoverTrigger>
@@ -55,6 +55,19 @@ export const AvatarPopover = ({ user, userMeta, seeProfile, signOut }: Props) =>
                     <HStack as="button" py="4" px="2" w="full" _hover={{ bgColor: 'gray.100' }} onClick={seeProfile}>
                         <FiEdit />
                         <Text>プロフィール</Text>
+                    </HStack>
+                    <Divider />
+                    <HStack
+                        as="a"
+                        py="4"
+                        px="2"
+                        w="full"
+                        _hover={{ bgColor: 'gray.100', cursor: 'pointer' }}
+                        target="_blank"
+                        href="https://docs.google.com/forms/d/e/1FAIpQLScSjafjOyw_kakr15Ye9H8_bY9fBBcj76VOxQC6QrjwPM9vnw/viewform"
+                    >
+                        <AiOutlineMail />
+                        <Text>お問い合わせ</Text>
                     </HStack>
                     <Divider />
                     <HStack as="button" py="4" px="2" w="full" _hover={{ bgColor: 'gray.100' }} onClick={signOut}>
