@@ -51,7 +51,7 @@ export const Page = (): JSX.Element => {
                         当団体は本人から個人情報の開示を求められたときには、遅滞なく本人に対しこれを開示します。個人情報の利用目的の通知や訂正、追加、削除、利用の停止、第三者への提供の停止を希望される方は以下のメールアドレスにお問い合わせください。
                     </Text>
                     <Text fontSize="lg" color="accentColor">
-                        <Link href="mailto:apu.nexussquare@gmail.com">apu.nexussquare@gmail.com</Link>
+                        <Link href="mailto:nexsqu@gmail.com">nexsqu@gmail.com</Link>
                     </Text>
                 </VStack>
 
@@ -107,7 +107,7 @@ export const Page = (): JSX.Element => {
 
                     <Text fontSize="lg">
                         メールアドレス:
-                        <Link color="accentColor" href="mailto:apu.nexussquare@gmail.com">
+                        <Link color="accentColor" href="mailto:nexsqu@gmail.com">
                             nexsqu@gmail.com
                         </Link>
                     </Text>
