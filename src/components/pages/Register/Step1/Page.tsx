@@ -75,7 +75,6 @@ export const Page = (): JSX.Element => {
                         {...register('email', {
                             validate: validators.requiredForEmailPatter(),
                         })}
-                        defaultValue={'aichi-pu.ac.jp'}
                         placeholder="xx000000@xxx.aichi-pu.ac.jp"
                         type="email"
                     />
