@@ -8,7 +8,7 @@ interface Props {
 export const RuleLayout = ({ title, children }: Props) => {
     return (
         <VStack align="left" w="full">
-            <Heading as="h1" fontSize="20">
+            <Heading as="h1" fontSize={'lg'}>
                 {title}
             </Heading>
             {children}
