@@ -33,7 +33,6 @@ const QACard = ({ question }: Props) => {
                 padding="10px 20px"
                 border="1px"
                 borderColor="gray.300"
-                _hover={{ opacity: '50%' }}
                 bgColor={'white'}
                 spacing={2}
                 alignItems={'start'}
