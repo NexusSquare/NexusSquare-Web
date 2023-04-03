@@ -112,7 +112,7 @@ export const AnswerList = ({
     if (!userId) return null
     return (
         <>
-            <Text as="h2" fontSize="2xl" fontWeight="semibold" w="full" pl="4">
+            <Text as="h2" fontSize="xl" fontWeight="semibold" w="full" pl="4">
                 回答：
                 <Box as="span" color={'mainColor'} mr="2">
                     {answers.length}

@@ -16,7 +16,7 @@ const sponsers = advertisement.getSome(2)
 export const RightBar = ({ children }: Props): JSX.Element => {
     return (
         <VStack as="aside" bgColor="subColor" h={RIGHT_BAR_HEIGHT} w={RIGHT_BAR_WIDTH} minW={RIGHT_BAR_MINI_WIDTH}>
-            <VStack spacing="15px" margin="30px 10px">
+            <VStack spacing={0} margin="30px 10px">
                 {sponsers.map((ad, i) => {
                     return <SponserBanner sponser={ad} key={i} />
                 })}

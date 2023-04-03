@@ -47,7 +47,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
             border="1px"
             borderColor="gray.300"
             bgColor={'white'}
-            spacing={2}
+            spacing={1}
             alignItems={'start'}
         >
             <HStack justify={'space-between'} w="full">
@@ -55,11 +55,13 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                     <Avatar width={8} height={8} src={question.postUser.imageUrl} />
                     <VStack spacing={0} alignItems={'start'}>
                         <HStack>
-                            <Text color="gray.400" isTruncated>
+                            <Text color="gray.400" isTruncated fontSize={'sm'}>
                                 {question.postUser.nickname}
                             </Text>
                             {!question.postUser.isDepartmentAnonymous && (
-                                <Text color="gray.400">{question.postUser.subject}</Text>
+                                <Text color="gray.400" fontSize={'sm'}>
+                                    {question.postUser.subject}
+                                </Text>
                             )}
                         </HStack>
 
@@ -91,7 +93,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
             </HStack>
             <Text
                 as="h3"
-                fontSize="xl"
+                fontSize="lg"
                 fontWeight="bold"
                 noOfLines={1}
                 onClick={() => onClickCard(question.questionId)}
@@ -113,7 +115,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
             </Text>
             <HStack>
                 <AiOutlineTag color={'#a0acc0'} />
-                <Text color="gray.400" fontSize={'sm'}>
+                <Text color="gray.400" fontSize={'xs'}>
                     {categoryText}
                 </Text>
             </HStack>

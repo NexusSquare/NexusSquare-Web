@@ -75,7 +75,6 @@ const SPFooter = (): JSX.Element => {
 const FooterLinkList = () => {
     return (
         <>
-            <FooterLink href="/" text="About" />
             <FooterLink href="/rule" text="利用規約" />
             <FooterLink href="privacy" text="プライバシー ポリシー" />
         </>

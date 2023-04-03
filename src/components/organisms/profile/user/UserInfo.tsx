@@ -113,7 +113,7 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     </Box>
                     <Input type="file" ref={inputRef} accept="image/*" hidden onChange={onChangeImage} multiple />
                 </Box>
-                <VStack w="full">
+                <VStack w="full" spacing={1}>
                     <Text fontWeight="bold" fontSize={{ base: 'lg', md: '2xl' }}>
                         {user.nickname}
                     </Text>
