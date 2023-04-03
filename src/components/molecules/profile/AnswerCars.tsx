@@ -44,7 +44,7 @@ export const AnswerCard = ({
             border="1px"
             borderColor="gray.300"
             bgColor={'white'}
-            spacing={2}
+            spacing={1}
             alignItems={'start'}
         >
             <HStack justify={'space-between'} w="full">
@@ -52,11 +52,13 @@ export const AnswerCard = ({
                     <Avatar width={8} height={8} src={answer.postUser.imageUrl} />
                     <VStack spacing={0} alignItems={'start'}>
                         <HStack>
-                            <Text color="gray.400" isTruncated>
+                            <Text color="gray.400" isTruncated fontSize={'sm'}>
                                 {answer.postUser.nickname}
                             </Text>
                             {!answer.postUser.isDepartmentAnonymous && (
-                                <Text color="gray.400">{answer.postUser.subject}</Text>
+                                <Text color="gray.400 " fontSize={'sm'}>
+                                    {answer.postUser.subject}
+                                </Text>
                             )}
                         </HStack>
 
@@ -88,7 +90,7 @@ export const AnswerCard = ({
             </HStack>
             <Text
                 as="h3"
-                fontSize="xl"
+                fontSize="lg"
                 fontWeight="bold"
                 noOfLines={1}
                 onClick={() => onClickCard(answer.questionId)}

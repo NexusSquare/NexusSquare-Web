@@ -6,7 +6,7 @@ export const RulePage = (): JSX.Element => {
     return (
         <Box bgColor="subColor" p={{ base: '2', md: '36' }}>
             <VStack spacing={10} h="full" bgColor="White" px={{ base: '10', md: '20' }} py="10" borderRadius="40">
-                <Text as="h1" fontWeight="bold" fontSize={{ base: '25', md: '33' }}>
+                <Text as="h1" fontWeight="bold" fontSize={'xl'}>
                     利用規約
                 </Text>
                 <Divider />
