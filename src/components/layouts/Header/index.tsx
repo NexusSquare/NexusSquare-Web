@@ -113,7 +113,6 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                         paddingX="0.5%"
                         aria-labelledby="jump to other functions"
                         display={{ base: 'none', md: 'flex' }}
-                        paddingTop={1}
                     >
                         <NavigationLinkList />
                     </HStack>
