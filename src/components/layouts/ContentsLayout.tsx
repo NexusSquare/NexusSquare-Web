@@ -20,7 +20,6 @@ export const ContentsLayout = ({ children, Left }: Props) => {
             <Box position={'fixed'} display={{ base: 'none', md: 'block' }} right="0" top={HEADER_HEIGHT}>
                 <RightBar />
             </Box>
-            s
         </>
     )
 }
