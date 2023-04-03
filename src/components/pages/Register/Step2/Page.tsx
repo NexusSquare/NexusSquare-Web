@@ -29,7 +29,7 @@ export const Page = (): JSX.Element => {
                 </Box>
                 {hasSentEmail && <Text color={'red.500'}>メールを送信しました。</Text>}
                 <PrimaryButton
-                    buttonText="認証メールを送る"
+                    buttonText="メールを再度送信"
                     type="button"
                     isLoading={sending}
                     disabled={sending}
