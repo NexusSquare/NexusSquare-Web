@@ -38,6 +38,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         onOpen: onOpenBestAnswerForm,
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
+    const questionCount = answers.length
 
     const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
     const otherAnswers: Answer[] = answers.filter((answer) => answer.answerId !== question?.bestAnswerId)
@@ -78,6 +79,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     isPosted={isPosted}
                     isMine={isMine}
                     refetchAnswers={refetchAnswers}
+                    questionCount={questionCount}
                 />
                 <HStack py="6">
                     <SponserBanner sponser={sponser} />

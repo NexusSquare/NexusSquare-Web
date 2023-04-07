@@ -30,6 +30,7 @@ interface Props {
     postUser?: User
     isPosted: boolean
     isMine: boolean
+    questionCount: number
 }
 
 export const QuestionDetail = ({
@@ -41,6 +42,7 @@ export const QuestionDetail = ({
     isPosted,
     isMine,
     refetchAnswers,
+    questionCount,
 }: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
@@ -125,6 +127,7 @@ export const QuestionDetail = ({
                         onOpenPostForm={onOpenPostForm}
                         isPosted={isPosted}
                         isMine={isMine}
+                        questionCount={questionCount}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}

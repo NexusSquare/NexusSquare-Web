@@ -15,7 +15,7 @@ export const QuestionPopover = ({ description }: Props) => {
             </PopoverTrigger>
             <PopoverContent
                 style={{
-                    background: 'rgba(0, 0, 0, 0.8)',
+                    background: 'rgba(0, 0, 0, 0.7)',
                 }}
                 color="white"
             >
