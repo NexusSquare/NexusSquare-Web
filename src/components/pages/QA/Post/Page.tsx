@@ -20,7 +20,6 @@ import _ from 'lodash'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
@@ -32,6 +31,7 @@ import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]
