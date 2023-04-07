@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useSendPasswordResetEmail } from '../../../../hooks/authentication/usePassword'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { pagesPath } from '../../../../lib/$path'
 import { validators } from '../../../../lib/validator/Validators'

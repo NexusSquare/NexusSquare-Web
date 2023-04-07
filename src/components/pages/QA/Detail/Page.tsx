@@ -8,7 +8,7 @@ import { BackButton } from '../../../common/Button/BackButton'
 import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
@@ -66,6 +66,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     }
 
     if (isError) return <NoItem title="質問" />
+
     return (
         <ContentsLayout Left={<LeftBar />}>
             <VStack w="full" spacing={2}>

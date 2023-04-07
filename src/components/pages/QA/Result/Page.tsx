@@ -8,7 +8,7 @@ import { QACategory, QuestionQuery } from '../../../../constants/query'
 
 import { useRouter } from 'next/router'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { SortDrawer } from '../../../organisms/qa/SortDrawer'
 import { CategoryDrawer } from '../../../organisms/qa/CategoryDrawer'
 import { SortItem } from '../../../../constants/sort'

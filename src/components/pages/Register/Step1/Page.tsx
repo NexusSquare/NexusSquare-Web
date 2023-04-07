@@ -17,7 +17,7 @@ import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
