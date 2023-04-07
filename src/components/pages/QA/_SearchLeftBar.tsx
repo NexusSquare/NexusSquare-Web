@@ -5,9 +5,9 @@ import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { Direction, OrderBy, QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../hooks/toast/useErrorToast'
 import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import { SecondaryButton } from '../../common/buttons/SecondaryButton'
+import { SecondaryButton } from '../../common/Button/SecondaryButton'
 import { Categories } from '../../molecules/qa/question/Categories'
 
 import { BaseLeftBar } from '../../layouts/LeftBar/_Base'
@@ -108,9 +108,10 @@ export const SearchLeftBar = ({
                             ref={inputRef}
                         ></Input>
                         <Button
-                            bgColor={'mainColor'}
+                            bgColor={'primary'}
                             color="white"
                             borderRadius={'sm'}
+                            _hover={{ bgColor: 'primaryDark' }}
                             onClick={() => onClickSearch(inputRef.current?.value)}
                         >
                             <SearchIcon />

@@ -2,7 +2,8 @@ import { extendTheme } from '@chakra-ui/react'
 
 export const chakraTheme = extendTheme({
     colors: {
-        mainColor: '#FF9037',
+        primary: '#FF9037',
+        primaryDark: '#FF6F00',
         subColor: '#FBF6F0',
         subSubColor: '#FFDA77',
         accentColor: '#3DB2FF',

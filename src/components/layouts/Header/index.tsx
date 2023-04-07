@@ -9,7 +9,7 @@ import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogOut } from '../../../hooks/authentication'
 import { useFetchNotifications } from '../../../hooks/notification/useFetchNotification'
 import { useUpdateNotification } from '../../../hooks/notification/useUpdateNotification'
-import { useErrorToast } from '../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { HEADER_HEIGHT } from '../constants'
 import { NotificationButton } from './notifications/_NotificationButton'
@@ -77,7 +77,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
         <VStack
             as="header"
             w="100%"
-            bgColor="mainColor"
+            bgColor="primary"
             spacing="0px"
             divider={<StackDivider borderColor="gray.200" />}
             position="fixed"
@@ -92,7 +92,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
                 paddingX={{ base: '10px', sm: '50px' }}
                 paddingY={{ base: '0px', md: '10px' }}
                 w="100%"
-                bgColor="mainColor"
+                bgColor="primary"
                 justifyContent={'space-between'}
             >
                 <HStack>

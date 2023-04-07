@@ -11,6 +11,12 @@ import {
     useDisclosure,
     Spacer,
     Divider,
+    Tooltip,
+    Popover,
+    PopoverTrigger,
+    Button,
+    PopoverContent,
+    PopoverBody,
 } from '@chakra-ui/react'
 import { FiEdit } from 'react-icons/fi'
 import React, { memo, RefObject, useCallback, useEffect } from 'react'
@@ -22,12 +28,14 @@ import { User, UserMeta } from '../../../../entities/user'
 import { UserReq } from '../../../../api/req/UserReq'
 import { useUpdateUser } from '../../../../hooks/user/useUpdateUser'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { STORAGE_URL } from '../../../../constants/storage'
 import { useUploadFile } from '../../../../hooks/storege/useUploadFile'
 import { useFile } from '../../../../hooks/useFile'
 import { Refetch } from '../../../../hooks/react-query/type'
 import { ProfileItem } from './_ProfileItem'
+import { BsQuestionCircle } from 'react-icons/bs'
+import { QuestionPopover } from '../../../common/Popover'
 
 interface Props {
     user: User
@@ -120,12 +128,19 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                     <ProfileItem label={'学部'} value={user.department} isAnonymous={user.isDepartmentAnonymous} />
                     <ProfileItem label={'学科'} value={user.subject} isAnonymous={user.isDepartmentAnonymous} />
                     <ProfileItem label={'学年'} value={user.grade} />
-                    <Text fontSize={{ base: 'md', md: 'xl' }}>
-                        現在のポイント：
-                        <Box color="red.400" fontWeight={'bold'} as="span">
-                            {user.point}pt
-                        </Box>
-                    </Text>
+                    <HStack>
+                        <Text fontSize={{ base: 'md', md: 'xl' }}>
+                            現在のポイント：
+                            <Box color="red.400" fontWeight={'bold'} as="span">
+                                {user.point}pt
+                            </Box>
+                        </Text>
+                        <QuestionPopover
+                            description={
+                                '質問や回答をするとポイントが付与されます。今後、ポイントが一定数貯まると景品に応募できるようになるかも...？'
+                            }
+                        />
+                    </HStack>
                 </VStack>
                 <IconButton
                     position="absolute"

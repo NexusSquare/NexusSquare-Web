@@ -1,9 +1,9 @@
 import { Box, Text, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { useSendEmail } from '../../../../hooks/authentication'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { FormLayout } from '../../../molecules/common/FormLayout'
 
 export const Page = (): JSX.Element => {

@@ -1,8 +1,8 @@
 import { VStack, Text, HStack, Checkbox, Stack, Box } from '@chakra-ui/react'
 import React, { ChangeEvent, LegacyRef, useEffect, useState } from 'react'
 import { DefaultModal } from '../../../common/DefaultModal'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { SecondaryButton } from '../../../common/buttons/SecondaryButton'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { SecondaryButton } from '../../../common/Button/SecondaryButton'
 import { RuleBody } from '../../../molecules/rule/RuleBody'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
 

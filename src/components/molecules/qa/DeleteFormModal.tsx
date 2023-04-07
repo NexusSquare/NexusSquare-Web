@@ -2,8 +2,8 @@ import { HStack, Input, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { DefaultModal } from '../../common/DefaultModal'
 
-import { SecondaryButton } from '../../common/buttons/SecondaryButton'
-import { PrimaryButton } from '../../common/buttons/PrimaryButton'
+import { SecondaryButton } from '../../common/Button/SecondaryButton'
+import { PrimaryButton } from '../../common/Button/PrimaryButton'
 
 interface Props {
     isOpen: boolean

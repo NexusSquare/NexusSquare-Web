@@ -126,7 +126,7 @@ const HistoryTab = ({ label, onClick }: HistoryTabProps) => {
             _selected={{
                 bgColor: 'white',
                 borderColor: 'gray.400',
-                borderBottomColor: 'mainColor',
+                borderBottomColor: 'primary',
                 borderBottomWidth: '5px',
                 color: 'black',
             }}

@@ -4,11 +4,11 @@ import { Answer } from '../../../../entities/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import { BackButton } from '../../../common/buttons/BackButton'
+import { BackButton } from '../../../common/Button/BackButton'
 import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
@@ -38,6 +38,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
         onOpen: onOpenBestAnswerForm,
         onClose: onCloseBestAnswerForm,
     } = useDisclosure()
+    const questionCount = answers.length
 
     const bestAnswer: Answer | undefined = answers.find((answer) => answer.answerId === question?.bestAnswerId)
     const otherAnswers: Answer[] = answers.filter((answer) => answer.answerId !== question?.bestAnswerId)
@@ -65,6 +66,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
     }
 
     if (isError) return <NoItem title="質問" />
+
     return (
         <ContentsLayout Left={<LeftBar />}>
             <VStack w="full" spacing={2}>
@@ -78,6 +80,7 @@ export const DetailPage = ({ questionId }: Props): JSX.Element => {
                     isPosted={isPosted}
                     isMine={isMine}
                     refetchAnswers={refetchAnswers}
+                    questionCount={questionCount}
                 />
                 <HStack py="6">
                     <SponserBanner sponser={sponser} />

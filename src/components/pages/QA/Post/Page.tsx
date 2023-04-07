@@ -20,7 +20,6 @@ import _ from 'lodash'
 import { Router, useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 import { useUser } from '../../../../store/atom'
 import { usePostQuestion } from '../../../../hooks/question'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
@@ -32,6 +31,8 @@ import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]
@@ -172,30 +173,18 @@ export const PostPage = (): JSX.Element => {
                         <Button
                             type="button"
                             onClick={() => router.back()}
-                            color="mainColor"
+                            color="primary"
                             bgColor="white"
                             borderWidth={1}
-                            borderColor="mainColor"
-                            _hover={{ bgColor: 'mainColor', color: 'white' }}
+                            borderColor="primary"
+                            _hover={{ bgColor: 'primary', color: 'white' }}
                             w="50%"
                             disabled={isLoading}
                             borderRadius={'sm'}
                         >
                             キャンセル
                         </Button>
-                        <Button
-                            type="submit"
-                            color="white"
-                            bgColor="mainColor"
-                            _hover={{ bgColor: 'subSubColor' }}
-                            leftIcon={<BsChatText />}
-                            w="full"
-                            isLoading={isLoading}
-                            disabled={isLoading}
-                            borderRadius={'sm'}
-                        >
-                            質問を投稿する
-                        </Button>
+                        <PrimaryButton type="submit" buttonText="質問を投稿する" width="full" />
                     </HStack>
                 </VStack>
             </VStack>

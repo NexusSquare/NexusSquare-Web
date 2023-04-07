@@ -11,6 +11,7 @@ export const useErrorToast = () => {
             status: 'error',
             isClosable: true,
             id: toastId,
+            variant: 'subtle',
         })
     }
     return errorToast

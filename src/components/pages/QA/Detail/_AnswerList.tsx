@@ -4,7 +4,7 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { USER_ID } from '../../../../constants/token'
 import { useDeleteAnswer } from '../../../../hooks/answer/useDeleteAnswer'
 import { useUpdateAnswer } from '../../../../hooks/answer/useUpdateAnswer'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
 import { useReport } from '../../../../hooks/report/useReport'
 import { useUser } from '../../../../store/atom'
@@ -114,7 +114,7 @@ export const AnswerList = ({
         <>
             <Text as="h2" fontSize="xl" fontWeight="semibold" w="full" pl="4">
                 回答：
-                <Box as="span" color={'mainColor'} mr="2">
+                <Box as="span" color={'primary'} mr="2">
                     {answers.length}
                 </Box>
                 件

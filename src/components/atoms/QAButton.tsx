@@ -8,14 +8,14 @@ const QAButton = (): JSX.Element => {
         <Link href="/qa/post" passHref>
             <HStack
                 spacing={2}
-                bgColor="mainColor"
+                bgColor="primary"
                 whiteSpace="nowrap"
                 borderRadius="30px"
                 paddingX={8}
                 paddingY={2}
                 boxShadow="md"
                 color="white"
-                _hover={{ bgColor: 'subSubColor' }}
+                _hover={{ bgColor: 'primaryDark' }}
                 _active={{ opacity: '50%', outline: 'none' }}
                 _focus={{ outline: 'none' }}
             >

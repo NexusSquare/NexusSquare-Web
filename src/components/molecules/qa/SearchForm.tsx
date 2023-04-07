@@ -2,7 +2,7 @@ import { SearchIcon } from '@chakra-ui/icons'
 import { Box, Button, HStack, IconButton, Input, VStack, Text } from '@chakra-ui/react'
 import React, { MutableRefObject, useRef } from 'react'
 import { Question } from '../../../entities/qa'
-import { SecondaryButton } from '../../common/buttons/SecondaryButton'
+import { SecondaryButton } from '../../common/Button/SecondaryButton'
 
 interface Props {
     questions: Question[]
@@ -23,7 +23,7 @@ export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategor
         <VStack w="full" paddingX={4}>
             <HStack w="full">
                 <Input placeholder="タイトル検索" w="full" borderRadius={'sm'} ref={inputRef}></Input>
-                <Button bgColor={'mainColor'} color="white" borderRadius={'sm'} onClick={onClickSearch}>
+                <Button bgColor={'primary'} color="white" borderRadius={'sm'} onClick={onClickSearch}>
                     <SearchIcon />
                 </Button>
             </HStack>

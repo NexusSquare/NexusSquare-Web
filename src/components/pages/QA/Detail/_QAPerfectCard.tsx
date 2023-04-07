@@ -35,6 +35,7 @@ interface Props {
     onOpenPostForm: () => void
     isPosted: boolean
     isMine: boolean
+    questionCount: number
 }
 
 export const QAPerfectCard = ({
@@ -45,6 +46,7 @@ export const QAPerfectCard = ({
     onOpenPostForm,
     isPosted,
     isMine,
+    questionCount,
 }: Props) => {
     const router = useRouter()
     const date = convertDateToString(question.createdAt)
@@ -131,7 +133,7 @@ export const QAPerfectCard = ({
                     {categoryText}
                 </Text>
             </HStack>
-            <CardFooter ansNum={question.ansNum} />
+            <CardFooter ansNum={questionCount} />
             {canPost && (
                 <>
                     <Divider />

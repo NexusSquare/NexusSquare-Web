@@ -26,7 +26,7 @@ export const DefaultModal = ({ title, children, isOpen, onClose }: Props): JSX.E
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>{title}</ModalHeader>
-                <ModalCloseButton color="mainColor" />
+                <ModalCloseButton color="primary" />
                 {children}
             </ModalContent>
         </Modal>

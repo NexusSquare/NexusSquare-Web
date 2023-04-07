@@ -4,7 +4,7 @@ import React from 'react'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
 import { Refetch } from '../../../../hooks/react-query/type'
@@ -30,6 +30,7 @@ interface Props {
     postUser?: User
     isPosted: boolean
     isMine: boolean
+    questionCount: number
 }
 
 export const QuestionDetail = ({
@@ -41,6 +42,7 @@ export const QuestionDetail = ({
     isPosted,
     isMine,
     refetchAnswers,
+    questionCount,
 }: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
@@ -95,11 +97,6 @@ export const QuestionDetail = ({
         })
     }
 
-    const onSuccessPostAnswer = () => {
-        if (!postUser) return
-        cacheClearAnswer(postUser.userId, questionId)
-    }
-
     const onClickPostAnswer = async (answerReq: AnswerReq) => {
         if (!postUser) return
         postAnswer(
@@ -111,6 +108,7 @@ export const QuestionDetail = ({
             }
         )
     }
+
     return (
         <>
             {isLoading || !question ? (
@@ -125,6 +123,7 @@ export const QuestionDetail = ({
                         onOpenPostForm={onOpenPostForm}
                         isPosted={isPosted}
                         isMine={isMine}
+                        questionCount={questionCount}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}

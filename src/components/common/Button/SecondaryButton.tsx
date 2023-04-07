@@ -25,11 +25,11 @@ export const SecondaryButton = ({
         <Button
             isLoading={isLoading}
             onClick={onClick}
-            color="mainColor"
+            color="primary"
             bgColor="white"
             borderWidth={1}
-            borderColor="mainColor"
-            _hover={{ bgColor: 'mainColor', color: 'white' }}
+            borderColor="primary"
+            _hover={{ bgColor: 'primary', color: 'white' }}
             type={type}
             width={width}
             isDisabled={disabled}

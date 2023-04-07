@@ -4,12 +4,12 @@ import { useEffect } from 'react'
 
 import { useForm } from 'react-hook-form'
 import { useSendPasswordResetEmail } from '../../../../hooks/authentication/usePassword'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { pagesPath } from '../../../../lib/$path'
 import { validators } from '../../../../lib/validator/Validators'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { TextLink } from '../../../common/TextLink'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { TextLink } from '../../../common/Link/TextLink'
 import { FormLayout } from '../../../molecules/common/FormLayout'
 
 export const PasswordForgotPage = (): JSX.Element => {
