@@ -4,7 +4,7 @@ import { Answer } from '../../../../entities/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import { BackButton } from '../../../common/buttons/BackButton'
+import { BackButton } from '../../../common/Button/BackButton'
 import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'

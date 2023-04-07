@@ -19,7 +19,7 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
 
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../../molecules/common/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'

@@ -2,7 +2,7 @@ import { FormControl, FormErrorMessage, Input, Select, Checkbox, VStack, FormLab
 
 import React from 'react'
 import { User } from '../../../entities/user'
-import { PrimaryButton } from '../../common/buttons/PrimaryButton'
+import { PrimaryButton } from '../../common/Button/PrimaryButton'
 import { gradeList } from '../../../entities/Grade'
 import { useCreateUserForm } from '../../../hooks/useCreateUserForm'
 import { UserReq } from '../../../api/req/UserReq'

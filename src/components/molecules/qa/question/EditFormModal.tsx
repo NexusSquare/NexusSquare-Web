@@ -17,8 +17,8 @@ import { DefaultModal } from '../../../common/DefaultModal'
 import { Question } from '../../../../entities/qa'
 import QACategories from '../../../../constants/qa/qaCategories'
 import { QuestionReq } from '../../../../api/req'
-import { SecondaryButton } from '../../../common/buttons/SecondaryButton'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
+import { SecondaryButton } from '../../../common/Button/SecondaryButton'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 
 interface Props {
     isOpen: boolean

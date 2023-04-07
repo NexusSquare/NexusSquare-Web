@@ -13,7 +13,7 @@ import {
     VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { useCreateUserForm } from '../../../../hooks/useCreateUserForm'
 import Department from '../../../../entities/Department'
 import { gradeList } from '../../../../entities/Grade'

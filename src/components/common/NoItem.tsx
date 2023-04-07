@@ -2,7 +2,7 @@ import { Box, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { FC } from 'react'
 import { pagesPath } from '../../lib/$path'
-import { PrimaryButton } from './buttons/PrimaryButton'
+import { PrimaryButton } from './Button/PrimaryButton'
 
 interface Props {
     title: string

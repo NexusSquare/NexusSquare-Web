@@ -2,8 +2,8 @@ import { Radio, RadioGroup, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Direction, OrderBy } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
-import { Drawer } from '../../common/Drawer'
-import { PrimaryButton } from '../../common/buttons/PrimaryButton'
+import { Drawer } from '../../common/Drawer/Drawer'
+import { PrimaryButton } from '../../common/Button/PrimaryButton'
 
 interface Props {
     onClose: () => void
