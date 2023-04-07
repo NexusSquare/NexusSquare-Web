@@ -23,7 +23,7 @@ export const SearchForm = ({ questions, clickSearch, openSortDrawer, openCategor
         <VStack w="full" paddingX={4}>
             <HStack w="full">
                 <Input placeholder="タイトル検索" w="full" borderRadius={'sm'} ref={inputRef}></Input>
-                <Button bgColor={'mainColor'} color="white" borderRadius={'sm'} onClick={onClickSearch}>
+                <Button bgColor={'primary'} color="white" borderRadius={'sm'} onClick={onClickSearch}>
                     <SearchIcon />
                 </Button>
             </HStack>

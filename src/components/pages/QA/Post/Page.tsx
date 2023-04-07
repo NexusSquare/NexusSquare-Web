@@ -172,11 +172,11 @@ export const PostPage = (): JSX.Element => {
                         <Button
                             type="button"
                             onClick={() => router.back()}
-                            color="mainColor"
+                            color="primary"
                             bgColor="white"
                             borderWidth={1}
-                            borderColor="mainColor"
-                            _hover={{ bgColor: 'mainColor', color: 'white' }}
+                            borderColor="primary"
+                            _hover={{ bgColor: 'primary', color: 'white' }}
                             w="50%"
                             disabled={isLoading}
                             borderRadius={'sm'}
@@ -186,7 +186,7 @@ export const PostPage = (): JSX.Element => {
                         <Button
                             type="submit"
                             color="white"
-                            bgColor="mainColor"
+                            bgColor="primary"
                             _hover={{ bgColor: 'subSubColor' }}
                             leftIcon={<BsChatText />}
                             w="full"

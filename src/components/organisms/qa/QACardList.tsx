@@ -67,7 +67,7 @@ const QuestionTabLabel: FC<QuestionTabLabelProps> = ({ onClick, labelName }) => 
             _selected={{
                 bgColor: 'white',
                 borderColor: 'gray.400',
-                borderBottomColor: 'mainColor',
+                borderBottomColor: 'primary',
                 borderBottomWidth: '5px',
                 color: 'black',
             }}

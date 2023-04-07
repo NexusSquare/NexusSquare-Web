@@ -8,7 +8,7 @@ const QAButton = (): JSX.Element => {
         <Link href="/qa/post" passHref>
             <HStack
                 spacing={2}
-                bgColor="mainColor"
+                bgColor="primary"
                 whiteSpace="nowrap"
                 borderRadius="30px"
                 paddingX={8}

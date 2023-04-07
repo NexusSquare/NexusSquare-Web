@@ -108,7 +108,7 @@ export const SearchLeftBar = ({
                             ref={inputRef}
                         ></Input>
                         <Button
-                            bgColor={'mainColor'}
+                            bgColor={'primary'}
                             color="white"
                             borderRadius={'sm'}
                             onClick={() => onClickSearch(inputRef.current?.value)}

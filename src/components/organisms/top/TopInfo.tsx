@@ -21,7 +21,7 @@ export const TopInfo = () => {
                 <HStack w={{ base: '100%', md: '50%' }}>
                     <VStack align="start" spacing="30px" pb={12}>
                         <Heading lineHeight="150%" fontSize={{ base: '2xl', md: '4xl' }}>
-                            <Box borderBottom="2px solid" as="span" borderColor="mainColor">
+                            <Box borderBottom="2px solid" as="span" borderColor="primary">
                                 大学生活でわからないことがあるときはここで解決！
                             </Box>
                         </Heading>
@@ -31,11 +31,11 @@ export const TopInfo = () => {
                         </Text>
                         <Button
                             size="lg"
-                            color="mainColor"
+                            color="primary"
                             bgColor="white"
                             borderWidth={1}
-                            borderColor="mainColor"
-                            _hover={{ bgColor: 'mainColor', color: 'white' }}
+                            borderColor="primary"
+                            _hover={{ bgColor: 'primary', color: 'white' }}
                             w={{ base: 'full', md: 'auto' }}
                             onClick={onClickLogin}
                         >

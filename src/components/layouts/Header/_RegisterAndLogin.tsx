@@ -25,16 +25,16 @@ const PcRegisterAndLogin = ({ onClickRegister, onClickLogin }: Props) => {
                 <Button
                     type="button"
                     color="white"
-                    bgColor="mainColor"
+                    bgColor="primary"
                     borderWidth={2}
                     borderColor="white"
-                    _hover={{ bgColor: 'white', color: 'mainColor' }}
+                    _hover={{ bgColor: 'white', color: 'primary' }}
                     onClick={onClickRegister}
                     borderRadius="sm"
                 >
                     新規登録
                 </Button>
-                <HStack as="button" spacing={1} _hover={{ color: 'mainColor' }}>
+                <HStack as="button" spacing={1} _hover={{ color: 'primary' }}>
                     <FiLogIn size={30} color={'white'} />
                     <Text
                         fontSize={'md'}
@@ -56,13 +56,7 @@ const SpRegisterAndLogin = ({ onClickRegister, onClickLogin }: Props) => {
     return (
         <SpProvider>
             <HStack spacing={2}>
-                <VStack
-                    as="button"
-                    _hover={{ color: 'mainColor' }}
-                    spacing={1}
-                    justify={'center'}
-                    alignItems={'center'}
-                >
+                <VStack as="button" _hover={{ color: 'primary' }} spacing={1} justify={'center'} alignItems={'center'}>
                     <FiUserPlus size={20} color={'white'} />
                     <Text fontSize={'10px'} color={'white'} fontWeight={'bold'} onClick={onClickRegister}>
                         新規登録

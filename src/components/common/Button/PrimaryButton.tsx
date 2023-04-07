@@ -24,7 +24,7 @@ export const PrimaryButton = ({
         <Button
             isLoading={isLoading}
             color="white"
-            bgColor="mainColor"
+            bgColor="primary"
             _hover={{ bgColor: 'subSubColor' }}
             onClick={onClick}
             type={type}

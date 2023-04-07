@@ -15,7 +15,7 @@ export const TopAbout = () => {
                     <Heading
                         w="full"
                         borderLeft={'5px solid'}
-                        borderColor="mainColor"
+                        borderColor="primary"
                         padding={'10px 12px'}
                         fontSize="xl"
                     >

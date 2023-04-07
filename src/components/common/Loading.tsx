@@ -5,7 +5,7 @@ export const Loading = () => {
     return (
         <VStack h="100vh" justify={'center'}>
             <HStack>
-                <CircularProgress isIndeterminate color="mainColor" />
+                <CircularProgress isIndeterminate color="primary" />
             </HStack>
         </VStack>
     )

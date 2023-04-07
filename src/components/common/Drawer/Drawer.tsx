@@ -19,7 +19,7 @@ export const Drawer = ({ onClose, isOpen, children, headerText }: Props) => {
         <ChakraDrawer onClose={onClose} isOpen={isOpen} size={'full'}>
             <DrawerOverlay />
             <DrawerContent>
-                <DrawerCloseButton color={'mainColor'} />
+                <DrawerCloseButton color={'primary'} />
                 <DrawerHeader>{headerText}</DrawerHeader>
                 <DrawerBody>{children}</DrawerBody>
             </DrawerContent>

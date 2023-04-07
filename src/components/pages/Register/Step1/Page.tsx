@@ -23,6 +23,7 @@ import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../../molecules/common/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'
+import { pagesPath } from '../../../../lib/$path'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -56,7 +57,7 @@ export const Page = (): JSX.Element => {
     }
 
     const onClickLogin = () => {
-        router.push(PAGE_LINKS.LOGIN.URL)
+        router.push(pagesPath.login.$url())
     }
     return (
         <FormLayout title="新規登録">

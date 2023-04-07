@@ -114,7 +114,7 @@ export const AnswerList = ({
         <>
             <Text as="h2" fontSize="xl" fontWeight="semibold" w="full" pl="4">
                 回答：
-                <Box as="span" color={'mainColor'} mr="2">
+                <Box as="span" color={'primary'} mr="2">
                     {answers.length}
                 </Box>
                 件
