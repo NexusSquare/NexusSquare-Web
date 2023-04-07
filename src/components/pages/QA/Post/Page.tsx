@@ -185,19 +185,6 @@ export const PostPage = (): JSX.Element => {
                             キャンセル
                         </Button>
                         <PrimaryButton type="submit" buttonText="質問を投稿する" width="full" />
-                        {/* <Button
-                            type="submit"
-                            color="white"
-                            bgColor="primary"
-                            _hover={{ bgColor: 'subSubColor' }}
-                            leftIcon={<BsChatText />}
-                            w="full"
-                            isLoading={isLoading}
-                            disabled={isLoading}
-                            borderRadius={'sm'}
-                        >
-                            質問を投稿する
-                        </Button> */}
                     </HStack>
                 </VStack>
             </VStack>
