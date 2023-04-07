@@ -32,6 +32,7 @@ import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
+import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]
@@ -183,7 +184,8 @@ export const PostPage = (): JSX.Element => {
                         >
                             キャンセル
                         </Button>
-                        <Button
+                        <PrimaryButton type="submit" buttonText="質問を投稿する" width="full" />
+                        {/* <Button
                             type="submit"
                             color="white"
                             bgColor="primary"
@@ -195,7 +197,7 @@ export const PostPage = (): JSX.Element => {
                             borderRadius={'sm'}
                         >
                             質問を投稿する
-                        </Button>
+                        </Button> */}
                     </HStack>
                 </VStack>
             </VStack>

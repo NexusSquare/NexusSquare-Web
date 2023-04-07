@@ -111,6 +111,7 @@ export const SearchLeftBar = ({
                             bgColor={'primary'}
                             color="white"
                             borderRadius={'sm'}
+                            _hover={{ bgColor: 'primaryDark' }}
                             onClick={() => onClickSearch(inputRef.current?.value)}
                         >
                             <SearchIcon />

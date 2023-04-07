@@ -15,7 +15,7 @@ const QAButton = (): JSX.Element => {
                 paddingY={2}
                 boxShadow="md"
                 color="white"
-                _hover={{ bgColor: 'subSubColor' }}
+                _hover={{ bgColor: 'primaryDark' }}
                 _active={{ opacity: '50%', outline: 'none' }}
                 _focus={{ outline: 'none' }}
             >
