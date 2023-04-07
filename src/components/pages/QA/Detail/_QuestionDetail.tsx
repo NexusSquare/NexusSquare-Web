@@ -97,11 +97,6 @@ export const QuestionDetail = ({
         })
     }
 
-    const onSuccessPostAnswer = () => {
-        if (!postUser) return
-        cacheClearAnswer(postUser.userId, questionId)
-    }
-
     const onClickPostAnswer = async (answerReq: AnswerReq) => {
         if (!postUser) return
         postAnswer(
@@ -113,6 +108,7 @@ export const QuestionDetail = ({
             }
         )
     }
+
     return (
         <>
             {isLoading || !question ? (
