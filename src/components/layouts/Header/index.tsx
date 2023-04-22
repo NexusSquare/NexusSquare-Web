@@ -12,13 +12,13 @@ import { useUpdateNotification } from '../../../hooks/notification/useUpdateNoti
 import { useErrorToast } from '../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../constants/errors'
 import { HEADER_HEIGHT } from '../constants'
-import { NotificationButton } from './notifications/_NotificationButton'
 import { AvatarPopover } from './_AvatarPopover'
 import { RegisterAndLogin } from './_RegisterAndLogin'
 import { NavigationLink } from './_NavigationLink'
 import { pagesPath } from '../../../lib/$path'
 import Image from 'next/image'
 import { useUser, useUserMeta } from '../../../store/atom'
+import { NotificationPopover } from './notifications/_NotificationPopover'
 interface Props {
     children?: ReactNode
 }
@@ -66,7 +66,7 @@ export const Header = memo(({ children }: Props): JSX.Element => {
     const LoginOrProfile = () =>
         user && userMeta ? (
             <HStack spacing={{ base: 2, md: 4 }}>
-                <NotificationButton notifications={notifications} seeNotification={onClickNotification} />
+                <NotificationPopover notifications={notifications} seeNotification={onClickNotification} />
                 <AvatarPopover user={user} userMeta={userMeta} seeProfile={onClickProfile} signOut={onClickLogOut} />
             </HStack>
         ) : (
