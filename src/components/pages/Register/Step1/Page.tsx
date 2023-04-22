@@ -7,7 +7,6 @@ import {
     FormHelperText,
     FormLabel,
     HStack,
-    Input,
     Text,
     VStack,
 } from '@chakra-ui/react'
@@ -19,11 +18,12 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { FormLayout } from '../../../ui/features/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'
 import { pagesPath } from '../../../../lib/$path'
+import { Input } from '../../../ui/common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

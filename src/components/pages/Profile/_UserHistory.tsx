@@ -20,7 +20,7 @@ import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuest
 import { History } from '../../../entities/history'
 import { Question } from '../../../entities/qa'
 import { Answer } from '../../../entities/qa/Answer'
-import { NoCards } from '../../common/NoCards'
+import { NoCards } from '../../ui/common/NoCards'
 import { AnswerList } from './_AnswerList'
 import { HistoryList } from './_HistoryList'
 import { QuestionList } from './_QuestionList'
@@ -28,6 +28,7 @@ import { Refetch } from '../../../hooks/react-query/type'
 import { pagesPath } from '../../../lib/$path'
 
 interface Props {
+    isMine: boolean
     userId: string
     answers: Answer[]
     questions: Question[]
@@ -38,6 +39,7 @@ interface Props {
 }
 // NOTE　責務を分離させるためにhooksの使用を許可
 export const UserHistory = ({
+    isMine,
     userId,
     answers,
     questions,
@@ -93,6 +95,7 @@ export const UserHistory = ({
                             onClickCard={onClickCard}
                             refetchQuestions={refetchQuestions}
                             userId={userId}
+                            isMine={isMine}
                         />
                     </TabPanel>
                     <TabPanel padding="0px">
@@ -102,6 +105,7 @@ export const UserHistory = ({
                             onClickCard={onClickCard}
                             userId={userId}
                             refetchAnswers={refetchAnswers}
+                            isMine={isMine}
                         />
                     </TabPanel>
                 </TabPanels>

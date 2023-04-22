@@ -5,12 +5,9 @@ import {
     FormErrorMessage,
     FormLabel,
     HStack,
-    Input,
     ListItem,
-    Select,
     Spacer,
     Text,
-    Textarea,
     UnorderedList,
     useDisclosure,
     VStack,
@@ -32,7 +29,10 @@ import { ContentsLayout } from '../../../layouts/ContentsLayout'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { Input } from '../../../ui/common/Input'
+import { Textarea } from '../../../ui/common/Textarea'
+import { Select } from '../../../ui/common/Select'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]

@@ -1,19 +1,14 @@
 import {
-    Box,
-    Checkbox,
-    Divider,
     FormControl,
     FormErrorMessage,
     FormHelperText,
     FormLabel,
     HStack,
-    Input,
-    Select,
     useDisclosure,
     VStack,
 } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { useCreateUserForm } from '../../../../hooks/useCreateUserForm'
 import Department from '../../../../entities/Department'
 import { gradeList } from '../../../../entities/Grade'
@@ -21,13 +16,16 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { usePostUser } from '../../../../hooks/user'
 import { UserReq } from '../../../../api/req/UserReq'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { FormLayout } from '../../../ui/features/FormLayout'
 import { RuleModal } from './_RuleModal'
 import { useState } from 'react'
 import { pagesPath } from '../../../../lib/$path'
 import { UserParams } from '../../../../entities/factories/userFactory'
 import { User, UserMeta } from '../../../../entities/user'
 import { useUser, useUserMeta } from '../../../../store/atom'
+import { Input } from '../../../ui/common/Input'
+import { Select } from '../../../ui/common/Select'
+import { Checkbox } from '../../../ui/common/Checkbox'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

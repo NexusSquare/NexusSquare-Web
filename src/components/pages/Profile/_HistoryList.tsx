@@ -1,8 +1,8 @@
 import { VStack, Text, Box } from '@chakra-ui/react'
 import React from 'react'
 import { History } from '../../../entities/history'
-import { NoCards } from '../../common/NoCards'
-import { HistoryCard } from '../../molecules/profile/HistoryCard'
+import { NoCards } from '../../ui/common/NoCards'
+import { HistoryCard } from './_HistoryCard'
 
 interface Props {
     historyList: History[]

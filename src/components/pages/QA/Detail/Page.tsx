@@ -4,7 +4,7 @@ import { Answer } from '../../../../entities/qa/Answer'
 
 import { useUser } from '../../../../store/atom'
 import { useFetchAnswersByQuestionId } from '../../../../hooks/answer/useFethcAnswer'
-import { BackButton } from '../../../common/Button/BackButton'
+import { BackButton } from '../../../ui/common/Button/BackButton'
 import { AnswerList } from './_AnswerList'
 import { QuestionDetail } from './_QuestionDetail'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
@@ -12,9 +12,9 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
-import { SponserBanner } from '../../../common/suponser/Banner'
+import { SponserBanner } from '../../../ui/features/Suponser/Banner'
 import { advertisement } from '../../../../entities/Advertisement'
-import { NoItem } from '../../../common/NoItem'
+import { NoItem } from '../../../ui/common/NoItem'
 
 interface Props {
     questionId: string

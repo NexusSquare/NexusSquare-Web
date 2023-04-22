@@ -3,7 +3,7 @@ import Image from 'next/image'
 
 import { BsTwitter } from 'react-icons/bs'
 import { useSpMediaQuery } from '../../hooks/useSpMediaQuery'
-import ChakraNextImage from '../common/chakraNextImage'
+import ChakraNextImage from '../ui/common/chakraNextImage'
 
 const copyRight = '© 2022 Nexus Square'
 

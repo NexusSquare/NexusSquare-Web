@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, VStack, Text } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormHelperText, FormLabel, VStack, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
@@ -8,9 +8,10 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { pagesPath } from '../../../../lib/$path'
 import { validators } from '../../../../lib/validator/Validators'
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
-import { TextLink } from '../../../common/Link/TextLink'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { Input } from '../../../ui/common/Input'
+import { TextLink } from '../../../ui/common/Link/TextLink'
+import { FormLayout } from '../../../ui/features/FormLayout'
 
 export const PasswordForgotPage = (): JSX.Element => {
     const {
@@ -56,10 +57,8 @@ export const PasswordForgotPage = (): JSX.Element => {
                 <FormControl isInvalid={errors.email !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'}>メールアドレス</FormLabel>
                     <Input
-                        id="mail"
-                        {...register('email', {
-                            validate: validators.requiredForEmailPatter(),
-                        })}
+                        id="email"
+                        {...register('email')}
                         defaultValue={'aichi-pu.ac.jp'}
                         placeholder="xx000000@xxx.aichi-pu.ac.jp"
                         type="email"

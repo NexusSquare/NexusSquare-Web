@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, VStack, Text, Divider, Heading, OrderedList, ListItem, Link, UnorderedList } from '@chakra-ui/react'
-import { RuleBody } from '../../molecules/rule/RuleBody'
+import { RuleBody } from '../../ui/features/Rule/RuleBody'
 
 export const RulePage = (): JSX.Element => {
     return (

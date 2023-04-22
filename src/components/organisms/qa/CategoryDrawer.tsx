@@ -1,13 +1,13 @@
-import { Checkbox, HStack, Radio, RadioGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { HStack } from '@chakra-ui/react'
 import React, { ChangeEvent, useState } from 'react'
 import QACategories from '../../../constants/qa/qaCategories'
 import { QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { useErrorToast } from '../../../hooks/toast/useErrorToast'
-import { Drawer } from '../../common/Drawer/Drawer'
-import { PrimaryButton } from '../../common/Button/PrimaryButton'
-import { SecondaryButton } from '../../common/Button/SecondaryButton'
-import { Categories } from '../../molecules/qa/question/Categories'
+import { Drawer } from '../../ui/common/Drawer/Drawer'
+import { PrimaryButton } from '../../ui/common/Button/PrimaryButton'
+import { SecondaryButton } from '../../ui/common/Button/SecondaryButton'
+import { Categories } from '../../ui/features/QA/question/Categories'
 
 interface Props {
     onClose: () => void
