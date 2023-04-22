@@ -1,8 +1,8 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { HiOutlineLightBulb } from 'react-icons/hi'
-import { convertDateToString } from '../../../../lib/convert/convertTimestamp'
-import { History, HistoryType } from '../../../../entities/history'
+import { convertDateToString } from '../../../lib/convert/convertTimestamp'
+import { History, HistoryType } from '../../../entities/history'
 
 interface Props {
     history: History

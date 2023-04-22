@@ -1,4 +1,4 @@
-import { Checkbox, HStack, Radio, RadioGroup, VStack, Wrap, WrapItem } from '@chakra-ui/react'
+import { HStack } from '@chakra-ui/react'
 import React, { ChangeEvent, useState } from 'react'
 import QACategories from '../../../constants/qa/qaCategories'
 import { QACategory } from '../../../constants/query'

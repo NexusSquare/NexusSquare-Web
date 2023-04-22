@@ -1,7 +1,4 @@
 import {
-    Box,
-    Checkbox,
-    Divider,
     FormControl,
     FormErrorMessage,
     FormHelperText,
@@ -28,6 +25,7 @@ import { User, UserMeta } from '../../../../entities/user'
 import { useUser, useUserMeta } from '../../../../store/atom'
 import { Input } from '../../../ui/common/Input'
 import { Select } from '../../../ui/common/Select'
+import { Checkbox } from '../../../ui/common/Checkbox'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

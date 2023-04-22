@@ -2,7 +2,7 @@
 import { HStack, VStack, Text, Box, Avatar, WrapItem } from '@chakra-ui/react'
 import React, { memo } from 'react'
 import { FaCoins } from 'react-icons/fa'
-import { User, UserMeta } from '../../../../entities/user'
+import { User, UserMeta } from '../../../entities/user'
 import { ProfileItem } from './_ProfileItem'
 
 interface Props {

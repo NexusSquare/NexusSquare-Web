@@ -1,41 +1,23 @@
 /* eslint-disable react/display-name */
-import {
-    HStack,
-    VStack,
-    Text,
-    Box,
-    Avatar,
-    IconButton,
-    Input,
-    Spinner,
-    useDisclosure,
-    Spacer,
-    Divider,
-    Tooltip,
-    Popover,
-    PopoverTrigger,
-    Button,
-    PopoverContent,
-    PopoverBody,
-} from '@chakra-ui/react'
+import { HStack, VStack, Text, Box, Avatar, IconButton, Input, Spinner, useDisclosure } from '@chakra-ui/react'
 import { FiEdit } from 'react-icons/fi'
 import React, { memo, RefObject, useCallback, useEffect } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
-import { EditForm } from '../../../ui/features/Profile/EditForm'
-import { Modal } from '../../../ui/common/Modal'
+import { EditForm } from './_EditForm'
+import { Modal } from '../../ui/common/Modal'
 import { FaCoins } from 'react-icons/fa'
-import { User, UserMeta } from '../../../../entities/user'
-import { UserReq } from '../../../../api/req/UserReq'
-import { useUpdateUser } from '../../../../hooks/user/useUpdateUser'
-import { ERROR_MESSAGE } from '../../../../constants/errors'
-import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
-import { STORAGE_URL } from '../../../../constants/storage'
-import { useUploadFile } from '../../../../hooks/storege/useUploadFile'
-import { useFile } from '../../../../hooks/useFile'
-import { Refetch } from '../../../../hooks/react-query/type'
+import { User, UserMeta } from '../../../entities/user'
+import { UserReq } from '../../../api/req/UserReq'
+import { useUpdateUser } from '../../../hooks/user/useUpdateUser'
+import { ERROR_MESSAGE } from '../../../constants/errors'
+import { useErrorToast } from '../../../hooks/toast/useErrorToast'
+import { STORAGE_URL } from '../../../constants/storage'
+import { useUploadFile } from '../../../hooks/storege/useUploadFile'
+import { useFile } from '../../../hooks/useFile'
+import { Refetch } from '../../../hooks/react-query/type'
 import { ProfileItem } from './_ProfileItem'
 import { BsQuestionCircle } from 'react-icons/bs'
-import { QuestionPopover } from '../../../ui/common/Popover'
+import { QuestionPopover } from '../../ui/common/Popover'
 
 interface Props {
     user: User

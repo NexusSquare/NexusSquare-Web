@@ -1,10 +1,11 @@
-import { Checkbox, Wrap, WrapItem, Text, Box, VStack } from '@chakra-ui/react'
+import { Wrap, WrapItem, Text, Box, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import QACategories, {
     QA_STUDENT_LIFE_CATEGORIES,
     QA_SUBJECT_CATEGORIES,
 } from '../../../../../constants/qa/qaCategories'
 import { QACategory } from '../../../../../constants/query'
+import { Checkbox } from '../../../common/Checkbox'
 
 interface Props {
     selectedCategories: QACategory[]

@@ -1,18 +1,18 @@
 import { Box, HStack, VStack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
-import { UserInfo } from '../../organisms/profile/user/UserInfo'
+
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
 import { Loading } from '../../ui/common/Loading'
-import { OthersInfo } from '../../organisms/profile/user/OthersInfo'
+import { OthersInfo } from './_OthersInfo'
 import { UserHistory } from './_UserHistory'
 import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
 import { BackButton } from '../../ui/common/Button/BackButton'
-import { useUser } from '../../../store/atom'
 import { ContentsLayout } from '../../layouts/ContentsLayout'
 import { LeftBar } from '../../layouts/LeftBar'
 import { NoItem } from '../../ui/common/NoItem'
 import { useAuth } from '../../../hooks/authentication'
+import { UserInfo } from './_UserInfo'
 interface Props {
     userId: string
     tab?: string
