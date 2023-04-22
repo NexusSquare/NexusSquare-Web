@@ -8,7 +8,6 @@ import {
     ModalBody,
     ModalFooter,
     Text,
-    Textarea,
 } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -18,6 +17,7 @@ import { validators } from '../../../../lib/validator/Validators'
 import { Modal } from '../../../common/Modal'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { SecondaryButton } from '../../../common/Button/SecondaryButton'
+import { Textarea } from '../../../common/Textarea'
 
 interface Props {
     isOpen: boolean

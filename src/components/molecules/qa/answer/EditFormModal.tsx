@@ -1,15 +1,4 @@
-import {
-    Button,
-    FormControl,
-    FormErrorMessage,
-    FormLabel,
-    HStack,
-    Input,
-    Text,
-    Textarea,
-    Select,
-    VStack,
-} from '@chakra-ui/react'
+import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, Text, Select, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Modal } from '../../../common/Modal'
@@ -17,6 +6,7 @@ import { AnswerReq } from '../../../../api/req'
 import { SecondaryButton } from '../../../common/Button/SecondaryButton'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { Answer } from '../../../../entities/qa/Answer'
+import { Textarea } from '../../../common/Textarea'
 
 interface Props {
     isOpen: boolean

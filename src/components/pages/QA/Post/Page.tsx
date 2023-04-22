@@ -9,7 +9,6 @@ import {
     Select,
     Spacer,
     Text,
-    Textarea,
     UnorderedList,
     useDisclosure,
     VStack,
@@ -33,6 +32,7 @@ import { User } from '../../../../entities/user'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { Input } from '../../../common/Input'
+import { Textarea } from '../../../common/Textarea'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]
