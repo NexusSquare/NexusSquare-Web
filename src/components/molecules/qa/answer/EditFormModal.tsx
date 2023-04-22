@@ -1,4 +1,4 @@
-import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, Text, Select, VStack } from '@chakra-ui/react'
+import { Button, FormControl, FormErrorMessage, FormLabel, HStack, Input, Text, VStack } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { Modal } from '../../../common/Modal'

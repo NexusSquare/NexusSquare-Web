@@ -6,7 +6,6 @@ import {
     FormLabel,
     HStack,
     ListItem,
-    Select,
     Spacer,
     Text,
     UnorderedList,
@@ -33,6 +32,7 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { Input } from '../../../common/Input'
 import { Textarea } from '../../../common/Textarea'
+import { Select } from '../../../common/Select'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]

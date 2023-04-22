@@ -1,5 +1,5 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Box, HStack, VStack, Text, Select, Wrap, WrapItem, Checkbox, Button } from '@chakra-ui/react'
+import { Box, HStack, VStack, Text, Button } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import React, { ChangeEvent, ReactNode, useRef, useState } from 'react'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
@@ -12,6 +12,7 @@ import { Categories } from '../../molecules/qa/question/Categories'
 
 import { BaseLeftBar } from '../../layouts/LeftBar/_Base'
 import { Input } from '../../common/Input'
+import { Select } from '../../common/Select'
 
 interface Props {
     children?: ReactNode
