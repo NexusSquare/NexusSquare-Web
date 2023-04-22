@@ -3,8 +3,8 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { advertisement } from '../../entities/Advertisement'
 import { SPONSERS } from '../../entities/Sponser'
-import QAButton from '../atoms/QAButton'
-import { SponserBanner } from '../common/suponser/Banner'
+import QAButton from '../ui/common/Button/QAButton'
+import { SponserBanner } from '../ui/features/Suponser/Banner'
 import { RIGHT_BAR_HEIGHT, RIGHT_BAR_MINI_WIDTH, RIGHT_BAR_WIDTH } from './constants'
 
 interface Props {
@@ -16,7 +16,7 @@ const sponsers = advertisement.getSome(2)
 export const RightBar = ({ children }: Props): JSX.Element => {
     return (
         <VStack as="aside" bgColor="subColor" h={RIGHT_BAR_HEIGHT} w={RIGHT_BAR_WIDTH} minW={RIGHT_BAR_MINI_WIDTH}>
-            <VStack spacing={0} margin="30px 10px">
+            <VStack spacing={2} margin="30px 10px">
                 {sponsers.map((ad, i) => {
                     return <SponserBanner sponser={ad} key={i} />
                 })}

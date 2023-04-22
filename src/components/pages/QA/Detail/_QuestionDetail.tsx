@@ -4,7 +4,7 @@ import React from 'react'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { usePostAnswer } from '../../../../hooks/answer/usePostAnswer'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useDeleteQuestion } from '../../../../hooks/question/useDeleteQuestion'
 import { useUpdateQuestion } from '../../../../hooks/question/useUpdateQuestion'
 import { Refetch } from '../../../../hooks/react-query/type'
@@ -12,12 +12,12 @@ import { useReport } from '../../../../hooks/report/useReport'
 import { AnswerReq, QuestionReq, ReportReq } from '../../../../api/req'
 import { Question } from '../../../../entities/qa'
 import { User } from '../../../../entities/user'
-import { QASkeleton } from '../../../common/QASkeleton'
-import { PostFormModal } from '../../../molecules/qa/answer/PostFormModal'
-import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
-import { EditFormModal } from '../../../molecules/qa/question/EditFormModal'
+import { QASkeleton } from '../../../ui/features/QASkeleton'
+import { PostFormModal } from '../../../ui/features/QA/answer/PostFormModal'
+import { DeleteFormModal } from '../../../ui/features/QA/DeleteFormModal'
+import { EditFormModal } from '../../../ui/features/QA/question/EditFormModal'
 import { QAPerfectCard } from './_QAPerfectCard'
-import { ReportFormModal } from '../../../molecules/qa/ReportFromModal'
+import { ReportFormModal } from '../../../ui/features/QA/ReportFromModal'
 import { useUser } from '../../../../store/atom'
 import { Answer } from '../../../../entities/qa/Answer'
 
@@ -30,6 +30,7 @@ interface Props {
     postUser?: User
     isPosted: boolean
     isMine: boolean
+    questionCount: number
 }
 
 export const QuestionDetail = ({
@@ -41,6 +42,7 @@ export const QuestionDetail = ({
     isPosted,
     isMine,
     refetchAnswers,
+    questionCount,
 }: Props) => {
     const errorToast = useErrorToast()
     const router = useRouter()
@@ -95,11 +97,6 @@ export const QuestionDetail = ({
         })
     }
 
-    const onSuccessPostAnswer = () => {
-        if (!postUser) return
-        cacheClearAnswer(postUser.userId, questionId)
-    }
-
     const onClickPostAnswer = async (answerReq: AnswerReq) => {
         if (!postUser) return
         postAnswer(
@@ -111,6 +108,7 @@ export const QuestionDetail = ({
             }
         )
     }
+
     return (
         <>
             {isLoading || !question ? (
@@ -125,6 +123,7 @@ export const QuestionDetail = ({
                         onOpenPostForm={onOpenPostForm}
                         isPosted={isPosted}
                         isMine={isMine}
+                        questionCount={questionCount}
                     />
                     <EditFormModal
                         onClose={onCloseEditForm}

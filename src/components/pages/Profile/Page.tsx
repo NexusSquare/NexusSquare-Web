@@ -1,27 +1,28 @@
 import { Box, HStack, VStack, Text } from '@chakra-ui/react'
 import Link from 'next/link'
-import { UserInfo } from '../../organisms/profile/user/UserInfo'
+
 import { useFetchUser, useFetchUserMeta } from '../../../hooks/user/useFetchUser'
-import { Loading } from '../../common/Loading'
-import { OthersInfo } from '../../organisms/profile/user/OthersInfo'
+import { Loading } from '../../ui/common/Loading'
+import { OthersInfo } from './_OthersInfo'
 import { UserHistory } from './_UserHistory'
 import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuestion'
 import { useFetchAnswersByUserId } from '../../../hooks/answer/useFethcAnswer'
-import { BackButton } from '../../common/buttons/BackButton'
-import { useUser } from '../../../store/atom'
+import { BackButton } from '../../ui/common/Button/BackButton'
 import { ContentsLayout } from '../../layouts/ContentsLayout'
 import { LeftBar } from '../../layouts/LeftBar'
-import { NoItem } from '../../common/NoItem'
+import { NoItem } from '../../ui/common/NoItem'
+import { useAuth } from '../../../hooks/authentication'
+import { UserInfo } from './_UserInfo'
 interface Props {
     userId: string
     tab?: string
 }
 // TODO　 コンポーネント分割（責務の分離）
 export const ProfilePage = ({ userId, tab }: Props): JSX.Element => {
-    const { user: currentUser } = useUser()
-    const myUserId = currentUser?.userId
+    const { data: currentUser } = useAuth()
+    const isMine = userId === currentUser?.uid
 
-    const { data: user, refetch: refetchUser, isError } = useFetchUser(userId)
+    const { data: profile, refetch: refetchUser, isError } = useFetchUser(userId)
     const { data: userMeta } = useFetchUserMeta(userId)
     const {
         data: questions = [],
@@ -37,17 +38,18 @@ export const ProfilePage = ({ userId, tab }: Props): JSX.Element => {
     const isFetchLoading: boolean = isFetchQuestionsLoading || isFetchAnswersLoading
 
     if (isError) return <NoItem title="ユーザー" />
-    if (!user) return <Loading />
+    if (!profile) return <Loading />
     return (
         <ContentsLayout Left={<LeftBar />}>
             <VStack w="full" pb="4" spacing={0}>
                 <BackButton />
-                {userId === myUserId ? (
-                    <UserInfo user={user} userMeta={userMeta} refetchUser={refetchUser} />
+                {isMine ? (
+                    <UserInfo user={profile} userMeta={userMeta} refetchUser={refetchUser} />
                 ) : (
-                    <OthersInfo user={user} />
+                    <OthersInfo user={profile} />
                 )}
                 <UserHistory
+                    isMine={isMine}
                     userId={userId}
                     answers={answers}
                     questions={questions}

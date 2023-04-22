@@ -1,12 +1,13 @@
-import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { UserAccount } from '../../../../entities/user'
 import { useLogin } from '../../../../hooks/authentication'
 import { validators } from '../../../../lib/validator/Validators'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { Input } from '../../../ui/common/Input'
+import { FormLayout } from '../../../ui/features/FormLayout'
 
 export const AdminLoginPage = (): JSX.Element => {
     const router = useRouter()

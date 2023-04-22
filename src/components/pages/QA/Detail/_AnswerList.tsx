@@ -4,19 +4,19 @@ import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { USER_ID } from '../../../../constants/token'
 import { useDeleteAnswer } from '../../../../hooks/answer/useDeleteAnswer'
 import { useUpdateAnswer } from '../../../../hooks/answer/useUpdateAnswer'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useBestAnswer } from '../../../../hooks/question/useUpdateQuestion'
 import { useReport } from '../../../../hooks/report/useReport'
 import { useUser } from '../../../../store/atom'
 import { AnswerReq, ReportReq } from '../../../../api/req'
 import { Answer } from '../../../../entities/qa/Answer'
-import { NoCards } from '../../../common/NoCards'
-import { QASkeleton } from '../../../common/QASkeleton'
+import { NoCards } from '../../../ui/common/NoCards'
+import { QASkeleton } from '../../../ui/features/QASkeleton'
 import AnswerCard from './_AnswerCard'
-import { BestAnswerModal } from '../../../molecules/qa/answer/BestAnswerModal'
-import { EditFormModal } from '../../../molecules/qa/answer/EditFormModal'
-import { DeleteFormModal } from '../../../molecules/qa/DeleteFormModal'
-import { ReportFormModal } from '../../../molecules/qa/ReportFromModal'
+import { BestAnswerModal } from '../../../ui/features/QA/answer/BestAnswerModal'
+import { EditFormModal } from '../../../ui/features/QA/answer/EditFormModal'
+import { DeleteFormModal } from '../../../ui/features/QA/DeleteFormModal'
+import { ReportFormModal } from '../../../ui/features/QA/ReportFromModal'
 import { Refetch } from '../../../../hooks/react-query/type'
 
 interface Props {
@@ -114,7 +114,7 @@ export const AnswerList = ({
         <>
             <Text as="h2" fontSize="xl" fontWeight="semibold" w="full" pl="4">
                 回答：
-                <Box as="span" color={'mainColor'} mr="2">
+                <Box as="span" color={'primary'} mr="2">
                     {answers.length}
                 </Box>
                 件

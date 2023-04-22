@@ -1,10 +1,11 @@
-import { VStack, Text, HStack, Checkbox, Stack, Box } from '@chakra-ui/react'
+import { VStack, Text, HStack } from '@chakra-ui/react'
 import React, { ChangeEvent, LegacyRef, useEffect, useState } from 'react'
-import { DefaultModal } from '../../../common/DefaultModal'
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
-import { SecondaryButton } from '../../../common/buttons/SecondaryButton'
-import { RuleBody } from '../../../molecules/rule/RuleBody'
+import { Modal } from '../../../ui/common/Modal'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { SecondaryButton } from '../../../ui/common/Button/SecondaryButton'
+import { RuleBody } from '../../../ui/features/Rule/RuleBody'
 import { useBottomScrollListener } from 'react-bottom-scroll-listener'
+import { Checkbox } from '../../../ui/common/Checkbox'
 
 interface Props {
     isOpen: boolean
@@ -25,7 +26,7 @@ export const RuleModal = ({ isOpen, onClose, onClick, isLoading }: Props) => {
         onClose()
     }
     return (
-        <DefaultModal isOpen={isOpen} onClose={onCloseModal} title="利用規約に同意しますか？">
+        <Modal isOpen={isOpen} onClose={onCloseModal} title="利用規約に同意しますか？">
             <VStack w="full" spacing={4} p="4">
                 <VStack maxH={96} overflow={'scroll'} borderWidth={1} p={2} ref={scrollRef}>
                     <RuleBody />
@@ -49,6 +50,6 @@ export const RuleModal = ({ isOpen, onClose, onClick, isLoading }: Props) => {
                     ></PrimaryButton>
                 </HStack>
             </VStack>
-        </DefaultModal>
+        </Modal>
     )
 }

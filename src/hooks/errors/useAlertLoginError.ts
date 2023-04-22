@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { ERROR, ERROR_MESSAGE } from '../../constants/errors'
-import { useErrorToast } from './useErrorToast'
+import { useErrorToast } from '../toast/useErrorToast'
 
 export const useAlertLoginError = () => {
     const errorToast = useErrorToast()

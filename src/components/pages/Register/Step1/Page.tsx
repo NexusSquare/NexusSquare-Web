@@ -7,7 +7,6 @@ import {
     FormHelperText,
     FormLabel,
     HStack,
-    Input,
     Text,
     VStack,
 } from '@chakra-ui/react'
@@ -17,12 +16,14 @@ import { useForm } from 'react-hook-form'
 import { ERROR, ERROR_MESSAGE } from '../../../../constants/errors'
 import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { useCreateAccount, useSendEmail } from '../../../../hooks/authentication'
-import { useErrorToast } from '../../../../hooks/errors/useErrorToast'
+import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
-import { PrimaryButton } from '../../../common/buttons/PrimaryButton'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { UserAccount } from '../../../../entities/user'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { FormLayout } from '../../../ui/features/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'
+import { pagesPath } from '../../../../lib/$path'
+import { Input } from '../../../ui/common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
@@ -56,7 +57,7 @@ export const Page = (): JSX.Element => {
     }
 
     const onClickLogin = () => {
-        router.push(PAGE_LINKS.LOGIN.URL)
+        router.push(pagesPath.login.$url())
     }
     return (
         <FormLayout title="新規登録">

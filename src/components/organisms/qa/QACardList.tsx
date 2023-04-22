@@ -1,9 +1,9 @@
 import { Button, Tab, TabList, TabPanel, TabPanels, VStack, Tabs, HStack, Text } from '@chakra-ui/react'
 import React, { FC } from 'react'
-import QACard from '../../molecules/qa/QACard'
+import QACard from '../../ui/features/QA/QACard'
 import { Question } from '../../../entities/qa'
-import { QASkeleton } from '../../common/QASkeleton'
-import { NoCards } from '../../common/NoCards'
+import { QASkeleton } from '../../ui/features/QASkeleton'
+import { NoCards } from '../../ui/common/NoCards'
 
 import { Status } from '../../../constants/query'
 import { QuestionType } from '../../../constants/qa/status'
@@ -67,7 +67,7 @@ const QuestionTabLabel: FC<QuestionTabLabelProps> = ({ onClick, labelName }) => 
             _selected={{
                 bgColor: 'white',
                 borderColor: 'gray.400',
-                borderBottomColor: 'mainColor',
+                borderBottomColor: 'primary',
                 borderBottomWidth: '5px',
                 color: 'black',
             }}
