@@ -3,15 +3,15 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { useLogin } from '../../../hooks/authentication'
-import { PrimaryButton } from '../../common/Button/PrimaryButton'
+import { PrimaryButton } from '../../ui/common/Button/PrimaryButton'
 
 import { UserAccount } from '../../../entities/user'
-import { FormLayout } from '../../molecules/common/FormLayout'
+import { FormLayout } from '../../ui/features/FormLayout'
 import { validators } from '../../../lib/validator/Validators'
 
-import { TextLink } from '../../common/Link/TextLink'
+import { TextLink } from '../../ui/common/Link/TextLink'
 import { pagesPath } from '../../../lib/$path'
-import { Input } from '../../common/Input'
+import { Input } from '../../ui/common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

@@ -8,10 +8,10 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { useInfoToast } from '../../../../hooks/toast/useInfoToast'
 import { pagesPath } from '../../../../lib/$path'
 import { validators } from '../../../../lib/validator/Validators'
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
-import { Input } from '../../../common/Input'
-import { TextLink } from '../../../common/Link/TextLink'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { Input } from '../../../ui/common/Input'
+import { TextLink } from '../../../ui/common/Link/TextLink'
+import { FormLayout } from '../../../ui/features/FormLayout'
 
 export const PasswordForgotPage = (): JSX.Element => {
     const {

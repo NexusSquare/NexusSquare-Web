@@ -22,7 +22,7 @@ import { HiDotsHorizontal } from 'react-icons/hi'
 import { convertDateToString } from '../../../lib/convert/convertTimestamp'
 import { useUser } from '../../../store/atom'
 import { Question } from '../../../entities/qa'
-import ChakraNextImage from '../../common/chakraNextImage'
+import ChakraNextImage from '../../ui/common/chakraNextImage'
 
 interface Props {
     isMine: boolean

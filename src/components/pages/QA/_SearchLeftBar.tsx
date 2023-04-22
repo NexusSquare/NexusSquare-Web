@@ -7,12 +7,12 @@ import { Direction, OrderBy, QACategory } from '../../../constants/query'
 import { SORT, SortItem } from '../../../constants/sort'
 import { useErrorToast } from '../../../hooks/toast/useErrorToast'
 import { useDidUpdateEffect } from '../../../hooks/useDidUpdateEffect'
-import { SecondaryButton } from '../../common/Button/SecondaryButton'
-import { Categories } from '../../molecules/qa/question/Categories'
+import { SecondaryButton } from '../../ui/common/Button/SecondaryButton'
+import { Categories } from '../../ui/features/QA/question/Categories'
 
 import { BaseLeftBar } from '../../layouts/LeftBar/_Base'
-import { Input } from '../../common/Input'
-import { Select } from '../../common/Select'
+import { Input } from '../../ui/common/Input'
+import { Select } from '../../ui/common/Select'
 
 interface Props {
     children?: ReactNode

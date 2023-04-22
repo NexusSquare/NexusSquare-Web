@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react'
 import { useSendEmail } from '../../../../hooks/authentication'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { FormLayout } from '../../../ui/features/FormLayout'
 
 export const Page = (): JSX.Element => {
     const { mutate: sendEmail, isLoading: sending, error } = useSendEmail()

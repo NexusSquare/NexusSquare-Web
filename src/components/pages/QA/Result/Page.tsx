@@ -2,7 +2,7 @@ import { Box, Text, useDisclosure, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import QACardWindow from '../../../organisms/qa/QACardWindow'
 import QACardList from '../../../organisms/qa/QACardList'
-import { SearchForm } from '../../../molecules/qa/SearchForm'
+import { SearchForm } from '../../../ui/features/QA/SearchForm'
 import { useFetchQuestions, useFetchQuestionsByTitle } from '../../../../hooks/question/useFetchQuestion'
 import { QACategory, QuestionQuery } from '../../../../constants/query'
 

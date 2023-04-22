@@ -5,9 +5,9 @@ import { PAGE_LINKS } from '../../../../constants/pageLinks'
 import { UserAccount } from '../../../../entities/user'
 import { useLogin } from '../../../../hooks/authentication'
 import { validators } from '../../../../lib/validator/Validators'
-import { PrimaryButton } from '../../../common/Button/PrimaryButton'
-import { Input } from '../../../common/Input'
-import { FormLayout } from '../../../molecules/common/FormLayout'
+import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
+import { Input } from '../../../ui/common/Input'
+import { FormLayout } from '../../../ui/features/FormLayout'
 
 export const AdminLoginPage = (): JSX.Element => {
     const router = useRouter()

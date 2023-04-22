@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import path from 'path'
 import React, { ReactNode, useEffect } from 'react'
-import { Loading } from '../components/common/Loading'
+import { Loading } from '../components/ui/common/Loading'
 import { PAGE_LINKS } from '../constants/pageLinks'
 import { useAuth } from '../hooks/authentication'
 import { pagesPath } from '../lib/$path'

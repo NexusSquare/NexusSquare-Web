@@ -20,7 +20,7 @@ import { useFetchQuestionsByUserId } from '../../../hooks/question/useFetchQuest
 import { History } from '../../../entities/history'
 import { Question } from '../../../entities/qa'
 import { Answer } from '../../../entities/qa/Answer'
-import { NoCards } from '../../common/NoCards'
+import { NoCards } from '../../ui/common/NoCards'
 import { AnswerList } from './_AnswerList'
 import { HistoryList } from './_HistoryList'
 import { QuestionList } from './_QuestionList'

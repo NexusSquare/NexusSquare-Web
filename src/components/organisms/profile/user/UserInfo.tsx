@@ -21,8 +21,8 @@ import {
 import { FiEdit } from 'react-icons/fi'
 import React, { memo, RefObject, useCallback, useEffect } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
-import { EditForm } from '../../../molecules/profile/EditForm'
-import { Modal } from '../../../common/Modal'
+import { EditForm } from '../../../ui/features/Profile/EditForm'
+import { Modal } from '../../../ui/common/Modal'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../../../entities/user'
 import { UserReq } from '../../../../api/req/UserReq'
@@ -35,7 +35,7 @@ import { useFile } from '../../../../hooks/useFile'
 import { Refetch } from '../../../../hooks/react-query/type'
 import { ProfileItem } from './_ProfileItem'
 import { BsQuestionCircle } from 'react-icons/bs'
-import { QuestionPopover } from '../../../common/Popover'
+import { QuestionPopover } from '../../../ui/common/Popover'
 
 interface Props {
     user: User
