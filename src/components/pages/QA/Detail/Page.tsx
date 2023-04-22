@@ -12,7 +12,7 @@ import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
 import { LeftBar } from '../../../layouts/LeftBar'
 import { ContentsLayout } from '../../../layouts/ContentsLayout'
-import { SponserBanner } from '../../../common/suponser/Banner'
+import { SponserBanner } from '../../../features/Suponser/Banner'
 import { advertisement } from '../../../../entities/Advertisement'
 import { NoItem } from '../../../common/NoItem'
 

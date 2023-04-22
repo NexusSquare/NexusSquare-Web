@@ -2,7 +2,7 @@ import { Button, Tab, TabList, TabPanel, TabPanels, VStack, Tabs, HStack, Text }
 import React, { FC } from 'react'
 import QACard from '../../molecules/qa/QACard'
 import { Question } from '../../../entities/qa'
-import { QASkeleton } from '../../common/QASkeleton'
+import { QASkeleton } from '../../features/QASkeleton'
 import { NoCards } from '../../common/NoCards'
 
 import { Status } from '../../../constants/query'

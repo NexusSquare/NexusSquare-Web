@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, Input, Select, Checkbox, VStack, FormLabel } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, Select, Checkbox, VStack, FormLabel } from '@chakra-ui/react'
 
 import React from 'react'
 import { User } from '../../../entities/user'
@@ -7,6 +7,7 @@ import { gradeList } from '../../../entities/Grade'
 import { useCreateUserForm } from '../../../hooks/useCreateUserForm'
 import { UserReq } from '../../../api/req/UserReq'
 import Department from '../../../entities/Department'
+import { Input } from '../../common/Input'
 
 interface Props {
     user: User

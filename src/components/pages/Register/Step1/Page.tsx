@@ -7,7 +7,6 @@ import {
     FormHelperText,
     FormLabel,
     HStack,
-    Input,
     Text,
     VStack,
 } from '@chakra-ui/react'
@@ -24,6 +23,7 @@ import { UserAccount } from '../../../../entities/user'
 import { FormLayout } from '../../../molecules/common/FormLayout'
 import { validators } from '../../../../lib/validator/Validators'
 import { pagesPath } from '../../../../lib/$path'
+import { Input } from '../../../common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

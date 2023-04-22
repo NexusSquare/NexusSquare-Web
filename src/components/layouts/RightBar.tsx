@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { advertisement } from '../../entities/Advertisement'
 import { SPONSERS } from '../../entities/Sponser'
 import QAButton from '../common/Button/QAButton'
-import { SponserBanner } from '../common/suponser/Banner'
+import { SponserBanner } from '../features/Suponser/Banner'
 import { RIGHT_BAR_HEIGHT, RIGHT_BAR_MINI_WIDTH, RIGHT_BAR_WIDTH } from './constants'
 
 interface Props {

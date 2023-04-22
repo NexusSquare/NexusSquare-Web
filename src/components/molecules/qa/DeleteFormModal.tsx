@@ -1,4 +1,4 @@
-import { HStack, Input, Text, VStack } from '@chakra-ui/react'
+import { HStack, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { Modal } from '../../common/Modal'
 import { SecondaryButton } from '../../common/Button/SecondaryButton'

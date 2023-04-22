@@ -1,4 +1,4 @@
-import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Input, Text, VStack } from '@chakra-ui/react'
+import { FormControl, FormErrorMessage, FormHelperText, FormLabel, Text, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
@@ -11,6 +11,7 @@ import { validators } from '../../../lib/validator/Validators'
 
 import { TextLink } from '../../common/Link/TextLink'
 import { pagesPath } from '../../../lib/$path'
+import { Input } from '../../common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

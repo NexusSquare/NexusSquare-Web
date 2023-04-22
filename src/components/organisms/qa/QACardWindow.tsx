@@ -6,7 +6,7 @@ import { AiOutlinePlus } from 'react-icons/ai'
 import ChakraNextImage from '../../common/chakraNextImage'
 import { PAGE_LINKS } from '../../../constants/pageLinks'
 import { SPONSERS } from '../../../entities/Sponser'
-import { SponserBanner } from '../../common/suponser/Banner'
+import { SponserBanner } from '../../features/Suponser/Banner'
 import { advertisement } from '../../../entities/Advertisement'
 
 interface Props {

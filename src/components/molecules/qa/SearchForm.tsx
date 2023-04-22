@@ -1,8 +1,9 @@
 import { SearchIcon } from '@chakra-ui/icons'
-import { Box, Button, HStack, IconButton, Input, VStack, Text } from '@chakra-ui/react'
+import { Box, Button, HStack, VStack, Text } from '@chakra-ui/react'
 import React, { MutableRefObject, useRef } from 'react'
 import { Question } from '../../../entities/qa'
 import { SecondaryButton } from '../../common/Button/SecondaryButton'
+import { Input } from '../../common/Input'
 
 interface Props {
     questions: Question[]

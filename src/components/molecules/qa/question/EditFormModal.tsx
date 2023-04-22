@@ -5,7 +5,6 @@ import {
     FormErrorMessage,
     FormLabel,
     HStack,
-    Input,
     Text,
     Textarea,
     Select,
@@ -19,6 +18,7 @@ import QACategories from '../../../../constants/qa/qaCategories'
 import { QuestionReq } from '../../../../api/req'
 import { SecondaryButton } from '../../../common/Button/SecondaryButton'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { Input } from '../../../common/Input'
 
 interface Props {
     isOpen: boolean

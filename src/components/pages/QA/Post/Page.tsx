@@ -5,7 +5,6 @@ import {
     FormErrorMessage,
     FormLabel,
     HStack,
-    Input,
     ListItem,
     Select,
     Spacer,
@@ -33,6 +32,7 @@ import { LeftBar } from '../../../layouts/LeftBar'
 import { User } from '../../../../entities/user'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
+import { Input } from '../../../common/Input'
 
 type QACategoriesType = typeof QACategories
 type QACategories = (typeof QACategories)[keyof QACategoriesType]

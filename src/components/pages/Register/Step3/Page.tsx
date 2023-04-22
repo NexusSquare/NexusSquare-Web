@@ -7,7 +7,6 @@ import {
     FormHelperText,
     FormLabel,
     HStack,
-    Input,
     Select,
     useDisclosure,
     VStack,
@@ -28,6 +27,7 @@ import { pagesPath } from '../../../../lib/$path'
 import { UserParams } from '../../../../entities/factories/userFactory'
 import { User, UserMeta } from '../../../../entities/user'
 import { useUser, useUserMeta } from '../../../../store/atom'
+import { Input } from '../../../common/Input'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()

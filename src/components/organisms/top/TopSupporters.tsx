@@ -2,7 +2,7 @@ import { Box, Heading, HStack, Stack, VStack } from '@chakra-ui/react'
 import React from 'react'
 import { Sponser, SPONSERS } from '../../../entities/Sponser'
 import Image from 'next/image'
-import { SponserLogo } from '../../common/suponser/SponserLogo'
+import { SponserLogo } from '../../features/Suponser/SponserLogo'
 import { advertisement } from '../../../entities/Advertisement'
 
 export const TopSupporters = () => {
