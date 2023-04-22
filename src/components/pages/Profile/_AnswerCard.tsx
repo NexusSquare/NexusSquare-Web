@@ -19,6 +19,7 @@ import { useUser } from '../../../store/atom'
 import { Answer } from '../../../entities/qa/Answer'
 
 interface Props {
+    isMine: boolean
     answer: Answer
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
@@ -27,6 +28,7 @@ interface Props {
 }
 
 export const AnswerCard = ({
+    isMine,
     answer,
     onOpenEditForm,
     onOpenDeleteForm,
@@ -67,16 +69,16 @@ export const AnswerCard = ({
                         </Text>
                     </VStack>
                 </HStack>
-                <Menu>
-                    <MenuButton
-                        as={IconButton}
-                        aria-label="Options"
-                        icon={<HiDotsHorizontal />}
-                        variant="outline"
-                        border={'none'}
-                        onClick={() => onClickDetail(answer)}
-                    />
-                    {userId === answer.userId && (
+                {isMine && (
+                    <Menu>
+                        <MenuButton
+                            as={IconButton}
+                            aria-label="Options"
+                            icon={<HiDotsHorizontal />}
+                            variant="outline"
+                            border={'none'}
+                            onClick={() => onClickDetail(answer)}
+                        />
                         <MenuList>
                             <MenuItem icon={<EditIcon aria-label="編集する" />} onClick={onOpenEditForm}>
                                 編集する
@@ -85,8 +87,8 @@ export const AnswerCard = ({
                                 削除する
                             </MenuItem>
                         </MenuList>
-                    )}
-                </Menu>
+                    </Menu>
+                )}
             </HStack>
             <Text
                 as="h3"

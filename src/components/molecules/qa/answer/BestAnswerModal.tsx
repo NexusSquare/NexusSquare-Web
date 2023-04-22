@@ -1,6 +1,6 @@
 import { VStack, Text, HStack } from '@chakra-ui/react'
 import React from 'react'
-import { DefaultModal } from '../../../common/DefaultModal'
+import { Modal } from '../../../common/Modal'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { SecondaryButton } from '../../../common/Button/SecondaryButton'
 
@@ -13,7 +13,7 @@ interface Props {
 
 export const BestAnswerModal = ({ isOpen, onClose, onClick, isLoading }: Props) => {
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="ベストアンサーに選びますか？">
+        <Modal isOpen={isOpen} onClose={onClose} title="ベストアンサーに選びますか？">
             <VStack w="full" spacing={4} p="4">
                 <Text w="full">
                     一度選択したベストアンサーは変更することができません。また、投稿された質問は解決済みになります。
@@ -35,6 +35,6 @@ export const BestAnswerModal = ({ isOpen, onClose, onClick, isLoading }: Props) 
                     ></PrimaryButton>
                 </HStack>
             </VStack>
-        </DefaultModal>
+        </Modal>
     )
 }

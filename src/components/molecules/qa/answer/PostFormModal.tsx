@@ -15,7 +15,7 @@ import { useForm } from 'react-hook-form'
 import { AnswerReq } from '../../../../api/req'
 import { Question } from '../../../../entities/qa'
 import { validators } from '../../../../lib/validator/Validators'
-import { DefaultModal } from '../../../common/DefaultModal'
+import { Modal } from '../../../common/Modal'
 import { PrimaryButton } from '../../../common/Button/PrimaryButton'
 import { SecondaryButton } from '../../../common/Button/SecondaryButton'
 
@@ -56,7 +56,7 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
         resetCountContent()
     })
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
+        <Modal isOpen={isOpen} onClose={onClose} title="質問回答しますか？">
             <Box w="full" as="form" onSubmit={onSubmit}>
                 <ModalBody>
                     <FormControl isInvalid={errors.content !== undefined} isRequired>
@@ -97,6 +97,6 @@ export const PostFormModal = ({ isOpen, onClose, question, isPostLoading, postAn
                     </HStack>
                 </ModalFooter>
             </Box>
-        </DefaultModal>
+        </Modal>
     )
 }

@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { DefaultModal } from '../../../common/DefaultModal'
+import { Modal } from '../../../common/Modal'
 import { Question } from '../../../../entities/qa'
 import QACategories from '../../../../constants/qa/qaCategories'
 import { QuestionReq } from '../../../../api/req'
@@ -70,7 +70,7 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
         resetFiledAll()
     }
     return (
-        <DefaultModal isOpen={isOpen} onClose={onCloseModal} title="質問を編集しますか？">
+        <Modal isOpen={isOpen} onClose={onCloseModal} title="質問を編集しますか？">
             <VStack w="full" as="form" onSubmit={handleSubmit((data) => onClickUpdateQuestion(data))} spacing={4} p="4">
                 <FormControl isInvalid={errors.category1 !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'} htmlFor="category1" fontSize={{ base: 'lg', md: 'lg' }}>
@@ -161,6 +161,6 @@ export const EditFormModal = ({ isOpen, onClose, question, onClickUpdateQuestion
                     ></PrimaryButton>
                 </HStack>
             </VStack>
-        </DefaultModal>
+        </Modal>
     )
 }

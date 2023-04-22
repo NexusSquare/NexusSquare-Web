@@ -8,19 +8,20 @@ import { AnswerReq } from '../../../api/req'
 import { Answer } from '../../../entities/qa/Answer'
 import { NoCards } from '../../common/NoCards'
 import { QASkeleton } from '../../common/QASkeleton'
-import { AnswerCard } from '../../molecules/profile/AnswerCars'
+import { AnswerCard } from './_AnswerCard'
 import { EditFormModal } from '../../molecules/qa/answer/EditFormModal'
 import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
 import { Refetch } from '../../../hooks/react-query/type'
 
 interface Props {
+    isMine: boolean
     userId: string
     answers: Answer[]
     isLoading: boolean
     onClickCard: (value: string) => void
     refetchAnswers: Refetch<Answer[]>
 }
-export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAnswers }: Props) => {
+export const AnswerList = ({ isMine, answers, isLoading, onClickCard, userId, refetchAnswers }: Props) => {
     const errorToast = useErrorToast()
     const [selectedAnswer, setSelectedAnswer] = useState<Answer>(answers[0])
     const { isOpen: isOpenEditForm, onOpen: onOpenEditForm, onClose: onCloseEditForm } = useDisclosure()
@@ -80,6 +81,7 @@ export const AnswerList = ({ answers, isLoading, onClickCard, userId, refetchAns
                             {answers.map((answer: Answer) => {
                                 return (
                                     <AnswerCard
+                                        isMine={isMine}
                                         answer={answer}
                                         key={answer.answerId}
                                         onOpenEditForm={onOpenEditForm}

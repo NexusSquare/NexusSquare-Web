@@ -22,7 +22,7 @@ import { FiEdit } from 'react-icons/fi'
 import React, { memo, RefObject, useCallback, useEffect } from 'react'
 import { AiFillCamera } from 'react-icons/ai'
 import { EditForm } from '../../../molecules/profile/EditForm'
-import { DefaultModal } from '../../../common/DefaultModal'
+import { Modal } from '../../../common/Modal'
 import { FaCoins } from 'react-icons/fa'
 import { User, UserMeta } from '../../../../entities/user'
 import { UserReq } from '../../../../api/req/UserReq'
@@ -155,9 +155,9 @@ export const UserInfo = memo(({ user, userMeta, refetchUser }: Props) => {
                 ></IconButton>
             </VStack>
 
-            <DefaultModal isOpen={isOpenEditForm} onClose={onCloseEditForm} title={'プロフィール編集'}>
+            <Modal isOpen={isOpenEditForm} onClose={onCloseEditForm} title={'プロフィール編集'}>
                 <EditForm updateProfile={onClickEditUser} user={user} isLoading={updateLoading} />
-            </DefaultModal>
+            </Modal>
         </>
     )
 })

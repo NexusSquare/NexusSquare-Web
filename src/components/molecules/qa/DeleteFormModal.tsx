@@ -1,7 +1,6 @@
 import { HStack, Input, Text, VStack } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { DefaultModal } from '../../common/DefaultModal'
-
+import { Modal } from '../../common/Modal'
 import { SecondaryButton } from '../../common/Button/SecondaryButton'
 import { PrimaryButton } from '../../common/Button/PrimaryButton'
 
@@ -14,7 +13,7 @@ interface Props {
 
 export const DeleteFormModal = ({ isOpen, onClose, onClickDelete, isDeleteLoading }: Props) => {
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="投稿を削除しますか？">
+        <Modal isOpen={isOpen} onClose={onClose} title="投稿を削除しますか？">
             <VStack w="full" spacing={4} p="4">
                 <Text w="full">
                     一度削除した投稿は元に戻すことはできません。また、投稿されたポイントは削除されます。
@@ -36,6 +35,6 @@ export const DeleteFormModal = ({ isOpen, onClose, onClickDelete, isDeleteLoadin
                     ></PrimaryButton>
                 </HStack>
             </VStack>
-        </DefaultModal>
+        </Modal>
     )
 }

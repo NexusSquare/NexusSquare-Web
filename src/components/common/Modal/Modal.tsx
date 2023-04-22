@@ -1,5 +1,5 @@
 import {
-    Modal,
+    Modal as CModal,
     ModalOverlay,
     ModalContent,
     ModalHeader,
@@ -18,17 +18,17 @@ interface Props {
     onClose: () => void
 }
 
-export const DefaultModal = ({ title, children, isOpen, onClose }: Props): JSX.Element => {
+export const Modal = ({ title, children, isOpen, onClose }: Props): JSX.Element => {
     const modalSize = useBreakpointValue({ base: 'sm', md: 'lg' })
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} size={modalSize}>
+        <CModal isOpen={isOpen} onClose={onClose} size={modalSize}>
             <ModalOverlay />
             <ModalContent>
                 <ModalHeader>{title}</ModalHeader>
                 <ModalCloseButton color="primary" />
                 {children}
             </ModalContent>
-        </Modal>
+        </CModal>
     )
 }

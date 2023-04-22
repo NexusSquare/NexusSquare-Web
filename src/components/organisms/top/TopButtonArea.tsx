@@ -1,6 +1,6 @@
 import { VStack, Text, Heading } from '@chakra-ui/react'
 import React from 'react'
-import QAButton from '../../atoms/QAButton'
+import QAButton from '../../common/Button/QAButton'
 
 export const TopButtonArea = () => {
     return (

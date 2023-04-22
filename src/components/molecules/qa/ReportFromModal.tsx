@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { DefaultModal } from '../../common/DefaultModal'
+import { Modal } from '../../common/Modal'
 import { Question } from '../../../entities/qa'
 import QACategories from '../../../constants/qa/qaCategories'
 import { QuestionReq } from '../../../api/req'
@@ -46,7 +46,7 @@ export const ReportFormModal = ({ isOpen, onClose, onClickReport, isReportLoadin
         },
     })
     return (
-        <DefaultModal isOpen={isOpen} onClose={onClose} title="質問を通報しますか？">
+        <Modal isOpen={isOpen} onClose={onClose} title="質問を通報しますか？">
             <VStack w="full" spacing={4} p="4" as="form" onSubmit={handleSubmit((data) => onClickReport(data))}>
                 <FormControl isInvalid={errors.reason !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'} fontSize={{ base: 'lg', md: 'lg' }}>
@@ -77,6 +77,6 @@ export const ReportFormModal = ({ isOpen, onClose, onClickReport, isReportLoadin
                     ></PrimaryButton>
                 </HStack>
             </VStack>
-        </DefaultModal>
+        </Modal>
     )
 }

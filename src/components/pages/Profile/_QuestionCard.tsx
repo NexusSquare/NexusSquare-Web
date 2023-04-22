@@ -25,6 +25,7 @@ import { Question } from '../../../entities/qa'
 import ChakraNextImage from '../../common/chakraNextImage'
 
 interface Props {
+    isMine: boolean
     question: Question
     onOpenEditForm: () => void
     onOpenDeleteForm: () => void
@@ -32,8 +33,14 @@ interface Props {
     onClickDetail: (value: Question) => void
 }
 
-export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onClickCard, onClickDetail }: Props) => {
-    const userId = useUser().user?.userId
+export const QuestionCard = ({
+    isMine,
+    question,
+    onOpenEditForm,
+    onOpenDeleteForm,
+    onClickCard,
+    onClickDetail,
+}: Props) => {
     const QA_IMAGE_PATH: string = '/images/ans.png'
     const date = convertDateToString(question.createdAt)
     const categoryText: string = question.categories[1]
@@ -70,7 +77,7 @@ export const QuestionCard = ({ question, onOpenEditForm, onOpenDeleteForm, onCli
                         </Text>
                     </VStack>
                 </HStack>
-                {userId === question.userId && (
+                {isMine && (
                     <Menu>
                         <MenuButton
                             as={IconButton}

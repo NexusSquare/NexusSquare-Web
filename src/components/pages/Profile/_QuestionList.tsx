@@ -10,19 +10,27 @@ import { QuestionReq } from '../../../api/req'
 import { Question } from '../../../entities/qa'
 import { NoCards } from '../../common/NoCards'
 import { QASkeleton } from '../../common/QASkeleton'
-import { QuestionCard } from '../../molecules/profile/QuestionCard'
+import { QuestionCard } from './_QuestionCard'
 import { DeleteFormModal } from '../../molecules/qa/DeleteFormModal'
 import { EditFormModal } from '../../molecules/qa/question/EditFormModal'
 import { Refetch } from '../../../hooks/react-query/type'
 
 interface Props {
+    isMine: boolean
     userId: string
     questions: Question[]
     isLoading: boolean
     onClickCard: (value: string) => void
     refetchQuestions: Refetch<Question[]>
 }
-export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestions, userId }: Props): JSX.Element => {
+export const QuestionList = ({
+    isMine,
+    questions,
+    isLoading,
+    onClickCard,
+    refetchQuestions,
+    userId,
+}: Props): JSX.Element => {
     const errorToast = useErrorToast()
     const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[0])
     const {
@@ -89,6 +97,7 @@ export const QuestionList = ({ questions, isLoading, onClickCard, refetchQuestio
                             {questions.map((questions: Question) => {
                                 return (
                                     <QuestionCard
+                                        isMine={isMine}
                                         question={questions}
                                         key={questions.questionId}
                                         onOpenEditForm={onOpenEditForm}
