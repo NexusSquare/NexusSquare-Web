@@ -1,6 +1,6 @@
 import { VStack, Text, Heading, UnorderedList, ListItem, Link } from '@chakra-ui/react'
 import React from 'react'
-import { RuleLayout } from '../../molecules/rule/RuleLayout'
+import { RuleLayout } from './RuleLayout'
 
 // TODO: 処理を共通化
 export const RuleBody = (): JSX.Element => {
