@@ -1,9 +1,10 @@
-import { useToast } from '@chakra-ui/react'
-import { useBaseToast } from './useBaseToast'
+import toast from 'react-hot-toast'
 
 export const useInfoToast = () => {
-    const status = 'info'
-    const toastId = 'info'
-    const infoToast = useBaseToast(status, toastId)
+    const infoToast = (message: string) => {
+        toast.success(message, {
+            position: 'bottom-center',
+        })
+    }
     return infoToast
 }

@@ -12,6 +12,7 @@ import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { Input } from '../../../ui/common/Input'
 import { TextLink } from '../../../ui/common/Link/TextLink'
 import { FormLayout } from '../../../ui/features/FormLayout'
+import toast, { Toaster } from 'react-hot-toast'
 
 export const PasswordForgotPage = (): JSX.Element => {
     const {
@@ -25,7 +26,6 @@ export const PasswordForgotPage = (): JSX.Element => {
     const infoToast = useInfoToast()
 
     const onSubmit = async (email: string) => {
-        console.log('email', email)
         mutate(email, {
             onSuccess: () => {
                 infoToast('パスワード再設定メールを送信しました。メールを確認してください。')
@@ -75,6 +75,7 @@ export const PasswordForgotPage = (): JSX.Element => {
                 />
             </VStack>
             <TextLink onClick={onClickLogin}>ログインはこちら</TextLink>
+            <Toaster />
         </FormLayout>
     )
 }

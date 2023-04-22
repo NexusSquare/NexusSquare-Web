@@ -4,6 +4,7 @@ import { AuthProvider } from '../providers/AuthProvider'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { RecoilRoot } from 'recoil'
 import { chakraTheme } from '../styles/chakra/config'
+import { Toaster } from 'react-hot-toast'
 
 const queryClient = new QueryClient()
 function MyApp({ Component, pageProps }: AppPropsWithLayout) {
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout) {
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
                 <ChakraProvider theme={chakraTheme}>
+                    <Toaster />
                     <AuthProvider>{getLayout(<Component {...pageProps} />)}</AuthProvider>
                 </ChakraProvider>
             </QueryClientProvider>

@@ -1,17 +1,10 @@
 import { useToast } from '@chakra-ui/react'
+import toast from 'react-hot-toast'
 
 export const useErrorToast = () => {
-    const toast = useToast()
-    const toastId = 'error'
-
     const errorToast = (message: string) => {
-        if (toast.isActive(toastId)) return
-        toast({
-            title: message,
-            status: 'error',
-            isClosable: true,
-            id: toastId,
-            variant: 'subtle',
+        toast.error(message, {
+            position: 'bottom-center',
         })
     }
     return errorToast
