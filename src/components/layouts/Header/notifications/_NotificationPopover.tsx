@@ -27,25 +27,29 @@ export const NotificationPopover: FC<Props> = ({ notifications, seeNotification 
     const onClickNotification = async (notificationId: string, questionId: string) => {
         seeNotification(notificationId, questionId)
     }
+
+    const hasNotification = notifications.length > 0
     return (
         <Popover>
             <PopoverTrigger>
                 <Box position="relative">
                     <NotificationIconButton />
-                    <Box
-                        position="absolute"
-                        bgColor="red"
-                        borderRadius="50%"
-                        boxSize="12px"
-                        top="5px"
-                        left="20px"
-                        _hover={{ cursor: 'pointer' }}
-                    ></Box>
+                    {hasNotification && (
+                        <Box
+                            position="absolute"
+                            bgColor="red"
+                            borderRadius="50%"
+                            boxSize="12px"
+                            top="5px"
+                            left="20px"
+                            _hover={{ cursor: 'pointer' }}
+                        ></Box>
+                    )}
                 </Box>
             </PopoverTrigger>
             <PopoverContent>
                 <PopoverBody>
-                    {notifications.length > 0 ? (
+                    {hasNotification ? (
                         <NotificationCardList notifications={notifications} onClick={onClickNotification} />
                     ) : (
                         <HStack py="2" px="2">
