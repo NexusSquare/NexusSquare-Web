@@ -1,5 +1,6 @@
 import { updateProfile, User } from 'firebase/auth'
-import { auth } from '../../plugins/firebase/client'
+import { httpsCallable } from 'firebase/functions'
+import { auth, functions } from '../../plugins/firebase/client'
 import { AuthRepository } from './AuthRepository'
 
 class AuthRepositoryImpl implements AuthRepository {
@@ -18,6 +19,9 @@ class AuthRepositoryImpl implements AuthRepository {
     public getMyEmail = (): string | undefined | null => {
         const email = auth.currentUser?.email
         return email
+    }
+    public sendEmailVerification = async (): Promise<void> => {
+        await httpsCallable(functions, 'sendVerification')()
     }
 }
 

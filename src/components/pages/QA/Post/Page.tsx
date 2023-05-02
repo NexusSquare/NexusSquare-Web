@@ -54,7 +54,6 @@ export const PostPage = (): JSX.Element => {
     const router = useRouter()
     const errorToast = useErrorToast()
     const infoToast = useInfoToast()
-
     //　NOTE　カテゴリー1が選択されるとカテゴリー2が生成される。
     useEffect(() => {
         resetField('category2')

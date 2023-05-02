@@ -14,7 +14,6 @@ import {
 } from '@chakra-ui/react'
 import React, { FC } from 'react'
 import { Notification } from '../../../../entities/notification/Notification'
-import { NotificationCard } from './_NotificationCard'
 import { NotificationCardList } from './_NotificationCardList'
 import { NotificationIconButton } from './_NotificationIconButton'
 
