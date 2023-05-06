@@ -48,4 +48,15 @@ export const SPONSERS: Sponser[] = [
             logo: 'https://mog-job.com',
         },
     },
+    {
+        name: 'hekikai',
+        image: {
+            banner: '/images/sponser/banners/hekikai.png',
+            logo: '/images/sponser/logos/hekikai.png',
+        },
+        urls: {
+            banner: 'https://www.hekishin.jp',
+            logo: 'https://www.hekishin.jp/',
+        },
+    },
 ]
