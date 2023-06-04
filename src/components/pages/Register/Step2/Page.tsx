@@ -28,7 +28,10 @@ export const Page = (): JSX.Element => {
             <VStack spacing={8}>
                 <Box mt={8}>
                     <Text>登録されたメールアドレス宛に受信確認メールを送信しました。</Text>
-                    <Text>メールをご確認いただき、メールに記載されてURLをクリックし、本登録を完了させて下さい</Text>
+                    <Text>
+                        メールをご確認いただき、メールに記載されているURLをクリックし、本登録を完了させて下さい。
+                    </Text>
+                    <Text>※認証メールは迷惑メールフォルダに送信されている場合があります。 </Text>
                 </Box>
                 <PrimaryButton
                     buttonText="メールを再度送信"

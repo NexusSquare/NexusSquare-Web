@@ -21,11 +21,11 @@ export const storage = getStorage(app)
 export const auth = getAuth(app)
 export const functions = getFunctions(app)
 
-if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_MODE) {
-    connectFunctionsEmulator(functions, 'localhost', 5001)
-    connectFirestoreEmulator(db, 'localhost', 8080)
-    connectAuthEmulator(auth, 'http://localhost:9099')
-}
+// if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_MODE) {
+//     connectFunctionsEmulator(functions, 'localhost', 5001)
+//     connectFirestoreEmulator(db, 'localhost', 8080)
+//     connectAuthEmulator(auth, 'http://localhost:9099')
+// }
 
 export const actionCodeSettings = {
     url: process.env.NEXT_PUBLIC_AFTER_CONFIRMATION_EMAIL_URL!,
