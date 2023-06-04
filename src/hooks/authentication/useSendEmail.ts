@@ -1,5 +1,7 @@
 import { useAuthSendEmailVerification } from '@react-query-firebase/auth'
+import { useMutation } from 'react-query'
 import { actionCodeSettings, auth } from '../../plugins/firebase/client'
+import { authRepository } from '../../repositories/auth/AuthRepositoryImpl'
 
 interface AfterFunction {
     onSuccess?: Function
@@ -8,19 +10,5 @@ interface AfterFunction {
 }
 
 export const useSendEmail = () => {
-    const mutation = useAuthSendEmailVerification()
-    const sendEmail = async (args?: AfterFunction) => {
-        mutation.mutate(
-            {
-                user: auth.currentUser!,
-                actionCodeSettings: actionCodeSettings,
-            },
-            {
-                onSuccess: () => args?.onSuccess?.(),
-                onError: () => args?.onError?.(),
-                onSettled: () => args?.onSettled?.(),
-            }
-        )
-    }
-    return { ...mutation, mutate: sendEmail }
+    return useMutation(() => authRepository.sendEmailVerification())
 }

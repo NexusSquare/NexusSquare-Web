@@ -75,7 +75,7 @@ export const Page = (): JSX.Element => {
                         type="password"
                     />
                     <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-                    <FormHelperText>半角英数8~16</FormHelperText>
+                    <FormHelperText>半角英数8~16でNexus Square用のパスワードを入力</FormHelperText>
                 </FormControl>
 
                 <PrimaryButton buttonText="ログイン" type="submit" width={48} isLoading={loading} disabled={loading} />

@@ -1,9 +1,9 @@
 import { getApp, getApps, initializeApp } from 'firebase/app'
 import { getAnalytics } from 'firebase/analytics'
-import { getFirestore } from 'firebase/firestore'
+import { connectFirestoreEmulator, getFirestore } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
-import { getAuth } from 'firebase/auth'
-import { getFunctions } from 'firebase/functions'
+import { connectAuthEmulator, getAuth } from 'firebase/auth'
+import { connectFunctionsEmulator, getFunctions } from 'firebase/functions'
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -19,7 +19,13 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp()
 export const db = getFirestore(app)
 export const storage = getStorage(app)
 export const auth = getAuth(app)
-export const funcions = getFunctions()
+export const functions = getFunctions(app)
+
+// if (process.env.NEXT_PUBLIC_FIREBASE_EMULATOR_MODE) {
+//     connectFunctionsEmulator(functions, 'localhost', 5001)
+//     connectFirestoreEmulator(db, 'localhost', 8080)
+//     connectAuthEmulator(auth, 'http://localhost:9099')
+// }
 
 export const actionCodeSettings = {
     url: process.env.NEXT_PUBLIC_AFTER_CONFIRMATION_EMAIL_URL!,

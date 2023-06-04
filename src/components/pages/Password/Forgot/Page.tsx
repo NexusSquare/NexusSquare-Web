@@ -56,14 +56,7 @@ export const PasswordForgotPage = (): JSX.Element => {
             >
                 <FormControl isInvalid={errors.email !== undefined} isRequired>
                     <FormLabel fontWeight={'bold'}>メールアドレス</FormLabel>
-                    <Input
-                        id="email"
-                        {...register('email')}
-                        defaultValue={'aichi-pu.ac.jp'}
-                        placeholder="xx000000@xxx.aichi-pu.ac.jp"
-                        type="email"
-                    />
-                    {/* <FormErrorMessage>{errors.email}</FormErrorMessage> */}
+                    <Input id="email" {...register('email')} placeholder="xx000000@xxx.aichi-pu.ac.jp" type="email" />
                     <FormHelperText>愛知県立県大学のメールアドレスを入力</FormHelperText>
                 </FormControl>
                 <PrimaryButton
