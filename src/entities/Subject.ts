@@ -1,3 +1,5 @@
+import { Departments } from './Department'
+
 export const Foreign = {
     eng: '英米学科',
     france: 'ヨーロッパ学科フランス語圏専攻',
@@ -51,23 +53,23 @@ export const Nursere = {
 
 export const departmentToSubject = (department: string): string[] => {
     switch (department) {
-        case '外国語学部':
+        case Departments.FOREIGN_LANGRAGE:
             return Object.values(Foreign)
-        case '日本文化学部':
+        case Departments.JAPANESE_CULTURE:
             return Object.values(Japan)
-        case '教育福祉学部':
+        case Departments.TEACH_WELFARE:
             return Object.values(Teach)
-        case '看護学部':
+        case Departments.NURSE:
             return Object.values(Nurse)
-        case '情報科学部':
+        case Departments.INFORMATION_SCIENCE:
             return Object.values(Info)
-        case '国際文化研究科':
+        case Departments.GLOBAL_CULTURE:
             return Object.values(Globalre)
-        case '人間発達学研究科':
+        case Departments.HUMAN_DEVELOPMENT:
             return Object.values(Humanre)
-        case '看護学研究科':
+        case Departments.NURSE_SCIENCE:
             return Object.values(Nursere)
-        case '情報科学研究科':
+        case Departments.INFORMATION_SCIENCE_RESEARCH:
             return Object.values(Infore)
         default:
             return []

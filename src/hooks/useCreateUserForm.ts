@@ -14,6 +14,7 @@ import {
 } from '../entities/Subject'
 
 import { UserParams } from '../entities/factories/userFactory'
+import { departmentToGrades } from '../entities/Grade'
 
 // NOTE optionsの型推論が効かない。UseFormProps
 export const useCreateUserForm = (options?: any) => {
@@ -26,12 +27,14 @@ export const useCreateUserForm = (options?: any) => {
     } = useForm<UserParams>(options)
 
     const [selectSubjects, setSelectSubjects] = useState<string[]>([])
+    const [gradeOptions, setGradeOptions] = useState<string[]>([])
     const watchDepartment = watch('department')
 
     useEffect(() => {
         resetField('subject')
         const subjects: string[] = departmentToSubject(watchDepartment)
         setSelectSubjects(subjects)
+        setGradeOptions(departmentToGrades(watchDepartment))
 
         return () => {
             setSelectSubjects([])
@@ -44,5 +47,6 @@ export const useCreateUserForm = (options?: any) => {
         errors,
         isSubmitting,
         selectSubjects,
+        gradeOptions,
     }
 }
