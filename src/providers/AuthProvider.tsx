@@ -39,7 +39,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     useEffect(() => {
         ;(async () => {
-            console.log('currentUser', currentUser)
             // NOTE userが存在しない場合、ログインしていないとみなす。
             if (currentUser === undefined) return
 
