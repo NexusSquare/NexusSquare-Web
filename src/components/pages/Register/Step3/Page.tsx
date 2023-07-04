@@ -91,47 +91,47 @@ export const Page = (): JSX.Element => {
                         />
                         <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
                     </FormControl>
-                    <HStack w="full">
-                        <FormControl isInvalid={errors.department !== undefined} isRequired>
-                            <FormLabel fontWeight={'bold'}>学部</FormLabel>
-                            <Select
-                                id="department"
-                                placeholder="学部(研究科)を選択"
-                                {...register('department', {
-                                    required: '必須項目です',
-                                })}
-                            >
-                                {Object.values(Department).map((department) => {
-                                    return (
-                                        <option key={department} value={department}>
-                                            {department}
-                                        </option>
-                                    )
-                                })}
-                            </Select>
-                            <FormErrorMessage>{errors.department && errors.department.message}</FormErrorMessage>
-                        </FormControl>
 
-                        <FormControl isInvalid={errors.subject !== undefined} isRequired>
-                            <FormLabel fontWeight={'bold'}>学科（専攻）</FormLabel>
-                            <Select
-                                id="subject"
-                                placeholder="学科（専攻）を選択"
-                                {...register('subject', {
-                                    required: '必須項目です',
-                                })}
-                            >
-                                {selectSubjects.map((selectItem: string) => {
-                                    return (
-                                        <option key={selectItem} value={selectItem}>
-                                            {selectItem}
-                                        </option>
-                                    )
-                                })}
-                            </Select>
-                            <FormErrorMessage>{errors.subject && errors.subject.message}</FormErrorMessage>
-                        </FormControl>
-                    </HStack>
+                    <FormControl isInvalid={errors.department !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'}>学部</FormLabel>
+                        <Select
+                            id="department"
+                            placeholder="学部(研究科)を選択"
+                            {...register('department', {
+                                required: '必須項目です',
+                            })}
+                        >
+                            {Object.values(Department).map((department) => {
+                                return (
+                                    <option key={department} value={department}>
+                                        {department}
+                                    </option>
+                                )
+                            })}
+                        </Select>
+                        <FormErrorMessage>{errors.department && errors.department.message}</FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl isInvalid={errors.subject !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'}>学科（専攻）</FormLabel>
+                        <Select
+                            id="subject"
+                            placeholder="学科（専攻）を選択"
+                            {...register('subject', {
+                                required: '必須項目です',
+                            })}
+                        >
+                            {selectSubjects.map((selectItem: string) => {
+                                return (
+                                    <option key={selectItem} value={selectItem}>
+                                        {selectItem}
+                                    </option>
+                                )
+                            })}
+                        </Select>
+                        <FormErrorMessage>{errors.subject && errors.subject.message}</FormErrorMessage>
+                    </FormControl>
+
                     <FormControl isInvalid={errors.grade !== undefined} isRequired>
                         <FormLabel fontWeight={'bold'}>学年</FormLabel>
                         <Select
