@@ -49,7 +49,7 @@ export const Nursere = {
     health: 'ウィメンズヘルス・助産学',
 } as const
 
-const departmentToSubject = (department: string): string[] => {
+export const departmentToSubject = (department: string): string[] => {
     switch (department) {
         case '外国語学部':
             return Object.values(Foreign)
@@ -67,7 +67,7 @@ const departmentToSubject = (department: string): string[] => {
             return Object.values(Humanre)
         case '看護学研究科':
             return Object.values(Nursere)
-        case '情報科学絵研究科':
+        case '情報科学研究科':
             return Object.values(Infore)
         default:
             return []
