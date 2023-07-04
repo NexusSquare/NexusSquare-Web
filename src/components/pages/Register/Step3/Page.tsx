@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/router'
 import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { useCreateUserForm } from '../../../../hooks/useCreateUserForm'
-import Department from '../../../../entities/Department'
+import { Departments } from '../../../../entities/Department'
 import { gradeList } from '../../../../entities/Grade'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
@@ -29,7 +29,7 @@ import { Checkbox } from '../../../ui/common/Checkbox'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
-    const { register, handleSubmit, errors, selectSubjects } = useCreateUserForm()
+    const { register, handleSubmit, errors, selectSubjects, gradeOptions } = useCreateUserForm()
     const [formValue, setFormValue] = useState<UserParams>()
     const { mutate: postUser, isLoading } = usePostUser()
     const { setUser } = useUser()
@@ -101,7 +101,7 @@ export const Page = (): JSX.Element => {
                                 required: '必須項目です',
                             })}
                         >
-                            {Object.values(Department).map((department) => {
+                            {Object.values(Departments).map((department) => {
                                 return (
                                     <option key={department} value={department}>
                                         {department}
@@ -141,7 +141,7 @@ export const Page = (): JSX.Element => {
                                 required: '必須項目です',
                             })}
                         >
-                            {gradeList.map((grade: string) => {
+                            {gradeOptions.map((grade: string) => {
                                 return (
                                     <option key={grade} value={grade}>
                                         {grade}
