@@ -30,9 +30,9 @@ class UserServiceImpl implements UserService {
             throw new Error(ERROR.INVALID_USER_TOKEN)
         }
         const user: User = userFactory.create(params, userId)
-        userRepository.save(user)
+        await userRepository.save(user)
         const userMeta: UserMeta = userFactory.createForMeta(user, email, params.name)
-        userMetaRepository.save(userMeta)
+        await userMetaRepository.save(userMeta)
         return { user, userMeta }
     }
     async update(userReq: Partial<UserReq>): Promise<void> {
