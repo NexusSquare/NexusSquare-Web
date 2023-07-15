@@ -11,7 +11,7 @@ interface Props {
 
 //　NOTE: routingのpageは配下で使用する。
 export const DefaultLayout = ({ children, pageName }: Props): JSX.Element => {
-    const siteTitle: string = `nexussquare - ${pageName}`
+    const siteTitle: string = `Nexus Square（ネクスク） - ${pageName}`
     return (
         <>
             <CommonMeta siteTitle={siteTitle} />

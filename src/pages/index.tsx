@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react'
 import type { NextPage, NextPageWithLayout } from 'next'
 import { Layout } from '../components/layouts/Layout'
 import { HomePage } from '../components/pages/Page'
