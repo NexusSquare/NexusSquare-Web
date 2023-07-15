@@ -18,7 +18,7 @@ export const UserGuards = ({ children }: Props) => {
     if (!isReady || isLoading) return <Loading />
 
     if (user === null && router.pathname !== pagesPath.login.$url().pathname) {
-        router.push(pagesPath.login.$url())
+        router.replace(pagesPath.login.$url())
         return null
     }
 

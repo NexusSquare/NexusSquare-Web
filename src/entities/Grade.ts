@@ -1,3 +1,5 @@
+import { isBachelor, isMaster } from './Department'
+
 export const gradeList = ['1年生', '2年生', '3年生', '4年生', '大学院1年生', '大学院2年生'] as const
 
 export const Grades: Grade[] = [
@@ -12,4 +14,14 @@ export const Grades: Grade[] = [
 export type Grade = {
     value: string
     label: string
+}
+
+export const departmentToGrades = (department: string): string[] => {
+    if (isBachelor(department)) {
+        return ['1年生', '2年生', '3年生', '4年生']
+    } else if (isMaster(department)) {
+        return ['大学院1年生', '大学院2年生']
+    } else {
+        return []
+    }
 }

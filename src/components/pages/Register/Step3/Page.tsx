@@ -10,7 +10,7 @@ import {
 import { useRouter } from 'next/router'
 import { PrimaryButton } from '../../../ui/common/Button/PrimaryButton'
 import { useCreateUserForm } from '../../../../hooks/useCreateUserForm'
-import Department from '../../../../entities/Department'
+import { Departments } from '../../../../entities/Department'
 import { gradeList } from '../../../../entities/Grade'
 import { useErrorToast } from '../../../../hooks/toast/useErrorToast'
 import { ERROR_MESSAGE } from '../../../../constants/errors'
@@ -29,7 +29,7 @@ import { Checkbox } from '../../../ui/common/Checkbox'
 
 export const Page = (): JSX.Element => {
     const router = useRouter()
-    const { register, handleSubmit, errors, selectSubjects } = useCreateUserForm()
+    const { register, handleSubmit, errors, selectSubjects, gradeOptions } = useCreateUserForm()
     const [formValue, setFormValue] = useState<UserParams>()
     const { mutate: postUser, isLoading } = usePostUser()
     const { setUser } = useUser()
@@ -91,47 +91,47 @@ export const Page = (): JSX.Element => {
                         />
                         <FormErrorMessage>{errors.nickname && errors.nickname.message}</FormErrorMessage>
                     </FormControl>
-                    <HStack w="full">
-                        <FormControl isInvalid={errors.department !== undefined} isRequired>
-                            <FormLabel fontWeight={'bold'}>学部</FormLabel>
-                            <Select
-                                id="department"
-                                placeholder="学部(研究科)を選択"
-                                {...register('department', {
-                                    required: '必須項目です',
-                                })}
-                            >
-                                {Object.values(Department).map((department) => {
-                                    return (
-                                        <option key={department} value={department}>
-                                            {department}
-                                        </option>
-                                    )
-                                })}
-                            </Select>
-                            <FormErrorMessage>{errors.department && errors.department.message}</FormErrorMessage>
-                        </FormControl>
 
-                        <FormControl isInvalid={errors.subject !== undefined} isRequired>
-                            <FormLabel fontWeight={'bold'}>学科（専攻）</FormLabel>
-                            <Select
-                                id="subject"
-                                placeholder="学科（専攻）を選択"
-                                {...register('subject', {
-                                    required: '必須項目です',
-                                })}
-                            >
-                                {selectSubjects.map((selectItem: string) => {
-                                    return (
-                                        <option key={selectItem} value={selectItem}>
-                                            {selectItem}
-                                        </option>
-                                    )
-                                })}
-                            </Select>
-                            <FormErrorMessage>{errors.subject && errors.subject.message}</FormErrorMessage>
-                        </FormControl>
-                    </HStack>
+                    <FormControl isInvalid={errors.department !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'}>学部</FormLabel>
+                        <Select
+                            id="department"
+                            placeholder="学部(研究科)を選択"
+                            {...register('department', {
+                                required: '必須項目です',
+                            })}
+                        >
+                            {Object.values(Departments).map((department) => {
+                                return (
+                                    <option key={department} value={department}>
+                                        {department}
+                                    </option>
+                                )
+                            })}
+                        </Select>
+                        <FormErrorMessage>{errors.department && errors.department.message}</FormErrorMessage>
+                    </FormControl>
+
+                    <FormControl isInvalid={errors.subject !== undefined} isRequired>
+                        <FormLabel fontWeight={'bold'}>学科（専攻）</FormLabel>
+                        <Select
+                            id="subject"
+                            placeholder="学科（専攻）を選択"
+                            {...register('subject', {
+                                required: '必須項目です',
+                            })}
+                        >
+                            {selectSubjects.map((selectItem: string) => {
+                                return (
+                                    <option key={selectItem} value={selectItem}>
+                                        {selectItem}
+                                    </option>
+                                )
+                            })}
+                        </Select>
+                        <FormErrorMessage>{errors.subject && errors.subject.message}</FormErrorMessage>
+                    </FormControl>
+
                     <FormControl isInvalid={errors.grade !== undefined} isRequired>
                         <FormLabel fontWeight={'bold'}>学年</FormLabel>
                         <Select
@@ -141,7 +141,7 @@ export const Page = (): JSX.Element => {
                                 required: '必須項目です',
                             })}
                         >
-                            {gradeList.map((grade: string) => {
+                            {gradeOptions.map((grade: string) => {
                                 return (
                                     <option key={grade} value={grade}>
                                         {grade}

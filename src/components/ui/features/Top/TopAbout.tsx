@@ -1,6 +1,5 @@
 import { Box, Heading, HStack, VStack, Text, useBreakpointValue } from '@chakra-ui/react'
 import React from 'react'
-import ChakraNextImage from '../../common/chakraNextImage'
 import Image from 'next/image'
 export const TopAbout = () => {
     const ICON_IMAGE_URL: string = '/favicons/android-chrome-512x512.png'
@@ -19,7 +18,7 @@ export const TopAbout = () => {
                         padding={'10px 12px'}
                         fontSize="xl"
                     >
-                        Nexus Squareとは
+                        Nexus Square（ネクスク）とは
                     </Heading>
                     <Text>
                         Nexus Squareは、愛知県立大学の学生が立ち上げた団体です。

@@ -6,7 +6,7 @@ import { PrimaryButton } from '../../ui/common/Button/PrimaryButton'
 import { gradeList } from '../../../entities/Grade'
 import { useCreateUserForm } from '../../../hooks/useCreateUserForm'
 import { UserReq } from '../../../api/req/UserReq'
-import Department from '../../../entities/Department'
+import { Departments } from '../../../entities/Department'
 import { Input } from '../../ui/common/Input'
 import { Select } from '../../ui/common/Select'
 import { Checkbox } from '../../ui/common/Checkbox'
@@ -18,7 +18,7 @@ interface Props {
 }
 
 export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
-    const { register, handleSubmit, errors, isSubmitting, selectSubjects } = useCreateUserForm({
+    const { register, handleSubmit, errors, isSubmitting, selectSubjects, gradeOptions } = useCreateUserForm({
         reValidateMode: 'onChange',
     })
 
@@ -26,6 +26,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
         <VStack
             as="form"
             onSubmit={handleSubmit((formValue) => {
+                console.log(formValue)
                 updateProfile(formValue)
             })}
             w={'full'}
@@ -58,7 +59,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                     })}
                     defaultValue={user.department}
                 >
-                    {Object.values(Department).map((department) => {
+                    {Object.values(Departments).map((department) => {
                         return (
                             <option key={department} value={department}>
                                 {department}
@@ -100,7 +101,7 @@ export const EditForm = ({ user, updateProfile, isLoading }: Props) => {
                     })}
                     defaultValue={user.grade}
                 >
-                    {gradeList.map((grade: string) => {
+                    {gradeOptions.map((grade: string) => {
                         return (
                             <option key={grade} value={grade}>
                                 {grade}

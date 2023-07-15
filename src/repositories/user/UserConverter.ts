@@ -5,8 +5,8 @@ import { UserDocument } from '../documents/UserDocument'
 export const userConverter = {
     toFirestore: (user: User): DocumentData => {
         const document: UserDocument = {
-            department: user.department ?? null,
-            subject: user.subject ?? null,
+            department: user.department,
+            subject: user.subject,
             grade: user.grade,
             nickname: user.nickname,
             imageUrl: user.imageUrl,

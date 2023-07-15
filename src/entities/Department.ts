@@ -1,16 +1,3 @@
-const Department = {
-    foreign: '外国語学部',
-    japan: '日本文化学部',
-    teach: '教育福祉学部',
-    nurse: '看護学部',
-    info: '情報科学部',
-    globalre: '国際文化研究科',
-    humanre: '人間発達学研究科',
-    nursere: '看護学研究科',
-    infore: '情報科学研究科',
-} as const
-export default Department
-
 export const Departments = {
     FOREIGN_LANGRAGE: '外国語学部',
     JAPANESE_CULTURE: '日本文化学部',
@@ -21,4 +8,27 @@ export const Departments = {
     HUMAN_DEVELOPMENT: '人間発達学研究科',
     NURSE_SCIENCE: '看護学研究科',
     INFORMATION_SCIENCE_RESEARCH: '情報科学研究科',
+}
+
+export const MasterGroup = [
+    Departments.INFORMATION_SCIENCE_RESEARCH,
+    Departments.NURSE_SCIENCE,
+    Departments.HUMAN_DEVELOPMENT,
+    Departments.GLOBAL_CULTURE,
+]
+
+export const BachelorGroup = [
+    Departments.FOREIGN_LANGRAGE,
+    Departments.JAPANESE_CULTURE,
+    Departments.TEACH_WELFARE,
+    Departments.NURSE,
+    Departments.INFORMATION_SCIENCE,
+]
+
+export const isMaster = (department: string): boolean => {
+    return MasterGroup.includes(department)
+}
+
+export const isBachelor = (department: string): boolean => {
+    return BachelorGroup.includes(department)
 }
