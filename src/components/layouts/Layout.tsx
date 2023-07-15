@@ -10,9 +10,8 @@ interface Props {
 }
 
 export const Layout = ({ children, pageName }: Props): JSX.Element => {
-    const siteTitle: string = `nexussquare - ${pageName}`
     return (
-        <DefaultLayout pageName={siteTitle}>
+        <DefaultLayout pageName={pageName}>
             {children}
             <Footer />
         </DefaultLayout>
