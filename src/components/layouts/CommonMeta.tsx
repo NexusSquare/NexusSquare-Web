@@ -5,7 +5,9 @@ interface Props {
     siteTitle: string
 }
 const CommonMeta = ({ siteTitle }: Props) => {
-    const ogpImageUrl: string = '/images/ogp.png'
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || ''
+    const ogpImageUrl: string = siteUrl + '/images/ogp.png'
+
     return (
         <Head>
             <link rel="icon" href="/favicons/favicon.ico" />
@@ -25,7 +27,7 @@ const CommonMeta = ({ siteTitle }: Props) => {
                 content="大学生活でわからないことがあればここで解決！Nexus Squareは、県大生が作った県大生のための情報共有サービスです。"
             />
             <meta property="og:type" content="website" />
-            <meta property="og:url" content="ページの URL" />
+            <meta property="og:url" content={siteUrl} />
             <meta property="og:image" content={ogpImageUrl} />
             <meta property="og:site_name" content="Nexus Square | ネクスク" />
             <meta property="og:locale" content="ja_JP" />
